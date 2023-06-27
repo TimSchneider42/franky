@@ -74,6 +74,18 @@ $(function() {
 <p><a href="https://github.com/timschneider42/franky/releases"><img src="https://img.shields.io/github/v/release/timschneider42/franky.svg?include_prereleases&amp;sort=semver" alt="Releases" style="pointer-events: none;" class="inline"/> </a></p>
 <p><a href="https://github.com/timschneider42/franky/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-LGPL-green.svg" alt="LGPL" style="pointer-events: none;" class="inline"/> </a> </p>
 <p>Franky is a high-level motion library (both C++ and Python) for the Franka Emika robot. It adds a Python wrapper around <a href="https://frankaemika.github.io/docs/libfranka.html">libfranka</a>, while replacing necessary real-time programming with higher-level motion commands. As franky focuses on making real-time trajectory generation easy, it allows the robot to react to unforeseen events.</p>
+<h2>Differences to frankx</h2>
+<p>Franky is a fork of <a href="https://github.com/pantor/frankx">frankx</a>, though both codebase and functionality differ substantially from frankx by now. In particular, franky provides the following new feature/improvements:</p><ul>
+<li><a href="#real-time-motion">Motions can be updated asynchronously.</a></li>
+<li><a href="#real-time-reactions">Reactions allow for the registration of callbacks instead of just printing to stdout when fired.</a></li>
+<li><a href="#robot-state">The robot state is also available during control.</a></li>
+<li>A larger part of the libfranka API is exposed to python (e.g.,<code>setCollisionBehavior</code>, <code>setJoinImpedance</code>, and <code>setCartesianImpedance</code>).</li>
+<li>Cartesian motion generation handles boundaries in Euler angles properly.</li>
+<li><a href="#motion-types">There is a new joint motion type that supports waypoints.</a></li>
+<li><a href="#geometry">The signature of <code>Affine</code> changed.</a> <code>Affine</code> does not handle elbow positions anymore. Instead, a new class <code>RobotPose</code> stores both the end-effector pose and optionally the elbow position.</li>
+<li>The <code>MotionData</code> class does not exist anymore. Instead, reactions and other settings moved to <code>Motion</code>.</li>
+<li><a href="#real-time-reactions">The <code>Measure</code> class allows for arithmetic operations.</a></li>
+</ul>
 <h2>Installation</h2>
 <p>To start using franky with Python and libfranka <em>0.9.0</em>, just install it via </p><div class="fragment"><div class="line">pip install franky-panda</div>
 </div><!-- fragment --><p>Franky is based on <a href="https://github.com/frankaemika/libfranka">libfranka</a>, <a href="https://eigen.tuxfamily.org">Eigen</a> for transformation calculations and <a href="https://github.com/pybind/pybind11">pybind11</a> for the Python bindings. Franky uses the <a href="https://ruckig.com">Ruckig</a> Community Version for Online Trajectory Generation (OTG). As the Franka is quite sensitive to acceleration discontinuities, it requires constrained jerk for all motions. After installing the dependencies (the exact versions can be found below), you can build and install franky via</p>
