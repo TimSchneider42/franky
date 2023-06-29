@@ -239,8 +239,8 @@ $(function() {
 <p><code>Measure</code> values support all classical arithmetic operations, like addition, subtraction, multiplication, division, and exponentiation (both as base and exponent). </p><div class="fragment"><div class="line">normal_force = (Measure.FORCE_X ** 2 + Measure.FORCE_Y ** 2 + Measure.FORCE_Z ** 2) ** 0.5</div>
 </div><!-- fragment --><p>With arithmetic comparisons, conditions can be generated. </p><div class="fragment"><div class="line">normal_force_within_bounds = normal_force &lt; 30.0</div>
 <div class="line">time_up = Measure.ABS_TIME &gt; 10.0</div>
-</div><!-- fragment --><p>Conditions support negation, conjunction (and), and disjunction (or): </p><div class="fragment"><div class="line">abort = not normal_force_within_bounds or time_up</div>
-<div class="line">fast_abort = not normal_force_within_bounds and time_up</div>
+</div><!-- fragment --><p>Conditions support negation, conjunction (and), and disjunction (or): </p><div class="fragment"><div class="line">abort = ~normal_force_within_bounds | time_up</div>
+<div class="line">fast_abort = ~normal_force_within_bounds | time_up</div>
 </div><!-- fragment --><p>To check whether a reaction has fired, a callback can be attached: </p><div class="fragment"><div class="line">from franky import RobotState</div>
 <div class="line"> </div>
 <div class="line">def reaction_callback(robot_state: RobotState, rel_time: float, abs_time: float):</div>
