@@ -90,8 +90,8 @@ Inheritance diagram for franky::LinearMotion:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af1b9a2006b9ed051662ad777d237974f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_linear_motion.html#af1b9a2006b9ed051662ad777d237974f">LinearMotion</a> (const <a class="el" href="classfranky_1_1_robot_pose.html">RobotPose</a> &amp;target, <a class="el" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80e">ReferenceType</a> reference_type=<a class="el" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80eab51ca26c6c89cfc9bec338f7a0d3e0c8">ReferenceType::Absolute</a>, const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;frame=Affine::Identity(), double velocity_rel=1.0, double acceleration_rel=1.0, double jerk_rel=1.0, bool return_when_finished=true)</td></tr>
-<tr class="separator:af1b9a2006b9ed051662ad777d237974f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a113990655879dcb477633636afa403b1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_linear_motion.html#a113990655879dcb477633636afa403b1">LinearMotion</a> (const <a class="el" href="classfranky_1_1_robot_pose.html">RobotPose</a> &amp;target, <a class="el" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80e">ReferenceType</a> reference_type=<a class="el" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80eab51ca26c6c89cfc9bec338f7a0d3e0c8">ReferenceType::Absolute</a>, const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;frame=Affine::Identity(), <a class="el" href="classfranky_1_1_relative_dynamics_factor.html">RelativeDynamicsFactor</a> relative_dynamics_factor=1.0, bool return_when_finished=true)</td></tr>
+<tr class="separator:a113990655879dcb477633636afa403b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classfranky_1_1_cartesian_waypoint_motion"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classfranky_1_1_cartesian_waypoint_motion')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classfranky_1_1_cartesian_waypoint_motion.html">franky::CartesianWaypointMotion</a></td></tr>
 <tr class="memitem:a382eb05ea3a2216ba0866b8d7281709a inherit pub_methods_classfranky_1_1_cartesian_waypoint_motion"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_cartesian_waypoint_motion.html#a382eb05ea3a2216ba0866b8d7281709a">CartesianWaypointMotion</a> (const std::vector&lt; <a class="el" href="structfranky_1_1_waypoint.html">Waypoint</a>&lt; <a class="el" href="classfranky_1_1_robot_pose.html">RobotPose</a> &gt;&gt; &amp;waypoints)</td></tr>
 <tr class="separator:a382eb05ea3a2216ba0866b8d7281709a inherit pub_methods_classfranky_1_1_cartesian_waypoint_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -142,8 +142,8 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a67c0978040846078aa72d0580c30167e inherit pro_methods_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="af1b9a2006b9ed051662ad777d237974f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1b9a2006b9ed051662ad777d237974f">&#9670;&nbsp;</a></span>LinearMotion()</h2>
+<a id="a113990655879dcb477633636afa403b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a113990655879dcb477633636afa403b1">&#9670;&nbsp;</a></span>LinearMotion()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -172,20 +172,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>velocity_rel</em> = <code>1.0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>acceleration_rel</em> = <code>1.0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>jerk_rel</em> = <code>1.0</code>, </td>
+          <td class="paramtype"><a class="el" href="classfranky_1_1_relative_dynamics_factor.html">RelativeDynamicsFactor</a>&#160;</td>
+          <td class="paramname"><em>relative_dynamics_factor</em> = <code>1.0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

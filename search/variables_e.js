@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['s_522',['s',['../structfranky_1_1_trajectory_state.html#aaab6eb7aab3c77d80280033900e22bd7',1,'franky::TrajectoryState']]],
-  ['states_523',['states',['../structfranky_1_1_trajectory.html#a76f724098ba2c0ef47a8c5456d44827b',1,'franky::Trajectory']]]
+  ['t_528',['t',['../structfranky_1_1_trajectory_state.html#a4e5bcdc457ab4eac73bdcdb60d31bf0c',1,'franky::TrajectoryState']]],
+  ['target_529',['target',['../structfranky_1_1_waypoint.html#a857fb8417fc17ff5e171494b1d398355',1,'franky::Waypoint']]],
+  ['target_5ftype_530',['target_type',['../structfranky_1_1_impedance_motion_1_1_params.html#a38a921916482fa544b8f6583c8f6850f',1,'franky::ImpedanceMotion::Params']]],
+  ['translational_5fstiffness_531',['translational_stiffness',['../structfranky_1_1_impedance_motion_1_1_params.html#a122b129596499ae590225f7b1fe3bfd0',1,'franky::ImpedanceMotion::Params']]]
 ];

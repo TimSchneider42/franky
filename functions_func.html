@@ -69,8 +69,8 @@ $(function() {
 <li>AbsTime()
 : <a class="el" href="classfranky_1_1_measure.html#a98d3cc1b9f211b042de9fd2238938fbc">franky::Measure</a>
 </li>
-<li>acceleration_rel()
-: <a class="el" href="classfranky_1_1_robot.html#a9f24f42eb6b464de6f71ee7887fa9865">franky::Robot</a>
+<li>acceleration()
+: <a class="el" href="classfranky_1_1_relative_dynamics_factor.html#a34da6e78cb104a1628a7dfb25038cd30">franky::RelativeDynamicsFactor</a>
 </li>
 <li>addReaction()
 : <a class="el" href="classfranky_1_1_motion.html#acb478c7c3d04e6c9e669223c5b652c6a">franky::Motion&lt; ControlSignalType &gt;</a>
@@ -235,8 +235,8 @@ $(function() {
 <li>jacobian()
 : <a class="el" href="structfranky_1_1_kinematics.html#af1f1e2e3b084425f1a0f67db69f9372e">franky::Kinematics</a>
 </li>
-<li>jerk_rel()
-: <a class="el" href="classfranky_1_1_robot.html#a10e6bb979dbb1f813194556292fde71e">franky::Robot</a>
+<li>jerk()
+: <a class="el" href="classfranky_1_1_relative_dynamics_factor.html#a1d7f32132b99026d50ad3f683552a4be">franky::RelativeDynamicsFactor</a>
 </li>
 <li>joinMotion()
 : <a class="el" href="classfranky_1_1_robot.html#a324b07d885a7d1d615991a7780e9f688">franky::Robot</a>
@@ -268,7 +268,7 @@ $(function() {
 : <a class="el" href="classfranky_1_1_linear_impedance_motion.html#a9721f2f0e4b50d008ab7d2ce37c4333a">franky::LinearImpedanceMotion</a>
 </li>
 <li>LinearMotion()
-: <a class="el" href="classfranky_1_1_linear_motion.html#af1b9a2006b9ed051662ad777d237974f">franky::LinearMotion</a>
+: <a class="el" href="classfranky_1_1_linear_motion.html#a113990655879dcb477633636afa403b1">franky::LinearMotion</a>
 </li>
 <li>LinearPath()
 : <a class="el" href="classfranky_1_1_linear_path.html#a593b911703da185deda938689b2c04df">franky::LinearPath&lt; state_dimensions &gt;</a>
@@ -289,8 +289,14 @@ $(function() {
 , <a class="el" href="classfranky_1_1_path.html#a261d704fcb3d59d35018f8a8860acbc8">franky::Path&lt; state_dimensions &gt;</a>
 , <a class="el" href="classfranky_1_1_quartic_blend_path.html#a5f02dc1afe13f65a89980caea9216f3c">franky::QuarticBlendPath&lt; state_dimensions &gt;</a>
 </li>
+<li>MAX_DYNAMICS()
+: <a class="el" href="classfranky_1_1_relative_dynamics_factor.html#aafb78c44330199e27db6b3f662307c14">franky::RelativeDynamicsFactor</a>
+</li>
+<li>max_dynamics()
+: <a class="el" href="classfranky_1_1_relative_dynamics_factor.html#a7dbf4dc92014c7533ee0090581308b90">franky::RelativeDynamicsFactor</a>
+</li>
 <li>Measure()
-: <a class="el" href="classfranky_1_1_measure.html#a8e0c418da6a3bea828dfd95e50d25d5f">franky::Measure</a>
+: <a class="el" href="classfranky_1_1_measure.html#aefc991686a8b710643f1aa55ffd69c6c">franky::Measure</a>
 </li>
 <li>Motion()
 : <a class="el" href="classfranky_1_1_motion.html#ab18f33f97f86e9fb838fb6d6d79915b4">franky::Motion&lt; ControlSignalType &gt;</a>
@@ -340,6 +346,9 @@ $(function() {
 , <a class="el" href="classfranky_1_1_quartic_blend_path.html#adf206fec1591efe7fe9cf7060f88925e">franky::QuarticBlendPath&lt; state_dimensions &gt;</a>
 , <a class="el" href="classfranky_1_1_reaction.html#a1906a5e500902ca4e1ac75e7fbd15947">franky::Reaction&lt; ControlSignalType &gt;</a>
 </li>
+<li>operator*()
+: <a class="el" href="classfranky_1_1_relative_dynamics_factor.html#ab5a59d78758ae5fc747cce2df95022f1">franky::RelativeDynamicsFactor</a>
+</li>
 </ul>
 
 
@@ -376,6 +385,12 @@ $(function() {
 </li>
 <li>registerUpdateCallback()
 : <a class="el" href="classfranky_1_1_motion_generator.html#a051feee2d761e6613886919357eb9a42">franky::MotionGenerator&lt; ControlSignalType &gt;</a>
+</li>
+<li>relative_dynamics_factor()
+: <a class="el" href="classfranky_1_1_robot.html#a43f2f6dde0cca1f8c21fa6c1fb1b28c0">franky::Robot</a>
+</li>
+<li>RelativeDynamicsFactor()
+: <a class="el" href="classfranky_1_1_relative_dynamics_factor.html#a7e43b12bb5d338ac74ef57c4fd791a6e">franky::RelativeDynamicsFactor</a>
 </li>
 <li>release()
 : <a class="el" href="classfranky_1_1_gripper.html#ac9493f3b30420ab41e6d2337f0e2a33a">franky::Gripper</a>
@@ -415,25 +430,16 @@ $(function() {
 <li>segments()
 : <a class="el" href="classfranky_1_1_aggregated_path.html#abf000ba3634a377fb8daeaa912c51ba5">franky::AggregatedPath&lt; state_dimensions &gt;</a>
 </li>
-<li>setAccelerationRel()
-: <a class="el" href="classfranky_1_1_robot.html#a037cf3e8c24fcaed8b427f5b78e8135e">franky::Robot</a>
-</li>
 <li>setCollisionBehavior()
 : <a class="el" href="classfranky_1_1_robot.html#aad586cb00aa450d5c51bc8260b9ad373">franky::Robot</a>
-</li>
-<li>setDynamicRel()
-: <a class="el" href="classfranky_1_1_robot.html#ad34101c5fdc09212600624e6b9de40f9">franky::Robot</a>
-</li>
-<li>setJerkRel()
-: <a class="el" href="classfranky_1_1_robot.html#a2414cf5851e230ca38f3a4bd86c4fd0c">franky::Robot</a>
 </li>
 <li>setNewWaypoint()
 : <a class="el" href="classfranky_1_1_cartesian_waypoint_motion.html#a96e8cffc1400b4fa99bda22eefa53d60">franky::CartesianWaypointMotion</a>
 , <a class="el" href="classfranky_1_1_joint_waypoint_motion.html#a9edbca78d8e379423c26a5843ef4590c">franky::JointWaypointMotion</a>
 , <a class="el" href="classfranky_1_1_waypoint_motion.html#af342ff37fa5c6d246190fea8fd1d0724">franky::WaypointMotion&lt; ControlSignalType, TargetType &gt;</a>
 </li>
-<li>setVelocityRel()
-: <a class="el" href="classfranky_1_1_robot.html#a1f363c03e10e3ec641237f3b4ca2d281">franky::Robot</a>
+<li>setRelativeDynamicsFactor()
+: <a class="el" href="classfranky_1_1_robot.html#ad19caa63f0237d39463e5a3dd0b3e793">franky::Robot</a>
 </li>
 <li>start()
 : <a class="el" href="classfranky_1_1_linear_path.html#ab865328fb62b1925a8fc63704fff413f">franky::LinearPath&lt; state_dimensions &gt;</a>
@@ -474,8 +480,8 @@ $(function() {
 <li>vector_repr()
 : <a class="el" href="classfranky_1_1_robot_pose.html#a49bde12b0fbe8a2cc7e95c923b170c8d">franky::RobotPose</a>
 </li>
-<li>velocity_rel()
-: <a class="el" href="classfranky_1_1_robot.html#a8d5158cd4a047ded18aeff054d963095">franky::Robot</a>
+<li>velocity()
+: <a class="el" href="classfranky_1_1_relative_dynamics_factor.html#afd6505e3977f86efea0cae6bd3dca074">franky::RelativeDynamicsFactor</a>
 </li>
 </ul>
 

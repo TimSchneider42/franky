@@ -1,7 +1,7 @@
 var searchData=
 [
   ['jacobian_90',['jacobian',['../structfranky_1_1_kinematics.html#af1f1e2e3b084425f1a0f67db69f9372e',1,'franky::Kinematics']]],
-  ['jerk_5frel_91',['jerk_rel',['../structfranky_1_1_waypoint.html#a4f9e83b04cae7738779dbec42e45bc32',1,'franky::Waypoint::jerk_rel()'],['../structfranky_1_1_waypoint_motion_1_1_params.html#a6626a171d854119916af60b2621736a8',1,'franky::WaypointMotion::Params::jerk_rel()'],['../structfranky_1_1_robot_1_1_params.html#ac4ef086b534a7a36d75d2bd8bc3ee111',1,'franky::Robot::Params::jerk_rel()'],['../classfranky_1_1_robot.html#a10e6bb979dbb1f813194556292fde71e',1,'franky::Robot::jerk_rel()']]],
+  ['jerk_91',['jerk',['../classfranky_1_1_relative_dynamics_factor.html#a1d7f32132b99026d50ad3f683552a4be',1,'franky::RelativeDynamicsFactor']]],
   ['joinmotion_92',['joinMotion',['../classfranky_1_1_robot.html#a324b07d885a7d1d615991a7780e9f688',1,'franky::Robot']]],
   ['joint_5findex_93',['joint_index',['../structfranky_1_1_kinematics_1_1_null_space_handling.html#a2879a0c9f1a8c7214ea328e9970c9907',1,'franky::Kinematics::NullSpaceHandling']]],
   ['joint_5fwaypoint_5fmotion_2ecpp_94',['joint_waypoint_motion.cpp',['../joint__waypoint__motion_8cpp.html',1,'']]],
