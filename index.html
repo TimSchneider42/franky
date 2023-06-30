@@ -128,7 +128,7 @@ $(function() {
 </div><!-- fragment --><p>The corresponding program in Python is </p><div class="fragment"><div class="line">from franky import Affine, LinearMotion, Robot, ReferenceType</div>
 <div class="line"> </div>
 <div class="line">robot = Robot(&quot;172.16.0.2&quot;)</div>
-<div class="line">robot.set_dynamic_rel(0.05)</div>
+<div class="line">robot.relative_dynamics_factor = 0.05</div>
 <div class="line"> </div>
 <div class="line">motion = LinearMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
 <div class="line">robot.move(motion)</div>
@@ -154,7 +154,7 @@ $(function() {
 <div class="line">robot.recover_from_errors()</div>
 <div class="line"> </div>
 <div class="line"># Set velocity, acceleration and jerk to 5% of the maximum</div>
-<div class="line">robot.set_dynamic_rel(0.05)</div>
+<div class="line">robot.relative_dynamics_factor = 0.05</div>
 <div class="line"> </div>
 <div class="line"># Alternatively, you can define each constraint individually</div>
 <div class="line">robot.velocity_rel = 0.2</div>
@@ -280,7 +280,7 @@ $(function() {
 <div class="line">from franky import Affine, LinearMotion, Robot, ReferenceType</div>
 <div class="line"> </div>
 <div class="line">robot = Robot(&quot;172.16.0.2&quot;)</div>
-<div class="line">robot.set_dynamic_rel(0.05)</div>
+<div class="line">robot.relative_dynamics_factor = 0.05</div>
 <div class="line"> </div>
 <div class="line">motion1 = LinearMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
 <div class="line">robot.move(motion1, asynchronous=True)</div>
