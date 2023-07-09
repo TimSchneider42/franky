@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['affine_533',['Affine',['../namespacefranky.html#afab9faf133666ada543b15236a8c4b5f',1,'franky']]]
+  ['affine_531',['Affine',['../namespacefranky.html#afab9faf133666ada543b15236a8c4b5f',1,'franky']]]
 ];
