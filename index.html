@@ -179,12 +179,12 @@ $(function() {
 </div><!-- fragment --><h3>Motion Types</h3>
 <p>Franky defines a number of different motion types. In python, you can use them as follows: </p><div class="fragment"><div class="line">import math</div>
 <div class="line">from scipy.spatial.transform import Rotation</div>
-<div class="line">from franky import JointPositionMotion, JointWaypointMotion, JointWaypoint, JointPositionStopMotion, LinearMotion, CartesianWaypointMotion, CartesianWaypoint, Affine, RobotPose, ReferenceType, CartesianPoseStopMotion</div>
+<div class="line">from franky import JointWaypointMotion, JointWaypoint, JointPositionStopMotion, LinearMotion, CartesianWaypointMotion, CartesianWaypoint, Affine, RobotPose, ReferenceType, CartesianPoseStopMotion</div>
 <div class="line"> </div>
 <div class="line"># A point-to-point motion in the joint space</div>
-<div class="line">m1 = JointPositionMotion([-1.8, 1.1, 1.7, -2.1, -1.1, 1.6, -0.4])</div>
+<div class="line">m1 = JointWaypointMotion([JointWaypoint([-1.8, 1.1, 1.7, -2.1, -1.1, 1.6, -0.4])])</div>
 <div class="line"> </div>
-<div class="line"># Generalization of JointPositionMotion that allows for multiple waypoints</div>
+<div class="line"># A motion in joint space with multiple waypoints</div>
 <div class="line">m2 = JointWaypointMotion([</div>
 <div class="line">    JointWaypoint([-1.8, 1.1, 1.7, -2.1, -1.1, 1.6, -0.4]),</div>
 <div class="line">    JointWaypoint([-1.7, 1.2, 1.8, -2.0, -1.0, 1.7, -0.3]),</div>
