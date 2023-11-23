@@ -89,6 +89,9 @@ $(function() {
 </ul>
 <h2>Installation</h2>
 <p>To start using franky with Python and libfranka <em>0.12.1</em>, just install it via </p><div class="fragment"><div class="line">pip install franky-panda</div>
+</div><!-- fragment --><p> We also provide wheels for libfranka <em>0.9.2</em>, which is the latest version that supports the old Franka Emika robot: </p><div class="fragment"><div class="line">wget https://github.com/TimSchneider42/franky/releases/latest/download/libfranka_0-9-2_wheels.zip</div>
+<div class="line">unzip libfranka_0-9-2_wheels.zip</div>
+<div class="line">pip install --no-index --find-links=./dist franky-panda</div>
 </div><!-- fragment --><p>Franky is based on <a href="https://github.com/frankaemika/libfranka">libfranka</a>, <a href="https://eigen.tuxfamily.org">Eigen</a> for transformation calculations and <a href="https://github.com/pybind/pybind11">pybind11</a> for the Python bindings. Franky uses the <a href="https://ruckig.com">Ruckig</a> Community Version for Online Trajectory Generation (OTG). As the Franka is quite sensitive to acceleration discontinuities, it requires constrained jerk for all motions. After installing the dependencies (the exact versions can be found below), you can build and install franky via</p>
 <div class="fragment"><div class="line">git clone --recurse-submodules git@github.com:timschneider42/franky.git</div>
 <div class="line">cd franky</div>
