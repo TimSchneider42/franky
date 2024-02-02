@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['euler_540',['Euler',['../namespacefranky.html#aead71bda923ed8b1060241612b057e99',1,'franky']]]
+  ['euler_542',['Euler',['../namespacefranky.html#aead71bda923ed8b1060241612b057e99',1,'franky']]]
 ];

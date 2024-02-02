@@ -83,6 +83,10 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_kinematic_chain.html">KinematicChain</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_cartesian_impedance_motion.html">CartesianImpedanceMotion</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_cartesian_motion.html">CartesianMotion</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_cartesian_waypoint_motion.html">CartesianWaypointMotion</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_condition.html">Condition</a></td></tr>
@@ -94,10 +98,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_joint_motion.html">JointMotion</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_joint_waypoint_motion.html">JointWaypointMotion</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_linear_impedance_motion.html">LinearImpedanceMotion</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_linear_motion.html">LinearMotion</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_measure.html">Measure</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -150,6 +150,8 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a1c45a73de42a7946775dc070b686635d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a1c45a73de42a7946775dc070b686635d">LinearMotion</a> = <a class="el" href="classfranky_1_1_cartesian_motion.html">CartesianMotion</a></td></tr>
+<tr class="separator:a1c45a73de42a7946775dc070b686635d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a92a07a88df41e482914cf4f9f2dddecb"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb">Vector6d</a> = Eigen::Vector&lt; double, 6 &gt;</td></tr>
 <tr class="separator:a92a07a88df41e482914cf4f9f2dddecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c36e6539a78f808bf759142dec935c4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> = Eigen::Vector&lt; double, 7 &gt;</td></tr>
@@ -248,6 +250,20 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="namespacefranky.html#aead71bda923ed8b1060241612b057e99">franky::Euler</a> = typedef Eigen::EulerAngles&lt;double, Eigen::EulerSystemXYZ&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1c45a73de42a7946775dc070b686635d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c45a73de42a7946775dc070b686635d">&#9670;&nbsp;</a></span>LinearMotion</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacefranky.html#a1c45a73de42a7946775dc070b686635d">franky::LinearMotion</a> = typedef <a class="el" href="classfranky_1_1_cartesian_motion.html">CartesianMotion</a></td>
         </tr>
       </table>
 </div><div class="memdoc">

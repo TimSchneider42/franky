@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['franky_2ehpp_319',['franky.hpp',['../franky_8hpp.html',1,'']]]
+  ['franky_2ehpp_325',['franky.hpp',['../franky_8hpp.html',1,'']]]
 ];

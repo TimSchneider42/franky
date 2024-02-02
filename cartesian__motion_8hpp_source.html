@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Franky: /home/runner/work/franky/franky/include/franky/motion/linear_motion.hpp Source File</title>
+<title>Franky: /home/runner/work/franky/franky/include/franky/motion/cartesian_motion.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -68,10 +68,10 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">linear_motion.hpp</div>  </div>
+<div class="title">cartesian_motion.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="linear__motion_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<a href="cartesian__motion_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;atomic&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;optional&gt;</span></div>
@@ -83,9 +83,9 @@ $(function() {
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacefranky.html">franky</a> {</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classfranky_1_1_linear_motion.html">   13</a></span>&#160;<span class="keyword">class </span><a class="code" href="classfranky_1_1_linear_motion.html">LinearMotion</a> : <span class="keyword">public</span> <a class="code" href="classfranky_1_1_cartesian_waypoint_motion.html">CartesianWaypointMotion</a> {</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classfranky_1_1_cartesian_motion.html">   13</a></span>&#160;<span class="keyword">class </span><a class="code" href="classfranky_1_1_cartesian_motion.html">CartesianMotion</a> : <span class="keyword">public</span> <a class="code" href="classfranky_1_1_cartesian_waypoint_motion.html">CartesianWaypointMotion</a> {</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classfranky_1_1_linear_motion.html#a113990655879dcb477633636afa403b1">LinearMotion</a>(</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classfranky_1_1_cartesian_motion.html#a10cecdd929dcc72faa93f0d49d6df734">CartesianMotion</a>(</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;      <span class="keyword">const</span> <a class="code" href="classfranky_1_1_robot_pose.html">RobotPose</a> &amp;target,</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;      <a class="code" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80e">ReferenceType</a> reference_type = <a class="code" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80eab51ca26c6c89cfc9bec338f7a0d3e0c8">ReferenceType::Absolute</a>,</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;      <span class="keyword">const</span> <a class="code" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;frame = Affine::Identity(),</div>
@@ -93,11 +93,14 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;      <span class="keywordtype">bool</span> return_when_finished = <span class="keyword">true</span>);</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;};</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;}  <span class="comment">// namespace franky</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">// Backwards compatibility</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="namespacefranky.html#a1c45a73de42a7946775dc070b686635d">   24</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classfranky_1_1_cartesian_motion.html">LinearMotion</a> = <a class="code" href="classfranky_1_1_cartesian_motion.html">CartesianMotion</a>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}  <span class="comment">// namespace franky</span></div>
 <div class="ttc" id="acartesian__waypoint__motion_8hpp_html"><div class="ttname"><a href="cartesian__waypoint__motion_8hpp.html">cartesian_waypoint_motion.hpp</a></div></div>
+<div class="ttc" id="aclassfranky_1_1_cartesian_motion_html"><div class="ttname"><a href="classfranky_1_1_cartesian_motion.html">franky::CartesianMotion</a></div><div class="ttdef"><b>Definition:</b> cartesian_motion.hpp:13</div></div>
+<div class="ttc" id="aclassfranky_1_1_cartesian_motion_html_a10cecdd929dcc72faa93f0d49d6df734"><div class="ttname"><a href="classfranky_1_1_cartesian_motion.html#a10cecdd929dcc72faa93f0d49d6df734">franky::CartesianMotion::CartesianMotion</a></div><div class="ttdeci">CartesianMotion(const RobotPose &amp;target, ReferenceType reference_type=ReferenceType::Absolute, const Affine &amp;frame=Affine::Identity(), RelativeDynamicsFactor relative_dynamics_factor=1.0, bool return_when_finished=true)</div><div class="ttdef"><b>Definition:</b> cartesian_motion.cpp:8</div></div>
 <div class="ttc" id="aclassfranky_1_1_cartesian_waypoint_motion_html"><div class="ttname"><a href="classfranky_1_1_cartesian_waypoint_motion.html">franky::CartesianWaypointMotion</a></div><div class="ttdef"><b>Definition:</b> cartesian_waypoint_motion.hpp:17</div></div>
-<div class="ttc" id="aclassfranky_1_1_linear_motion_html"><div class="ttname"><a href="classfranky_1_1_linear_motion.html">franky::LinearMotion</a></div><div class="ttdef"><b>Definition:</b> linear_motion.hpp:13</div></div>
-<div class="ttc" id="aclassfranky_1_1_linear_motion_html_a113990655879dcb477633636afa403b1"><div class="ttname"><a href="classfranky_1_1_linear_motion.html#a113990655879dcb477633636afa403b1">franky::LinearMotion::LinearMotion</a></div><div class="ttdeci">LinearMotion(const RobotPose &amp;target, ReferenceType reference_type=ReferenceType::Absolute, const Affine &amp;frame=Affine::Identity(), RelativeDynamicsFactor relative_dynamics_factor=1.0, bool return_when_finished=true)</div><div class="ttdef"><b>Definition:</b> linear_motion.cpp:8</div></div>
 <div class="ttc" id="aclassfranky_1_1_relative_dynamics_factor_html"><div class="ttname"><a href="classfranky_1_1_relative_dynamics_factor.html">franky::RelativeDynamicsFactor</a></div><div class="ttdef"><b>Definition:</b> relative_dynamics_factor.hpp:7</div></div>
 <div class="ttc" id="aclassfranky_1_1_robot_pose_html"><div class="ttname"><a href="classfranky_1_1_robot_pose.html">franky::RobotPose</a></div><div class="ttdef"><b>Definition:</b> robot_pose.hpp:11</div></div>
 <div class="ttc" id="anamespacefranky_html"><div class="ttname"><a href="namespacefranky.html">franky</a></div><div class="ttdef"><b>Definition:</b> gripper.cpp:3</div></div>

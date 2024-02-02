@@ -126,16 +126,16 @@ $(function() {
 <div class="line">robot.setDynamicRel(0.05);</div>
 <div class="line"> </div>
 <div class="line">// Move the end-effector 20cm in positive x-direction</div>
-<div class="line">auto motion = LinearMotion(RobotPose(Affine({0.2, 0.0, 0.0}), 0.0), ReferenceType::Relative);</div>
+<div class="line">auto motion = CartesianMotion(RobotPose(Affine({0.2, 0.0, 0.0}), 0.0), ReferenceType::Relative);</div>
 <div class="line"> </div>
 <div class="line">// Finally move the robot</div>
 <div class="line">robot.move(motion);</div>
-</div><!-- fragment --><p>The corresponding program in Python is </p><div class="fragment"><div class="line">from franky import Affine, LinearMotion, Robot, ReferenceType</div>
+</div><!-- fragment --><p>The corresponding program in Python is </p><div class="fragment"><div class="line">from franky import Affine, CartesianMotion, Robot, ReferenceType</div>
 <div class="line"> </div>
 <div class="line">robot = Robot(&quot;172.16.0.2&quot;)</div>
 <div class="line">robot.relative_dynamics_factor = 0.05</div>
 <div class="line"> </div>
-<div class="line">motion = LinearMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
+<div class="line">motion = CartesianMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
 <div class="line">robot.move(motion)</div>
 </div><!-- fragment --><p>Furthermore, we will introduce methods for geometric calculations, for moving the robot according to different motion types, how to implement real-time reactions and changing waypoints in real time as well as controlling the gripper.</p>
 <h3>Geometry</h3>
@@ -184,7 +184,7 @@ $(function() {
 </div><!-- fragment --><h3>Motion Types</h3>
 <p>Franky defines a number of different motion types. In python, you can use them as follows: </p><div class="fragment"><div class="line">import math</div>
 <div class="line">from scipy.spatial.transform import Rotation</div>
-<div class="line">from franky import JointWaypointMotion, JointWaypoint, JointPositionStopMotion, LinearMotion, CartesianWaypointMotion, CartesianWaypoint, Affine, RobotPose, ReferenceType, CartesianPoseStopMotion</div>
+<div class="line">from franky import JointWaypointMotion, JointWaypoint, JointPositionStopMotion, CartesianMotion, CartesianWaypointMotion, CartesianWaypoint, Affine, RobotPose, ReferenceType, CartesianPoseStopMotion</div>
 <div class="line"> </div>
 <div class="line"># A point-to-point motion in the joint space</div>
 <div class="line">m1 = JointWaypointMotion([JointWaypoint([-1.8, 1.1, 1.7, -2.1, -1.1, 1.6, -0.4])])</div>
@@ -201,15 +201,15 @@ $(function() {
 <div class="line"> </div>
 <div class="line"># A linear motion in cartesian space</div>
 <div class="line">quat = Rotation.from_euler(&quot;xyz&quot;, [0, 0, math.pi / 2]).as_quat()</div>
-<div class="line">m4 = LinearMotion(Affine([0.2, -0.4, 0.3], quat))</div>
-<div class="line">m5 = LinearMotion(RobotPose(Affine([0.2, -0.4, 0.3], quat), elbow_position=1.7)) # With target elbow angle</div>
+<div class="line">m4 = CartesianMotion(Affine([0.2, -0.4, 0.3], quat))</div>
+<div class="line">m5 = CartesianMotion(RobotPose(Affine([0.2, -0.4, 0.3], quat), elbow_position=1.7)) # With target elbow angle</div>
 <div class="line"> </div>
 <div class="line"># A linear motion in cartesian space relative to the initial position</div>
 <div class="line"># (Note that this motion is relative both in position and orientation. Hence, when the robot&#39;s end-effector is oriented</div>
 <div class="line"># differently, it will move in a different direction)</div>
-<div class="line">m6 = LinearMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
+<div class="line">m6 = CartesianMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
 <div class="line"> </div>
-<div class="line"># Generalization of LinearMotion that allows for multiple waypoints</div>
+<div class="line"># Generalization of CartesianMotion that allows for multiple waypoints</div>
 <div class="line">m7 = CartesianWaypointMotion([</div>
 <div class="line">  CartesianWaypoint(RobotPose(Affine([0.2, -0.4, 0.3], quat), elbow_position=1.7)),</div>
 <div class="line">  # The following waypoint is relative to the prior one and 50% slower</div>
@@ -224,11 +224,11 @@ $(function() {
 <p>The real robot can be moved by applying a motion to the robot using <code>move</code>: </p><div class="fragment"><div class="line">robot.move(m1)</div>
 <div class="line">robot.move(m2)</div>
 </div><!-- fragment --><h3>Real-Time Reactions</h3>
-<p>By adding reactions to the motion data, the robot can react to unforeseen events. In the Python API, you can define conditions by using a comparison between a robot's value and a given threshold. If the threshold is exceeded, the reaction fires. </p><div class="fragment"><div class="line">from franky import LinearMotion, Affine, ReferenceType, Measure, Reaction</div>
+<p>By adding reactions to the motion data, the robot can react to unforeseen events. In the Python API, you can define conditions by using a comparison between a robot's value and a given threshold. If the threshold is exceeded, the reaction fires. </p><div class="fragment"><div class="line">from franky import CartesianMotion, Affine, ReferenceType, Measure, Reaction</div>
 <div class="line"> </div>
-<div class="line">motion = LinearMotion(Affine([0.0, 0.0, 0.1]), ReferenceType.Relative)  # Move down 10cm</div>
+<div class="line">motion = CartesianMotion(Affine([0.0, 0.0, 0.1]), ReferenceType.Relative)  # Move down 10cm</div>
 <div class="line"> </div>
-<div class="line">reaction_motion = LinearMotion(Affine([0.0, 0.0, 0.01]), ReferenceType.Relative)  # Move up for 1cm</div>
+<div class="line">reaction_motion = CartesianMotion(Affine([0.0, 0.0, 0.01]), ReferenceType.Relative)  # Move up for 1cm</div>
 <div class="line"> </div>
 <div class="line"># Trigger reaction if the Z force is greater than 30N</div>
 <div class="line">reaction = Reaction(Measure.FORCE_Z &gt; 30.0, reaction_motion)</div>
@@ -254,7 +254,7 @@ $(function() {
 <div class="line">reaction.register_callback(reaction_callback)</div>
 </div><!-- fragment --><p>Note that these callbacks are not executed in the control thread since they would otherwise block it. Instead, they are put in a queue and executed by another thread. While this scheme ensures that the control thread can always run, it cannot prevent that the queue grows indefinitely when the callbacks take more time to execute than it takes for new callbacks to be queued. Hence, callbacks might be executed significantly after their respective reaction has fired if they are triggered in rapid succession or take a long time to execute.</p>
 <p>In C++ you can additionally use lambdas to define more complex behaviours: </p><div class="fragment"><div class="line"> {c++}</div>
-<div class="line">auto motion = LinearMotion(RobotPose(Affine({0.0, 0.0, 0.2}), 0.0), ReferenceType::Relative);</div>
+<div class="line">auto motion = CartesianMotion(RobotPose(Affine({0.0, 0.0, 0.2}), 0.0), ReferenceType::Relative);</div>
 <div class="line"> </div>
 <div class="line">// Stop motion if force is over 10N</div>
 <div class="line">auto stop_motion = StopMotion&lt;franka::CartesianPose&gt;()</div>
@@ -282,16 +282,16 @@ $(function() {
 <div class="line">robot.move(motion)</div>
 </div><!-- fragment --><h3>Real-Time Motion</h3>
 <p>By setting the <code>asynchronous</code> parameter of <code>Robot.move</code> to <code>True</code>, the function does not block until the motion finishes. Instead, it returns immediately and, thus, allows the main thread to set new motions asynchronously. </p><div class="fragment"><div class="line">import time</div>
-<div class="line">from franky import Affine, LinearMotion, Robot, ReferenceType</div>
+<div class="line">from franky import Affine, CartesianMotion, Robot, ReferenceType</div>
 <div class="line"> </div>
 <div class="line">robot = Robot(&quot;172.16.0.2&quot;)</div>
 <div class="line">robot.relative_dynamics_factor = 0.05</div>
 <div class="line"> </div>
-<div class="line">motion1 = LinearMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
+<div class="line">motion1 = CartesianMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
 <div class="line">robot.move(motion1, asynchronous=True)</div>
 <div class="line"> </div>
 <div class="line">time.sleep(0.5)</div>
-<div class="line">motion2 = LinearMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
+<div class="line">motion2 = CartesianMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
 <div class="line">robot.move(motion2, asynchronous=True)</div>
 </div><!-- fragment --><p>By calling <code>Robot.join_motion</code> the main thread can be synchronized with the motion thread, as it will block until the robot finishes its motion. </p><div class="fragment"><div class="line">robot.join_motion()</div>
 </div><!-- fragment --><p>Note that when exceptions occur during the asynchronous execution of a motion, they will not be thrown immediately. Instead, the control thread stores the exception and terminates. The next time <code>Robot.join_motion</code> or <code>Robot.move</code> are called, they will throw the stored exception in the main thread. Hence, after an asynchronous motion has finished, make sure to call <code>Robot.join_motion</code> to ensure being notified of any exceptions that occurred during the motion.</p>
