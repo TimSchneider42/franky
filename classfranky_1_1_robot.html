@@ -95,9 +95,9 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a9c09c2ddf5e143513ddd56e5ff7337d1"><td class="memTemplParams" colspan="2">template&lt;size_t dims&gt; </td></tr>
-<tr class="memitem:a9c09c2ddf5e143513ddd56e5ff7337d1"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a> = std::variant&lt; double, std::array&lt; double, dims &gt;, <a class="el" href="namespacefranky.html#adc6cdbe74d2a335e329e61b7b46b96b7">Vector</a>&lt; dims &gt; &gt;</td></tr>
-<tr class="separator:a9c09c2ddf5e143513ddd56e5ff7337d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a369cce243389413446ae49940f0bab02"><td class="memTemplParams" colspan="2">template&lt;size_t dims&gt; </td></tr>
+<tr class="memitem:a369cce243389413446ae49940f0bab02"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a> = std::variant&lt; double, std::array&lt; double, dims &gt;, Eigen::Vector&lt; double, dims &gt; &gt;</td></tr>
+<tr class="separator:a369cce243389413446ae49940f0bab02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -106,11 +106,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab017d5bb8451915dbc0fde436782c771"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a242b157f9b7fa39617a84680b92ee477"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a242b157f9b7fa39617a84680b92ee477">Robot</a> (const std::string &amp;<a class="el" href="classfranky_1_1_robot.html#a25ca7e90c8a10848921fb35a378a7d33">fci_hostname</a>, const <a class="el" href="structfranky_1_1_robot_1_1_params.html">Params</a> &amp;params)</td></tr>
 <tr class="separator:a242b157f9b7fa39617a84680b92ee477"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad586cb00aa450d5c51bc8260b9ad373"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#aad586cb00aa450d5c51bc8260b9ad373">setCollisionBehavior</a> (const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 7 &gt; &amp;torque_threshold, const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 6 &gt; &amp;force_threshold)</td></tr>
+<tr class="memitem:aad586cb00aa450d5c51bc8260b9ad373"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#aad586cb00aa450d5c51bc8260b9ad373">setCollisionBehavior</a> (const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;torque_threshold, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;force_threshold)</td></tr>
 <tr class="separator:aad586cb00aa450d5c51bc8260b9ad373"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56b550916fb5b9df587e24a6b2353b68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a56b550916fb5b9df587e24a6b2353b68">setCollisionBehavior</a> (const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 7 &gt; &amp;lower_torque_threshold, const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 7 &gt; &amp;upper_torque_threshold, const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 6 &gt; &amp;lower_force_threshold, const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 6 &gt; &amp;upper_force_threshold)</td></tr>
+<tr class="memitem:a56b550916fb5b9df587e24a6b2353b68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a56b550916fb5b9df587e24a6b2353b68">setCollisionBehavior</a> (const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;lower_torque_threshold, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;upper_torque_threshold, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;lower_force_threshold, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;upper_force_threshold)</td></tr>
 <tr class="separator:a56b550916fb5b9df587e24a6b2353b68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b1476422439a82844e934873c88888a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a8b1476422439a82844e934873c88888a">setCollisionBehavior</a> (const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 7 &gt; &amp;lower_torque_threshold_acceleration, const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 7 &gt; &amp;upper_torque_threshold_acceleration, const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 7 &gt; &amp;lower_torque_threshold_nominal, const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 7 &gt; &amp;upper_torque_threshold_nominal, const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 6 &gt; &amp;lower_force_threshold_acceleration, const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 6 &gt; &amp;upper_force_threshold_acceleration, const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 6 &gt; &amp;lower_force_threshold_nominal, const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 6 &gt; &amp;upper_force_threshold_nominal)</td></tr>
+<tr class="memitem:a8b1476422439a82844e934873c88888a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a8b1476422439a82844e934873c88888a">setCollisionBehavior</a> (const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;lower_torque_threshold_acceleration, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;upper_torque_threshold_acceleration, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;lower_torque_threshold_nominal, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;upper_torque_threshold_nominal, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;lower_force_threshold_acceleration, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;upper_force_threshold_acceleration, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;lower_force_threshold_nominal, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;upper_force_threshold_nominal)</td></tr>
 <tr class="separator:a8b1476422439a82844e934873c88888a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7389f6e088ba456dd689c093ee6640e0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a7389f6e088ba456dd689c093ee6640e0">recoverFromErrors</a> ()</td></tr>
 <tr class="separator:a7389f6e088ba456dd689c093ee6640e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -118,7 +118,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad3d89c3fd930ea6590d0abd10fbdb755"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf04b2531a0ac4a16a759cc048d82e15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_robot_pose.html">RobotPose</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#adf04b2531a0ac4a16a759cc048d82e15">currentPose</a> ()</td></tr>
 <tr class="separator:adf04b2531a0ac4a16a759cc048d82e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4aae0b9dbfe4d88615810d1743c43646"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a7a0728789dfc62216103d8a51206ce51">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a4aae0b9dbfe4d88615810d1743c43646">currentJointPositions</a> ()</td></tr>
+<tr class="memitem:a4aae0b9dbfe4d88615810d1743c43646"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a4aae0b9dbfe4d88615810d1743c43646">currentJointPositions</a> ()</td></tr>
 <tr class="separator:a4aae0b9dbfe4d88615810d1743c43646"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fd74136334e010a7695f31507fd8775"><td class="memItemLeft" align="right" valign="top">franka::RobotState&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a8fd74136334e010a7695f31507fd8775">state</a> ()</td></tr>
 <tr class="separator:a8fd74136334e010a7695f31507fd8775"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,9 +147,9 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:acae6f09215934cdc31bc5710fe395015"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacefranky.html#a7a0728789dfc62216103d8a51206ce51">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#acae6f09215934cdc31bc5710fe395015">inverseKinematics</a> (const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;target, const <a class="el" href="namespacefranky.html#a7a0728789dfc62216103d8a51206ce51">Vector7d</a> &amp;q0)</td></tr>
+<tr class="memitem:acae6f09215934cdc31bc5710fe395015"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#acae6f09215934cdc31bc5710fe395015">inverseKinematics</a> (const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;target, const <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;q0)</td></tr>
 <tr class="separator:acae6f09215934cdc31bc5710fe395015"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1be6bdcdcea8b3f1c81a9b607068ca03"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a1be6bdcdcea8b3f1c81a9b607068ca03">forwardKinematics</a> (const <a class="el" href="namespacefranky.html#a7a0728789dfc62216103d8a51206ce51">Vector7d</a> &amp;q)</td></tr>
+<tr class="memitem:a1be6bdcdcea8b3f1c81a9b607068ca03"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a1be6bdcdcea8b3f1c81a9b607068ca03">forwardKinematics</a> (const <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;q)</td></tr>
 <tr class="separator:a1be6bdcdcea8b3f1c81a9b607068ca03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -189,8 +189,8 @@ Static Public Attributes</h2></td></tr>
 <tr class="separator:a3155de462f5590cc67b2874acf846f53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a9c09c2ddf5e143513ddd56e5ff7337d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c09c2ddf5e143513ddd56e5ff7337d1">&#9670;&nbsp;</a></span>ScalarOrArray</h2>
+<a id="a369cce243389413446ae49940f0bab02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a369cce243389413446ae49940f0bab02">&#9670;&nbsp;</a></span>ScalarOrArray</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -198,7 +198,7 @@ Static Public Attributes</h2></td></tr>
 template&lt;size_t dims&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">franky::Robot::ScalarOrArray</a> =  std::variant&lt;double, std::array&lt;double, dims&gt;, <a class="el" href="namespacefranky.html#adc6cdbe74d2a335e329e61b7b46b96b7">Vector</a>&lt;dims&gt; &gt;</td>
+          <td class="memname">using <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">franky::Robot::ScalarOrArray</a> =  std::variant&lt;double, std::array&lt;double, dims&gt;, Eigen::Vector&lt;double, dims&gt; &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -295,7 +295,7 @@ template&lt;size_t dims&gt; </div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a7a0728789dfc62216103d8a51206ce51">Vector7d</a> franky::Robot::currentJointPositions </td>
+          <td class="memname"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> franky::Robot::currentJointPositions </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -351,7 +351,7 @@ template&lt;size_t dims&gt; </div>
         <tr>
           <td class="memname"><a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> franky::Robot::forwardKinematics </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespacefranky.html#a7a0728789dfc62216103d8a51206ce51">Vector7d</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;&#160;</td>
           <td class="paramname"><em>q</em></td><td>)</td>
           <td></td>
         </tr>
@@ -392,7 +392,7 @@ template&lt;size_t dims&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a7a0728789dfc62216103d8a51206ce51">Vector7d</a> franky::Robot::inverseKinematics </td>
+          <td class="memname"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> franky::Robot::inverseKinematics </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;&#160;</td>
           <td class="paramname"><em>target</em>, </td>
@@ -400,7 +400,7 @@ template&lt;size_t dims&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespacefranky.html#a7a0728789dfc62216103d8a51206ce51">Vector7d</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;&#160;</td>
           <td class="paramname"><em>q0</em>&#160;</td>
         </tr>
         <tr>
@@ -675,25 +675,25 @@ template&lt;size_t dims&gt; </div>
         <tr>
           <td class="memname">void franky::Robot::setCollisionBehavior </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
           <td class="paramname"><em>lower_torque_threshold</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
           <td class="paramname"><em>upper_torque_threshold</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
           <td class="paramname"><em>lower_force_threshold</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
           <td class="paramname"><em>upper_force_threshold</em>&#160;</td>
         </tr>
         <tr>
@@ -715,49 +715,49 @@ template&lt;size_t dims&gt; </div>
         <tr>
           <td class="memname">void franky::Robot::setCollisionBehavior </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
           <td class="paramname"><em>lower_torque_threshold_acceleration</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
           <td class="paramname"><em>upper_torque_threshold_acceleration</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
           <td class="paramname"><em>lower_torque_threshold_nominal</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
           <td class="paramname"><em>upper_torque_threshold_nominal</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
           <td class="paramname"><em>lower_force_threshold_acceleration</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
           <td class="paramname"><em>upper_force_threshold_acceleration</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
           <td class="paramname"><em>lower_force_threshold_nominal</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
           <td class="paramname"><em>upper_force_threshold_nominal</em>&#160;</td>
         </tr>
         <tr>
@@ -779,13 +779,13 @@ template&lt;size_t dims&gt; </div>
         <tr>
           <td class="memname">void franky::Robot::setCollisionBehavior </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
           <td class="paramname"><em>torque_threshold</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a9c09c2ddf5e143513ddd56e5ff7337d1">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
           <td class="paramname"><em>force_threshold</em>&#160;</td>
         </tr>
         <tr>
@@ -903,8 +903,8 @@ template&lt;size_t dims&gt; </div>
 <div class="line">          <a class="code" href="namespacefranky.html#aead71bda923ed8b1060241612b057e99">Euler</a>(M_PI / 4, 0, M_PI),</div>
 <div class="line">          Eigen::Matrix&lt;double, 3, 1&gt;::Ones())</div>
 <div class="line">  )</div>
-<div class="ttc" id="anamespacefranky_html_aead71bda923ed8b1060241612b057e99"><div class="ttname"><a href="namespacefranky.html#aead71bda923ed8b1060241612b057e99">franky::Euler</a></div><div class="ttdeci">Eigen::EulerAngles&lt; double, Eigen::EulerSystemXYZ &gt; Euler</div><div class="ttdef"><b>Definition:</b> types.hpp:14</div></div>
-<div class="ttc" id="anamespacefranky_html_afab9faf133666ada543b15236a8c4b5f"><div class="ttname"><a href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">franky::Affine</a></div><div class="ttdeci">Eigen::Affine3d Affine</div><div class="ttdef"><b>Definition:</b> types.hpp:16</div></div>
+<div class="ttc" id="anamespacefranky_html_aead71bda923ed8b1060241612b057e99"><div class="ttname"><a href="namespacefranky.html#aead71bda923ed8b1060241612b057e99">franky::Euler</a></div><div class="ttdeci">Eigen::EulerAngles&lt; double, Eigen::EulerSystemXYZ &gt; Euler</div><div class="ttdef"><b>Definition:</b> types.hpp:11</div></div>
+<div class="ttc" id="anamespacefranky_html_afab9faf133666ada543b15236a8c4b5f"><div class="ttname"><a href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">franky::Affine</a></div><div class="ttdeci">Eigen::Affine3d Affine</div><div class="ttdef"><b>Definition:</b> types.hpp:13</div></div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Franky: /home/runner/work/franky/franky/include/franky/motion/linear_motion.hpp Source File</title>
+<title>Franky: /home/runner/work/franky/franky/include/franky/motion/joint_motion.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -68,42 +68,39 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">linear_motion.hpp</div>  </div>
+<div class="title">joint_motion.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="linear__motion_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<a href="joint__motion_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;atomic&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;optional&gt;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;ruckig/ruckig.hpp&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="robot__pose_8hpp.html">franky/robot_pose.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="cartesian__waypoint__motion_8hpp.html">franky/motion/cartesian_waypoint_motion.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="joint__waypoint__motion_8hpp.html">franky/motion/joint_waypoint_motion.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="reference__type_8hpp.html">franky/motion/reference_type.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacefranky.html">franky</a> {</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classfranky_1_1_linear_motion.html">   13</a></span>&#160;<span class="keyword">class </span><a class="code" href="classfranky_1_1_linear_motion.html">LinearMotion</a> : <span class="keyword">public</span> <a class="code" href="classfranky_1_1_cartesian_waypoint_motion.html">CartesianWaypointMotion</a> {</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classfranky_1_1_joint_motion.html">   13</a></span>&#160;<span class="keyword">class </span><a class="code" href="classfranky_1_1_joint_motion.html">JointMotion</a> : <span class="keyword">public</span> <a class="code" href="classfranky_1_1_joint_waypoint_motion.html">JointWaypointMotion</a> {</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classfranky_1_1_linear_motion.html#a113990655879dcb477633636afa403b1">LinearMotion</a>(</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;      <span class="keyword">const</span> <a class="code" href="classfranky_1_1_robot_pose.html">RobotPose</a> &amp;target,</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;      <a class="code" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80e">ReferenceType</a> reference_type = <a class="code" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80eab51ca26c6c89cfc9bec338f7a0d3e0c8">ReferenceType::Absolute</a>,</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;      <span class="keyword">const</span> <a class="code" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;frame = Affine::Identity(),</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;      <a class="code" href="classfranky_1_1_relative_dynamics_factor.html">RelativeDynamicsFactor</a> relative_dynamics_factor = 1.0,</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;      <span class="keywordtype">bool</span> return_when_finished = <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;};</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;}  <span class="comment">// namespace franky</span></div>
-<div class="ttc" id="acartesian__waypoint__motion_8hpp_html"><div class="ttname"><a href="cartesian__waypoint__motion_8hpp.html">cartesian_waypoint_motion.hpp</a></div></div>
-<div class="ttc" id="aclassfranky_1_1_cartesian_waypoint_motion_html"><div class="ttname"><a href="classfranky_1_1_cartesian_waypoint_motion.html">franky::CartesianWaypointMotion</a></div><div class="ttdef"><b>Definition:</b> cartesian_waypoint_motion.hpp:17</div></div>
-<div class="ttc" id="aclassfranky_1_1_linear_motion_html"><div class="ttname"><a href="classfranky_1_1_linear_motion.html">franky::LinearMotion</a></div><div class="ttdef"><b>Definition:</b> linear_motion.hpp:13</div></div>
-<div class="ttc" id="aclassfranky_1_1_linear_motion_html_a113990655879dcb477633636afa403b1"><div class="ttname"><a href="classfranky_1_1_linear_motion.html#a113990655879dcb477633636afa403b1">franky::LinearMotion::LinearMotion</a></div><div class="ttdeci">LinearMotion(const RobotPose &amp;target, ReferenceType reference_type=ReferenceType::Absolute, const Affine &amp;frame=Affine::Identity(), RelativeDynamicsFactor relative_dynamics_factor=1.0, bool return_when_finished=true)</div><div class="ttdef"><b>Definition:</b> linear_motion.cpp:8</div></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classfranky_1_1_joint_motion.html#a36d27dc8dbd0999da5b0ed044b0d0f7f">JointMotion</a>(</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;      <span class="keyword">const</span> <a class="code" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;target,</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;      <a class="code" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80e">ReferenceType</a> reference_type,</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;      <a class="code" href="classfranky_1_1_relative_dynamics_factor.html">RelativeDynamicsFactor</a> relative_dynamics_factor,</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;      <span class="keywordtype">bool</span> return_when_finished);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;};</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}  <span class="comment">// namespace franky</span></div>
+<div class="ttc" id="aclassfranky_1_1_joint_motion_html"><div class="ttname"><a href="classfranky_1_1_joint_motion.html">franky::JointMotion</a></div><div class="ttdef"><b>Definition:</b> joint_motion.hpp:13</div></div>
+<div class="ttc" id="aclassfranky_1_1_joint_motion_html_a36d27dc8dbd0999da5b0ed044b0d0f7f"><div class="ttname"><a href="classfranky_1_1_joint_motion.html#a36d27dc8dbd0999da5b0ed044b0d0f7f">franky::JointMotion::JointMotion</a></div><div class="ttdeci">JointMotion(const Vector7d &amp;target, ReferenceType reference_type, RelativeDynamicsFactor relative_dynamics_factor, bool return_when_finished)</div><div class="ttdef"><b>Definition:</b> joint_motion.cpp:7</div></div>
+<div class="ttc" id="aclassfranky_1_1_joint_waypoint_motion_html"><div class="ttname"><a href="classfranky_1_1_joint_waypoint_motion.html">franky::JointWaypointMotion</a></div><div class="ttdef"><b>Definition:</b> joint_waypoint_motion.hpp:17</div></div>
 <div class="ttc" id="aclassfranky_1_1_relative_dynamics_factor_html"><div class="ttname"><a href="classfranky_1_1_relative_dynamics_factor.html">franky::RelativeDynamicsFactor</a></div><div class="ttdef"><b>Definition:</b> relative_dynamics_factor.hpp:7</div></div>
-<div class="ttc" id="aclassfranky_1_1_robot_pose_html"><div class="ttname"><a href="classfranky_1_1_robot_pose.html">franky::RobotPose</a></div><div class="ttdef"><b>Definition:</b> robot_pose.hpp:11</div></div>
+<div class="ttc" id="ajoint__waypoint__motion_8hpp_html"><div class="ttname"><a href="joint__waypoint__motion_8hpp.html">joint_waypoint_motion.hpp</a></div></div>
 <div class="ttc" id="anamespacefranky_html"><div class="ttname"><a href="namespacefranky.html">franky</a></div><div class="ttdef"><b>Definition:</b> gripper.cpp:3</div></div>
 <div class="ttc" id="anamespacefranky_html_a2354a27cfe3100f07e0ad71513ded80e"><div class="ttname"><a href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80e">franky::ReferenceType</a></div><div class="ttdeci">ReferenceType</div><div class="ttdef"><b>Definition:</b> reference_type.hpp:5</div></div>
-<div class="ttc" id="anamespacefranky_html_a2354a27cfe3100f07e0ad71513ded80eab51ca26c6c89cfc9bec338f7a0d3e0c8"><div class="ttname"><a href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80eab51ca26c6c89cfc9bec338f7a0d3e0c8">franky::ReferenceType::Absolute</a></div><div class="ttdeci">@ Absolute</div></div>
-<div class="ttc" id="anamespacefranky_html_afab9faf133666ada543b15236a8c4b5f"><div class="ttname"><a href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">franky::Affine</a></div><div class="ttdeci">Eigen::Affine3d Affine</div><div class="ttdef"><b>Definition:</b> types.hpp:13</div></div>
+<div class="ttc" id="anamespacefranky_html_a4c36e6539a78f808bf759142dec935c4"><div class="ttname"><a href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">franky::Vector7d</a></div><div class="ttdeci">Eigen::Vector&lt; double, 7 &gt; Vector7d</div><div class="ttdef"><b>Definition:</b> types.hpp:9</div></div>
 <div class="ttc" id="areference__type_8hpp_html"><div class="ttname"><a href="reference__type_8hpp.html">reference_type.hpp</a></div></div>
 <div class="ttc" id="arobot__pose_8hpp_html"><div class="ttname"><a href="robot__pose_8hpp.html">robot_pose.hpp</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

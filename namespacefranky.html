@@ -91,6 +91,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_impedance_motion.html">ImpedanceMotion</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_joint_motion.html">JointMotion</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_joint_waypoint_motion.html">JointWaypointMotion</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_linear_impedance_motion.html">LinearImpedanceMotion</a></td></tr>
@@ -148,13 +150,10 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:adc6cdbe74d2a335e329e61b7b46b96b7"><td class="memTemplParams" colspan="2">template&lt;size_t dims&gt; </td></tr>
-<tr class="memitem:adc6cdbe74d2a335e329e61b7b46b96b7"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacefranky.html#adc6cdbe74d2a335e329e61b7b46b96b7">Vector</a> = Eigen::Matrix&lt; double, dims, 1 &gt;</td></tr>
-<tr class="separator:adc6cdbe74d2a335e329e61b7b46b96b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33e9245749c95e2f6ac593510a3c3012"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a33e9245749c95e2f6ac593510a3c3012">Vector6d</a> = <a class="el" href="namespacefranky.html#adc6cdbe74d2a335e329e61b7b46b96b7">Vector</a>&lt; 6 &gt;</td></tr>
-<tr class="separator:a33e9245749c95e2f6ac593510a3c3012"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a0728789dfc62216103d8a51206ce51"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a7a0728789dfc62216103d8a51206ce51">Vector7d</a> = <a class="el" href="namespacefranky.html#adc6cdbe74d2a335e329e61b7b46b96b7">Vector</a>&lt; 7 &gt;</td></tr>
-<tr class="separator:a7a0728789dfc62216103d8a51206ce51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92a07a88df41e482914cf4f9f2dddecb"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb">Vector6d</a> = Eigen::Vector&lt; double, 6 &gt;</td></tr>
+<tr class="separator:a92a07a88df41e482914cf4f9f2dddecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c36e6539a78f808bf759142dec935c4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> = Eigen::Vector&lt; double, 7 &gt;</td></tr>
+<tr class="separator:a4c36e6539a78f808bf759142dec935c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aead71bda923ed8b1060241612b057e99"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#aead71bda923ed8b1060241612b057e99">Euler</a> = Eigen::EulerAngles&lt; double, Eigen::EulerSystemXYZ &gt;</td></tr>
 <tr class="separator:aead71bda923ed8b1060241612b057e99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afab9faf133666ada543b15236a8c4b5f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> = Eigen::Affine3d</td></tr>
@@ -255,44 +254,28 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="adc6cdbe74d2a335e329e61b7b46b96b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc6cdbe74d2a335e329e61b7b46b96b7">&#9670;&nbsp;</a></span>Vector</h2>
+<a id="a92a07a88df41e482914cf4f9f2dddecb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92a07a88df41e482914cf4f9f2dddecb">&#9670;&nbsp;</a></span>Vector6d</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;size_t dims&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacefranky.html#adc6cdbe74d2a335e329e61b7b46b96b7">franky::Vector</a> = typedef Eigen::Matrix&lt;double, dims, 1&gt;</td>
+          <td class="memname">using <a class="el" href="namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb">franky::Vector6d</a> = typedef Eigen::Vector&lt;double, 6&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a33e9245749c95e2f6ac593510a3c3012"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33e9245749c95e2f6ac593510a3c3012">&#9670;&nbsp;</a></span>Vector6d</h2>
+<a id="a4c36e6539a78f808bf759142dec935c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c36e6539a78f808bf759142dec935c4">&#9670;&nbsp;</a></span>Vector7d</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacefranky.html#a33e9245749c95e2f6ac593510a3c3012">franky::Vector6d</a> = typedef <a class="el" href="namespacefranky.html#adc6cdbe74d2a335e329e61b7b46b96b7">Vector</a>&lt;6&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7a0728789dfc62216103d8a51206ce51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a0728789dfc62216103d8a51206ce51">&#9670;&nbsp;</a></span>Vector7d</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="namespacefranky.html#a7a0728789dfc62216103d8a51206ce51">franky::Vector7d</a> = typedef <a class="el" href="namespacefranky.html#adc6cdbe74d2a335e329e61b7b46b96b7">Vector</a>&lt;7&gt;</td>
+          <td class="memname">using <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">franky::Vector7d</a> = typedef Eigen::Vector&lt;double, 7&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">

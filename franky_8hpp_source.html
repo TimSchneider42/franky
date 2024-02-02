@@ -77,31 +77,32 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="condition_8hpp.html">franky/motion/condition.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="exponential__impedance__motion_8hpp.html">franky/motion/exponential_impedance_motion.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="impedance__motion_8hpp.html">franky/motion/impedance_motion.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="joint__waypoint__motion_8hpp.html">franky/motion/joint_waypoint_motion.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="linear__impedance__motion_8hpp.html">franky/motion/linear_impedance_motion.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="linear__motion_8hpp.html">franky/motion/linear_motion.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="measure_8hpp.html">franky/motion/measure.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="motion_8hpp.html">franky/motion/motion.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="motion__generator_8hpp.html">franky/motion/motion_generator.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="reaction_8hpp.html">franky/motion/reaction.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="reference__type_8hpp.html">franky/motion/reference_type.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="stop__motion_8hpp.html">franky/motion/stop_motion.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="waypoint__motion_8hpp.html">franky/motion/waypoint_motion.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="aggregated__path_8hpp.html">franky/path/aggregated_path.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="linear__path_8hpp.html">franky/path/linear_path.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="path_8hpp.html">franky/path/path.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="quartic__blend__path_8hpp.html">franky/path/quartic_blend_path.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="time__parametrization_8hpp.html">franky/path/time_parametrization.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="trajectory_8hpp.html">franky/path/trajectory.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="control__signal__type_8hpp.html">franky/control_signal_type.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="gripper_8hpp.html">franky/gripper.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="kinematics_8hpp.html">franky/kinematics.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="robot_8hpp.html">franky/robot.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="robot__pose_8hpp.html">franky/robot_pose.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="types_8hpp.html">franky/types.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="util_8hpp.html">franky/util.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="joint__motion_8hpp.html">franky/motion/joint_motion.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="joint__waypoint__motion_8hpp.html">franky/motion/joint_waypoint_motion.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="linear__impedance__motion_8hpp.html">franky/motion/linear_impedance_motion.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="linear__motion_8hpp.html">franky/motion/linear_motion.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="measure_8hpp.html">franky/motion/measure.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="motion_8hpp.html">franky/motion/motion.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="motion__generator_8hpp.html">franky/motion/motion_generator.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="reaction_8hpp.html">franky/motion/reaction.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="reference__type_8hpp.html">franky/motion/reference_type.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="stop__motion_8hpp.html">franky/motion/stop_motion.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="waypoint__motion_8hpp.html">franky/motion/waypoint_motion.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="aggregated__path_8hpp.html">franky/path/aggregated_path.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="linear__path_8hpp.html">franky/path/linear_path.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="path_8hpp.html">franky/path/path.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="quartic__blend__path_8hpp.html">franky/path/quartic_blend_path.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="time__parametrization_8hpp.html">franky/path/time_parametrization.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="trajectory_8hpp.html">franky/path/trajectory.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="control__signal__type_8hpp.html">franky/control_signal_type.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="gripper_8hpp.html">franky/gripper.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="kinematics_8hpp.html">franky/kinematics.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="robot_8hpp.html">franky/robot.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="robot__pose_8hpp.html">franky/robot_pose.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="types_8hpp.html">franky/types.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="util_8hpp.html">franky/util.hpp</a>&quot;</span></div>
 <div class="ttc" id="aaggregated__path_8hpp_html"><div class="ttname"><a href="aggregated__path_8hpp.html">aggregated_path.hpp</a></div></div>
 <div class="ttc" id="acartesian__waypoint__motion_8hpp_html"><div class="ttname"><a href="cartesian__waypoint__motion_8hpp.html">cartesian_waypoint_motion.hpp</a></div></div>
 <div class="ttc" id="acondition_8hpp_html"><div class="ttname"><a href="condition_8hpp.html">condition.hpp</a></div></div>
@@ -109,6 +110,7 @@ $(function() {
 <div class="ttc" id="aexponential__impedance__motion_8hpp_html"><div class="ttname"><a href="exponential__impedance__motion_8hpp.html">exponential_impedance_motion.hpp</a></div></div>
 <div class="ttc" id="agripper_8hpp_html"><div class="ttname"><a href="gripper_8hpp.html">gripper.hpp</a></div></div>
 <div class="ttc" id="aimpedance__motion_8hpp_html"><div class="ttname"><a href="impedance__motion_8hpp.html">impedance_motion.hpp</a></div></div>
+<div class="ttc" id="ajoint__motion_8hpp_html"><div class="ttname"><a href="joint__motion_8hpp.html">joint_motion.hpp</a></div></div>
 <div class="ttc" id="ajoint__waypoint__motion_8hpp_html"><div class="ttname"><a href="joint__waypoint__motion_8hpp.html">joint_waypoint_motion.hpp</a></div></div>
 <div class="ttc" id="akinematics_8hpp_html"><div class="ttname"><a href="kinematics_8hpp.html">kinematics.hpp</a></div></div>
 <div class="ttc" id="alinear__impedance__motion_8hpp_html"><div class="ttname"><a href="linear__impedance__motion_8hpp.html">linear_impedance_motion.hpp</a></div></div>
