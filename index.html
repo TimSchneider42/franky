@@ -88,7 +88,32 @@ $(function() {
 <li>Exceptions caused by libfranka are raised properly instead of being printed to stdout.</li>
 <li><a href="#installation">We provide wheels for both Franka Research 3 and the older Franka Panda</a></li>
 </ul>
-<h2>Installation</h2>
+<h2>Setup</h2>
+<p>To install franky, you have to follow three steps:</p><ol type="1">
+<li>Ensure that you are using a realtime kernel</li>
+<li>Ensure that the executing user has permission to run real-time applications</li>
+<li>Install franky via pip or build it from the sources</li>
+</ol>
+<h3>Installing a real-time kernel</h3>
+<p>In order for franky to function properly, it requires the underlying OS to use a realtime kernel. Otherwise, you might see <code>communication_constrains_violation</code> errors.</p>
+<p>To check whether your system is currently using a real-time kernel, type <code>uname -a</code>. You should see something like this: </p><div class="fragment"><div class="line">$ uname -a</div>
+<div class="line">Linux [PCNAME] 5.15.0-1056-realtime #63-Ubuntu SMP PREEMPT_RT ...</div>
+</div><!-- fragment --><p> If it does not say PREEMPT_RT, you are not currently running a real-time kernel.</p>
+<p>There are multiple ways of installing a real-time kernel. You can <a href="https://frankaemika.github.io/docs/installation_linux.html#setting-up-the-real-time-kernel">build it from source</a> or, if you are using Ubuntu, it can be <a href="https://ubuntu.com/real-time">enabled through Ubuntu Pro</a>.</p>
+<h3>Allowing the executing user to run real-time applications</h3>
+<p>First, create a group <code>realtime</code> and add your user (or whoever is running franky) to this group: </p><div class="fragment"><div class="line">sudo addgroup realtime</div>
+<div class="line">sudo usermod -a -G realtime $(whoami)</div>
+</div><!-- fragment --><p>Afterward, add the following limits to the real-time group in /etc/security/limits.conf: </p><div class="fragment"><div class="line">@realtime soft rtprio 99</div>
+<div class="line">@realtime soft priority 99</div>
+<div class="line">@realtime soft memlock 102400</div>
+<div class="line">@realtime hard rtprio 99</div>
+<div class="line">@realtime hard priority 99</div>
+<div class="line">@realtime hard memlock 102400</div>
+</div><!-- fragment --><p> Log out and log in again to let the changes take effect.</p>
+<p>To verify that the changes were applied, check if your user is in the <code>realtime</code> group: </p><div class="fragment"><div class="line">$ groups</div>
+<div class="line">... realtime</div>
+</div><!-- fragment --><p> If realtime is not listed in your groups, try rebooting.</p>
+<h3>Installing franky</h3>
 <p>To start using franky with Python and libfranka <em>0.12.1</em>, just install it via </p><div class="fragment"><div class="line">pip install franky-panda</div>
 </div><!-- fragment --><p> We also provide wheels for libfranka versions <em>0.7.1</em>, <em>0.8.0</em>, <em>0.9.2</em>, <em>0.10.0</em>, <em>0.11.0</em>, <em>0.12.1</em>, <em>0.13.3</em>. They can be installed via </p><div class="fragment"><div class="line">VERSION=0-9-2</div>
 <div class="line">wget https://github.com/TimSchneider42/franky/releases/latest/download/libfranka_${VERSION}_wheels.zip</div>
