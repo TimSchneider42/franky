@@ -330,7 +330,7 @@ $(function() {
 <div class="line">gripper.gripper_force = 20.0; // [N]</div>
 <div class="line"> </div>
 <div class="line">// Preshape gripper before grasp, use the given speed</div>
-<div class="line">gripper.move(50.0); // [mm]</div>
+<div class="line">gripper.move(0.05); // [m]</div>
 <div class="line"> </div>
 <div class="line">// Grasp an object of unknown width</div>
 <div class="line">is_grasping = gripper.clamp();</div>
@@ -340,7 +340,7 @@ $(function() {
 <div class="line"> </div>
 <div class="line">// Release an object and move to a given distance</div>
 <div class="line">if (is_grasping) {</div>
-<div class="line">  gripper.release(50.0);</div>
+<div class="line">  gripper.release(0.05);</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>The Python API is straight-forward for the Gripper class.</p>
 <h2>Documentation</h2>
