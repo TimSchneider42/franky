@@ -12,7 +12,7 @@ var searchData=
   ['trajectory_258',['Trajectory',['../structfranky_1_1_trajectory.html',1,'franky']]],
   ['trajectory_2ehpp_259',['trajectory.hpp',['../trajectory_8hpp.html',1,'']]],
   ['trajectorystate_260',['TrajectoryState',['../structfranky_1_1_trajectory_state.html',1,'franky']]],
-  ['transform_261',['transform',['../classfranky_1_1_cartesian_state.html#a665489c93e3d63ca7da69ef5df4fb2ba',1,'franky::CartesianState::transform()'],['../classfranky_1_1_robot_velocity.html#a6ddf6ff137a03f2d0f5b2da37a93d986',1,'franky::RobotVelocity::transform()']]],
+  ['transform_261',['transform',['../classfranky_1_1_cartesian_state.html#a665489c93e3d63ca7da69ef5df4fb2ba',1,'franky::CartesianState::transform()'],['../classfranky_1_1_robot_velocity.html#a7e10894668e53f945a34939cc828716e',1,'franky::RobotVelocity::transform(const Affine &amp;affine) const'],['../classfranky_1_1_robot_velocity.html#a4e2cbc0ba39425815403cffcffdb6545',1,'franky::RobotVelocity::transform(const RotationMatrixType &amp;rotation) const']]],
   ['translational_5fstiffness_262',['translational_stiffness',['../structfranky_1_1_impedance_motion_1_1_params.html#a122b129596499ae590225f7b1fe3bfd0',1,'franky::ImpedanceMotion::Params']]],
   ['types_2ehpp_263',['types.hpp',['../types_8hpp.html',1,'']]]
 ];

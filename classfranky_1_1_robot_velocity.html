@@ -95,8 +95,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab5457d7739425402e41821a66d7ab32c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac28805aa77b99da89a6320717e01fade"><td class="memItemLeft" align="right" valign="top">franka::CartesianVelocities&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_velocity.html#ac28805aa77b99da89a6320717e01fade">as_franka_velocity</a> () const</td></tr>
 <tr class="separator:ac28805aa77b99da89a6320717e01fade"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ddf6ff137a03f2d0f5b2da37a93d986"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_velocity.html#a6ddf6ff137a03f2d0f5b2da37a93d986">transform</a> (const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;transform) const</td></tr>
-<tr class="separator:a6ddf6ff137a03f2d0f5b2da37a93d986"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e10894668e53f945a34939cc828716e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_velocity.html#a7e10894668e53f945a34939cc828716e">transform</a> (const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;affine) const</td></tr>
+<tr class="separator:a7e10894668e53f945a34939cc828716e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e2cbc0ba39425815403cffcffdb6545"><td class="memTemplParams" colspan="2">template&lt;typename RotationMatrixType &gt; </td></tr>
+<tr class="memitem:a4e2cbc0ba39425815403cffcffdb6545"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_velocity.html#a4e2cbc0ba39425815403cffcffdb6545">transform</a> (const RotationMatrixType &amp;rotation) const</td></tr>
+<tr class="separator:a4e2cbc0ba39425815403cffcffdb6545"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea37c9c184882800dc5e8f5a4d87d2e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_velocity.html#aea37c9c184882800dc5e8f5a4d87d2e1">with_elbow_velocity</a> (const std::optional&lt; double &gt; <a class="el" href="classfranky_1_1_robot_velocity.html#af689e796fb75f4104db5d789f4dfea24">elbow_velocity</a>) const</td></tr>
 <tr class="separator:aea37c9c184882800dc5e8f5a4d87d2e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68e6be6ba66daa7928eb435068f6fc1f"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_velocity.html#a68e6be6ba66daa7928eb435068f6fc1f">end_effector_linear_velocity</a> () const</td></tr>
@@ -375,8 +378,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6ddf6ff137a03f2d0f5b2da37a93d986"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ddf6ff137a03f2d0f5b2da37a93d986">&#9670;&nbsp;</a></span>transform()</h2>
+<a id="a7e10894668e53f945a34939cc828716e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e10894668e53f945a34939cc828716e">&#9670;&nbsp;</a></span>transform() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -388,7 +391,35 @@ Public Member Functions</h2></td></tr>
           <td class="memname"><a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a> franky::RobotVelocity::transform </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;&#160;</td>
-          <td class="paramname"><em>transform</em></td><td>)</td>
+          <td class="paramname"><em>affine</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4e2cbc0ba39425815403cffcffdb6545"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e2cbc0ba39425815403cffcffdb6545">&#9670;&nbsp;</a></span>transform() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RotationMatrixType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a> franky::RobotVelocity::transform </td>
+          <td>(</td>
+          <td class="paramtype">const RotationMatrixType &amp;&#160;</td>
+          <td class="paramname"><em>rotation</em></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
