@@ -2,7 +2,7 @@ var searchData=
 [
   ['jacobian_95',['jacobian',['../structfranky_1_1_kinematics.html#af1f1e2e3b084425f1a0f67db69f9372e',1,'franky::Kinematics']]],
   ['jerk_96',['jerk',['../classfranky_1_1_relative_dynamics_factor.html#a1d7f32132b99026d50ad3f683552a4be',1,'franky::RelativeDynamicsFactor']]],
-  ['joinmotion_97',['joinMotion',['../classfranky_1_1_robot.html#a324b07d885a7d1d615991a7780e9f688',1,'franky::Robot']]],
+  ['joinmotion_97',['joinMotion',['../classfranky_1_1_robot.html#a2f48445583c522dd798e312bdbacf864',1,'franky::Robot::joinMotion()'],['../classfranky_1_1_robot.html#a114a614ee78f9b554dd9aaef8fe2a1d8',1,'franky::Robot::joinMotion(const std::chrono::duration&lt; Rep, Period &gt; &amp;timeout)']]],
   ['joint_5findex_98',['joint_index',['../structfranky_1_1_kinematics_1_1_null_space_handling.html#a2879a0c9f1a8c7214ea328e9970c9907',1,'franky::Kinematics::NullSpaceHandling']]],
   ['joint_5fmotion_2ecpp_99',['joint_motion.cpp',['../joint__motion_8cpp.html',1,'']]],
   ['joint_5fmotion_2ehpp_100',['joint_motion.hpp',['../joint__motion_8hpp.html',1,'']]],

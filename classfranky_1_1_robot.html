@@ -132,8 +132,13 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a25ca7e90c8a10848921fb35a378a7d33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15b55042954d0bec0f2190abf2c8bb59"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a15b55042954d0bec0f2190abf2c8bb59">current_control_signal_type</a> ()</td></tr>
 <tr class="separator:a15b55042954d0bec0f2190abf2c8bb59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a324b07d885a7d1d615991a7780e9f688"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a324b07d885a7d1d615991a7780e9f688">joinMotion</a> ()</td></tr>
-<tr class="separator:a324b07d885a7d1d615991a7780e9f688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f48445583c522dd798e312bdbacf864"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a2f48445583c522dd798e312bdbacf864">joinMotion</a> ()</td></tr>
+<tr class="separator:a2f48445583c522dd798e312bdbacf864"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a114a614ee78f9b554dd9aaef8fe2a1d8"><td class="memTemplParams" colspan="2">template&lt;class Rep , class Period &gt; </td></tr>
+<tr class="memitem:a114a614ee78f9b554dd9aaef8fe2a1d8"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a114a614ee78f9b554dd9aaef8fe2a1d8">joinMotion</a> (const std::chrono::duration&lt; Rep, Period &gt; &amp;timeout)</td></tr>
+<tr class="separator:a114a614ee78f9b554dd9aaef8fe2a1d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb00fbee84e00d09f3c8dedbfe5708f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#afb00fbee84e00d09f3c8dedbfe5708f4">pollMotion</a> ()</td></tr>
+<tr class="separator:afb00fbee84e00d09f3c8dedbfe5708f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a859611a82b5a23419dfb38d3e599d789"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a859611a82b5a23419dfb38d3e599d789">move</a> (const std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; franka::CartesianPose &gt;&gt; &amp;motion, bool async=false)</td></tr>
 <tr class="separator:a859611a82b5a23419dfb38d3e599d789"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab380daea275bc2eee0e3c512632242ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#ab380daea275bc2eee0e3c512632242ed">move</a> (const std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; franka::CartesianVelocities &gt;&gt; &amp;motion, bool async=false)</td></tr>
@@ -435,19 +440,55 @@ template&lt;size_t dims&gt; </div>
 
 </div>
 </div>
-<a id="a324b07d885a7d1d615991a7780e9f688"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a324b07d885a7d1d615991a7780e9f688">&#9670;&nbsp;</a></span>joinMotion()</h2>
+<a id="a2f48445583c522dd798e312bdbacf864"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f48445583c522dd798e312bdbacf864">&#9670;&nbsp;</a></span>joinMotion() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void franky::Robot::joinMotion </td>
+          <td class="memname">bool franky::Robot::joinMotion </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a114a614ee78f9b554dd9aaef8fe2a1d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a114a614ee78f9b554dd9aaef8fe2a1d8">&#9670;&nbsp;</a></span>joinMotion() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Rep , class Period &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool franky::Robot::joinMotion </td>
+          <td>(</td>
+          <td class="paramtype">const std::chrono::duration&lt; Rep, Period &gt; &amp;&#160;</td>
+          <td class="paramname"><em>timeout</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
@@ -621,6 +662,31 @@ template&lt;size_t dims&gt; </div>
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afb00fbee84e00d09f3c8dedbfe5708f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb00fbee84e00d09f3c8dedbfe5708f4">&#9670;&nbsp;</a></span>pollMotion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool franky::Robot::pollMotion </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
   </td>

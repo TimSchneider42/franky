@@ -7,5 +7,6 @@ var searchData=
   ['path_2ehpp_178',['path.hpp',['../path_8hpp.html',1,'']]],
   ['pathstep_179',['PathStep',['../structfranky_1_1_path_step.html',1,'franky']]],
   ['pathwaypoint_180',['PathWaypoint',['../structfranky_1_1_path_waypoint.html',1,'franky']]],
-  ['pseudoinverse_181',['pseudoinverse',['../structfranky_1_1_kinematics.html#abc33433542d6db464c1f7cf66c71f677',1,'franky::Kinematics']]]
+  ['pollmotion_181',['pollMotion',['../classfranky_1_1_robot.html#afb00fbee84e00d09f3c8dedbfe5708f4',1,'franky::Robot']]],
+  ['pseudoinverse_182',['pseudoinverse',['../structfranky_1_1_kinematics.html#abc33433542d6db464c1f7cf66c71f677',1,'franky::Kinematics']]]
 ];
