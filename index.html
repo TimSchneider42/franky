@@ -131,16 +131,23 @@ $(function() {
 <div class="fragment"><div class="line">pip install .</div>
 </div><!-- fragment --><p>Make sure that the built library can be found from Python by adapting your Python Path.</p>
 <h4>Using Docker</h4>
-<p>To use franky within Docker we have supplied a <a href="docker/Dockerfile">Dockerfile</a> which you currently need to build yourself:</p>
+<p>To use franky within Docker we provide a <a href="docker/run/Dockerfile">Dockerfile</a>.</p>
 <div class="fragment"><div class="line">git clone https://github.com/timschneider42/franky.git</div>
 <div class="line">cd franky/</div>
-<div class="line">docker build -t franky --build-arg libfranka_version=0.7.0 -f docker/Dockerfile .</div>
-</div><!-- fragment --><p>To use another version of libfranka than the default (v.0.7.0) simply change the build argument. Then, to run the container simply:</p>
-<div class="fragment"><div class="line">docker run -it --rm --network=host --privileged franky</div>
+<div class="line">docker build -t franky --build-arg LIBFRANKA_VERSION=0.13.3 -f docker/run/Dockerfile .</div>
+</div><!-- fragment --><p>To use another version of libfranka than the default (v.0.13.3) simply change the build argument. Then, to run the container simply:</p>
+<div class="fragment"><div class="line">docker run -it --rm --network=host --privileged franky /bin/bash</div>
 </div><!-- fragment --><p>The container requires access to the host machines network <em>and</em> elevated user rights to allow the docker user to set RT capabilities of the processes run from within it.</p>
-<h2>Tutorial</h2>
-<p>Franky comes with both a C++ and Python API that differ only regarding real-time capability. We will introduce both languages next to each other. In your C++ project, just include <code>include &lt;franky/franky.hpp&gt;</code> and link the library. For Python, just <code>import franky</code>. As a first example, only four lines of code are needed for simple robotic motions.</p>
-<div class="fragment"><div class="line"> {c++}</div>
+<h4>Building franky with Docker</h4>
+<p>For building franky and its wheels, we provide a Docker container that can be launched using docker-compose:</p>
+<div class="fragment"><div class="line">docker compose build</div>
+<div class="line">docker compose run franky-build run-tests  # To run the tests</div>
+<div class="line">docker compose run franky-build build-wheels  # To build wheels for all supported python versions</div>
+</div><!-- fragment --><div class="fragment"><div class="line">## Tutorial</div>
+<div class="line"> </div>
+<div class="line">Franky comes with both a C++ and Python API that differ only regarding real-time capability. We will introduce both languages next to each other. In your C++ project, just include `include &lt;franky/franky.hpp&gt;` and link the library. For Python, just `import franky`. As a first example, only four lines of code are needed for simple robotic motions.</div>
+<div class="line"> </div>
+<div class="line">```c++</div>
 <div class="line">#include &lt;franky/franky.hpp&gt;</div>
 <div class="line">using namespace franky;</div>
 <div class="line"> </div>
