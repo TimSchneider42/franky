@@ -84,15 +84,21 @@ $(function() {
 <li>as_franka_pose()
 : <a class="el" href="classfranky_1_1_robot_pose.html#a990479787ac004f967a1bb16e45feb9b">franky::RobotPose</a>
 </li>
+<li>as_franka_velocity()
+: <a class="el" href="classfranky_1_1_robot_velocity.html#ac28805aa77b99da89a6320717e01fade">franky::RobotVelocity</a>
+</li>
 </ul>
 
 
 <h3><a id="index_c"></a>- c -</h3><ul>
 <li>CartesianImpedanceMotion()
-: <a class="el" href="classfranky_1_1_cartesian_impedance_motion.html#afa41b19c7b1d728ce1e85932d3b87fd7">franky::CartesianImpedanceMotion</a>
+: <a class="el" href="classfranky_1_1_cartesian_impedance_motion.html#af61e7e9c4b8283f8ff8617dcf6d4c589">franky::CartesianImpedanceMotion</a>
 </li>
 <li>CartesianMotion()
 : <a class="el" href="classfranky_1_1_cartesian_motion.html#a10cecdd929dcc72faa93f0d49d6df734">franky::CartesianMotion</a>
+</li>
+<li>CartesianState()
+: <a class="el" href="classfranky_1_1_cartesian_state.html#a147333d9312be3a90d0aea528cd1e2bd">franky::CartesianState</a>
 </li>
 <li>CartesianWaypointMotion()
 : <a class="el" href="classfranky_1_1_cartesian_waypoint_motion.html#a382eb05ea3a2216ba0866b8d7281709a">franky::CartesianWaypointMotion</a>
@@ -112,6 +118,12 @@ $(function() {
 <li>current_control_signal_type()
 : <a class="el" href="classfranky_1_1_robot.html#a15b55042954d0bec0f2190abf2c8bb59">franky::Robot</a>
 </li>
+<li>currentCartesianState()
+: <a class="el" href="classfranky_1_1_robot.html#a4d2595f5969257dd18dce4997d59f7cd">franky::Robot</a>
+</li>
+<li>currentCartesianVelocity()
+: <a class="el" href="classfranky_1_1_robot.html#acb900ba5048aa792f4c16150703d8a6b">franky::Robot</a>
+</li>
 <li>currentJointPositions()
 : <a class="el" href="classfranky_1_1_robot.html#a4aae0b9dbfe4d88615810d1743c43646">franky::Robot</a>
 </li>
@@ -125,8 +137,17 @@ $(function() {
 <li>elbow_position()
 : <a class="el" href="classfranky_1_1_robot_pose.html#a3ee0468d5bcdd943845d54f1e051d459">franky::RobotPose</a>
 </li>
+<li>elbow_velocity()
+: <a class="el" href="classfranky_1_1_robot_velocity.html#af689e796fb75f4104db5d789f4dfea24">franky::RobotVelocity</a>
+</li>
 <li>end()
 : <a class="el" href="classfranky_1_1_linear_path.html#a69ded1b8ba950feca97446625c165ce0">franky::LinearPath&lt; state_dimensions &gt;</a>
+</li>
+<li>end_effector_angular_velocity()
+: <a class="el" href="classfranky_1_1_robot_velocity.html#a51538f5d512d6605ae79f4fb3046fb81">franky::RobotVelocity</a>
+</li>
+<li>end_effector_linear_velocity()
+: <a class="el" href="classfranky_1_1_robot_velocity.html#a68e6be6ba66daa7928eb435068f6fc1f">franky::RobotVelocity</a>
 </li>
 <li>end_effector_pose()
 : <a class="el" href="classfranky_1_1_robot_pose.html#abe83d0dc121a5e1312ac4f2acdbd9fbd">franky::RobotPose</a>
@@ -362,6 +383,9 @@ $(function() {
 <li>pollMotion()
 : <a class="el" href="classfranky_1_1_robot.html#afb00fbee84e00d09f3c8dedbfe5708f4">franky::Robot</a>
 </li>
+<li>pose()
+: <a class="el" href="classfranky_1_1_cartesian_state.html#a5e8e2c8161dc22d18a01a0c28897792b">franky::CartesianState</a>
+</li>
 <li>pseudoinverse()
 : <a class="el" href="structfranky_1_1_kinematics.html#abc33433542d6db464c1f7cf66c71f677">franky::Kinematics</a>
 </li>
@@ -426,6 +450,9 @@ $(function() {
 <li>RobotPose()
 : <a class="el" href="classfranky_1_1_robot_pose.html#a2dbca2efd3922f5b8a0954e778dcd197">franky::RobotPose</a>
 </li>
+<li>RobotVelocity()
+: <a class="el" href="classfranky_1_1_robot_velocity.html#afe5611a93ddbac86a054f5c9dd7c2310">franky::RobotVelocity</a>
+</li>
 </ul>
 
 
@@ -467,6 +494,10 @@ $(function() {
 <li>TimeParametrization()
 : <a class="el" href="classfranky_1_1_time_parametrization.html#ac03cffe075949f1223f3ffef3fda374e">franky::TimeParametrization</a>
 </li>
+<li>transform()
+: <a class="el" href="classfranky_1_1_cartesian_state.html#a665489c93e3d63ca7da69ef5df4fb2ba">franky::CartesianState</a>
+, <a class="el" href="classfranky_1_1_robot_velocity.html#a6ddf6ff137a03f2d0f5b2da37a93d986">franky::RobotVelocity</a>
+</li>
 </ul>
 
 
@@ -485,9 +516,11 @@ $(function() {
 <h3><a id="index_v"></a>- v -</h3><ul>
 <li>vector_repr()
 : <a class="el" href="classfranky_1_1_robot_pose.html#a49bde12b0fbe8a2cc7e95c923b170c8d">franky::RobotPose</a>
+, <a class="el" href="classfranky_1_1_robot_velocity.html#ab5457d7739425402e41821a66d7ab32c">franky::RobotVelocity</a>
 </li>
 <li>velocity()
-: <a class="el" href="classfranky_1_1_relative_dynamics_factor.html#afd6505e3977f86efea0cae6bd3dca074">franky::RelativeDynamicsFactor</a>
+: <a class="el" href="classfranky_1_1_cartesian_state.html#a895fd1633c25c02c3f4301c7770bfe4e">franky::CartesianState</a>
+, <a class="el" href="classfranky_1_1_relative_dynamics_factor.html#afd6505e3977f86efea0cae6bd3dca074">franky::RelativeDynamicsFactor</a>
 </li>
 </ul>
 
@@ -501,6 +534,12 @@ $(function() {
 </li>
 <li>with_elbow_position()
 : <a class="el" href="classfranky_1_1_robot_pose.html#a0172a87f3b12aa7dc0482d46168a6c5f">franky::RobotPose</a>
+</li>
+<li>with_elbow_velocity()
+: <a class="el" href="classfranky_1_1_robot_velocity.html#aea37c9c184882800dc5e8f5a4d87d2e1">franky::RobotVelocity</a>
+</li>
+<li>with_velocity()
+: <a class="el" href="classfranky_1_1_cartesian_state.html#af8d5d0bd601f4e3b0ff0d49d7bcc5976">franky::CartesianState</a>
 </li>
 </ul>
 
