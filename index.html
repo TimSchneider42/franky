@@ -131,15 +131,15 @@ $(function() {
 <div class="fragment"><div class="line">pip install .</div>
 </div><!-- fragment --><p>Make sure that the built library can be found from Python by adapting your Python Path.</p>
 <h4>Using Docker</h4>
-<p>To use franky within Docker we provide a <a href="docker/run/Dockerfile">Dockerfile</a>.</p>
+<p>To use franky within Docker we provide a <a href="docker/run/Dockerfile">Dockerfile</a> and accompanying <a href="docker-compose.yml">docker-compose</a> file.</p>
 <div class="fragment"><div class="line">git clone https://github.com/timschneider42/franky.git</div>
 <div class="line">cd franky/</div>
-<div class="line">docker build -t franky --build-arg LIBFRANKA_VERSION=0.13.3 -f docker/run/Dockerfile .</div>
-</div><!-- fragment --><p>To use another version of libfranka than the default (v.0.13.3) simply change the build argument. Then, to run the container simply:</p>
-<div class="fragment"><div class="line">docker run -it --rm --network=host --privileged franky /bin/bash</div>
-</div><!-- fragment --><p>The container requires access to the host machines network <em>and</em> elevated user rights to allow the docker user to set RT capabilities of the processes run from within it.</p>
+<div class="line">docker compose build franky-run</div>
+</div><!-- fragment --><p>To use another version of libfranka than the default (v0.13.3) add a build argument: </p><div class="fragment"><div class="line">docker compose build franky-run --build-arg LIBFRANKA_VERSION=0.9.2</div>
+</div><!-- fragment --><p>To run the container: </p><div class="fragment"><div class="line">docker compose run franky-run bash</div>
+</div><!-- fragment --><p> The container requires access to the host machines network <em>and</em> elevated user rights to allow the docker user to set RT capabilities of the processes run from within it.</p>
 <h4>Building franky with Docker</h4>
-<p>For building franky and its wheels, we provide a Docker container that can be launched using docker-compose:</p>
+<p>For building franky and its wheels, we provide another Docker container that can also be launched using docker-compose:</p>
 <div class="fragment"><div class="line">docker compose build</div>
 <div class="line">docker compose run franky-build run-tests  # To run the tests</div>
 <div class="line">docker compose run franky-build build-wheels  # To build wheels for all supported python versions</div>
@@ -355,10 +355,10 @@ $(function() {
 <h2>Development</h2>
 <p>Franky is written in C++17 and Python3.7. It is currently tested against following versions</p>
 <ul>
+<li>Libfranka v0.7.1, v0.8.0, v0.9.2, v0.10.0, v0.11.0, v0.12.1, v0.13.3</li>
 <li>Eigen v3.4.0</li>
-<li>Libfranka v0.12.1</li>
-<li>Pybind11 v2.9.1</li>
-<li>Catch2 v2.13 (only for testing)</li>
+<li>Pybind11 v2.11.1</li>
+<li>Catch2 v2.13.8 (for testing only)</li>
 </ul>
 <h2>License</h2>
 <p>For non-commercial applications, this software is licensed under the LGPL v3.0. If you want to use franky within commercial applications or under a different license, please contact us for individual agreements. </p>
