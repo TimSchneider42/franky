@@ -151,6 +151,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1scope__guard.html">scope_guard</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html">Twist</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1timeout__exception.html">timeout_exception</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -233,6 +235,11 @@ Functions</h2></td></tr>
 <tr class="memitem:ac6fc3324a4cf6df2787a64d6e84abb24"><td class="memTemplParams" colspan="2">template&lt;typename RotationMatrixType &gt; </td></tr>
 <tr class="memitem:ac6fc3324a4cf6df2787a64d6e84abb24"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacefranky.html#ac6fc3324a4cf6df2787a64d6e84abb24">operator*</a> (const RotationMatrixType &amp;rotation, const <a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a> &amp;robot_velocity)</td></tr>
 <tr class="separator:ac6fc3324a4cf6df2787a64d6e84abb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0256b40c0ee5ec119bc38dc87ba95176"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_twist.html">Twist</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a0256b40c0ee5ec119bc38dc87ba95176">operator*</a> (const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;affine, const <a class="el" href="classfranky_1_1_twist.html">Twist</a> &amp;twist)</td></tr>
+<tr class="separator:a0256b40c0ee5ec119bc38dc87ba95176"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f4a8e79208c3df8d0226a09aac5cf34"><td class="memTemplParams" colspan="2">template&lt;typename RotationMatrixType &gt; </td></tr>
+<tr class="memitem:a2f4a8e79208c3df8d0226a09aac5cf34"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_twist.html">Twist</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a2f4a8e79208c3df8d0226a09aac5cf34">operator*</a> (const RotationMatrixType &amp;rotation, const <a class="el" href="classfranky_1_1_twist.html">Twist</a> &amp;twist)</td></tr>
+<tr class="separator:a2f4a8e79208c3df8d0226a09aac5cf34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36e90fbc5123a5195869ffacb729014e"><td class="memTemplParams" colspan="2">template&lt;size_t dims&gt; </td></tr>
 <tr class="memitem:a36e90fbc5123a5195869ffacb729014e"><td class="memTemplItemLeft" align="right" valign="top">std::array&lt; double, dims &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a36e90fbc5123a5195869ffacb729014e">toStd</a> (const Eigen::Matrix&lt; double, dims, 1 &gt; &amp;vector)</td></tr>
 <tr class="separator:a36e90fbc5123a5195869ffacb729014e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -519,7 +526,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a27bbe5029544c4333715a85a7a43eaf5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27bbe5029544c4333715a85a7a43eaf5">&#9670;&nbsp;</a></span>operator*() <span class="overload">[1/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a27bbe5029544c4333715a85a7a43eaf5">&#9670;&nbsp;</a></span>operator*() <span class="overload">[1/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -554,8 +561,44 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a0256b40c0ee5ec119bc38dc87ba95176"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0256b40c0ee5ec119bc38dc87ba95176">&#9670;&nbsp;</a></span>operator*() <span class="overload">[2/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classfranky_1_1_twist.html">Twist</a> franky::operator* </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;&#160;</td>
+          <td class="paramname"><em>affine</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classfranky_1_1_twist.html">Twist</a> &amp;&#160;</td>
+          <td class="paramname"><em>twist</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="afe836097f81e29d3b6c9ac722a078d0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe836097f81e29d3b6c9ac722a078d0d">&#9670;&nbsp;</a></span>operator*() <span class="overload">[2/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afe836097f81e29d3b6c9ac722a078d0d">&#9670;&nbsp;</a></span>operator*() <span class="overload">[3/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -591,7 +634,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a4c30c0e173a1886238ed773e005be361"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c30c0e173a1886238ed773e005be361">&#9670;&nbsp;</a></span>operator*() <span class="overload">[3/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c30c0e173a1886238ed773e005be361">&#9670;&nbsp;</a></span>operator*() <span class="overload">[4/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -627,7 +670,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ada1326a1aed3004af977c08461d30169"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada1326a1aed3004af977c08461d30169">&#9670;&nbsp;</a></span>operator*() <span class="overload">[4/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ada1326a1aed3004af977c08461d30169">&#9670;&nbsp;</a></span>operator*() <span class="overload">[5/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -655,7 +698,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a0636706f1ecb60b215ce13072d61f0c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0636706f1ecb60b215ce13072d61f0c0">&#9670;&nbsp;</a></span>operator*() <span class="overload">[5/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0636706f1ecb60b215ce13072d61f0c0">&#9670;&nbsp;</a></span>operator*() <span class="overload">[6/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -691,7 +734,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="ac6fc3324a4cf6df2787a64d6e84abb24"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac6fc3324a4cf6df2787a64d6e84abb24">&#9670;&nbsp;</a></span>operator*() <span class="overload">[6/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6fc3324a4cf6df2787a64d6e84abb24">&#9670;&nbsp;</a></span>operator*() <span class="overload">[7/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -712,6 +755,44 @@ template&lt;typename RotationMatrixType &gt; </div>
           <td></td>
           <td class="paramtype">const <a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a> &amp;&#160;</td>
           <td class="paramname"><em>robot_velocity</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2f4a8e79208c3df8d0226a09aac5cf34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f4a8e79208c3df8d0226a09aac5cf34">&#9670;&nbsp;</a></span>operator*() <span class="overload">[8/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RotationMatrixType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classfranky_1_1_twist.html">Twist</a> franky::operator* </td>
+          <td>(</td>
+          <td class="paramtype">const RotationMatrixType &amp;&#160;</td>
+          <td class="paramname"><em>rotation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classfranky_1_1_twist.html">Twist</a> &amp;&#160;</td>
+          <td class="paramname"><em>twist</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
