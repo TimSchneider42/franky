@@ -14,5 +14,6 @@ var searchData=
   ['forwardkinematics_76',['forwardKinematics',['../classfranky_1_1_robot.html#a1be6bdcdcea8b3f1c81a9b607068ca03',1,'franky::Robot']]],
   ['frame_77',['frame',['../structfranky_1_1_cartesian_waypoint_motion_1_1_params.html#a9518f48b10b574ed7254dca1cf4685fd',1,'franky::CartesianWaypointMotion::Params']]],
   ['franky_78',['franky',['../namespacefranky.html',1,'']]],
-  ['franky_2ehpp_79',['franky.hpp',['../franky_8hpp.html',1,'']]]
+  ['franky_2ehpp_79',['franky.hpp',['../franky_8hpp.html',1,'']]],
+  ['fromvectorrepr_80',['fromVectorRepr',['../classfranky_1_1_twist.html#a39a4f6fc1cca31a7431618657d551f17',1,'franky::Twist']]]
 ];

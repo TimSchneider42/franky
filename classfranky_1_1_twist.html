@@ -69,6 +69,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classfranky_1_1_twist-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">franky::Twist Class Reference</div>  </div>
@@ -82,15 +83,10 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a602c3a67b5366f80238a39056ec3b90a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#a602c3a67b5366f80238a39056ec3b90a">Twist</a> ()</td></tr>
-<tr class="memdesc:a602c3a67b5366f80238a39056ec3b90a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. Initializes linear and angular velocities to zero.  <a href="classfranky_1_1_twist.html#a602c3a67b5366f80238a39056ec3b90a">More...</a><br /></td></tr>
-<tr class="separator:a602c3a67b5366f80238a39056ec3b90a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc5436a6628d7685aacf10d56e915126"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#acc5436a6628d7685aacf10d56e915126">Twist</a> (const <a class="el" href="classfranky_1_1_twist.html">Twist</a> &amp;twist)=default</td></tr>
 <tr class="separator:acc5436a6628d7685aacf10d56e915126"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a479b60ae2b60dc9e1409173d7dd4963a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#a479b60ae2b60dc9e1409173d7dd4963a">Twist</a> (Eigen::Vector3d <a class="el" href="classfranky_1_1_twist.html#a5c704065f92d12266fb0e16e2b2dd61d">linear_velocity</a>, Eigen::Vector3d <a class="el" href="classfranky_1_1_twist.html#af1199e9d3b8e06d11c519f99f5e2a4e4">angular_velocity</a>)</td></tr>
-<tr class="separator:a479b60ae2b60dc9e1409173d7dd4963a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab07aa1a210756a6b50d9978794b2ed10"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#ab07aa1a210756a6b50d9978794b2ed10">Twist</a> (const <a class="el" href="namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb">Vector6d</a> &amp;<a class="el" href="classfranky_1_1_twist.html#a31a3a4886d8ef4ee37b4d12acec1162e">vector_repr</a>)</td></tr>
-<tr class="separator:ab07aa1a210756a6b50d9978794b2ed10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c27d104e1b1ede05906e1a4b8260aa2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#a9c27d104e1b1ede05906e1a4b8260aa2">Twist</a> (Eigen::Vector3d <a class="el" href="classfranky_1_1_twist.html#a5c704065f92d12266fb0e16e2b2dd61d">linear_velocity</a>=Eigen::Vector3d::Zero(), Eigen::Vector3d <a class="el" href="classfranky_1_1_twist.html#af1199e9d3b8e06d11c519f99f5e2a4e4">angular_velocity</a>=Eigen::Vector3d::Zero())</td></tr>
+<tr class="separator:a9c27d104e1b1ede05906e1a4b8260aa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a31a3a4886d8ef4ee37b4d12acec1162e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb">Vector6d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#a31a3a4886d8ef4ee37b4d12acec1162e">vector_repr</a> () const</td></tr>
 <tr class="memdesc:a31a3a4886d8ef4ee37b4d12acec1162e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the vector representation of the twist. It consists of the linear and angular velocities.  <a href="classfranky_1_1_twist.html#a31a3a4886d8ef4ee37b4d12acec1162e">More...</a><br /></td></tr>
 <tr class="separator:a31a3a4886d8ef4ee37b4d12acec1162e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -110,39 +106,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af1199e9d3b8e06d11c519f99f5e2a4e4"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#af1199e9d3b8e06d11c519f99f5e2a4e4">angular_velocity</a> () const</td></tr>
 <tr class="memdesc:af1199e9d3b8e06d11c519f99f5e2a4e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the angular velocity.  <a href="classfranky_1_1_twist.html#af1199e9d3b8e06d11c519f99f5e2a4e4">More...</a><br /></td></tr>
 <tr class="separator:af1199e9d3b8e06d11c519f99f5e2a4e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a39a4f6fc1cca31a7431618657d551f17"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classfranky_1_1_twist.html">Twist</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#a39a4f6fc1cca31a7431618657d551f17">fromVectorRepr</a> (const <a class="el" href="namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb">Vector6d</a> &amp;<a class="el" href="classfranky_1_1_twist.html#a31a3a4886d8ef4ee37b4d12acec1162e">vector_repr</a>)</td></tr>
+<tr class="separator:a39a4f6fc1cca31a7431618657d551f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents the twist of a frame. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a602c3a67b5366f80238a39056ec3b90a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a602c3a67b5366f80238a39056ec3b90a">&#9670;&nbsp;</a></span>Twist() <span class="overload">[1/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">franky::Twist::Twist </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Default constructor. Initializes linear and angular velocities to zero. </p>
-
-</div>
-</div>
 <a id="acc5436a6628d7685aacf10d56e915126"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc5436a6628d7685aacf10d56e915126">&#9670;&nbsp;</a></span>Twist() <span class="overload">[2/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acc5436a6628d7685aacf10d56e915126">&#9670;&nbsp;</a></span>Twist() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -167,8 +141,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a479b60ae2b60dc9e1409173d7dd4963a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a479b60ae2b60dc9e1409173d7dd4963a">&#9670;&nbsp;</a></span>Twist() <span class="overload">[3/4]</span></h2>
+<a id="a9c27d104e1b1ede05906e1a4b8260aa2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c27d104e1b1ede05906e1a4b8260aa2">&#9670;&nbsp;</a></span>Twist() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -180,51 +154,18 @@ Public Member Functions</h2></td></tr>
           <td class="memname">franky::Twist::Twist </td>
           <td>(</td>
           <td class="paramtype">Eigen::Vector3d&#160;</td>
-          <td class="paramname"><em>linear_velocity</em>, </td>
+          <td class="paramname"><em>linear_velocity</em> = <code>Eigen::Vector3d::Zero()</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Eigen::Vector3d&#160;</td>
-          <td class="paramname"><em>angular_velocity</em>&#160;</td>
+          <td class="paramname"><em>angular_velocity</em> = <code>Eigen::Vector3d::Zero()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">linear_velocity</td><td>The linear velocity. </td></tr>
-    <tr><td class="paramname">angular_velocity</td><td>The angular velocity. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ab07aa1a210756a6b50d9978794b2ed10"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab07aa1a210756a6b50d9978794b2ed10">&#9670;&nbsp;</a></span>Twist() <span class="overload">[4/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">franky::Twist::Twist </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb">Vector6d</a> &amp;&#160;</td>
-          <td class="paramname"><em>vector_repr</em></td><td>)</td>
-          <td></td>
         </tr>
       </table>
   </td>
@@ -235,7 +176,8 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">vector_repr</td><td>The vector representation of the twist. </td></tr>
+    <tr><td class="paramname">linear_velocity</td><td>The linear velocity. </td></tr>
+    <tr><td class="paramname">angular_velocity</td><td>The angular velocity. </td></tr>
   </table>
   </dd>
 </dl>
@@ -268,6 +210,38 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the angular velocity. </p>
 <dl class="section return"><dt>Returns</dt><dd>The angular velocity. </dd></dl>
+
+</div>
+</div>
+<a id="a39a4f6fc1cca31a7431618657d551f17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39a4f6fc1cca31a7431618657d551f17">&#9670;&nbsp;</a></span>fromVectorRepr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classfranky_1_1_twist.html">Twist</a> franky::Twist::fromVectorRepr </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb">Vector6d</a> &amp;&#160;</td>
+          <td class="paramname"><em>vector_repr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vector_repr</td><td>The vector representation of the twist. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

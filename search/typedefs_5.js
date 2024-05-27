@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['vector6d_597',['Vector6d',['../namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb',1,'franky']]],
-  ['vector7d_598',['Vector7d',['../namespacefranky.html#a4c36e6539a78f808bf759142dec935c4',1,'franky']]]
+  ['vector6d_599',['Vector6d',['../namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb',1,'franky']]],
+  ['vector7d_600',['Vector7d',['../namespacefranky.html#a4c36e6539a78f808bf759142dec935c4',1,'franky']]]
 ];
