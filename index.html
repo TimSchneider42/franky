@@ -216,7 +216,9 @@ $(function() {
 </div><!-- fragment --><h3>Motion Types</h3>
 <p>Franky defines a number of different motion types. In python, you can use them as follows: </p><div class="fragment"><div class="line">import math</div>
 <div class="line">from scipy.spatial.transform import Rotation</div>
-<div class="line">from franky import JointWaypointMotion, JointWaypoint, JointPositionStopMotion, CartesianMotion, CartesianWaypointMotion, CartesianWaypoint, Affine, RobotPose, ReferenceType, CartesianPoseStopMotion</div>
+<div class="line">from franky import JointWaypointMotion, JointWaypoint, JointPositionStopMotion, CartesianMotion, \</div>
+<div class="line">    CartesianWaypointMotion, CartesianWaypoint, Affine, Twist, RobotPose, ReferenceType, CartesianPoseStopMotion, \</div>
+<div class="line">    CartesianState, JointState</div>
 <div class="line"> </div>
 <div class="line"># A point-to-point motion in the joint space</div>
 <div class="line">m1 = JointWaypointMotion([JointWaypoint([-1.8, 1.1, 1.7, -2.1, -1.1, 1.6, -0.4])])</div>
@@ -228,30 +230,51 @@ $(function() {
 <div class="line">    JointWaypoint([-1.9, 1.0, 1.6, -2.2, -1.2, 1.5, -0.5])</div>
 <div class="line">])</div>
 <div class="line"> </div>
+<div class="line"># Intermediate waypoints also permit to specify target velocities. The default target velocity is 0, meaning that the</div>
+<div class="line"># robot will stop at every waypoint.</div>
+<div class="line">m3 = JointWaypointMotion([</div>
+<div class="line">    JointWaypoint([-1.8, 1.1, 1.7, -2.1, -1.1, 1.6, -0.4]),</div>
+<div class="line">    JointWaypoint(</div>
+<div class="line">        JointState(</div>
+<div class="line">            position=[-1.7, 1.2, 1.8, -2.0, -1.0, 1.7, -0.3],</div>
+<div class="line">            velocity=[0.1, .0, 0.3, .0, .0, 0.15, .0])),</div>
+<div class="line">    JointWaypoint([-1.9, 1.0, 1.6, -2.2, -1.2, 1.5, -0.5])</div>
+<div class="line">])</div>
+<div class="line"> </div>
 <div class="line"># Stop the robot</div>
-<div class="line">m3 = JointPositionStopMotion()</div>
+<div class="line">m4 = JointPositionStopMotion()</div>
 <div class="line"> </div>
 <div class="line"># A linear motion in cartesian space</div>
 <div class="line">quat = Rotation.from_euler(&quot;xyz&quot;, [0, 0, math.pi / 2]).as_quat()</div>
-<div class="line">m4 = CartesianMotion(Affine([0.2, -0.4, 0.3], quat))</div>
-<div class="line">m5 = CartesianMotion(RobotPose(Affine([0.2, -0.4, 0.3], quat), elbow_position=1.7)) # With target elbow angle</div>
+<div class="line">m5 = CartesianMotion(Affine([0.2, -0.4, 0.3], quat))</div>
+<div class="line">m6 = CartesianMotion(RobotPose(Affine([0.2, -0.4, 0.3], quat), elbow_position=1.7))  # With target elbow angle</div>
 <div class="line"> </div>
 <div class="line"># A linear motion in cartesian space relative to the initial position</div>
 <div class="line"># (Note that this motion is relative both in position and orientation. Hence, when the robot&#39;s end-effector is oriented</div>
 <div class="line"># differently, it will move in a different direction)</div>
-<div class="line">m6 = CartesianMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
+<div class="line">m7 = CartesianMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
 <div class="line"> </div>
 <div class="line"># Generalization of CartesianMotion that allows for multiple waypoints</div>
-<div class="line">m7 = CartesianWaypointMotion([</div>
-<div class="line">  CartesianWaypoint(RobotPose(Affine([0.2, -0.4, 0.3], quat), elbow_position=1.7)),</div>
-<div class="line">  # The following waypoint is relative to the prior one and 50% slower</div>
-<div class="line">  CartesianWaypoint(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative, velocity_rel=0.5)</div>
+<div class="line">m8 = CartesianWaypointMotion([</div>
+<div class="line">    CartesianWaypoint(RobotPose(Affine([0.2, -0.4, 0.3], quat), elbow_position=1.7)),</div>
+<div class="line">    # The following waypoint is relative to the prior one and 50% slower</div>
+<div class="line">    CartesianWaypoint(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative, velocity_rel=0.5)</div>
+<div class="line">])</div>
+<div class="line"> </div>
+<div class="line"># Cartesian waypoints also permit to specify target velocities</div>
+<div class="line">m9 = CartesianWaypointMotion([</div>
+<div class="line">    CartesianWaypoint(Affine([0.3, 0.3, 0.3])),</div>
+<div class="line">    CartesianWaypoint(</div>
+<div class="line">        CartesianState(</div>
+<div class="line">            pose=Affine([0.4, 0.2, 0.3]),</div>
+<div class="line">            velocity=Twist([0.1, -0.1, 0.0]))),</div>
+<div class="line">    CartesianWaypoint(Affine([0.4, 0.2, 0.3]))</div>
 <div class="line">])</div>
 <div class="line"> </div>
 <div class="line"># Stop the robot. The difference of JointPositionStopMotion to CartesianPoseStopMotion is that JointPositionStopMotion</div>
 <div class="line"># stops the robot in joint position control mode while CartesianPoseStopMotion stops it in cartesian pose control mode.</div>
 <div class="line"># The difference becomes relevant when asynchronous move commands are being sent (see below).</div>
-<div class="line">m8 = CartesianPoseStopMotion()</div>
+<div class="line">m10 = CartesianPoseStopMotion()</div>
 </div><!-- fragment --><p>Every motion and waypoint type allows to adapt the dynamics (velocity, acceleration and jerk) by setting the respective <code>velocity_rel</code>, <code>acceleration_rel</code>, and <code>jerk_rel</code> parameters.</p>
 <p>The real robot can be moved by applying a motion to the robot using <code>move</code>: </p><div class="fragment"><div class="line">robot.move(m1)</div>
 <div class="line">robot.move(m2)</div>
