@@ -119,7 +119,7 @@ $(function() {
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;};</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
 <div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="namespacefranky.html#a4c30c0e173a1886238ed773e005be361">   48</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="classfranky_1_1_cartesian_state.html">CartesianState</a> <a class="code" href="namespacefranky.html#a4c30c0e173a1886238ed773e005be361">operator*</a>(<span class="keyword">const</span> <a class="code" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;transform, <span class="keyword">const</span> <a class="code" href="classfranky_1_1_cartesian_state.html">CartesianState</a> &amp;cartesian_state) {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordflow">return</span> cartesian_state.transform(transform);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordflow">return</span> cartesian_state.<a class="code" href="classfranky_1_1_cartesian_state.html#a9f7b644b3920e5816554b8855854a1aa">transformWith</a>(transform);</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}  <span class="comment">// namespace franky</span></div>
