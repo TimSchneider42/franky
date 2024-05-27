@@ -25,7 +25,7 @@ var searchData=
   ['repr_224',['repr',['../classfranky_1_1_measure.html#a664d5e3506c4665f2be173ec5d2afa6f',1,'franky::Measure::repr()'],['../classfranky_1_1_condition.html#afaae7e02e68860afdf7c40a75bf91d25',1,'franky::Condition::repr()']]],
   ['resettimeunsafe_225',['resetTimeUnsafe',['../classfranky_1_1_motion_generator.html#aaa6cf6fa7c6af2d7b081b19d569c2e0f',1,'franky::MotionGenerator']]],
   ['return_5fwhen_5ffinished_226',['return_when_finished',['../structfranky_1_1_cartesian_impedance_motion_1_1_params.html#a55fe8148f737b8ab7856d39cb5e1733d',1,'franky::CartesianImpedanceMotion::Params::return_when_finished()'],['../structfranky_1_1_waypoint_motion_1_1_params.html#a9fa647a0354691ad7eed675c1aaa7fe1',1,'franky::WaypointMotion::Params::return_when_finished()']]],
-  ['right_5ftransform_227',['right_transform',['../classfranky_1_1_robot_pose.html#aa8a1105e96b79b30ecd8d93b0a75b012',1,'franky::RobotPose']]],
+  ['righttransform_227',['rightTransform',['../classfranky_1_1_robot_pose.html#afdbee35c5bf294ed93a139cc6280a076',1,'franky::RobotPose']]],
   ['robot_228',['Robot',['../classfranky_1_1_robot.html',1,'franky::Robot'],['../classfranky_1_1_robot.html#a242b157f9b7fa39617a84680b92ee477',1,'franky::Robot::Robot(const std::string &amp;fci_hostname, const Params &amp;params)'],['../classfranky_1_1_robot.html#ab017d5bb8451915dbc0fde436782c771',1,'franky::Robot::Robot(const std::string &amp;fci_hostname)']]],
   ['robot_229',['robot',['../classfranky_1_1_motion.html#a67c0978040846078aa72d0580c30167e',1,'franky::Motion']]],
   ['robot_2ecpp_230',['robot.cpp',['../robot_8cpp.html',1,'']]],

@@ -7,5 +7,5 @@ var searchData=
   ['waypointmotion_3c_20franka_3a_3acartesianpose_2c_20franky_3a_3acartesianstate_20_3e_285',['WaypointMotion&lt; franka::CartesianPose, franky::CartesianState &gt;',['../classfranky_1_1_waypoint_motion.html',1,'franky']]],
   ['waypointmotion_3c_20franka_3a_3ajointpositions_2c_20jointstate_20_3e_286',['WaypointMotion&lt; franka::JointPositions, JointState &gt;',['../classfranky_1_1_waypoint_motion.html',1,'franky']]],
   ['width_287',['width',['../classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e',1,'franky::Gripper']]],
-  ['with_5felbow_5fposition_288',['with_elbow_position',['../classfranky_1_1_robot_pose.html#a0172a87f3b12aa7dc0482d46168a6c5f',1,'franky::RobotPose']]]
+  ['withelbowposition_288',['withElbowPosition',['../classfranky_1_1_robot_pose.html#a628f8f3342dd6cb0bb60e1a8b08ea8bb',1,'franky::RobotPose']]]
 ];
