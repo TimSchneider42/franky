@@ -75,11 +75,15 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Class to represent the twist of a robot.  
+ <a href="classfranky_1_1_twist.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="twist_8hpp_source.html">twist.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a602c3a67b5366f80238a39056ec3b90a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#a602c3a67b5366f80238a39056ec3b90a">Twist</a> ()</td></tr>
+<tr class="memdesc:a602c3a67b5366f80238a39056ec3b90a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. Initializes linear and angular velocities to zero.  <a href="classfranky_1_1_twist.html#a602c3a67b5366f80238a39056ec3b90a">More...</a><br /></td></tr>
 <tr class="separator:a602c3a67b5366f80238a39056ec3b90a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc5436a6628d7685aacf10d56e915126"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#acc5436a6628d7685aacf10d56e915126">Twist</a> (const <a class="el" href="classfranky_1_1_twist.html">Twist</a> &amp;twist)=default</td></tr>
 <tr class="separator:acc5436a6628d7685aacf10d56e915126"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -88,20 +92,28 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab07aa1a210756a6b50d9978794b2ed10"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#ab07aa1a210756a6b50d9978794b2ed10">Twist</a> (const <a class="el" href="namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb">Vector6d</a> &amp;<a class="el" href="classfranky_1_1_twist.html#a31a3a4886d8ef4ee37b4d12acec1162e">vector_repr</a>)</td></tr>
 <tr class="separator:ab07aa1a210756a6b50d9978794b2ed10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a31a3a4886d8ef4ee37b4d12acec1162e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb">Vector6d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#a31a3a4886d8ef4ee37b4d12acec1162e">vector_repr</a> () const</td></tr>
+<tr class="memdesc:a31a3a4886d8ef4ee37b4d12acec1162e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the vector representation of the twist. It consists of the linear and angular velocities.  <a href="classfranky_1_1_twist.html#a31a3a4886d8ef4ee37b4d12acec1162e">More...</a><br /></td></tr>
 <tr class="separator:a31a3a4886d8ef4ee37b4d12acec1162e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6aa913ac69af05a7a29f98dc19910798"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_twist.html">Twist</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#a6aa913ac69af05a7a29f98dc19910798">transformWith</a> (const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;affine) const</td></tr>
-<tr class="separator:a6aa913ac69af05a7a29f98dc19910798"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f75fc666b90701fb5b518ca44e7542a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_twist.html">Twist</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#a3f75fc666b90701fb5b518ca44e7542a">transformWith</a> (const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;transformation) const</td></tr>
+<tr class="memdesc:a3f75fc666b90701fb5b518ca44e7542a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform the frame of the twist by applying the given affine transform.  <a href="classfranky_1_1_twist.html#a3f75fc666b90701fb5b518ca44e7542a">More...</a><br /></td></tr>
+<tr class="separator:a3f75fc666b90701fb5b518ca44e7542a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8877c2da86231733a7ee309bd6378434"><td class="memTemplParams" colspan="2">template&lt;typename RotationMatrixType &gt; </td></tr>
 <tr class="memitem:a8877c2da86231733a7ee309bd6378434"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_twist.html">Twist</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#a8877c2da86231733a7ee309bd6378434">transformWith</a> (const RotationMatrixType &amp;rotation) const</td></tr>
+<tr class="memdesc:a8877c2da86231733a7ee309bd6378434"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform the frame of the twist by applying the given rotation.  <a href="classfranky_1_1_twist.html#a8877c2da86231733a7ee309bd6378434">More...</a><br /></td></tr>
 <tr class="separator:a8877c2da86231733a7ee309bd6378434"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a896c0f6949127e1c37f5716b3f771bdb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_twist.html">Twist</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#a896c0f6949127e1c37f5716b3f771bdb">propagateThroughLink</a> (const Eigen::Vector3d &amp;link_translation) const</td></tr>
+<tr class="memdesc:a896c0f6949127e1c37f5716b3f771bdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Propagate the twist through a link with the given translation. Hence, suppose this twist is the twist of a frame A, then this function computes the twist of a frame B that is rigidly attached to frame A by a link with the given translation: B = A + T, where T is the translation.  <a href="classfranky_1_1_twist.html#a896c0f6949127e1c37f5716b3f771bdb">More...</a><br /></td></tr>
 <tr class="separator:a896c0f6949127e1c37f5716b3f771bdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c704065f92d12266fb0e16e2b2dd61d"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#a5c704065f92d12266fb0e16e2b2dd61d">linear_velocity</a> () const</td></tr>
+<tr class="memdesc:a5c704065f92d12266fb0e16e2b2dd61d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the linear velocity.  <a href="classfranky_1_1_twist.html#a5c704065f92d12266fb0e16e2b2dd61d">More...</a><br /></td></tr>
 <tr class="separator:a5c704065f92d12266fb0e16e2b2dd61d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1199e9d3b8e06d11c519f99f5e2a4e4"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_twist.html#af1199e9d3b8e06d11c519f99f5e2a4e4">angular_velocity</a> () const</td></tr>
+<tr class="memdesc:af1199e9d3b8e06d11c519f99f5e2a4e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the angular velocity.  <a href="classfranky_1_1_twist.html#af1199e9d3b8e06d11c519f99f5e2a4e4">More...</a><br /></td></tr>
 <tr class="separator:af1199e9d3b8e06d11c519f99f5e2a4e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class to represent the twist of a robot. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a602c3a67b5366f80238a39056ec3b90a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a602c3a67b5366f80238a39056ec3b90a">&#9670;&nbsp;</a></span>Twist() <span class="overload">[1/4]</span></h2>
 
@@ -124,6 +136,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Default constructor. Initializes linear and angular velocities to zero. </p>
 
 </div>
 </div>
@@ -186,6 +200,13 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">linear_velocity</td><td>The linear velocity. </td></tr>
+    <tr><td class="paramname">angular_velocity</td><td>The angular velocity. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -212,6 +233,12 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vector_repr</td><td>The vector representation of the twist. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -239,6 +266,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Get the angular velocity. </p>
+<dl class="section return"><dt>Returns</dt><dd>The angular velocity. </dd></dl>
+
 </div>
 </div>
 <a id="a5c704065f92d12266fb0e16e2b2dd61d"></a>
@@ -263,6 +293,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the linear velocity. </p>
+<dl class="section return"><dt>Returns</dt><dd>The linear velocity. </dd></dl>
 
 </div>
 </div>
@@ -289,7 +322,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Propagate the twist through a link with the given translation. Hence, suppose this twist is the twist of a frame A, then this function computes the twist of a frame B that is rigidly attached to frame A by a link with the given translation: B = A + T, where T is the translation. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Propagate the twist through a link with the given translation. Hence, suppose this twist is the twist of a frame A, then this function computes the twist of a frame B that is rigidly attached to frame A by a link with the given translation: B = A + T, where T is the translation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">link_translation</td><td>The translation of the link. Must be in the same reference frame as this twist. </td></tr>
   </table>
@@ -299,8 +334,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6aa913ac69af05a7a29f98dc19910798"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6aa913ac69af05a7a29f98dc19910798">&#9670;&nbsp;</a></span>transformWith() <span class="overload">[1/2]</span></h2>
+<a id="a3f75fc666b90701fb5b518ca44e7542a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f75fc666b90701fb5b518ca44e7542a">&#9670;&nbsp;</a></span>transformWith() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -312,7 +347,7 @@ Public Member Functions</h2></td></tr>
           <td class="memname"><a class="el" href="classfranky_1_1_twist.html">Twist</a> franky::Twist::transformWith </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;&#160;</td>
-          <td class="paramname"><em>affine</em></td><td>)</td>
+          <td class="paramname"><em>transformation</em></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -322,6 +357,15 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Transform the frame of the twist by applying the given affine transform. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">transformation</td><td>The transformation to apply. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The twist after the transformation. </dd></dl>
 
 </div>
 </div>
@@ -351,6 +395,15 @@ template&lt;typename RotationMatrixType &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Transform the frame of the twist by applying the given rotation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rotation</td><td>The rotation to apply. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The twist after the transformation. </dd></dl>
+
 </div>
 </div>
 <a id="a31a3a4886d8ef4ee37b4d12acec1162e"></a>
@@ -375,6 +428,9 @@ template&lt;typename RotationMatrixType &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the vector representation of the twist. It consists of the linear and angular velocities. </p>
+<dl class="section return"><dt>Returns</dt><dd>The vector representation of the twist. </dd></dl>
 
 </div>
 </div>

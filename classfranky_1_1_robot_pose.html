@@ -75,6 +75,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>A class to represent the cartesian pose of a robot.  
+ <a href="classfranky_1_1_robot_pose.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="robot__pose_8hpp_source.html">robot_pose.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -92,23 +95,34 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7e69775675a57388d71e963c195ac7e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_pose.html#a7e69775675a57388d71e963c195ac7e5">RobotPose</a> (franka::CartesianPose franka_pose)</td></tr>
 <tr class="separator:a7e69775675a57388d71e963c195ac7e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49bde12b0fbe8a2cc7e95c923b170c8d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_pose.html#a49bde12b0fbe8a2cc7e95c923b170c8d">vector_repr</a> () const</td></tr>
+<tr class="memdesc:a49bde12b0fbe8a2cc7e95c923b170c8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the vector representation of the pose, which consists of the end effector position and orientation (as rotation vector) and the elbow position.  <a href="classfranky_1_1_robot_pose.html#a49bde12b0fbe8a2cc7e95c923b170c8d">More...</a><br /></td></tr>
 <tr class="separator:a49bde12b0fbe8a2cc7e95c923b170c8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a990479787ac004f967a1bb16e45feb9b"><td class="memItemLeft" align="right" valign="top">franka::CartesianPose&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_pose.html#a990479787ac004f967a1bb16e45feb9b">as_franka_pose</a> () const</td></tr>
+<tr class="memdesc:a990479787ac004f967a1bb16e45feb9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert this pose to a franka pose.  <a href="classfranky_1_1_robot_pose.html#a990479787ac004f967a1bb16e45feb9b">More...</a><br /></td></tr>
 <tr class="separator:a990479787ac004f967a1bb16e45feb9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc234649707e63232c54d9e392db25c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_robot_pose.html">RobotPose</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_pose.html#adc234649707e63232c54d9e392db25c6">leftTransform</a> (const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;transform) const</td></tr>
+<tr class="memdesc:adc234649707e63232c54d9e392db25c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform this pose with a given affine transformation from the left side.  <a href="classfranky_1_1_robot_pose.html#adc234649707e63232c54d9e392db25c6">More...</a><br /></td></tr>
 <tr class="separator:adc234649707e63232c54d9e392db25c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afdbee35c5bf294ed93a139cc6280a076"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_robot_pose.html">RobotPose</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_pose.html#afdbee35c5bf294ed93a139cc6280a076">rightTransform</a> (const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;transform) const</td></tr>
+<tr class="memdesc:afdbee35c5bf294ed93a139cc6280a076"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform this pose with a given affine transformation from the right side.  <a href="classfranky_1_1_robot_pose.html#afdbee35c5bf294ed93a139cc6280a076">More...</a><br /></td></tr>
 <tr class="separator:afdbee35c5bf294ed93a139cc6280a076"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a132eef8bd15ba00132fb64ed441382ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_robot_pose.html">RobotPose</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_pose.html#a132eef8bd15ba00132fb64ed441382ba">changeEndEffectorFrame</a> (const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;transform) const</td></tr>
+<tr class="memdesc:a132eef8bd15ba00132fb64ed441382ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the frame of the end effector by applying a transformation from the right side. This is equivalent to calling rightTransform(transform).  <a href="classfranky_1_1_robot_pose.html#a132eef8bd15ba00132fb64ed441382ba">More...</a><br /></td></tr>
 <tr class="separator:a132eef8bd15ba00132fb64ed441382ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a628f8f3342dd6cb0bb60e1a8b08ea8bb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_robot_pose.html">RobotPose</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_pose.html#a628f8f3342dd6cb0bb60e1a8b08ea8bb">withElbowPosition</a> (const std::optional&lt; double &gt; <a class="el" href="classfranky_1_1_robot_pose.html#a3ee0468d5bcdd943845d54f1e051d459">elbow_position</a>) const</td></tr>
+<tr class="memdesc:a628f8f3342dd6cb0bb60e1a8b08ea8bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the pose with a new elbow position.  <a href="classfranky_1_1_robot_pose.html#a628f8f3342dd6cb0bb60e1a8b08ea8bb">More...</a><br /></td></tr>
 <tr class="separator:a628f8f3342dd6cb0bb60e1a8b08ea8bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe83d0dc121a5e1312ac4f2acdbd9fbd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_pose.html#abe83d0dc121a5e1312ac4f2acdbd9fbd">end_effector_pose</a> () const</td></tr>
+<tr class="memdesc:abe83d0dc121a5e1312ac4f2acdbd9fbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the end effector pose.  <a href="classfranky_1_1_robot_pose.html#abe83d0dc121a5e1312ac4f2acdbd9fbd">More...</a><br /></td></tr>
 <tr class="separator:abe83d0dc121a5e1312ac4f2acdbd9fbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ee0468d5bcdd943845d54f1e051d459"><td class="memItemLeft" align="right" valign="top">std::optional&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_pose.html#a3ee0468d5bcdd943845d54f1e051d459">elbow_position</a> () const</td></tr>
+<tr class="memdesc:a3ee0468d5bcdd943845d54f1e051d459"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the elbow position.  <a href="classfranky_1_1_robot_pose.html#a3ee0468d5bcdd943845d54f1e051d459">More...</a><br /></td></tr>
 <tr class="separator:a3ee0468d5bcdd943845d54f1e051d459"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A class to represent the cartesian pose of a robot. </p>
+<p>This class encapsulates the cartesian pose of a robot, which comprises the end effector pose and the elbow position. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a2dbca2efd3922f5b8a0954e778dcd197"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2dbca2efd3922f5b8a0954e778dcd197">&#9670;&nbsp;</a></span>RobotPose() <span class="overload">[1/6]</span></h2>
 
@@ -177,6 +191,13 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">end_effector_pose</td><td>The pose of the end effector. </td></tr>
+    <tr><td class="paramname">elbow_position</td><td>The position of the elbow. Optional. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -213,6 +234,13 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vector_repr</td><td>The vector representation of the pose. </td></tr>
+    <tr><td class="paramname">ignore_elbow</td><td>Whether to ignore the elbow position. Default is false. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -249,6 +277,13 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vector_repr</td><td>The vector representation of the pose. </td></tr>
+    <tr><td class="paramname">elbow_position</td><td>The position of the elbow. Optional. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -275,6 +310,12 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">franka_pose</td><td>The franka pose. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -293,6 +334,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Convert this pose to a franka pose. </p>
+<dl class="section return"><dt>Returns</dt><dd>The franka pose. </dd></dl>
 
 </div>
 </div>
@@ -320,6 +364,15 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Change the frame of the end effector by applying a transformation from the right side. This is equivalent to calling rightTransform(transform). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">transform</td><td>The transform to apply. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The robot pose with the new end effector frame. </dd></dl>
+
 </div>
 </div>
 <a id="a3ee0468d5bcdd943845d54f1e051d459"></a>
@@ -345,6 +398,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Get the elbow position. </p>
+<dl class="section return"><dt>Returns</dt><dd>The elbow position. </dd></dl>
+
 </div>
 </div>
 <a id="abe83d0dc121a5e1312ac4f2acdbd9fbd"></a>
@@ -369,6 +425,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the end effector pose. </p>
+<dl class="section return"><dt>Returns</dt><dd>The end effector pose. </dd></dl>
 
 </div>
 </div>
@@ -396,6 +455,15 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Transform this pose with a given affine transformation from the left side. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">transform</td><td>The transform to apply. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The transformed robot pose. </dd></dl>
+
 </div>
 </div>
 <a id="afdbee35c5bf294ed93a139cc6280a076"></a>
@@ -422,6 +490,15 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Transform this pose with a given affine transformation from the right side. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">transform</td><td>The transform to apply. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The transformed robot pose. </dd></dl>
+
 </div>
 </div>
 <a id="a49bde12b0fbe8a2cc7e95c923b170c8d"></a>
@@ -438,6 +515,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get the vector representation of the pose, which consists of the end effector position and orientation (as rotation vector) and the elbow position. </p>
+<dl class="section return"><dt>Returns</dt><dd>The vector representation of the pose. </dd></dl>
 
 </div>
 </div>
@@ -464,6 +544,15 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the pose with a new elbow position. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">elbow_position</td><td>The new elbow position. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The pose with the new elbow position. </dd></dl>
 
 </div>
 </div>
