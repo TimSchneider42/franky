@@ -258,7 +258,7 @@ $(function() {
 <div class="line">m8 = CartesianWaypointMotion([</div>
 <div class="line">    CartesianWaypoint(RobotPose(Affine([0.2, -0.4, 0.3], quat), elbow_position=1.7)),</div>
 <div class="line">    # The following waypoint is relative to the prior one and 50% slower</div>
-<div class="line">    CartesianWaypoint(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative, velocity_rel=0.5)</div>
+<div class="line">    CartesianWaypoint(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative, RelativeDynamicsFactor(0.5, 1.0, 1.0))</div>
 <div class="line">])</div>
 <div class="line"> </div>
 <div class="line"># Cartesian waypoints also permit to specify target velocities</div>
@@ -275,7 +275,7 @@ $(function() {
 <div class="line"># stops the robot in joint position control mode while CartesianPoseStopMotion stops it in cartesian pose control mode.</div>
 <div class="line"># The difference becomes relevant when asynchronous move commands are being sent (see below).</div>
 <div class="line">m10 = CartesianPoseStopMotion()</div>
-</div><!-- fragment --><p>Every motion and waypoint type allows to adapt the dynamics (velocity, acceleration and jerk) by setting the respective <code>velocity_rel</code>, <code>acceleration_rel</code>, and <code>jerk_rel</code> parameters.</p>
+</div><!-- fragment --><p>Every motion and waypoint type allows to adapt the dynamics (velocity, acceleration and jerk) by setting the respective <code>relative_dynamics_factor</code> parameter.</p>
 <p>The real robot can be moved by applying a motion to the robot using <code>move</code>: </p><div class="fragment"><div class="line">robot.move(m1)</div>
 <div class="line">robot.move(m2)</div>
 </div><!-- fragment --><h3>Real-Time Reactions</h3>
