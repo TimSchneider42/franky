@@ -140,9 +140,9 @@ $(function() {
 </div><!-- fragment --><p> The container requires access to the host machines network <em>and</em> elevated user rights to allow the docker user to set RT capabilities of the processes run from within it.</p>
 <h4>Building franky with Docker</h4>
 <p>For building franky and its wheels, we provide another Docker container that can also be launched using docker-compose:</p>
-<div class="fragment"><div class="line">docker compose build</div>
-<div class="line">docker compose run franky-build run-tests  # To run the tests</div>
-<div class="line">docker compose run franky-build build-wheels  # To build wheels for all supported python versions</div>
+<div class="fragment"><div class="line">docker compose build franky-build</div>
+<div class="line">docker compose run --rm franky-build run-tests  # To run the tests</div>
+<div class="line">docker compose run --rm franky-build build-wheels  # To build wheels for all supported python versions</div>
 </div><!-- fragment --><div class="fragment"><div class="line">## Tutorial</div>
 <div class="line"> </div>
 <div class="line">Franky comes with both a C++ and Python API that differ only regarding real-time capability. We will introduce both languages next to each other. In your C++ project, just include `include &lt;franky/franky.hpp&gt;` and link the library. For Python, just `import franky`. As a first example, only four lines of code are needed for simple robotic motions.</div>
