@@ -143,11 +143,9 @@ $(function() {
 <div class="fragment"><div class="line">docker compose build franky-build</div>
 <div class="line">docker compose run --rm franky-build run-tests  # To run the tests</div>
 <div class="line">docker compose run --rm franky-build build-wheels  # To build wheels for all supported python versions</div>
-</div><!-- fragment --><div class="fragment"><div class="line">## Tutorial</div>
-<div class="line"> </div>
-<div class="line">Franky comes with both a C++ and Python API that differ only regarding real-time capability. We will introduce both languages next to each other. In your C++ project, just include `include &lt;franky/franky.hpp&gt;` and link the library. For Python, just `import franky`. As a first example, only four lines of code are needed for simple robotic motions.</div>
-<div class="line"> </div>
-<div class="line">```c++</div>
+</div><!-- fragment --><h2>Tutorial</h2>
+<p>Franky comes with both a C++ and Python API that differ only regarding real-time capability. We will introduce both languages next to each other. In your C++ project, just include <code>include &lt;franky/franky.hpp&gt;</code> and link the library. For Python, just <code>import franky</code>. As a first example, only four lines of code are needed for simple robotic motions.</p>
+<div class="fragment"><div class="line"> {c++}</div>
 <div class="line">#include &lt;franky/franky.hpp&gt;</div>
 <div class="line">using namespace franky;</div>
 <div class="line"> </div>
