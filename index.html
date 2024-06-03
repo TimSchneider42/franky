@@ -201,16 +201,28 @@ $(function() {
 </div><!-- fragment --><h3>Robot State</h3>
 <p>The robot state can be retrieved by calling the following methods:</p>
 <ul>
-<li><code>state</code>: Return an object of the <code>franky.RobotState</code> class which contains most of the same attributes, under the same name, as the libfranka <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html">franka::RobotState</a> definition.</li>
-<li><code>current_pose</code>: Return a 3D Affine transformation object of the measured end effector pose in base frame (alias for <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#a193781d47722b32925e0ea7ac415f442">franka::RobotState::O_T_EE</a>).</li>
-<li><code>current_joint_positions</code>: Return a sequence of the manipulator arm's 7-joint positions (alias for <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#ade3335d1ac2f6c44741a916d565f7091">franka::RobotState::q</a>).</li>
+<li><code>state</code>: Object of type <code>franky.RobotState</code>, which is a wrapper of the libfranka <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html">franka::RobotState</a> structure.</li>
+<li><code>current_cartesian_state</code>: Object of type <code><a class="el" href="classfranky_1_1_cartesian_state.html">franky.CartesianState</a></code>, which contains the end-effector pose and velocity obtained from <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#a193781d47722b32925e0ea7ac415f442">franka::RobotState::O_T_EE</a> and <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#a4be112bd1a9a7d777a67aea4a18a8dcc">franka::RobotState::O_dP_EE_c</a>.</li>
+<li><code>current_joint_position</code>: Object of type <code><a class="el" href="classfranky_1_1_joint_state.html">franky.JointState</a></code>, which contains the joint positions and velocities obtained from <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#ade3335d1ac2f6c44741a916d565f7091">franka::RobotState::q</a> and <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#a706045af1b176049e9e56df755325bd2">franka::RobotState::dq</a>.</li>
 </ul>
-<div class="fragment"><div class="line">robot = Robot(<span class="stringliteral">&quot;172.16.0.2&quot;</span>)</div>
+<div class="fragment"><div class="line">robot = Robot(&quot;172.16.0.2&quot;)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Get the current state</span></div>
+<div class="line"># Get the current state as raw `franky.RobotState`</div>
 <div class="line">state = robot.state</div>
-<div class="line">pose = robot.current_pose</div>
-<div class="line">joint_positions = robot.current_joint_positions</div>
+<div class="line"> </div>
+<div class="line"># Get the robot&#39;s cartesian state</div>
+<div class="line">cartesian_state = robot.current_cartesian_state</div>
+<div class="line">robot_pose = cartesian_state.pose  # Contains end-effector pose and elbow position</div>
+<div class="line">ee_pose = robot_pose.end_effector_pose</div>
+<div class="line">elbow_pos = robot_pose.elbow_position</div>
+<div class="line">robot_velocity = cartesian_state.velocity  # Contains end-effector twist and elbow velocity</div>
+<div class="line">ee_twist = robot_velocity.end_effector_twist</div>
+<div class="line">elbow_vel = robot_velocity.elbow_velocity</div>
+<div class="line"> </div>
+<div class="line"># Get the robot&#39;s joint state</div>
+<div class="line">joint_state = robot.current_joint_state</div>
+<div class="line">joint_pos = joint_state.position</div>
+<div class="line">joint_vel = joint_state.velocity</div>
 </div><!-- fragment --><h3>Motion Types</h3>
 <p>Franky defines a number of different motion types. In python, you can use them as follows: </p><div class="fragment"><div class="line">import math</div>
 <div class="line">from scipy.spatial.transform import Rotation</div>
