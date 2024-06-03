@@ -88,8 +88,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aafe4a81eeddb9212361603d79b3bb0bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_cartesian_state.html#aafe4a81eeddb9212361603d79b3bb0bd">CartesianState</a> ()=default</td></tr>
 <tr class="separator:aafe4a81eeddb9212361603d79b3bb0bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f7b644b3920e5816554b8855854a1aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_cartesian_state.html">CartesianState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_cartesian_state.html#a9f7b644b3920e5816554b8855854a1aa">transformWith</a> (const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;transform) const</td></tr>
+<tr class="memdesc:a9f7b644b3920e5816554b8855854a1aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform the frame of the state by applying the given affine transform.  <a href="classfranky_1_1_cartesian_state.html#a9f7b644b3920e5816554b8855854a1aa">More...</a><br /></td></tr>
 <tr class="separator:a9f7b644b3920e5816554b8855854a1aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95522df649508eed67ac81cf21ca1b08"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_cartesian_state.html">CartesianState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_cartesian_state.html#a95522df649508eed67ac81cf21ca1b08">changeEndEffectorFrame</a> (const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;transform) const</td></tr>
+<tr class="memdesc:a95522df649508eed67ac81cf21ca1b08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the end effector frame of the state by the given affine transform.  <a href="classfranky_1_1_cartesian_state.html#a95522df649508eed67ac81cf21ca1b08">More...</a><br /></td></tr>
 <tr class="separator:a95522df649508eed67ac81cf21ca1b08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e8e2c8161dc22d18a01a0c28897792b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_robot_pose.html">RobotPose</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_cartesian_state.html#a5e8e2c8161dc22d18a01a0c28897792b">pose</a> () const</td></tr>
 <tr class="separator:a5e8e2c8161dc22d18a01a0c28897792b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -156,6 +158,13 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pose</td><td>The pose of the end effector. </td></tr>
+    <tr><td class="paramname">velocity</td><td>The velocity of the end effector. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -235,6 +244,15 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Change the end effector frame of the state by the given affine transform. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">transform</td><td>The pose of the new end-effector in the frame of the old end-effector. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The state with a new end-effector frame. </dd></dl>
+
 </div>
 </div>
 <a id="a5e8e2c8161dc22d18a01a0c28897792b"></a>
@@ -285,6 +303,15 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Transform the frame of the state by applying the given affine transform. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">transform</td><td>The transformation to apply. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The state after the transformation. </dd></dl>
 
 </div>
 </div>

@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['params_317',['Params',['../structfranky_1_1_cartesian_impedance_motion_1_1_params.html',1,'franky::CartesianImpedanceMotion::Params'],['../structfranky_1_1_cartesian_waypoint_motion_1_1_params.html',1,'franky::CartesianWaypointMotion::Params'],['../structfranky_1_1_exponential_impedance_motion_1_1_params.html',1,'franky::ExponentialImpedanceMotion::Params'],['../structfranky_1_1_impedance_motion_1_1_params.html',1,'franky::ImpedanceMotion::Params'],['../structfranky_1_1_robot_1_1_params.html',1,'franky::Robot::Params'],['../structfranky_1_1_waypoint_motion_1_1_params.html',1,'franky::WaypointMotion&lt; ControlSignalType, TargetType &gt;::Params']]],
-  ['path_318',['Path',['../classfranky_1_1_path.html',1,'franky']]],
-  ['pathstep_319',['PathStep',['../structfranky_1_1_path_step.html',1,'franky']]],
-  ['pathwaypoint_320',['PathWaypoint',['../structfranky_1_1_path_waypoint.html',1,'franky']]]
+  ['params_318',['Params',['../structfranky_1_1_cartesian_impedance_motion_1_1_params.html',1,'franky::CartesianImpedanceMotion::Params'],['../structfranky_1_1_cartesian_waypoint_motion_1_1_params.html',1,'franky::CartesianWaypointMotion::Params'],['../structfranky_1_1_exponential_impedance_motion_1_1_params.html',1,'franky::ExponentialImpedanceMotion::Params'],['../structfranky_1_1_impedance_motion_1_1_params.html',1,'franky::ImpedanceMotion::Params'],['../structfranky_1_1_robot_1_1_params.html',1,'franky::Robot::Params'],['../structfranky_1_1_waypoint_motion_1_1_params.html',1,'franky::WaypointMotion&lt; ControlSignalType, TargetType &gt;::Params']]],
+  ['path_319',['Path',['../classfranky_1_1_path.html',1,'franky']]],
+  ['pathstep_320',['PathStep',['../structfranky_1_1_path_step.html',1,'franky']]],
+  ['pathwaypoint_321',['PathWaypoint',['../structfranky_1_1_path_waypoint.html',1,'franky']]]
 ];

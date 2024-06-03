@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['franky_342',['franky',['../namespacefranky.html',1,'']]]
+  ['franky_343',['franky',['../namespacefranky.html',1,'']]]
 ];
