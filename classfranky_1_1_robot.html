@@ -91,6 +91,7 @@ Inheritance diagram for franky::Robot:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_robot_1_1_params.html">Params</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global parameters for the robot.  <a href="structfranky_1_1_robot_1_1_params.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
@@ -107,67 +108,95 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a242b157f9b7fa39617a84680b92ee477"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a242b157f9b7fa39617a84680b92ee477">Robot</a> (const std::string &amp;<a class="el" href="classfranky_1_1_robot.html#a25ca7e90c8a10848921fb35a378a7d33">fci_hostname</a>, const <a class="el" href="structfranky_1_1_robot_1_1_params.html">Params</a> &amp;params)</td></tr>
 <tr class="separator:a242b157f9b7fa39617a84680b92ee477"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad586cb00aa450d5c51bc8260b9ad373"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#aad586cb00aa450d5c51bc8260b9ad373">setCollisionBehavior</a> (const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;torque_threshold, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;force_threshold)</td></tr>
+<tr class="memdesc:aad586cb00aa450d5c51bc8260b9ad373"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the collision behavior of the robot.  <a href="classfranky_1_1_robot.html#aad586cb00aa450d5c51bc8260b9ad373">More...</a><br /></td></tr>
 <tr class="separator:aad586cb00aa450d5c51bc8260b9ad373"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56b550916fb5b9df587e24a6b2353b68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a56b550916fb5b9df587e24a6b2353b68">setCollisionBehavior</a> (const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;lower_torque_threshold, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;upper_torque_threshold, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;lower_force_threshold, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;upper_force_threshold)</td></tr>
+<tr class="memdesc:a56b550916fb5b9df587e24a6b2353b68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the collision behavior of the robot.  <a href="classfranky_1_1_robot.html#a56b550916fb5b9df587e24a6b2353b68">More...</a><br /></td></tr>
 <tr class="separator:a56b550916fb5b9df587e24a6b2353b68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b1476422439a82844e934873c88888a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a8b1476422439a82844e934873c88888a">setCollisionBehavior</a> (const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;lower_torque_threshold_acceleration, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;upper_torque_threshold_acceleration, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;lower_torque_threshold_nominal, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;upper_torque_threshold_nominal, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;lower_force_threshold_acceleration, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;upper_force_threshold_acceleration, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;lower_force_threshold_nominal, const <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;upper_force_threshold_nominal)</td></tr>
+<tr class="memdesc:a8b1476422439a82844e934873c88888a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the collision behavior of the robot.  <a href="classfranky_1_1_robot.html#a8b1476422439a82844e934873c88888a">More...</a><br /></td></tr>
 <tr class="separator:a8b1476422439a82844e934873c88888a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7389f6e088ba456dd689c093ee6640e0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a7389f6e088ba456dd689c093ee6640e0">recoverFromErrors</a> ()</td></tr>
+<tr class="memdesc:a7389f6e088ba456dd689c093ee6640e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the automatic error recovery of the robot and returns whether the recovery was successful.  <a href="classfranky_1_1_robot.html#a7389f6e088ba456dd689c093ee6640e0">More...</a><br /></td></tr>
 <tr class="separator:a7389f6e088ba456dd689c093ee6640e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad3d89c3fd930ea6590d0abd10fbdb755"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#ad3d89c3fd930ea6590d0abd10fbdb755">hasErrors</a> ()</td></tr>
+<tr class="memdesc:ad3d89c3fd930ea6590d0abd10fbdb755"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the robot has errors.  <a href="classfranky_1_1_robot.html#ad3d89c3fd930ea6590d0abd10fbdb755">More...</a><br /></td></tr>
 <tr class="separator:ad3d89c3fd930ea6590d0abd10fbdb755"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf04b2531a0ac4a16a759cc048d82e15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_robot_pose.html">RobotPose</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#adf04b2531a0ac4a16a759cc048d82e15">currentPose</a> ()</td></tr>
+<tr class="memdesc:adf04b2531a0ac4a16a759cc048d82e15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current pose of the robot.  <a href="classfranky_1_1_robot.html#adf04b2531a0ac4a16a759cc048d82e15">More...</a><br /></td></tr>
 <tr class="separator:adf04b2531a0ac4a16a759cc048d82e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb900ba5048aa792f4c16150703d8a6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#acb900ba5048aa792f4c16150703d8a6b">currentCartesianVelocity</a> ()</td></tr>
+<tr class="memdesc:acb900ba5048aa792f4c16150703d8a6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current cartesian velocity of the robot.  <a href="classfranky_1_1_robot.html#acb900ba5048aa792f4c16150703d8a6b">More...</a><br /></td></tr>
 <tr class="separator:acb900ba5048aa792f4c16150703d8a6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d2595f5969257dd18dce4997d59f7cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_cartesian_state.html">CartesianState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a4d2595f5969257dd18dce4997d59f7cd">currentCartesianState</a> ()</td></tr>
+<tr class="memdesc:a4d2595f5969257dd18dce4997d59f7cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current cartesian state of the robot.  <a href="classfranky_1_1_robot.html#a4d2595f5969257dd18dce4997d59f7cd">More...</a><br /></td></tr>
 <tr class="separator:a4d2595f5969257dd18dce4997d59f7cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab5abbad176d18599f25a4204e354cfb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_joint_state.html">JointState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#aab5abbad176d18599f25a4204e354cfb">currentJointState</a> ()</td></tr>
+<tr class="memdesc:aab5abbad176d18599f25a4204e354cfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current joint state of the robot.  <a href="classfranky_1_1_robot.html#aab5abbad176d18599f25a4204e354cfb">More...</a><br /></td></tr>
 <tr class="separator:aab5abbad176d18599f25a4204e354cfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4aae0b9dbfe4d88615810d1743c43646"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a4aae0b9dbfe4d88615810d1743c43646">currentJointPositions</a> ()</td></tr>
+<tr class="memdesc:a4aae0b9dbfe4d88615810d1743c43646"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current joint positions of the robot.  <a href="classfranky_1_1_robot.html#a4aae0b9dbfe4d88615810d1743c43646">More...</a><br /></td></tr>
 <tr class="separator:a4aae0b9dbfe4d88615810d1743c43646"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d118e16b5789a8442c486cca80ed3c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a2d118e16b5789a8442c486cca80ed3c6">currentJointVelocities</a> ()</td></tr>
+<tr class="memdesc:a2d118e16b5789a8442c486cca80ed3c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current joint velocities of the robot.  <a href="classfranky_1_1_robot.html#a2d118e16b5789a8442c486cca80ed3c6">More...</a><br /></td></tr>
 <tr class="separator:a2d118e16b5789a8442c486cca80ed3c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fd74136334e010a7695f31507fd8775"><td class="memItemLeft" align="right" valign="top">franka::RobotState&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a8fd74136334e010a7695f31507fd8775">state</a> ()</td></tr>
+<tr class="memdesc:a8fd74136334e010a7695f31507fd8775"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current state of the robot.  <a href="classfranky_1_1_robot.html#a8fd74136334e010a7695f31507fd8775">More...</a><br /></td></tr>
 <tr class="separator:a8fd74136334e010a7695f31507fd8775"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43f2f6dde0cca1f8c21fa6c1fb1b28c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_relative_dynamics_factor.html">RelativeDynamicsFactor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a43f2f6dde0cca1f8c21fa6c1fb1b28c0">relative_dynamics_factor</a> ()</td></tr>
+<tr class="memdesc:a43f2f6dde0cca1f8c21fa6c1fb1b28c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current global relative dynamics factor of the robot.  <a href="classfranky_1_1_robot.html#a43f2f6dde0cca1f8c21fa6c1fb1b28c0">More...</a><br /></td></tr>
 <tr class="separator:a43f2f6dde0cca1f8c21fa6c1fb1b28c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad19caa63f0237d39463e5a3dd0b3e793"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#ad19caa63f0237d39463e5a3dd0b3e793">setRelativeDynamicsFactor</a> (const <a class="el" href="classfranky_1_1_relative_dynamics_factor.html">RelativeDynamicsFactor</a> &amp;<a class="el" href="classfranky_1_1_robot.html#a43f2f6dde0cca1f8c21fa6c1fb1b28c0">relative_dynamics_factor</a>)</td></tr>
+<tr class="memdesc:ad19caa63f0237d39463e5a3dd0b3e793"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the global relative dynamics factor of the robot.  <a href="classfranky_1_1_robot.html#ad19caa63f0237d39463e5a3dd0b3e793">More...</a><br /></td></tr>
 <tr class="separator:ad19caa63f0237d39463e5a3dd0b3e793"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a971c769d2725f11c3437d28f9ad6de61"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a971c769d2725f11c3437d28f9ad6de61">is_in_control</a> ()</td></tr>
+<tr class="memdesc:a971c769d2725f11c3437d28f9ad6de61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the robot is currently in control, i.e. a motion is being executed.  <a href="classfranky_1_1_robot.html#a971c769d2725f11c3437d28f9ad6de61">More...</a><br /></td></tr>
 <tr class="separator:a971c769d2725f11c3437d28f9ad6de61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25ca7e90c8a10848921fb35a378a7d33"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a25ca7e90c8a10848921fb35a378a7d33">fci_hostname</a> () const</td></tr>
+<tr class="memdesc:a25ca7e90c8a10848921fb35a378a7d33"><td class="mdescLeft">&#160;</td><td class="mdescRight">The hostname of the robot.  <a href="classfranky_1_1_robot.html#a25ca7e90c8a10848921fb35a378a7d33">More...</a><br /></td></tr>
 <tr class="separator:a25ca7e90c8a10848921fb35a378a7d33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15b55042954d0bec0f2190abf2c8bb59"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a15b55042954d0bec0f2190abf2c8bb59">current_control_signal_type</a> ()</td></tr>
+<tr class="memdesc:a15b55042954d0bec0f2190abf2c8bb59"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of the current control signal.  <a href="classfranky_1_1_robot.html#a15b55042954d0bec0f2190abf2c8bb59">More...</a><br /></td></tr>
 <tr class="separator:a15b55042954d0bec0f2190abf2c8bb59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f48445583c522dd798e312bdbacf864"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a2f48445583c522dd798e312bdbacf864">joinMotion</a> ()</td></tr>
+<tr class="memdesc:a2f48445583c522dd798e312bdbacf864"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for the current motion to finish. Throw any exceptions that occurred during the motion.  <a href="classfranky_1_1_robot.html#a2f48445583c522dd798e312bdbacf864">More...</a><br /></td></tr>
 <tr class="separator:a2f48445583c522dd798e312bdbacf864"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a114a614ee78f9b554dd9aaef8fe2a1d8"><td class="memTemplParams" colspan="2">template&lt;class Rep , class Period &gt; </td></tr>
 <tr class="memitem:a114a614ee78f9b554dd9aaef8fe2a1d8"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a114a614ee78f9b554dd9aaef8fe2a1d8">joinMotion</a> (const std::chrono::duration&lt; Rep, Period &gt; &amp;timeout)</td></tr>
+<tr class="memdesc:a114a614ee78f9b554dd9aaef8fe2a1d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for the current motion to finish with a timeout. Throw any exceptions that occurred during the motion.  <a href="classfranky_1_1_robot.html#a114a614ee78f9b554dd9aaef8fe2a1d8">More...</a><br /></td></tr>
 <tr class="separator:a114a614ee78f9b554dd9aaef8fe2a1d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb00fbee84e00d09f3c8dedbfe5708f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#afb00fbee84e00d09f3c8dedbfe5708f4">pollMotion</a> ()</td></tr>
+<tr class="memdesc:afb00fbee84e00d09f3c8dedbfe5708f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the robot is still in motion. This function is non-blocking and returns immediately. Throw any exceptions that occurred during the motion.  <a href="classfranky_1_1_robot.html#afb00fbee84e00d09f3c8dedbfe5708f4">More...</a><br /></td></tr>
 <tr class="separator:afb00fbee84e00d09f3c8dedbfe5708f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a859611a82b5a23419dfb38d3e599d789"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a859611a82b5a23419dfb38d3e599d789">move</a> (const std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; franka::CartesianPose &gt;&gt; &amp;motion, bool async=false)</td></tr>
+<tr class="memdesc:a859611a82b5a23419dfb38d3e599d789"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given motion.  <a href="classfranky_1_1_robot.html#a859611a82b5a23419dfb38d3e599d789">More...</a><br /></td></tr>
 <tr class="separator:a859611a82b5a23419dfb38d3e599d789"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab380daea275bc2eee0e3c512632242ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#ab380daea275bc2eee0e3c512632242ed">move</a> (const std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; franka::CartesianVelocities &gt;&gt; &amp;motion, bool async=false)</td></tr>
+<tr class="memdesc:ab380daea275bc2eee0e3c512632242ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given motion.  <a href="classfranky_1_1_robot.html#ab380daea275bc2eee0e3c512632242ed">More...</a><br /></td></tr>
 <tr class="separator:ab380daea275bc2eee0e3c512632242ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a498c6e8a367669466d18c65a0515d8c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a498c6e8a367669466d18c65a0515d8c5">move</a> (const std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; franka::JointPositions &gt;&gt; &amp;motion, bool async=false)</td></tr>
+<tr class="memdesc:a498c6e8a367669466d18c65a0515d8c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given motion.  <a href="classfranky_1_1_robot.html#a498c6e8a367669466d18c65a0515d8c5">More...</a><br /></td></tr>
 <tr class="separator:a498c6e8a367669466d18c65a0515d8c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42f0813075efa3d3798caec78dc4f87a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a42f0813075efa3d3798caec78dc4f87a">move</a> (const std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; franka::JointVelocities &gt;&gt; &amp;motion, bool async=false)</td></tr>
+<tr class="memdesc:a42f0813075efa3d3798caec78dc4f87a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given motion.  <a href="classfranky_1_1_robot.html#a42f0813075efa3d3798caec78dc4f87a">More...</a><br /></td></tr>
 <tr class="separator:a42f0813075efa3d3798caec78dc4f87a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7dea936c9cd2ccbb5cd82edf88846f75"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a7dea936c9cd2ccbb5cd82edf88846f75">move</a> (const std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; franka::Torques &gt;&gt; &amp;motion, bool async=false)</td></tr>
+<tr class="memdesc:a7dea936c9cd2ccbb5cd82edf88846f75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given motion.  <a href="classfranky_1_1_robot.html#a7dea936c9cd2ccbb5cd82edf88846f75">More...</a><br /></td></tr>
 <tr class="separator:a7dea936c9cd2ccbb5cd82edf88846f75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:acae6f09215934cdc31bc5710fe395015"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#acae6f09215934cdc31bc5710fe395015">inverseKinematics</a> (const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;target, const <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;q0)</td></tr>
+<tr class="memdesc:acae6f09215934cdc31bc5710fe395015"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the inverse kinematics for the given target pose.  <a href="classfranky_1_1_robot.html#acae6f09215934cdc31bc5710fe395015">More...</a><br /></td></tr>
 <tr class="separator:acae6f09215934cdc31bc5710fe395015"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1be6bdcdcea8b3f1c81a9b607068ca03"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a1be6bdcdcea8b3f1c81a9b607068ca03">forwardKinematics</a> (const <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;q)</td></tr>
+<tr class="memdesc:a1be6bdcdcea8b3f1c81a9b607068ca03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the forward kinematics for the given joint positions.  <a href="classfranky_1_1_robot.html#a1be6bdcdcea8b3f1c81a9b607068ca03">More...</a><br /></td></tr>
 <tr class="separator:a1be6bdcdcea8b3f1c81a9b607068ca03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a92cd026dc21f2228fee51626a11fecce"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classfranky_1_1_kinematic_chain.html">KinematicChain</a>&lt; 7 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a92cd026dc21f2228fee51626a11fecce">kinematics</a></td></tr>
+<tr class="memdesc:a92cd026dc21f2228fee51626a11fecce"><td class="mdescLeft">&#160;</td><td class="mdescRight">The kinematic chain of the robot.  <a href="classfranky_1_1_robot.html#a92cd026dc21f2228fee51626a11fecce">More...</a><br /></td></tr>
 <tr class="separator:a92cd026dc21f2228fee51626a11fecce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
@@ -196,7 +225,7 @@ Static Public Attributes</h2></td></tr>
 <tr class="separator:a7bfd5d2c673b14344aaa46aa5fccc525"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1b801f4105946b9e7edd682204bcb19"><td class="memItemLeft" align="right" valign="top">static constexpr std::array&lt; double, 7 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#ac1b801f4105946b9e7edd682204bcb19">max_joint_jerk</a></td></tr>
 <tr class="separator:ac1b801f4105946b9e7edd682204bcb19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba9f9254a1af4fea2af758c450399c4c"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#aba9f9254a1af4fea2af758c450399c4c">degrees_of_freedoms</a> { 7 }</td></tr>
+<tr class="memitem:aba9f9254a1af4fea2af758c450399c4c"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#aba9f9254a1af4fea2af758c450399c4c">degrees_of_freedoms</a> {7}</td></tr>
 <tr class="separator:aba9f9254a1af4fea2af758c450399c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3155de462f5590cc67b2874acf846f53"><td class="memItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a3155de462f5590cc67b2874acf846f53">control_rate</a> {0.001}</td></tr>
 <tr class="separator:a3155de462f5590cc67b2874acf846f53"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -244,6 +273,12 @@ template&lt;size_t dims&gt; </div>
 </div><div class="memdoc">
 
 <p>Connects to a robot at the given FCI IP address. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fci_hostname</td><td>The hostname or IP address of the robot. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -280,6 +315,13 @@ template&lt;size_t dims&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fci_hostname</td><td>The hostname or IP address of the robot. </td></tr>
+    <tr><td class="paramname">params</td><td>The parameters for the robot. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -298,6 +340,8 @@ template&lt;size_t dims&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The type of the current control signal. </p>
 
 </div>
 </div>
@@ -324,6 +368,9 @@ template&lt;size_t dims&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Returns the current cartesian state of the robot. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current cartesian state of the robot. </dd></dl>
+
 </div>
 </div>
 <a id="acb900ba5048aa792f4c16150703d8a6b"></a>
@@ -349,6 +396,9 @@ template&lt;size_t dims&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Returns the current cartesian velocity of the robot. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current cartesian velocity of the robot. </dd></dl>
+
 </div>
 </div>
 <a id="a4aae0b9dbfe4d88615810d1743c43646"></a>
@@ -365,6 +415,9 @@ template&lt;size_t dims&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns the current joint positions of the robot. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current joint positions of the robot. </dd></dl>
 
 </div>
 </div>
@@ -383,6 +436,9 @@ template&lt;size_t dims&gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Returns the current joint state of the robot. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current joint state of the robot. </dd></dl>
+
 </div>
 </div>
 <a id="a2d118e16b5789a8442c486cca80ed3c6"></a>
@@ -399,6 +455,9 @@ template&lt;size_t dims&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns the current joint velocities of the robot. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current joint velocities of the robot. </dd></dl>
 
 </div>
 </div>
@@ -425,6 +484,9 @@ template&lt;size_t dims&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Returns the current pose of the robot. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current pose of the robot. </dd></dl>
+
 </div>
 </div>
 <a id="a25ca7e90c8a10848921fb35a378a7d33"></a>
@@ -441,6 +503,8 @@ template&lt;size_t dims&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The hostname of the robot. </p>
 
 </div>
 </div>
@@ -468,6 +532,15 @@ template&lt;size_t dims&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Calculate the forward kinematics for the given joint positions. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">q</td><td>The joint positions. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The forward kinematics. </dd></dl>
+
 </div>
 </div>
 <a id="ad3d89c3fd930ea6590d0abd10fbdb755"></a>
@@ -484,6 +557,9 @@ template&lt;size_t dims&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns whether the robot has errors. </p>
+<dl class="section return"><dt>Returns</dt><dd>Whether the robot has errors. </dd></dl>
 
 </div>
 </div>
@@ -521,6 +597,16 @@ template&lt;size_t dims&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Calculate the inverse kinematics for the given target pose. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target</td><td>The target pose. </td></tr>
+    <tr><td class="paramname">q0</td><td>The initial guess for the joint positions. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector containing the joint positions. </dd></dl>
+
 </div>
 </div>
 <a id="a971c769d2725f11c3437d28f9ad6de61"></a>
@@ -537,6 +623,8 @@ template&lt;size_t dims&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Whether the robot is currently in control, i.e. a motion is being executed. </p>
 
 </div>
 </div>
@@ -562,6 +650,8 @@ template&lt;size_t dims&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Wait for the current motion to finish. Throw any exceptions that occurred during the motion. </p>
 
 </div>
 </div>
@@ -590,6 +680,15 @@ template&lt;class Rep , class Period &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Wait for the current motion to finish with a timeout. Throw any exceptions that occurred during the motion. </p>
+<p>After the timeout has expired, the function will return false. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeout</td><td>The timeout to wait for the motion to finish. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the motion finished before the timeout expired. </dd></dl>
 
 </div>
 </div>
@@ -627,6 +726,15 @@ template&lt;class Rep , class Period &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Execute the given motion. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">motion</td><td>The motion to execute. </td></tr>
+    <tr><td class="paramname">async</td><td>Whether to execute the motion asynchronously. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="ab380daea275bc2eee0e3c512632242ed"></a>
@@ -662,6 +770,15 @@ template&lt;class Rep , class Period &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Execute the given motion. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">motion</td><td>The motion to execute. </td></tr>
+    <tr><td class="paramname">async</td><td>Whether to execute the motion asynchronously. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -699,6 +816,15 @@ template&lt;class Rep , class Period &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Execute the given motion. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">motion</td><td>The motion to execute. </td></tr>
+    <tr><td class="paramname">async</td><td>Whether to execute the motion asynchronously. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a42f0813075efa3d3798caec78dc4f87a"></a>
@@ -734,6 +860,15 @@ template&lt;class Rep , class Period &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Execute the given motion. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">motion</td><td>The motion to execute. </td></tr>
+    <tr><td class="paramname">async</td><td>Whether to execute the motion asynchronously. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -771,6 +906,15 @@ template&lt;class Rep , class Period &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Execute the given motion. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">motion</td><td>The motion to execute. </td></tr>
+    <tr><td class="paramname">async</td><td>Whether to execute the motion asynchronously. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="afb00fbee84e00d09f3c8dedbfe5708f4"></a>
@@ -796,6 +940,9 @@ template&lt;class Rep , class Period &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Check whether the robot is still in motion. This function is non-blocking and returns immediately. Throw any exceptions that occurred during the motion. </p>
+<dl class="section return"><dt>Returns</dt><dd>Whether the robot is still in motion. </dd></dl>
+
 </div>
 </div>
 <a id="a7389f6e088ba456dd689c093ee6640e0"></a>
@@ -813,6 +960,9 @@ template&lt;class Rep , class Period &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Calls the automatic error recovery of the robot and returns whether the recovery was successful. </p>
+<dl class="section return"><dt>Returns</dt><dd>Whether the recovery was successful. </dd></dl>
+
 </div>
 </div>
 <a id="a43f2f6dde0cca1f8c21fa6c1fb1b28c0"></a>
@@ -829,6 +979,9 @@ template&lt;class Rep , class Period &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns the current global relative dynamics factor of the robot. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current relative dynamics factor of the robot. </dd></dl>
 
 </div>
 </div>
@@ -869,6 +1022,17 @@ template&lt;class Rep , class Period &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set the collision behavior of the robot. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lower_torque_threshold</td><td>The lower torque threshold for the collision behavior in Nm. </td></tr>
+    <tr><td class="paramname">upper_torque_threshold</td><td>The upper torque threshold for the collision behavior in Nm. </td></tr>
+    <tr><td class="paramname">lower_force_threshold</td><td>The lower force threshold for the collision behavior in N. </td></tr>
+    <tr><td class="paramname">upper_force_threshold</td><td>The upper force threshold for the collision behavior in N. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -934,6 +1098,21 @@ template&lt;class Rep , class Period &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Set the collision behavior of the robot. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lower_torque_threshold_acceleration</td><td>The lower torque threshold for the collision behavior in Nm during acceleration. </td></tr>
+    <tr><td class="paramname">upper_torque_threshold_acceleration</td><td>The upper torque threshold for the collision behavior in Nm during acceleration. </td></tr>
+    <tr><td class="paramname">lower_torque_threshold_nominal</td><td>The lower torque threshold for the collision behavior in Nm during nominal operation. </td></tr>
+    <tr><td class="paramname">upper_torque_threshold_nominal</td><td>The upper torque threshold for the collision behavior in Nm during nominal operation. </td></tr>
+    <tr><td class="paramname">lower_force_threshold_acceleration</td><td>The lower force threshold for the collision behavior in N during acceleration. </td></tr>
+    <tr><td class="paramname">upper_force_threshold_acceleration</td><td>The upper force threshold for the collision behavior in N during acceleration. </td></tr>
+    <tr><td class="paramname">lower_force_threshold_nominal</td><td>The lower force threshold for the collision behavior in N during nominal operation. </td></tr>
+    <tr><td class="paramname">upper_force_threshold_nominal</td><td>The upper force threshold for the collision behavior in N during nominal operation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="aad586cb00aa450d5c51bc8260b9ad373"></a>
@@ -962,6 +1141,15 @@ template&lt;class Rep , class Period &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Set the collision behavior of the robot. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">torque_threshold</td><td>The torque threshold for the collision behavior in Nm. </td></tr>
+    <tr><td class="paramname">force_threshold</td><td>The force threshold for the collision behavior in N. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="ad19caa63f0237d39463e5a3dd0b3e793"></a>
@@ -980,6 +1168,14 @@ template&lt;class Rep , class Period &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Sets the global relative dynamics factor of the robot. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">relative_dynamics_factor</td><td>The relative dynamics factor to set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a8fd74136334e010a7695f31507fd8775"></a>
@@ -996,6 +1192,9 @@ template&lt;class Rep , class Period &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns the current state of the robot. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current state of the robot. </dd></dl>
 
 </div>
 </div>
@@ -1032,7 +1231,7 @@ template&lt;class Rep , class Period &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr size_t franky::Robot::degrees_of_freedoms { 7 }</td>
+          <td class="memname">constexpr size_t franky::Robot::degrees_of_freedoms {7}</td>
         </tr>
       </table>
   </td>
@@ -1072,6 +1271,8 @@ template&lt;class Rep , class Period &gt; </div>
 <div class="ttc" id="anamespacefranky_html_aead71bda923ed8b1060241612b057e99"><div class="ttname"><a href="namespacefranky.html#aead71bda923ed8b1060241612b057e99">franky::Euler</a></div><div class="ttdeci">Eigen::EulerAngles&lt; double, Eigen::EulerSystemXYZ &gt; Euler</div><div class="ttdef"><b>Definition:</b> types.hpp:11</div></div>
 <div class="ttc" id="anamespacefranky_html_afab9faf133666ada543b15236a8c4b5f"><div class="ttname"><a href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">franky::Affine</a></div><div class="ttdeci">Eigen::Affine3d Affine</div><div class="ttdef"><b>Definition:</b> types.hpp:13</div></div>
 </div><!-- fragment -->
+<p>The kinematic chain of the robot. </p>
+
 </div>
 </div>
 <a id="af72648c3440d9303c66568bec318149b"></a>
@@ -1160,7 +1361,7 @@ template&lt;class Rep , class Period &gt; </div>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    { 15.0, 7.5, 10.0, 12.5, 15.0, 20.0, 20.0 }</div>
+<div class="line">      {15.0, 7.5, 10.0, 12.5, 15.0, 20.0, 20.0}</div>
 <div class="line">  }</div>
 </div><!-- fragment -->
 </div>
@@ -1185,7 +1386,7 @@ template&lt;class Rep , class Period &gt; </div>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    { 7500.0, 3750.0, 5000.0, 6250.0, 7500.0, 10000.0, 10000.0 }</div>
+<div class="line">      {7500.0, 3750.0, 5000.0, 6250.0, 7500.0, 10000.0, 10000.0}</div>
 <div class="line">  }</div>
 </div><!-- fragment -->
 </div>
@@ -1210,7 +1411,7 @@ template&lt;class Rep , class Period &gt; </div>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    { 2.175, 2.175, 2.175, 2.175, 2.610, 2.610, 2.610 }</div>
+<div class="line">      {2.175, 2.175, 2.175, 2.175, 2.610, 2.610, 2.610}</div>
 <div class="line">  }</div>
 </div><!-- fragment -->
 </div>

@@ -75,11 +75,15 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Joint state of a robot.  
+ <a href="classfranky_1_1_joint_state.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="joint__state_8hpp_source.html">joint_state.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a58de323134a7b11599dafbcb3d9fcf1c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_joint_state.html#a58de323134a7b11599dafbcb3d9fcf1c">JointState</a> (<a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> <a class="el" href="classfranky_1_1_joint_state.html#addd9bedce775d28cef880644b635ccf0">position</a>)</td></tr>
+<tr class="memdesc:a58de323134a7b11599dafbcb3d9fcf1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a joint state with the given joint positions and zero velocities.  <a href="classfranky_1_1_joint_state.html#a58de323134a7b11599dafbcb3d9fcf1c">More...</a><br /></td></tr>
 <tr class="separator:a58de323134a7b11599dafbcb3d9fcf1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4a1bcb1c1f08f59f160c64f05462c1b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_joint_state.html#ad4a1bcb1c1f08f59f160c64f05462c1b">JointState</a> (<a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> <a class="el" href="classfranky_1_1_joint_state.html#addd9bedce775d28cef880644b635ccf0">position</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> <a class="el" href="classfranky_1_1_joint_state.html#a5210d159dcb06ea28000f90060acf100">velocity</a>)</td></tr>
 <tr class="separator:ad4a1bcb1c1f08f59f160c64f05462c1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -88,11 +92,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a330222fd0fea56aef1c1a7a6eb918e9b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_joint_state.html#a330222fd0fea56aef1c1a7a6eb918e9b">JointState</a> ()=default</td></tr>
 <tr class="separator:a330222fd0fea56aef1c1a7a6eb918e9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:addd9bedce775d28cef880644b635ccf0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_joint_state.html#addd9bedce775d28cef880644b635ccf0">position</a> () const</td></tr>
+<tr class="memdesc:addd9bedce775d28cef880644b635ccf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The position component of the state.  <a href="classfranky_1_1_joint_state.html#addd9bedce775d28cef880644b635ccf0">More...</a><br /></td></tr>
 <tr class="separator:addd9bedce775d28cef880644b635ccf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5210d159dcb06ea28000f90060acf100"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_joint_state.html#a5210d159dcb06ea28000f90060acf100">velocity</a> () const</td></tr>
+<tr class="memdesc:a5210d159dcb06ea28000f90060acf100"><td class="mdescLeft">&#160;</td><td class="mdescRight">The velocity component of the state.  <a href="classfranky_1_1_joint_state.html#a5210d159dcb06ea28000f90060acf100">More...</a><br /></td></tr>
 <tr class="separator:a5210d159dcb06ea28000f90060acf100"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Joint state of a robot. </p>
+<p>This class encapsulates the joint state of a robot, which comprises the joint positions and the joint velocities. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a58de323134a7b11599dafbcb3d9fcf1c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a58de323134a7b11599dafbcb3d9fcf1c">&#9670;&nbsp;</a></span>JointState() <span class="overload">[1/4]</span></h2>
 
@@ -116,6 +125,14 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Construct a joint state with the given joint positions and zero velocities. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>The joint positions. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -152,6 +169,13 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>The joint positions. </td></tr>
+    <tr><td class="paramname">velocity</td><td>The joint velocities. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -230,6 +254,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>The position component of the state. </p>
+
 </div>
 </div>
 <a id="a5210d159dcb06ea28000f90060acf100"></a>
@@ -254,6 +280,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>The velocity component of the state. </p>
 
 </div>
 </div>
