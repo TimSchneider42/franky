@@ -75,6 +75,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Parameters for the Cartesian impedance motion.  
+ <a href="structfranky_1_1_cartesian_impedance_motion_1_1_params.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="cartesian__impedance__motion_8hpp_source.html">cartesian_impedance_motion.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for franky::CartesianImpedanceMotion::Params:</div>
@@ -82,7 +85,7 @@ Inheritance diagram for franky::CartesianImpedanceMotion::Params:</div>
  <div class="center">
   <img src="structfranky_1_1_cartesian_impedance_motion_1_1_params.png" usemap="#franky::CartesianImpedanceMotion::Params_map" alt=""/>
   <map id="franky::CartesianImpedanceMotion::Params_map" name="franky::CartesianImpedanceMotion::Params_map">
-<area href="structfranky_1_1_impedance_motion_1_1_params.html" alt="franky::ImpedanceMotion::Params" shape="rect" coords="0,0,255,24"/>
+<area href="structfranky_1_1_impedance_motion_1_1_params.html" title="Parameters for the impedance motion." alt="franky::ImpedanceMotion::Params" shape="rect" coords="0,0,255,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -104,7 +107,17 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:aaa14fc3684c6a91038cf13a86dd865f9 inherit pub_attribs_structfranky_1_1_impedance_motion_1_1_params"><td class="memItemLeft" align="right" valign="top">Eigen::Vector&lt; bool, 6 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_impedance_motion_1_1_params.html#aaa14fc3684c6a91038cf13a86dd865f9">force_constraints_active</a> {Eigen::Vector&lt;bool, 6&gt;::Zero()}</td></tr>
 <tr class="separator:aaa14fc3684c6a91038cf13a86dd865f9 inherit pub_attribs_structfranky_1_1_impedance_motion_1_1_params"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Data Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Parameters for the Cartesian impedance motion. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structfranky_1_1_impedance_motion_1_1_params.html" title="Parameters for the impedance motion.">ImpedanceMotion::Params</a></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">return_when_finished</td><td>Whether to end the motion when the target is reached or keep holding the last target. </td></tr>
+    <tr><td class="paramname">finish_wait_factor</td><td>How long to wait after the motion has finished. This factor gets multiplied with the duration of the motion to obtain the total motion duration. After the motion duration has expired, the motion will hold the target until the total motion duration is reached. E.g. a factor of 1.2 will hold the target for 20% longer than the motion duration. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="acc7d37d06d998daec4c4a7c8dcfcf3cb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acc7d37d06d998daec4c4a7c8dcfcf3cb">&#9670;&nbsp;</a></span>finish_wait_factor</h2>
 

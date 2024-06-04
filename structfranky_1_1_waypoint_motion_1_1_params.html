@@ -75,6 +75,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Parameters for the waypoint motion.  
+ <a href="structfranky_1_1_waypoint_motion_1_1_params.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="waypoint__motion_8hpp_source.html">waypoint_motion.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for franky::WaypointMotion&lt; ControlSignalType, TargetType &gt;::Params:</div>
@@ -82,7 +85,7 @@ Inheritance diagram for franky::WaypointMotion&lt; ControlSignalType, TargetType
  <div class="center">
   <img src="structfranky_1_1_waypoint_motion_1_1_params.png" usemap="#franky::WaypointMotion_3C_20ControlSignalType_2C_20TargetType_20_3E::Params_map" alt=""/>
   <map id="franky::WaypointMotion_3C_20ControlSignalType_2C_20TargetType_20_3E::Params_map" name="franky::WaypointMotion_3C_20ControlSignalType_2C_20TargetType_20_3E::Params_map">
-<area href="structfranky_1_1_cartesian_waypoint_motion_1_1_params.html" alt="franky::CartesianWaypointMotion::Params" shape="rect" coords="0,56,393,80"/>
+<area href="structfranky_1_1_cartesian_waypoint_motion_1_1_params.html" title="Parameters for the Cartesian waypoint motion." alt="franky::CartesianWaypointMotion::Params" shape="rect" coords="0,56,393,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -93,7 +96,19 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a9fa647a0354691ad7eed675c1aaa7fe1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_waypoint_motion_1_1_params.html#a9fa647a0354691ad7eed675c1aaa7fe1">return_when_finished</a> {true}</td></tr>
 <tr class="separator:a9fa647a0354691ad7eed675c1aaa7fe1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Data Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;typename ControlSignalType, typename TargetType&gt;<br />
+struct franky::WaypointMotion&lt; ControlSignalType, TargetType &gt;::Params</h3>
+
+<p>Parameters for the waypoint motion. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">relative_dynamics_factor</td><td>The relative dynamics factor for this motion. This factor will get multiplied with the robot's global dynamics factor to get the actual dynamics factor for this motion. </td></tr>
+    <tr><td class="paramname">return_when_finished</td><td>Whether to end the motion when the last waypoint is reached or keep holding the last target. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="a27f1c313e9786eec77be60871685d1ae"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a27f1c313e9786eec77be60871685d1ae">&#9670;&nbsp;</a></span>relative_dynamics_factor</h2>
 

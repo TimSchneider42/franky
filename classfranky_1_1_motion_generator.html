@@ -76,6 +76,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Helper class for handling motions and reactions.  
+ <a href="classfranky_1_1_motion_generator.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="motion__generator_8hpp_source.html">motion_generator.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -83,22 +86,33 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4a2a46bb73d7963546a2c3c4435e7fd3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#a4a2a46bb73d7963546a2c3c4435e7fd3">MotionGenerator</a> (<a class="el" href="classfranky_1_1_robot.html">Robot</a> *robot, std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;&gt; initial_motion)</td></tr>
 <tr class="separator:a4a2a46bb73d7963546a2c3c4435e7fd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59afd2fd02e86eda578b757cdaafcafc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#a59afd2fd02e86eda578b757cdaafcafc">operator()</a> (const franka::RobotState &amp;robot_state, franka::Duration period)</td></tr>
+<tr class="memdesc:a59afd2fd02e86eda578b757cdaafcafc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the motion generator and get the next control signal.  <a href="classfranky_1_1_motion_generator.html#a59afd2fd02e86eda578b757cdaafcafc">More...</a><br /></td></tr>
 <tr class="separator:a59afd2fd02e86eda578b757cdaafcafc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a051feee2d761e6613886919357eb9a42"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#a051feee2d761e6613886919357eb9a42">registerUpdateCallback</a> (const std::function&lt; void(const franka::RobotState &amp;, franka::Duration, double)&gt; &amp;callback)</td></tr>
+<tr class="memdesc:a051feee2d761e6613886919357eb9a42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a callback that is called in every step of the motion.  <a href="classfranky_1_1_motion_generator.html#a051feee2d761e6613886919357eb9a42">More...</a><br /></td></tr>
 <tr class="separator:a051feee2d761e6613886919357eb9a42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08194dae167f7252098a0c859fd996b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#a08194dae167f7252098a0c859fd996b6">updateMotion</a> (std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;&gt; new_motion)</td></tr>
+<tr class="memdesc:a08194dae167f7252098a0c859fd996b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the current motion.  <a href="classfranky_1_1_motion_generator.html#a08194dae167f7252098a0c859fd996b6">More...</a><br /></td></tr>
 <tr class="separator:a08194dae167f7252098a0c859fd996b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0abb8a6c37b8ab8208810bb58250bf8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#ad0abb8a6c37b8ab8208810bb58250bf8">has_new_motion</a> ()</td></tr>
+<tr class="memdesc:ad0abb8a6c37b8ab8208810bb58250bf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether a new motion is available.  <a href="classfranky_1_1_motion_generator.html#ad0abb8a6c37b8ab8208810bb58250bf8">More...</a><br /></td></tr>
 <tr class="separator:ad0abb8a6c37b8ab8208810bb58250bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa6cf6fa7c6af2d7b081b19d569c2e0f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#aaa6cf6fa7c6af2d7b081b19d569c2e0f">resetTimeUnsafe</a> ()</td></tr>
+<tr class="memdesc:aaa6cf6fa7c6af2d7b081b19d569c2e0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the time of the motion generator without locking the mutex.  <a href="classfranky_1_1_motion_generator.html#aaa6cf6fa7c6af2d7b081b19d569c2e0f">More...</a><br /></td></tr>
 <tr class="separator:aaa6cf6fa7c6af2d7b081b19d569c2e0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a2dceaaa3e924424fc57f68b5e1955712"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#a2dceaaa3e924424fc57f68b5e1955712">REACTION_RECURSION_LIMIT</a> = 8</td></tr>
+<tr class="memdesc:a2dceaaa3e924424fc57f68b5e1955712"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum recursion limit for reactions. After more than this number of reactions are fired in a single step, the motion generator will throw a <a class="el" href="structfranky_1_1_reaction_recursion_exception.html" title="Exception thrown when the reaction recursion limit (8) is reached.">ReactionRecursionException</a>.  <a href="classfranky_1_1_motion_generator.html#a2dceaaa3e924424fc57f68b5e1955712">More...</a><br /></td></tr>
 <tr class="separator:a2dceaaa3e924424fc57f68b5e1955712"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;typename ControlSignalType&gt;<br />
+class franky::MotionGenerator&lt; ControlSignalType &gt;</h3>
+
+<p>Helper class for handling motions and reactions. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a4a2a46bb73d7963546a2c3c4435e7fd3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4a2a46bb73d7963546a2c3c4435e7fd3">&#9670;&nbsp;</a></span>MotionGenerator()</h2>
 
@@ -134,6 +148,13 @@ template&lt;typename ControlSignalType &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">robot</td><td>The robot instance. </td></tr>
+    <tr><td class="paramname">initial_motion</td><td>The initial motion. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -151,6 +172,8 @@ template&lt;typename ControlSignalType &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Whether a new motion is available. </p>
 
 </div>
 </div>
@@ -182,6 +205,16 @@ template&lt;typename ControlSignalType &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Update the motion generator and get the next control signal. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">robot_state</td><td>The current robot state. </td></tr>
+    <tr><td class="paramname">period</td><td>The time step. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The control signal for the robot. </dd></dl>
+
 </div>
 </div>
 <a id="a051feee2d761e6613886919357eb9a42"></a>
@@ -210,6 +243,14 @@ template&lt;typename ControlSignalType &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Register a callback that is called in every step of the motion. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">callback</td><td>The callback to register. Callbacks are called with the robot state, the time step [s], the relative time [s] and the control signal computed in this step. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="aaa6cf6fa7c6af2d7b081b19d569c2e0f"></a>
@@ -225,6 +266,8 @@ template&lt;typename ControlSignalType &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Reset the time of the motion generator without locking the mutex. </p>
 
 </div>
 </div>
@@ -245,6 +288,14 @@ template&lt;typename ControlSignalType &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Update the current motion. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">new_motion</td><td>The new motion. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -270,6 +321,8 @@ template&lt;typename ControlSignalType &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Maximum recursion limit for reactions. After more than this number of reactions are fired in a single step, the motion generator will throw a <a class="el" href="structfranky_1_1_reaction_recursion_exception.html" title="Exception thrown when the reaction recursion limit (8) is reached.">ReactionRecursionException</a>. </p>
 
 </div>
 </div>

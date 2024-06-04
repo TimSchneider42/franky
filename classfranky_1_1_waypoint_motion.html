@@ -77,6 +77,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>A motion following multiple waypoints in a time-optimal way. Works with arbitrary initial conditions.  
+ <a href="classfranky_1_1_waypoint_motion.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="waypoint__motion_8hpp_source.html">waypoint_motion.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for franky::WaypointMotion&lt; ControlSignalType, TargetType &gt;:</div>
@@ -84,13 +87,14 @@ Inheritance diagram for franky::WaypointMotion&lt; ControlSignalType, TargetType
  <div class="center">
   <img src="classfranky_1_1_waypoint_motion.png" usemap="#franky::WaypointMotion_3C_20ControlSignalType_2C_20TargetType_20_3E_map" alt=""/>
   <map id="franky::WaypointMotion_3C_20ControlSignalType_2C_20TargetType_20_3E_map" name="franky::WaypointMotion_3C_20ControlSignalType_2C_20TargetType_20_3E_map">
-<area href="classfranky_1_1_motion.html" alt="franky::Motion&lt; ControlSignalType &gt;" shape="rect" coords="0,0,345,24"/>
+<area href="classfranky_1_1_motion.html" title="Base class for motions." alt="franky::Motion&lt; ControlSignalType &gt;" shape="rect" coords="0,0,345,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_waypoint_motion_1_1_params.html">Params</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameters for the waypoint motion.  <a href="structfranky_1_1_waypoint_motion_1_1_params.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -99,18 +103,25 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a988a4be1ead6c7231da77169316c67eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classfranky_1_1_motion"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classfranky_1_1_motion')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classfranky_1_1_motion.html">franky::Motion&lt; ControlSignalType &gt;</a></td></tr>
 <tr class="memitem:acb478c7c3d04e6c9e669223c5b652c6a inherit pub_methods_classfranky_1_1_motion"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#acb478c7c3d04e6c9e669223c5b652c6a">addReaction</a> (std::shared_ptr&lt; <a class="el" href="classfranky_1_1_reaction.html">Reaction</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;&gt; reaction)</td></tr>
+<tr class="memdesc:acb478c7c3d04e6c9e669223c5b652c6a inherit pub_methods_classfranky_1_1_motion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a reaction to the motion.  <a href="classfranky_1_1_motion.html#acb478c7c3d04e6c9e669223c5b652c6a">More...</a><br /></td></tr>
 <tr class="separator:acb478c7c3d04e6c9e669223c5b652c6a inherit pub_methods_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a025aef8e6422fa295abc6ef15f3d237b inherit pub_methods_classfranky_1_1_motion"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#a025aef8e6422fa295abc6ef15f3d237b">addReactionFront</a> (std::shared_ptr&lt; <a class="el" href="classfranky_1_1_reaction.html">Reaction</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;&gt; reaction)</td></tr>
+<tr class="memdesc:a025aef8e6422fa295abc6ef15f3d237b inherit pub_methods_classfranky_1_1_motion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a reaction to the front of the reaction list.  <a href="classfranky_1_1_motion.html#a025aef8e6422fa295abc6ef15f3d237b">More...</a><br /></td></tr>
 <tr class="separator:a025aef8e6422fa295abc6ef15f3d237b inherit pub_methods_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed40663a195eb68318799d19451c5a0d inherit pub_methods_classfranky_1_1_motion"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classfranky_1_1_reaction.html">Reaction</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#aed40663a195eb68318799d19451c5a0d">reactions</a> ()</td></tr>
+<tr class="memdesc:aed40663a195eb68318799d19451c5a0d inherit pub_methods_classfranky_1_1_motion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Currently registered reactions of the motion.  <a href="classfranky_1_1_motion.html#aed40663a195eb68318799d19451c5a0d">More...</a><br /></td></tr>
 <tr class="separator:aed40663a195eb68318799d19451c5a0d inherit pub_methods_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05ed2a4f6dbcd406f9298a7c8e4e76c2 inherit pub_methods_classfranky_1_1_motion"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#a05ed2a4f6dbcd406f9298a7c8e4e76c2">registerCallback</a> (<a class="el" href="classfranky_1_1_motion.html#a88b516f697c02d377eea35729f44af39">CallbackType</a> callback)</td></tr>
+<tr class="memdesc:a05ed2a4f6dbcd406f9298a7c8e4e76c2 inherit pub_methods_classfranky_1_1_motion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a callback that is called in every step of the motion.  <a href="classfranky_1_1_motion.html#a05ed2a4f6dbcd406f9298a7c8e4e76c2">More...</a><br /></td></tr>
 <tr class="separator:a05ed2a4f6dbcd406f9298a7c8e4e76c2 inherit pub_methods_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6eb7e754962dd60f750c904f8f5ab7ed inherit pub_methods_classfranky_1_1_motion"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#a6eb7e754962dd60f750c904f8f5ab7ed">init</a> (<a class="el" href="classfranky_1_1_robot.html">Robot</a> *<a class="el" href="classfranky_1_1_motion.html#a67c0978040846078aa72d0580c30167e">robot</a>, const franka::RobotState &amp;robot_state, const std::optional&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &amp;previous_command)</td></tr>
+<tr class="memdesc:a6eb7e754962dd60f750c904f8f5ab7ed inherit pub_methods_classfranky_1_1_motion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the motion.  <a href="classfranky_1_1_motion.html#a6eb7e754962dd60f750c904f8f5ab7ed">More...</a><br /></td></tr>
 <tr class="separator:a6eb7e754962dd60f750c904f8f5ab7ed inherit pub_methods_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a996dec8dc62e73a512d8ecd6511f0fb3 inherit pub_methods_classfranky_1_1_motion"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#a996dec8dc62e73a512d8ecd6511f0fb3">nextCommand</a> (const franka::RobotState &amp;robot_state, franka::Duration time_step, double rel_time, double abs_time, const std::optional&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &amp;previous_command)</td></tr>
+<tr class="memdesc:a996dec8dc62e73a512d8ecd6511f0fb3 inherit pub_methods_classfranky_1_1_motion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the next command of the motion.  <a href="classfranky_1_1_motion.html#a996dec8dc62e73a512d8ecd6511f0fb3">More...</a><br /></td></tr>
 <tr class="separator:a996dec8dc62e73a512d8ecd6511f0fb3 inherit pub_methods_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac96066e11fe1c8abe72492acec4f06de inherit pub_methods_classfranky_1_1_motion"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#ac96066e11fe1c8abe72492acec4f06de">checkAndCallReactions</a> (const franka::RobotState &amp;robot_state, double rel_time, double abs_time)</td></tr>
+<tr class="memdesc:ac96066e11fe1c8abe72492acec4f06de inherit pub_methods_classfranky_1_1_motion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check and call reactions.  <a href="classfranky_1_1_motion.html#ac96066e11fe1c8abe72492acec4f06de">More...</a><br /></td></tr>
 <tr class="separator:ac96066e11fe1c8abe72492acec4f06de inherit pub_methods_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
@@ -143,7 +154,14 @@ Additional Inherited Members</h2></td></tr>
 <div class="textblock"><h3>template&lt;typename ControlSignalType, typename TargetType&gt;<br />
 class franky::WaypointMotion&lt; ControlSignalType, TargetType &gt;</h3>
 
-<p>A motion following multiple waypoints (with intermediate zero velocity) in a time-optimal way. Works with arbitrary initial conditions. </p>
+<p>A motion following multiple waypoints in a time-optimal way. Works with arbitrary initial conditions. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">ControlSignalType</td><td>The type of the control signal. Either franka::Torques, franka::JointVelocities, franka::CartesianVelocities, franka::JointPositions or franka::CartesianPose. </td></tr>
+    <tr><td class="paramname">TargetType</td><td>The type of the target of the waypoints. </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a988a4be1ead6c7231da77169316c67eb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a988a4be1ead6c7231da77169316c67eb">&#9670;&nbsp;</a></span>WaypointMotion()</h2>
@@ -180,6 +198,13 @@ template&lt;typename ControlSignalType , typename TargetType &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">waypoints</td><td>The waypoints to follow. </td></tr>
+    <tr><td class="paramname">params</td><td>Parameters for the motion. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

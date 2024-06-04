@@ -76,6 +76,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>A condition on the robot state.  
+ <a href="classfranky_1_1_condition.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="condition_8hpp_source.html">condition.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
@@ -88,14 +91,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:adf78d10504bce34caef779390e108644"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_condition.html#adf78d10504bce34caef779390e108644">Condition</a> (<a class="el" href="classfranky_1_1_condition.html#a9125e1116845be84750cd88f76f76848">CheckFunc</a> check_func, std::string <a class="el" href="classfranky_1_1_condition.html#afaae7e02e68860afdf7c40a75bf91d25">repr</a>=&quot;NULL&quot;)</td></tr>
 <tr class="separator:adf78d10504bce34caef779390e108644"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af73a963ea6eab3309116b399b9726c76"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_condition.html#af73a963ea6eab3309116b399b9726c76">Condition</a> (bool constant_value)</td></tr>
+<tr class="memdesc:af73a963ea6eab3309116b399b9726c76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit constructor for constant conditions.  <a href="classfranky_1_1_condition.html#af73a963ea6eab3309116b399b9726c76">More...</a><br /></td></tr>
 <tr class="separator:af73a963ea6eab3309116b399b9726c76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43d9ddead58203dae3a790ce950dbccf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_condition.html#a43d9ddead58203dae3a790ce950dbccf">operator()</a> (const franka::RobotState &amp;robot_state, double rel_time, double abs_time) const</td></tr>
-<tr class="memdesc:a43d9ddead58203dae3a790ce950dbccf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the condition is fulfilled.  <a href="classfranky_1_1_condition.html#a43d9ddead58203dae3a790ce950dbccf">More...</a><br /></td></tr>
+<tr class="memdesc:a43d9ddead58203dae3a790ce950dbccf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the condition is met.  <a href="classfranky_1_1_condition.html#a43d9ddead58203dae3a790ce950dbccf">More...</a><br /></td></tr>
 <tr class="separator:a43d9ddead58203dae3a790ce950dbccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afaae7e02e68860afdf7c40a75bf91d25"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_condition.html#afaae7e02e68860afdf7c40a75bf91d25">repr</a> () const</td></tr>
+<tr class="memdesc:afaae7e02e68860afdf7c40a75bf91d25"><td class="mdescLeft">&#160;</td><td class="mdescRight">The string representation of the condition.  <a href="classfranky_1_1_condition.html#afaae7e02e68860afdf7c40a75bf91d25">More...</a><br /></td></tr>
 <tr class="separator:afaae7e02e68860afdf7c40a75bf91d25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A condition on the robot state. </p>
+<p>This class defines a condition on the robot state, which can be used to define a condition for a reaction in a motion. Conditions support logical operations (&amp;&amp;, ||, ==, !=, !) and can be combined to form more complex conditions. </p>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a9125e1116845be84750cd88f76f76848"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9125e1116845be84750cd88f76f76848">&#9670;&nbsp;</a></span>CheckFunc</h2>
 
@@ -144,6 +152,13 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">check_func</td><td>A function that returns true if the condition is met. </td></tr>
+    <tr><td class="paramname">repr</td><td>A string representation of the condition. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -162,6 +177,14 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Implicit constructor for constant conditions. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">constant_value</td><td>The constant value of the condition. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -206,7 +229,16 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Check if the condition is fulfilled. </p>
+<p>Check if the condition is met. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">robot_state</td><td>The current robot state. </td></tr>
+    <tr><td class="paramname">rel_time</td><td>The time since the start of the current motion. </td></tr>
+    <tr><td class="paramname">abs_time</td><td>The time since the start of the current chain of motions. This value measures the time since the robot started moving, and is only reset if a motion expires without being replaced by a new motion. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the condition is met. </dd></dl>
 
 </div>
 </div>
@@ -232,6 +264,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>The string representation of the condition. </p>
 
 </div>
 </div>

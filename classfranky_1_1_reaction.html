@@ -75,6 +75,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>A reaction that can be attached to a motion.  
+ <a href="classfranky_1_1_reaction.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="reaction_8hpp_source.html">reaction.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -84,13 +87,22 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2bf1b2f2d5450e197e76f6d556694954"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_reaction.html#a2bf1b2f2d5450e197e76f6d556694954">Reaction</a> (<a class="el" href="classfranky_1_1_condition.html">Condition</a> <a class="el" href="classfranky_1_1_reaction.html#a54f43da1036cd95e187f54e00a93b083">condition</a>, const MotionFunc &amp;motion_func)</td></tr>
 <tr class="separator:a2bf1b2f2d5450e197e76f6d556694954"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1906a5e500902ca4e1ac75e7fbd15947"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_reaction.html#a1906a5e500902ca4e1ac75e7fbd15947">operator()</a> (const franka::RobotState &amp;robot_state, double rel_time, double abs_time)</td></tr>
+<tr class="memdesc:a1906a5e500902ca4e1ac75e7fbd15947"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the new motion if the condition is met.  <a href="classfranky_1_1_reaction.html#a1906a5e500902ca4e1ac75e7fbd15947">More...</a><br /></td></tr>
 <tr class="separator:a1906a5e500902ca4e1ac75e7fbd15947"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54f43da1036cd95e187f54e00a93b083"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_reaction.html#a54f43da1036cd95e187f54e00a93b083">condition</a> (const franka::RobotState &amp;robot_state, double rel_time, double abs_time) const</td></tr>
+<tr class="memdesc:a54f43da1036cd95e187f54e00a93b083"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the condition is met.  <a href="classfranky_1_1_reaction.html#a54f43da1036cd95e187f54e00a93b083">More...</a><br /></td></tr>
 <tr class="separator:a54f43da1036cd95e187f54e00a93b083"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af868bc4dd1928724d3408de3d203cb68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_reaction.html#af868bc4dd1928724d3408de3d203cb68">registerCallback</a> (std::function&lt; void(const franka::RobotState &amp;, double, double)&gt; callback)</td></tr>
+<tr class="memdesc:af868bc4dd1928724d3408de3d203cb68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a callback that is called when the condition of this reaction is met.  <a href="classfranky_1_1_reaction.html#af868bc4dd1928724d3408de3d203cb68">More...</a><br /></td></tr>
 <tr class="separator:af868bc4dd1928724d3408de3d203cb68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;typename ControlSignalType&gt;<br />
+class franky::Reaction&lt; ControlSignalType &gt;</h3>
+
+<p>A reaction that can be attached to a motion. </p>
+<p>This class defines a reaction in a motion, which can be used to change the motion based on the robot state. Reactions consist of a condition and a motion that replaces the current motion immediately if the condition is met. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a202c668ee83dc961a6d5992e81929426"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a202c668ee83dc961a6d5992e81929426">&#9670;&nbsp;</a></span>Reaction() <span class="overload">[1/2]</span></h2>
 
@@ -126,6 +138,13 @@ template&lt;typename ControlSignalType &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">condition</td><td>The condition that must be met for the reaction to be executed. </td></tr>
+    <tr><td class="paramname">new_motion</td><td>The motion that is executed if the condition is met. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -164,6 +183,13 @@ template&lt;typename ControlSignalType &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">condition</td><td>The condition that must be met for the reaction to be executed. </td></tr>
+    <tr><td class="paramname">motion_func</td><td>A function that returns a motion that is executed if the condition is met. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -210,6 +236,17 @@ template&lt;typename ControlSignalType &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Check if the condition is met. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">robot_state</td><td>The current robot state. </td></tr>
+    <tr><td class="paramname">rel_time</td><td>The time since the start of the current motion. </td></tr>
+    <tr><td class="paramname">abs_time</td><td>The time since the start of the current chain of motions. This value measures the time since the robot started moving, and is only reset if a motion expires without being replaced by a new motion. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the condition is met, false otherwise. </dd></dl>
+
 </div>
 </div>
 <a id="a1906a5e500902ca4e1ac75e7fbd15947"></a>
@@ -246,6 +283,17 @@ template&lt;typename ControlSignalType &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Get the new motion if the condition is met. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">robot_state</td><td>The current robot state. </td></tr>
+    <tr><td class="paramname">rel_time</td><td>The time since the start of the current motion. </td></tr>
+    <tr><td class="paramname">abs_time</td><td>The time since the start of the current chain of motions. This value measures the time since the robot started moving, and is only reset if a motion expires without being replaced by a new motion. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The new motion if the condition is met, or nullptr otherwise. </dd></dl>
+
 </div>
 </div>
 <a id="af868bc4dd1928724d3408de3d203cb68"></a>
@@ -265,6 +313,14 @@ template&lt;typename ControlSignalType &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Register a callback that is called when the condition of this reaction is met. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">callback</td><td>The callback to register. Callbacks are called with the robot state, the relative time [s] and the absolute time [s]. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
