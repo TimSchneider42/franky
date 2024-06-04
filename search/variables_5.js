@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['gripper_5fforce_559',['gripper_force',['../classfranky_1_1_gripper.html#ac8655b190983beceb4a2c6b6ed633e51',1,'franky::Gripper']]],
-  ['gripper_5fspeed_560',['gripper_speed',['../classfranky_1_1_gripper.html#abb08f1b007f8b642e8081b356dc8bae3',1,'franky::Gripper']]]
+  ['joint_5findex_554',['joint_index',['../structfranky_1_1_kinematics_1_1_null_space_handling.html#a2879a0c9f1a8c7214ea328e9970c9907',1,'franky::Kinematics::NullSpaceHandling']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['control_5frate_543',['control_rate',['../classfranky_1_1_robot.html#a3155de462f5590cc67b2874acf846f53',1,'franky::Robot']]],
-  ['controller_5fmode_544',['controller_mode',['../structfranky_1_1_robot_1_1_params.html#a598cc77f3116a601bac482ddc4c74083',1,'franky::Robot::Params']]]
+  ['control_5frate_538',['control_rate',['../classfranky_1_1_robot.html#a3155de462f5590cc67b2874acf846f53',1,'franky::Robot']]],
+  ['controller_5fmode_539',['controller_mode',['../structfranky_1_1_robot_1_1_params.html#a598cc77f3116a601bac482ddc4c74083',1,'franky::Robot::Params']]]
 ];

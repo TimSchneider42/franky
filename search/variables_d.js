@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['s_588',['s',['../structfranky_1_1_trajectory_state.html#aaab6eb7aab3c77d80280033900e22bd7',1,'franky::TrajectoryState']]],
-  ['states_589',['states',['../structfranky_1_1_trajectory.html#a76f724098ba2c0ef47a8c5456d44827b',1,'franky::Trajectory']]]
+  ['value_584',['value',['../structfranky_1_1_kinematics_1_1_null_space_handling.html#a6896c0ba84d77e443908e15ff5b24f0a',1,'franky::Kinematics::NullSpaceHandling']]]
 ];

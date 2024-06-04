@@ -361,7 +361,7 @@ $(function() {
 </div><!-- fragment --><p>By calling <code>Robot.join_motion</code> the main thread can be synchronized with the motion thread, as it will block until the robot finishes its motion. </p><div class="fragment"><div class="line">robot.join_motion()</div>
 </div><!-- fragment --><p>Note that when exceptions occur during the asynchronous execution of a motion, they will not be thrown immediately. Instead, the control thread stores the exception and terminates. The next time <code>Robot.join_motion</code> or <code>Robot.move</code> are called, they will throw the stored exception in the main thread. Hence, after an asynchronous motion has finished, make sure to call <code>Robot.join_motion</code> to ensure being notified of any exceptions that occurred during the motion.</p>
 <h3>Gripper</h3>
-<p>In the <code><a class="el" href="classfranky_1_1_gripper.html">franky::Gripper</a></code> class, the default gripper force and gripper speed can be set. Then, additionally to the libfranka commands, the following helper methods can be used:</p>
+<p>In the <code><a class="el" href="classfranky_1_1_gripper.html" title="A wrapper around the franka::Gripper class that adds asynchronous functionality.">franky::Gripper</a></code> class, the default gripper force and gripper speed can be set. Then, additionally to the libfranka commands, the following helper methods can be used:</p>
 <div class="fragment"><div class="line"> {c++}</div>
 <div class="line">auto gripper = Gripper(&quot;172.16.0.2&quot;);</div>
 <div class="line"> </div>

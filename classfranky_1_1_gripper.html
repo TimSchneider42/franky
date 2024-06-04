@@ -69,13 +69,14 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classfranky_1_1_gripper-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">franky::Gripper Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>A wrapper around the franka::Gripper class that adds asynchronous functionality.  
+ <a href="classfranky_1_1_gripper.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="gripper_8hpp_source.html">gripper.hpp</a>&gt;</code></p>
 <div class="dynheader">
@@ -87,52 +88,46 @@ Inheritance diagram for franky::Gripper:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9858ad58925f5fb798d09f6ab4495bf3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a9858ad58925f5fb798d09f6ab4495bf3">Gripper</a> (const std::string &amp;fci_hostname, double speed=0.04, double force=20.0)</td></tr>
-<tr class="separator:a9858ad58925f5fb798d09f6ab4495bf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad496a52d3a7a01926c8fd6e679901a89"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#ad496a52d3a7a01926c8fd6e679901a89">Gripper</a> (const std::string &amp;franka_address)</td></tr>
+<tr class="separator:ad496a52d3a7a01926c8fd6e679901a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6996e448e7a780d67682743cd836da9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#ac6996e448e7a780d67682743cd836da9">Gripper</a> (<a class="el" href="classfranky_1_1_gripper.html">Gripper</a> &amp;&amp;gripper) noexcept</td></tr>
+<tr class="separator:ac6996e448e7a780d67682743cd836da9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8129e872500c488c7c40208ed16d8c6f"><td class="memItemLeft" align="right" valign="top">std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a8129e872500c488c7c40208ed16d8c6f">graspAsync</a> (double <a class="el" href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">width</a>, double speed, double force, double epsilon_inner=0.005, double epsilon_outer=0.005) const</td></tr>
+<tr class="memdesc:a8129e872500c488c7c40208ed16d8c6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronous variant of the franka::Gripper::grasp function.  <a href="classfranky_1_1_gripper.html#a8129e872500c488c7c40208ed16d8c6f">More...</a><br /></td></tr>
+<tr class="separator:a8129e872500c488c7c40208ed16d8c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a388a0767ba45ca89b27350beeddde492"><td class="memItemLeft" align="right" valign="top">std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a388a0767ba45ca89b27350beeddde492">moveAsync</a> (double <a class="el" href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">width</a>, double speed) const</td></tr>
+<tr class="memdesc:a388a0767ba45ca89b27350beeddde492"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronous variant of the franka::Gripper::move function.  <a href="classfranky_1_1_gripper.html#a388a0767ba45ca89b27350beeddde492">More...</a><br /></td></tr>
+<tr class="separator:a388a0767ba45ca89b27350beeddde492"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f9b3b3a14eefe618b480a4e932dce24"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a6f9b3b3a14eefe618b480a4e932dce24">open</a> (double speed)</td></tr>
+<tr class="memdesc:a6f9b3b3a14eefe618b480a4e932dce24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the gripper fully.  <a href="classfranky_1_1_gripper.html#a6f9b3b3a14eefe618b480a4e932dce24">More...</a><br /></td></tr>
+<tr class="separator:a6f9b3b3a14eefe618b480a4e932dce24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a4197014806044797dad4993a88b85a"><td class="memItemLeft" align="right" valign="top">std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a9a4197014806044797dad4993a88b85a">openAsync</a> (double speed)</td></tr>
+<tr class="memdesc:a9a4197014806044797dad4993a88b85a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronous variant of the open function.  <a href="classfranky_1_1_gripper.html#a9a4197014806044797dad4993a88b85a">More...</a><br /></td></tr>
+<tr class="separator:a9a4197014806044797dad4993a88b85a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa0240c93235e026c0a2d1c9d2e0af4d"><td class="memItemLeft" align="right" valign="top">std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#aaa0240c93235e026c0a2d1c9d2e0af4d">homingAsync</a> ()</td></tr>
+<tr class="memdesc:aaa0240c93235e026c0a2d1c9d2e0af4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronous variant of the franka::Gripper::homing function.  <a href="classfranky_1_1_gripper.html#aaa0240c93235e026c0a2d1c9d2e0af4d">More...</a><br /></td></tr>
+<tr class="separator:aaa0240c93235e026c0a2d1c9d2e0af4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabe1916e6f02e1357c30d37f0d4c27a0"><td class="memItemLeft" align="right" valign="top">std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#aabe1916e6f02e1357c30d37f0d4c27a0">stopAsync</a> ()</td></tr>
+<tr class="memdesc:aabe1916e6f02e1357c30d37f0d4c27a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronous variant of the franka::Gripper::stop function.  <a href="classfranky_1_1_gripper.html#aabe1916e6f02e1357c30d37f0d4c27a0">More...</a><br /></td></tr>
+<tr class="separator:aabe1916e6f02e1357c30d37f0d4c27a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a176c18c2ca98694075eea1085dc65a7e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">width</a> () const</td></tr>
+<tr class="memdesc:a176c18c2ca98694075eea1085dc65a7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current opening width of the gripper [m].  <a href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">More...</a><br /></td></tr>
 <tr class="separator:a176c18c2ca98694075eea1085dc65a7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e07e3fcd2dd0f5c65952e53a5b6dbd7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a4e07e3fcd2dd0f5c65952e53a5b6dbd7">isGrasping</a> () const</td></tr>
-<tr class="separator:a4e07e3fcd2dd0f5c65952e53a5b6dbd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d5578a3a6986c38b66fc696105cf8ca"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a1d5578a3a6986c38b66fc696105cf8ca">move</a> (double <a class="el" href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">width</a>)</td></tr>
-<tr class="separator:a1d5578a3a6986c38b66fc696105cf8ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af71bf66d6a775374bb80608bb9cfee00"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#af71bf66d6a775374bb80608bb9cfee00">moveUnsafe</a> (double <a class="el" href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">width</a>)</td></tr>
-<tr class="separator:af71bf66d6a775374bb80608bb9cfee00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a0f48785ef7ad28a446c3aea0605cbf"><td class="memItemLeft" align="right" valign="top">std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a7a0f48785ef7ad28a446c3aea0605cbf">moveAsync</a> (double <a class="el" href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">width</a>)</td></tr>
-<tr class="separator:a7a0f48785ef7ad28a446c3aea0605cbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fcccee4196cea826a7cc9e62a3557ce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a0fcccee4196cea826a7cc9e62a3557ce">open</a> ()</td></tr>
-<tr class="separator:a0fcccee4196cea826a7cc9e62a3557ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7262ecaca816c94f2e694f49892c89c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#ad7262ecaca816c94f2e694f49892c89c">clamp</a> ()</td></tr>
-<tr class="separator:ad7262ecaca816c94f2e694f49892c89c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9408773142351f9414f0123e197814fd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a9408773142351f9414f0123e197814fd">clamp</a> (double min_clamping_width)</td></tr>
-<tr class="separator:a9408773142351f9414f0123e197814fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9493f3b30420ab41e6d2337f0e2a33a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#ac9493f3b30420ab41e6d2337f0e2a33a">release</a> ()</td></tr>
-<tr class="separator:ac9493f3b30420ab41e6d2337f0e2a33a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53f09f3b13a8fe3b14f5521975e95a59"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a53f09f3b13a8fe3b14f5521975e95a59">release</a> (double <a class="el" href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">width</a>)</td></tr>
-<tr class="separator:a53f09f3b13a8fe3b14f5521975e95a59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00d8eda43ed4e75eab69807fa8333b67"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a00d8eda43ed4e75eab69807fa8333b67">releaseRelative</a> (double <a class="el" href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">width</a>)</td></tr>
-<tr class="separator:a00d8eda43ed4e75eab69807fa8333b67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72155ac40289656ab7d224dcf75d8cf2"><td class="memItemLeft" align="right" valign="top">::franka::GripperState&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a72155ac40289656ab7d224dcf75d8cf2">get_state</a> ()</td></tr>
-<tr class="separator:a72155ac40289656ab7d224dcf75d8cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:ac8655b190983beceb4a2c6b6ed633e51"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#ac8655b190983beceb4a2c6b6ed633e51">gripper_force</a> {20.0}</td></tr>
-<tr class="separator:ac8655b190983beceb4a2c6b6ed633e51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb08f1b007f8b642e8081b356dc8bae3"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#abb08f1b007f8b642e8081b356dc8bae3">gripper_speed</a> {0.04}</td></tr>
-<tr class="separator:abb08f1b007f8b642e8081b356dc8bae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93fa5e0cbfa934fa6aeb92bdabb576ea"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a93fa5e0cbfa934fa6aeb92bdabb576ea">has_error</a> {false}</td></tr>
-<tr class="separator:a93fa5e0cbfa934fa6aeb92bdabb576ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98ab4774d6a43ea482e25c3de8fe6539"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a98ab4774d6a43ea482e25c3de8fe6539">max_width</a> {0.081 + width_calibration}</td></tr>
-<tr class="separator:a98ab4774d6a43ea482e25c3de8fe6539"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr class="memitem:a7b6de84de8df76c6ede0ecdda07f8fb6"><td class="memItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a7b6de84de8df76c6ede0ecdda07f8fb6">max_speed</a> {0.1}</td></tr>
-<tr class="separator:a7b6de84de8df76c6ede0ecdda07f8fb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a792b6d30ee087a4cddba5e3d2320d6e9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a792b6d30ee087a4cddba5e3d2320d6e9">is_grasped</a> () const</td></tr>
+<tr class="memdesc:a792b6d30ee087a4cddba5e3d2320d6e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the gripper is grasping.  <a href="classfranky_1_1_gripper.html#a792b6d30ee087a4cddba5e3d2320d6e9">More...</a><br /></td></tr>
+<tr class="separator:a792b6d30ee087a4cddba5e3d2320d6e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ae2659a6edf6e117fc461f60191c9db"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a5ae2659a6edf6e117fc461f60191c9db">max_width</a> () const</td></tr>
+<tr class="memdesc:a5ae2659a6edf6e117fc461f60191c9db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum width of the gripper [m].  <a href="classfranky_1_1_gripper.html#a5ae2659a6edf6e117fc461f60191c9db">More...</a><br /></td></tr>
+<tr class="separator:a5ae2659a6edf6e117fc461f60191c9db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb8531bbdefc46cbd15f36a3ad40b1e8"><td class="memItemLeft" align="right" valign="top">franka::GripperState&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#abb8531bbdefc46cbd15f36a3ad40b1e8">state</a> () const</td></tr>
+<tr class="memdesc:abb8531bbdefc46cbd15f36a3ad40b1e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current gripper state.  <a href="classfranky_1_1_gripper.html#abb8531bbdefc46cbd15f36a3ad40b1e8">More...</a><br /></td></tr>
+<tr class="separator:abb8531bbdefc46cbd15f36a3ad40b1e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a9858ad58925f5fb798d09f6ab4495bf3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9858ad58925f5fb798d09f6ab4495bf3">&#9670;&nbsp;</a></span>Gripper()</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A wrapper around the franka::Gripper class that adds asynchronous functionality. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ad496a52d3a7a01926c8fd6e679901a89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad496a52d3a7a01926c8fd6e679901a89">&#9670;&nbsp;</a></span>Gripper() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -144,299 +139,21 @@ Static Public Attributes</h2></td></tr>
           <td class="memname">franky::Gripper::Gripper </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>fci_hostname</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>franka_address</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>speed</em> = <code>0.04</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>force</em> = <code>20.0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">fci_hostname</td><td>The hostname of the Franka robot. </td></tr>
-    <tr><td class="paramname">speed</td><td>The speed of the gripper. Default is 0.04. </td></tr>
-    <tr><td class="paramname">force</td><td>The force of the gripper. Default is 20.0. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="ad7262ecaca816c94f2e694f49892c89c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad7262ecaca816c94f2e694f49892c89c">&#9670;&nbsp;</a></span>clamp() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool franky::Gripper::clamp </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a9408773142351f9414f0123e197814fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9408773142351f9414f0123e197814fd">&#9670;&nbsp;</a></span>clamp() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool franky::Gripper::clamp </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>min_clamping_width</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a72155ac40289656ab7d224dcf75d8cf2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72155ac40289656ab7d224dcf75d8cf2">&#9670;&nbsp;</a></span>get_state()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">franka::GripperState franky::Gripper::get_state </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a4e07e3fcd2dd0f5c65952e53a5b6dbd7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e07e3fcd2dd0f5c65952e53a5b6dbd7">&#9670;&nbsp;</a></span>isGrasping()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool franky::Gripper::isGrasping </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1d5578a3a6986c38b66fc696105cf8ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d5578a3a6986c38b66fc696105cf8ca">&#9670;&nbsp;</a></span>move()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool franky::Gripper::move </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>width</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7a0f48785ef7ad28a446c3aea0605cbf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a0f48785ef7ad28a446c3aea0605cbf">&#9670;&nbsp;</a></span>moveAsync()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::future&lt; bool &gt; franky::Gripper::moveAsync </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>width</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af71bf66d6a775374bb80608bb9cfee00"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af71bf66d6a775374bb80608bb9cfee00">&#9670;&nbsp;</a></span>moveUnsafe()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool franky::Gripper::moveUnsafe </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>width</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0fcccee4196cea826a7cc9e62a3557ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0fcccee4196cea826a7cc9e62a3557ce">&#9670;&nbsp;</a></span>open()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool franky::Gripper::open </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac9493f3b30420ab41e6d2337f0e2a33a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac9493f3b30420ab41e6d2337f0e2a33a">&#9670;&nbsp;</a></span>release() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool franky::Gripper::release </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a53f09f3b13a8fe3b14f5521975e95a59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a53f09f3b13a8fe3b14f5521975e95a59">&#9670;&nbsp;</a></span>release() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool franky::Gripper::release </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>width</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a00d8eda43ed4e75eab69807fa8333b67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a00d8eda43ed4e75eab69807fa8333b67">&#9670;&nbsp;</a></span>releaseRelative()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool franky::Gripper::releaseRelative </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>width</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a176c18c2ca98694075eea1085dc65a7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a176c18c2ca98694075eea1085dc65a7e">&#9670;&nbsp;</a></span>width()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double franky::Gripper::width </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="ac8655b190983beceb4a2c6b6ed633e51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac8655b190983beceb4a2c6b6ed633e51">&#9670;&nbsp;</a></span>gripper_force</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double franky::Gripper::gripper_force {20.0}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="abb08f1b007f8b642e8081b356dc8bae3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb08f1b007f8b642e8081b356dc8bae3">&#9670;&nbsp;</a></span>gripper_speed</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double franky::Gripper::gripper_speed {0.04}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a93fa5e0cbfa934fa6aeb92bdabb576ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a93fa5e0cbfa934fa6aeb92bdabb576ea">&#9670;&nbsp;</a></span>has_error</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool franky::Gripper::has_error {false}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7b6de84de8df76c6ede0ecdda07f8fb6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b6de84de8df76c6ede0ecdda07f8fb6">&#9670;&nbsp;</a></span>max_speed</h2>
+<a id="ac6996e448e7a780d67682743cd836da9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6996e448e7a780d67682743cd836da9">&#9670;&nbsp;</a></span>Gripper() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -445,29 +162,319 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr double franky::Gripper::max_speed {0.1}</td>
+          <td class="memname">franky::Gripper::Gripper </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classfranky_1_1_gripper.html">Gripper</a> &amp;&amp;&#160;</td>
+          <td class="paramname"><em>gripper</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a98ab4774d6a43ea482e25c3de8fe6539"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98ab4774d6a43ea482e25c3de8fe6539">&#9670;&nbsp;</a></span>max_width</h2>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8129e872500c488c7c40208ed16d8c6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8129e872500c488c7c40208ed16d8c6f">&#9670;&nbsp;</a></span>graspAsync()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const double franky::Gripper::max_width {0.081 + width_calibration}</td>
+          <td class="memname">std::future&lt; bool &gt; franky::Gripper::graspAsync </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>speed</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>force</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>epsilon_inner</em> = <code>0.005</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>epsilon_outer</em> = <code>0.005</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Asynchronous variant of the franka::Gripper::grasp function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>Size of the object to grasp in [m]. </td></tr>
+    <tr><td class="paramname">speed</td><td>Closing speed in [m/s]. </td></tr>
+    <tr><td class="paramname">force</td><td>Grasping force in [N]. </td></tr>
+    <tr><td class="paramname">epsilon_inner</td><td>Maximum tolerated deviation when the actual grasped width is smaller than the commanded grasp width. </td></tr>
+    <tr><td class="paramname">epsilon_outer</td><td>Maximum tolerated deviation when the actual grasped width is larger than the commanded grasp width. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Future that becomes ready when the grasp is finished. Contains true if an object has been grasped, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="aaa0240c93235e026c0a2d1c9d2e0af4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa0240c93235e026c0a2d1c9d2e0af4d">&#9670;&nbsp;</a></span>homingAsync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::future&lt; bool &gt; franky::Gripper::homingAsync </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Asynchronous variant of the franka::Gripper::homing function. </p>
+<dl class="section return"><dt>Returns</dt><dd>A future that becomes ready when the homing is finished. Contains true if the homing was successful. </dd></dl>
+
+</div>
+</div>
+<a id="a792b6d30ee087a4cddba5e3d2320d6e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a792b6d30ee087a4cddba5e3d2320d6e9">&#9670;&nbsp;</a></span>is_grasped()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool franky::Gripper::is_grasped </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Whether the gripper is grasping. </p>
+
+</div>
+</div>
+<a id="a5ae2659a6edf6e117fc461f60191c9db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ae2659a6edf6e117fc461f60191c9db">&#9670;&nbsp;</a></span>max_width()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double franky::Gripper::max_width </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maximum width of the gripper [m]. </p>
+
+</div>
+</div>
+<a id="a388a0767ba45ca89b27350beeddde492"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a388a0767ba45ca89b27350beeddde492">&#9670;&nbsp;</a></span>moveAsync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::future&lt; bool &gt; franky::Gripper::moveAsync </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>speed</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Asynchronous variant of the franka::Gripper::move function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>Intended opening width in [m]. </td></tr>
+    <tr><td class="paramname">speed</td><td>Speed of the movement in [m/s]. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Future that becomes ready when the movement is finished. Contains true if the movement was successful, </dd></dl>
+
+</div>
+</div>
+<a id="a6f9b3b3a14eefe618b480a4e932dce24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f9b3b3a14eefe618b480a4e932dce24">&#9670;&nbsp;</a></span>open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool franky::Gripper::open </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>speed</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opens the gripper fully. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">speed</td><td>Speed of the movement in [m/s]. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the gripper was opened successfully. </dd></dl>
+
+</div>
+</div>
+<a id="a9a4197014806044797dad4993a88b85a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a4197014806044797dad4993a88b85a">&#9670;&nbsp;</a></span>openAsync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::future&lt; bool &gt; franky::Gripper::openAsync </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>speed</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Asynchronous variant of the open function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">speed</td><td>Speed of the movement in [m/s]. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Future that becomes ready when the gripper is fully opened. Contains true if the gripper was opened successfully. </dd></dl>
+
+</div>
+</div>
+<a id="abb8531bbdefc46cbd15f36a3ad40b1e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb8531bbdefc46cbd15f36a3ad40b1e8">&#9670;&nbsp;</a></span>state()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">franka::GripperState franky::Gripper::state </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Current gripper state. </p>
+
+</div>
+</div>
+<a id="aabe1916e6f02e1357c30d37f0d4c27a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabe1916e6f02e1357c30d37f0d4c27a0">&#9670;&nbsp;</a></span>stopAsync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::future&lt; bool &gt; franky::Gripper::stopAsync </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Asynchronous variant of the franka::Gripper::stop function. </p>
+<dl class="section return"><dt>Returns</dt><dd>A future that becomes ready when the stop is finished. Contains true if the stop was successful. </dd></dl>
+
+</div>
+</div>
+<a id="a176c18c2ca98694075eea1085dc65a7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a176c18c2ca98694075eea1085dc65a7e">&#9670;&nbsp;</a></span>width()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double franky::Gripper::width </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Current opening width of the gripper [m]. </p>
 
 </div>
 </div>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['has_5ferror_561',['has_error',['../classfranky_1_1_gripper.html#a93fa5e0cbfa934fa6aeb92bdabb576ea',1,'franky::Gripper']]]
+  ['kinematics_555',['kinematics',['../classfranky_1_1_robot.html#a92cd026dc21f2228fee51626a11fecce',1,'franky::Robot']]]
 ];
