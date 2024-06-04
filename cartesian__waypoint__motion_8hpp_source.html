@@ -92,42 +92,41 @@ $(function() {
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="structfranky_1_1_cartesian_waypoint_motion_1_1_params.html">   20</a></span>&#160;  <span class="keyword">struct </span><a class="code" href="structfranky_1_1_cartesian_waypoint_motion_1_1_params.html">Params</a> : <a class="code" href="classfranky_1_1_waypoint_motion.html">WaypointMotion</a>&lt;franka::CartesianPose, CartesianState&gt;<a class="code" href="structfranky_1_1_cartesian_waypoint_motion_1_1_params.html">::Params</a> {</div>
 <div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="structfranky_1_1_cartesian_waypoint_motion_1_1_params.html#a9518f48b10b574ed7254dca1cf4685fd">   21</a></span>&#160;    <a class="code" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> <a class="code" href="structfranky_1_1_cartesian_waypoint_motion_1_1_params.html#a9518f48b10b574ed7254dca1cf4685fd">frame</a>{Affine::Identity()};</div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="structfranky_1_1_cartesian_waypoint_motion_1_1_params.html#a9a0fa63b9e82537f5ac9a8d6e5e10378">   22</a></span>&#160;    <a class="code" href="classfranky_1_1_waypoint_motion.html">WaypointMotion&lt;franka::CartesianPose, CartesianState&gt;::Params</a> <a class="code" href="structfranky_1_1_cartesian_waypoint_motion_1_1_params.html#a9a0fa63b9e82537f5ac9a8d6e5e10378">base_params</a>{};</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  };</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classfranky_1_1_cartesian_waypoint_motion.html#a1ea0c8ce5c8d42b53dbe2714327bad72">CartesianWaypointMotion</a>(<span class="keyword">const</span> std::vector&lt;<a class="code" href="structfranky_1_1_waypoint.html">Waypoint&lt;CartesianState&gt;</a>&gt; &amp;waypoints);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classfranky_1_1_cartesian_waypoint_motion.html#a1ea0c8ce5c8d42b53dbe2714327bad72">CartesianWaypointMotion</a>(<span class="keyword">const</span> std::vector&lt;<a class="code" href="structfranky_1_1_waypoint.html">Waypoint&lt;CartesianState&gt;</a>&gt; &amp;waypoints, Params params);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classfranky_1_1_cartesian_waypoint_motion.html#a00714dd79a63f21159989853a6ef5bb0">initWaypointMotion</a>(</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;      <span class="keyword">const</span> franka::RobotState &amp;robot_state,</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;      <span class="keyword">const</span> std::optional&lt;franka::CartesianPose&gt; &amp;previous_command,</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;      ruckig::InputParameter&lt;7&gt; &amp;input_parameter) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classfranky_1_1_cartesian_waypoint_motion.html#ad4d162ff3ad1d75e5f4af8765c12e5f1">setNewWaypoint</a>(</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;      <span class="keyword">const</span> franka::RobotState &amp;robot_state,</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      <span class="keyword">const</span> std::optional&lt;franka::CartesianPose&gt; &amp;previous_command,</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      <span class="keyword">const</span> <a class="code" href="structfranky_1_1_waypoint.html">Waypoint&lt;CartesianState&gt;</a> &amp;new_waypoint,</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;      ruckig::InputParameter&lt;7&gt; &amp;input_parameter) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  [[nodiscard]] std::tuple&lt;Vector7d, Vector7d, Vector7d&gt; <a class="code" href="classfranky_1_1_cartesian_waypoint_motion.html#a493676502c53be9f6f0acf8a82cb8192">getAbsoluteInputLimits</a>() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  [[nodiscard]] <a class="code" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaaca982887767b31bb472878f67e6ddbfd9f">franka::CartesianPose</a> <a class="code" href="classfranky_1_1_cartesian_waypoint_motion.html#ad3089b89c08a357168e176bb3fd4b1cf">getControlSignal</a>(<span class="keyword">const</span> ruckig::InputParameter&lt;7&gt; &amp;input_parameter) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  Params params_;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <a class="code" href="classfranky_1_1_cartesian_state.html">CartesianState</a> target_state_;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <a class="code" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> ref_frame_;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keyword">static</span> <span class="keyword">inline</span> <a class="code" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> vec_cart_rot_elbow(<span class="keywordtype">double</span> cart, <span class="keywordtype">double</span> rot, <span class="keywordtype">double</span> elbow) {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">return</span> {cart, cart, cart, rot, rot, rot, elbow};</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  }</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;};</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}  <span class="comment">// namespace franky</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  };</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classfranky_1_1_cartesian_waypoint_motion.html#a1ea0c8ce5c8d42b53dbe2714327bad72">CartesianWaypointMotion</a>(<span class="keyword">const</span> std::vector&lt;<a class="code" href="structfranky_1_1_waypoint.html">Waypoint&lt;CartesianState&gt;</a>&gt; &amp;waypoints);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classfranky_1_1_cartesian_waypoint_motion.html#a1ea0c8ce5c8d42b53dbe2714327bad72">CartesianWaypointMotion</a>(<span class="keyword">const</span> std::vector&lt;<a class="code" href="structfranky_1_1_waypoint.html">Waypoint&lt;CartesianState&gt;</a>&gt; &amp;waypoints, Params params);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classfranky_1_1_cartesian_waypoint_motion.html#a00714dd79a63f21159989853a6ef5bb0">initWaypointMotion</a>(</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;      <span class="keyword">const</span> franka::RobotState &amp;robot_state,</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;      <span class="keyword">const</span> std::optional&lt;franka::CartesianPose&gt; &amp;previous_command,</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;      ruckig::InputParameter&lt;7&gt; &amp;input_parameter) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classfranky_1_1_cartesian_waypoint_motion.html#ad4d162ff3ad1d75e5f4af8765c12e5f1">setNewWaypoint</a>(</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;      <span class="keyword">const</span> franka::RobotState &amp;robot_state,</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;      <span class="keyword">const</span> std::optional&lt;franka::CartesianPose&gt; &amp;previous_command,</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      <span class="keyword">const</span> <a class="code" href="structfranky_1_1_waypoint.html">Waypoint&lt;CartesianState&gt;</a> &amp;new_waypoint,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      ruckig::InputParameter&lt;7&gt; &amp;input_parameter) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  [[nodiscard]] std::tuple&lt;Vector7d, Vector7d, Vector7d&gt; <a class="code" href="classfranky_1_1_cartesian_waypoint_motion.html#a493676502c53be9f6f0acf8a82cb8192">getAbsoluteInputLimits</a>() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  [[nodiscard]] <a class="code" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaaca982887767b31bb472878f67e6ddbfd9f">franka::CartesianPose</a> <a class="code" href="classfranky_1_1_cartesian_waypoint_motion.html#ad3089b89c08a357168e176bb3fd4b1cf">getControlSignal</a>(<span class="keyword">const</span> ruckig::InputParameter&lt;7&gt; &amp;input_parameter) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  Params params_;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <a class="code" href="classfranky_1_1_cartesian_state.html">CartesianState</a> target_state_;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <a class="code" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> ref_frame_;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keyword">static</span> <span class="keyword">inline</span> <a class="code" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> vec_cart_rot_elbow(<span class="keywordtype">double</span> cart, <span class="keywordtype">double</span> rot, <span class="keywordtype">double</span> elbow) {</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">return</span> {cart, cart, cart, rot, rot, rot, elbow};</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  }</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;};</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}  <span class="comment">// namespace franky</span></div>
 <div class="ttc" id="acartesian__state_8hpp_html"><div class="ttname"><a href="cartesian__state_8hpp.html">cartesian_state.hpp</a></div></div>
 <div class="ttc" id="aclassfranky_1_1_cartesian_state_html"><div class="ttname"><a href="classfranky_1_1_cartesian_state.html">franky::CartesianState</a></div><div class="ttdef"><b>Definition:</b> cartesian_state.hpp:17</div></div>
 <div class="ttc" id="aclassfranky_1_1_cartesian_waypoint_motion_html"><div class="ttname"><a href="classfranky_1_1_cartesian_waypoint_motion.html">franky::CartesianWaypointMotion</a></div><div class="ttdef"><b>Definition:</b> cartesian_waypoint_motion.hpp:18</div></div>
@@ -146,7 +145,6 @@ $(function() {
 <div class="ttc" id="arobot__pose_8hpp_html"><div class="ttname"><a href="robot__pose_8hpp.html">robot_pose.hpp</a></div></div>
 <div class="ttc" id="astructfranky_1_1_cartesian_waypoint_motion_1_1_params_html"><div class="ttname"><a href="structfranky_1_1_cartesian_waypoint_motion_1_1_params.html">franky::CartesianWaypointMotion::Params</a></div><div class="ttdef"><b>Definition:</b> cartesian_waypoint_motion.hpp:20</div></div>
 <div class="ttc" id="astructfranky_1_1_cartesian_waypoint_motion_1_1_params_html_a9518f48b10b574ed7254dca1cf4685fd"><div class="ttname"><a href="structfranky_1_1_cartesian_waypoint_motion_1_1_params.html#a9518f48b10b574ed7254dca1cf4685fd">franky::CartesianWaypointMotion::Params::frame</a></div><div class="ttdeci">Affine frame</div><div class="ttdef"><b>Definition:</b> cartesian_waypoint_motion.hpp:21</div></div>
-<div class="ttc" id="astructfranky_1_1_cartesian_waypoint_motion_1_1_params_html_a9a0fa63b9e82537f5ac9a8d6e5e10378"><div class="ttname"><a href="structfranky_1_1_cartesian_waypoint_motion_1_1_params.html#a9a0fa63b9e82537f5ac9a8d6e5e10378">franky::CartesianWaypointMotion::Params::base_params</a></div><div class="ttdeci">WaypointMotion&lt; franka::CartesianPose, CartesianState &gt;::Params base_params</div><div class="ttdef"><b>Definition:</b> cartesian_waypoint_motion.hpp:22</div></div>
 <div class="ttc" id="astructfranky_1_1_waypoint_html"><div class="ttname"><a href="structfranky_1_1_waypoint.html">franky::Waypoint</a></div><div class="ttdef"><b>Definition:</b> waypoint_motion.hpp:15</div></div>
 <div class="ttc" id="autil_8hpp_html"><div class="ttname"><a href="util_8hpp.html">util.hpp</a></div></div>
 <div class="ttc" id="awaypoint__motion_8hpp_html"><div class="ttname"><a href="waypoint__motion_8hpp.html">waypoint_motion.hpp</a></div></div>

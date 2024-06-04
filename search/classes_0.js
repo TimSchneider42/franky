@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['aggregatedpath_293',['AggregatedPath',['../classfranky_1_1_aggregated_path.html',1,'franky']]]
+  ['aggregatedpath_291',['AggregatedPath',['../classfranky_1_1_aggregated_path.html',1,'franky']]]
 ];
