@@ -144,9 +144,9 @@ $(function() {
 <div class="line">docker compose run --rm franky-build run-tests  # To run the tests</div>
 <div class="line">docker compose run --rm franky-build build-wheels  # To build wheels for all supported python versions</div>
 </div><!-- fragment --><h2>Tutorial</h2>
-<p>Franky comes with both a C++ and Python API that differ only regarding real-time capability. We will introduce both languages next to each other. In your C++ project, just include <code>include &lt;franky/franky.hpp&gt;</code> and link the library. For Python, just <code>import franky</code>. As a first example, only four lines of code are needed for simple robotic motions.</p>
+<p>Franky comes with both a C++ and Python API that differ only regarding real-time capability. We will introduce both languages next to each other. In your C++ project, just include <code>include &lt;<a class="el" href="franky_8hpp.html">franky.hpp</a>&gt;</code> and link the library. For Python, just <code>import franky</code>. As a first example, only four lines of code are needed for simple robotic motions.</p>
 <div class="fragment"><div class="line"> {c++}</div>
-<div class="line">#include &lt;franky/franky.hpp&gt;</div>
+<div class="line">#include &lt;franky.hpp&gt;</div>
 <div class="line">using namespace franky;</div>
 <div class="line"> </div>
 <div class="line">// Connect to the robot with the FCI IP address</div>
@@ -363,27 +363,69 @@ $(function() {
 <h3>Gripper</h3>
 <p>In the <code><a class="el" href="classfranky_1_1_gripper.html" title="A wrapper around the franka::Gripper class that adds asynchronous functionality.">franky::Gripper</a></code> class, the default gripper force and gripper speed can be set. Then, additionally to the libfranka commands, the following helper methods can be used:</p>
 <div class="fragment"><div class="line"> {c++}</div>
-<div class="line">auto gripper = Gripper(&quot;172.16.0.2&quot;);</div>
+<div class="line">#include &lt;franky.hpp&gt;</div>
+<div class="line">#include &lt;chrono&gt;</div>
+<div class="line">#include &lt;future&gt;</div>
 <div class="line"> </div>
-<div class="line">// These are the default values</div>
-<div class="line">gripper.gripper_speed = 0.02; // [m/s]</div>
-<div class="line">gripper.gripper_force = 20.0; // [N]</div>
+<div class="line">auto gripper = franky::Gripper(&quot;172.16.0.2&quot;);</div>
 <div class="line"> </div>
-<div class="line">// Preshape gripper before grasp, use the given speed</div>
-<div class="line">gripper.move(0.05); // [m]</div>
+<div class="line">double speed = 0.02; // [m/s]</div>
+<div class="line">double force = 20.0; // [N]</div>
+<div class="line"> </div>
+<div class="line">// Move the fingers to a specific width (5cm)</div>
+<div class="line">bool success = gripper.move(0.05, speed, force);</div>
 <div class="line"> </div>
 <div class="line">// Grasp an object of unknown width</div>
-<div class="line">is_grasping = gripper.clamp();</div>
+<div class="line">success &amp;= gripper.grasp(0.0, speed, force, epsilon_outer=1.0);</div>
 <div class="line"> </div>
-<div class="line">// Do something</div>
-<div class="line">is_grasping &amp;= gripper.isGrasping();</div>
+<div class="line">// Get the width of the grasped object</div>
+<div class="line">double width = gripper.width();</div>
 <div class="line"> </div>
-<div class="line">// Release an object and move to a given distance</div>
-<div class="line">if (is_grasping) {</div>
-<div class="line">  gripper.release(0.05);</div>
+<div class="line">// Release the object</div>
+<div class="line">gripper.open(speed);</div>
+<div class="line"> </div>
+<div class="line">// There are also asynchronous versions of the methods</div>
+<div class="line">std::future&lt;bool&gt; success_future = gripper.moveAsync(0.05, speed, force);</div>
+<div class="line"> </div>
+<div class="line">// Wait for 1s</div>
+<div class="line">if (!success_future.wait_for(std::chrono::seconds(1)) == std::future_status::ready) {</div>
+<div class="line">  // Get the result</div>
+<div class="line">  std::cout &lt;&lt; &quot;Success: &quot; &lt;&lt; success_future.get() &lt;&lt; std::endl;</div>
+<div class="line">} else {</div>
+<div class="line">  gripper.stop();</div>
+<div class="line">  success_future.wait();</div>
+<div class="line">  std::cout &lt;&lt; &quot;Gripper motion timed out.&quot; &lt;&lt; std::endl;</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>The Python API is straight-forward for the Gripper class.</p>
-<h2>Documentation</h2>
+</div><!-- fragment --><p>The Python API follows the c++ API closely: </p><div class="fragment"><div class="line">import franky</div>
+<div class="line"> </div>
+<div class="line">gripper = franky.Gripper(&quot;172.16.0.2&quot;)</div>
+<div class="line"> </div>
+<div class="line">speed = 0.02  # [m/s]</div>
+<div class="line">force = 20.0  # [N]</div>
+<div class="line"> </div>
+<div class="line"># Move the fingers to a specific width (5cm)</div>
+<div class="line">success = gripper.move(0.05, speed, force)</div>
+<div class="line"> </div>
+<div class="line"># Grasp an object of unknown width</div>
+<div class="line">success &amp;= gripper.grasp(0.0, speed, force, epsilon_outer=1.0)</div>
+<div class="line"> </div>
+<div class="line"># Get the width of the grasped object</div>
+<div class="line">width = gripper.width()</div>
+<div class="line"> </div>
+<div class="line"># Release the object</div>
+<div class="line">gripper.open(speed)</div>
+<div class="line"> </div>
+<div class="line"># There are also asynchronous versions of the methods</div>
+<div class="line">success_future = gripper.move_async(0.05, speed, force)</div>
+<div class="line"> </div>
+<div class="line"># Wait for 1s</div>
+<div class="line">if success_future.wait(1):</div>
+<div class="line">    print(f&quot;Success: {success_future.get()}&quot;)</div>
+<div class="line">else:</div>
+<div class="line">    gripper.stop()</div>
+<div class="line">    success_future.wait()</div>
+<div class="line">    print(&quot;Gripper motion timed out.&quot;)</div>
+</div><!-- fragment --><h2>Documentation</h2>
 <p>An auto-generated documentation can be found at <a href="https://timschneider42.github.io/franky/">https://timschneider42.github.io/franky/</a>. Moreover, there are multiple examples for both C++ and Python in the <a href="https://github.com/TimSchneider42/franky/tree/master/examples">examples</a> directory.</p>
 <h2>Development</h2>
 <p>Franky is written in C++17 and Python3.7. It is currently tested against following versions</p>
