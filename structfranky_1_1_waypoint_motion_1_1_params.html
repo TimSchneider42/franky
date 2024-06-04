@@ -101,13 +101,6 @@ Public Attributes</h2></td></tr>
 struct franky::WaypointMotion&lt; ControlSignalType, TargetType &gt;::Params</h3>
 
 <p>Parameters for the waypoint motion. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">relative_dynamics_factor</td><td>The relative dynamics factor for this motion. This factor will get multiplied with the robot's global dynamics factor to get the actual dynamics factor for this motion. </td></tr>
-    <tr><td class="paramname">return_when_finished</td><td>Whether to end the motion when the last waypoint is reached or keep holding the last target. </td></tr>
-  </table>
-  </dd>
-</dl>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="a27f1c313e9786eec77be60871685d1ae"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a27f1c313e9786eec77be60871685d1ae">&#9670;&nbsp;</a></span>relative_dynamics_factor</h2>
@@ -122,6 +115,7 @@ template&lt;typename ControlSignalType , typename TargetType &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The relative dynamics factor for this motion. This factor will get multiplied with the robot's global dynamics factor to get the actual dynamics factor for this motion. </p>
 
 </div>
 </div>
@@ -138,6 +132,7 @@ template&lt;typename ControlSignalType , typename TargetType &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Whether to end the motion when the last waypoint is reached or keep holding the last target. </p>
 
 </div>
 </div>
