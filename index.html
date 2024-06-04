@@ -119,17 +119,17 @@ $(function() {
 <div class="line">wget https://github.com/TimSchneider42/franky/releases/latest/download/libfranka_${VERSION}_wheels.zip</div>
 <div class="line">unzip libfranka_${VERSION}_wheels.zip</div>
 <div class="line">pip install --no-index --find-links=./dist franky-panda</div>
-</div><!-- fragment --><p>Franky is based on <a href="https://github.com/frankaemika/libfranka">libfranka</a>, <a href="https://eigen.tuxfamily.org">Eigen</a> for transformation calculations and <a href="https://github.com/pybind/pybind11">pybind11</a> for the Python bindings. Franky uses the <a href="https://ruckig.com">Ruckig</a> Community Version for Online Trajectory Generation (OTG). As the Franka is quite sensitive to acceleration discontinuities, it requires constrained jerk for all motions. After installing the dependencies (the exact versions can be found below), you can build and install franky via</p>
-<div class="fragment"><div class="line">git clone --recurse-submodules git@github.com:timschneider42/franky.git</div>
+</div><!-- fragment --><p>Franky is based on <a href="https://github.com/frankaemika/libfranka">libfranka</a>, <a href="https://eigen.tuxfamily.org">Eigen</a> for transformation calculations and <a href="https://github.com/pybind/pybind11">pybind11</a> for the Python bindings. As the Franka is sensitive to acceleration discontinuities, it requires jerk-constrained motion generation, for which franky uses the <a href="https://ruckig.com">Ruckig</a> community version for Online Trajectory Generation (OTG).</p>
+<p>After installing the dependencies (the exact versions can be found <a href="#development">here</a>), you can build and install franky via </p><div class="fragment"><div class="line">git clone --recurse-submodules git@github.com:timschneider42/franky.git</div>
 <div class="line">cd franky</div>
 <div class="line">mkdir -p build</div>
 <div class="line">cd build</div>
 <div class="line">cmake -DCMAKE_BUILD_TYPE=Release ..</div>
 <div class="line">make</div>
 <div class="line">make install</div>
-</div><!-- fragment --><p>To use franky, you can also include it as a subproject in your parent CMake via <code>add_subdirectory(franky)</code> and then <code>target_link_libraries(&lt;target&gt; libfranky)</code>. If you need only the Python module, you can install franky via</p>
-<div class="fragment"><div class="line">pip install .</div>
-</div><!-- fragment --><p>Make sure that the built library can be found from Python by adapting your Python Path.</p>
+</div><!-- fragment --><p>To use franky, you can also include it as a subproject in your parent CMake via <code>add_subdirectory(franky)</code> and then <code>target_link_libraries(&lt;target&gt; libfranky)</code>.</p>
+<p>If you need only the Python module, you can install franky via </p><div class="fragment"><div class="line">pip install .</div>
+</div><!-- fragment --><p> Make sure that the built library <code>_franky.cpython-3**-****-linux-gnu.so</code> is in the Python path, e.g. by adjusting <code>PYTHONPATH</code> accordingly.</p>
 <h4>Using Docker</h4>
 <p>To use franky within Docker we provide a <a href="docker/run/Dockerfile">Dockerfile</a> and accompanying <a href="docker-compose.yml">docker-compose</a> file.</p>
 <div class="fragment"><div class="line">git clone https://github.com/timschneider42/franky.git</div>
@@ -433,6 +433,7 @@ $(function() {
 <li>Libfranka v0.7.1, v0.8.0, v0.9.2, v0.10.0, v0.11.0, v0.12.1, v0.13.3</li>
 <li>Eigen v3.4.0</li>
 <li>Pybind11 v2.11.1</li>
+<li>Python 3.7, 3.8, 3.9, 3.10, 3.11, 3.12</li>
 <li>Catch2 v2.13.8 (for testing only)</li>
 </ul>
 <h2>License</h2>
