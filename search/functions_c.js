@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['open_475',['open',['../classfranky_1_1_gripper.html#a04e69733804cabe0f06a9e7abb52c332',1,'franky::Gripper']]],
-  ['openasync_476',['openAsync',['../classfranky_1_1_gripper.html#a953b97a6c574a5d8e22a905466ebc6c1',1,'franky::Gripper']]],
+  ['open_475',['open',['../classfranky_1_1_gripper.html#a6f9b3b3a14eefe618b480a4e932dce24',1,'franky::Gripper']]],
+  ['openasync_476',['openAsync',['../classfranky_1_1_gripper.html#a9a4197014806044797dad4993a88b85a',1,'franky::Gripper']]],
   ['operator_21_477',['operator!',['../namespacefranky.html#aaa64d97ddccb5a54b9cc5448f4140d37',1,'franky']]],
   ['operator_21_3d_478',['operator!=',['../namespacefranky.html#ad0fd48f95175ccff51a008422b0c79d3',1,'franky::operator!=(const Measure &amp;m1, const Measure &amp;m2)'],['../namespacefranky.html#a94e04eafe4db05368577002db3271805',1,'franky::operator!=(const Condition &amp;c1, const Condition &amp;c2)']]],
   ['operator_26_26_479',['operator&amp;&amp;',['../namespacefranky.html#a9998e96cdaba177849f645156d9268eb',1,'franky']]],

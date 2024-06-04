@@ -98,12 +98,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a388a0767ba45ca89b27350beeddde492"><td class="memItemLeft" align="right" valign="top">std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a388a0767ba45ca89b27350beeddde492">moveAsync</a> (double <a class="el" href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">width</a>, double speed) const</td></tr>
 <tr class="memdesc:a388a0767ba45ca89b27350beeddde492"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronous variant of the franka::Gripper::move function.  <a href="classfranky_1_1_gripper.html#a388a0767ba45ca89b27350beeddde492">More...</a><br /></td></tr>
 <tr class="separator:a388a0767ba45ca89b27350beeddde492"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04e69733804cabe0f06a9e7abb52c332"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a04e69733804cabe0f06a9e7abb52c332">open</a> (double speed, double force)</td></tr>
-<tr class="memdesc:a04e69733804cabe0f06a9e7abb52c332"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the gripper fully.  <a href="classfranky_1_1_gripper.html#a04e69733804cabe0f06a9e7abb52c332">More...</a><br /></td></tr>
-<tr class="separator:a04e69733804cabe0f06a9e7abb52c332"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a953b97a6c574a5d8e22a905466ebc6c1"><td class="memItemLeft" align="right" valign="top">std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a953b97a6c574a5d8e22a905466ebc6c1">openAsync</a> (double speed, double force)</td></tr>
-<tr class="memdesc:a953b97a6c574a5d8e22a905466ebc6c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronous variant of the open function.  <a href="classfranky_1_1_gripper.html#a953b97a6c574a5d8e22a905466ebc6c1">More...</a><br /></td></tr>
-<tr class="separator:a953b97a6c574a5d8e22a905466ebc6c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f9b3b3a14eefe618b480a4e932dce24"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a6f9b3b3a14eefe618b480a4e932dce24">open</a> (double speed)</td></tr>
+<tr class="memdesc:a6f9b3b3a14eefe618b480a4e932dce24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the gripper fully.  <a href="classfranky_1_1_gripper.html#a6f9b3b3a14eefe618b480a4e932dce24">More...</a><br /></td></tr>
+<tr class="separator:a6f9b3b3a14eefe618b480a4e932dce24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a4197014806044797dad4993a88b85a"><td class="memItemLeft" align="right" valign="top">std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#a9a4197014806044797dad4993a88b85a">openAsync</a> (double speed)</td></tr>
+<tr class="memdesc:a9a4197014806044797dad4993a88b85a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronous variant of the open function.  <a href="classfranky_1_1_gripper.html#a9a4197014806044797dad4993a88b85a">More...</a><br /></td></tr>
+<tr class="separator:a9a4197014806044797dad4993a88b85a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa0240c93235e026c0a2d1c9d2e0af4d"><td class="memItemLeft" align="right" valign="top">std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_gripper.html#aaa0240c93235e026c0a2d1c9d2e0af4d">homingAsync</a> ()</td></tr>
 <tr class="memdesc:aaa0240c93235e026c0a2d1c9d2e0af4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronous variant of the franka::Gripper::homing function.  <a href="classfranky_1_1_gripper.html#aaa0240c93235e026c0a2d1c9d2e0af4d">More...</a><br /></td></tr>
 <tr class="separator:aaa0240c93235e026c0a2d1c9d2e0af4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -350,8 +350,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a04e69733804cabe0f06a9e7abb52c332"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04e69733804cabe0f06a9e7abb52c332">&#9670;&nbsp;</a></span>open()</h2>
+<a id="a6f9b3b3a14eefe618b480a4e932dce24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f9b3b3a14eefe618b480a4e932dce24">&#9670;&nbsp;</a></span>open()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -360,18 +360,8 @@ Public Member Functions</h2></td></tr>
           <td class="memname">bool franky::Gripper::open </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>speed</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>speed</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>force</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -380,7 +370,6 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">speed</td><td>Speed of the movement in [m/s]. </td></tr>
-    <tr><td class="paramname">force</td><td>Force in [N]. </td></tr>
   </table>
   </dd>
 </dl>
@@ -388,8 +377,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a953b97a6c574a5d8e22a905466ebc6c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a953b97a6c574a5d8e22a905466ebc6c1">&#9670;&nbsp;</a></span>openAsync()</h2>
+<a id="a9a4197014806044797dad4993a88b85a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a4197014806044797dad4993a88b85a">&#9670;&nbsp;</a></span>openAsync()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -398,18 +387,8 @@ Public Member Functions</h2></td></tr>
           <td class="memname">std::future&lt; bool &gt; franky::Gripper::openAsync </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>speed</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>speed</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>force</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -418,7 +397,6 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">speed</td><td>Speed of the movement in [m/s]. </td></tr>
-    <tr><td class="paramname">force</td><td>Force in [N]. </td></tr>
   </table>
   </dd>
 </dl>
