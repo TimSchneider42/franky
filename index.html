@@ -373,7 +373,7 @@ $(function() {
 <div class="line">double force = 20.0; // [N]</div>
 <div class="line"> </div>
 <div class="line">// Move the fingers to a specific width (5cm)</div>
-<div class="line">bool success = gripper.move(0.05, speed, force);</div>
+<div class="line">bool success = gripper.move(0.05, speed);</div>
 <div class="line"> </div>
 <div class="line">// Grasp an object of unknown width</div>
 <div class="line">success &amp;= gripper.grasp(0.0, speed, force, epsilon_outer=1.0);</div>
@@ -385,7 +385,7 @@ $(function() {
 <div class="line">gripper.open(speed);</div>
 <div class="line"> </div>
 <div class="line">// There are also asynchronous versions of the methods</div>
-<div class="line">std::future&lt;bool&gt; success_future = gripper.moveAsync(0.05, speed, force);</div>
+<div class="line">std::future&lt;bool&gt; success_future = gripper.moveAsync(0.05, speed);</div>
 <div class="line"> </div>
 <div class="line">// Wait for 1s</div>
 <div class="line">if (!success_future.wait_for(std::chrono::seconds(1)) == std::future_status::ready) {</div>
@@ -404,19 +404,19 @@ $(function() {
 <div class="line">force = 20.0  # [N]</div>
 <div class="line"> </div>
 <div class="line"># Move the fingers to a specific width (5cm)</div>
-<div class="line">success = gripper.move(0.05, speed, force)</div>
+<div class="line">success = gripper.move(0.05, speed)</div>
 <div class="line"> </div>
 <div class="line"># Grasp an object of unknown width</div>
 <div class="line">success &amp;= gripper.grasp(0.0, speed, force, epsilon_outer=1.0)</div>
 <div class="line"> </div>
 <div class="line"># Get the width of the grasped object</div>
-<div class="line">width = gripper.width()</div>
+<div class="line">width = gripper.width</div>
 <div class="line"> </div>
 <div class="line"># Release the object</div>
 <div class="line">gripper.open(speed)</div>
 <div class="line"> </div>
 <div class="line"># There are also asynchronous versions of the methods</div>
-<div class="line">success_future = gripper.move_async(0.05, speed, force)</div>
+<div class="line">success_future = gripper.move_async(0.05, speed)</div>
 <div class="line"> </div>
 <div class="line"># Wait for 1s</div>
 <div class="line">if success_future.wait(1):</div>
