@@ -74,6 +74,7 @@ $(function() {
 <p><a href="https://github.com/timschneider42/franky/releases"><img src="https://img.shields.io/github/v/release/timschneider42/franky.svg?include_prereleases&amp;sort=semver" alt="Releases" style="pointer-events: none;" class="inline"/> </a></p>
 <p><a href="https://github.com/timschneider42/franky/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-LGPL-green.svg" alt="LGPL" style="pointer-events: none;" class="inline"/> </a> </p>
 <p>Franky is a high-level motion library (both C++ and Python) for the Franka Emika robot. It adds a Python wrapper around <a href="https://frankaemika.github.io/docs/libfranka.html">libfranka</a>, while replacing necessary real-time programming with higher-level motion commands. As franky focuses on making real-time trajectory generation easy, it allows the robot to react to unforeseen events.</p>
+<p>Check out the <a href="#tutorial">tutorial</a> and the <a href="https://github.com/TimSchneider42/franky/tree/master/examples">examples</a> for an introduction. The full documentation can be found at <a href="https://timschneider42.github.io/franky/">https://timschneider42.github.io/franky/</a>.</p>
 <h2>Differences to frankx</h2>
 <p>Franky is a fork of <a href="https://github.com/pantor/frankx">frankx</a>, though both codebase and functionality differ substantially from frankx by now. In particular, franky provides the following new features/improvements:</p><ul>
 <li><a href="#real-time-motion">Motions can be updated asynchronously.</a></li>
@@ -425,9 +426,7 @@ $(function() {
 <div class="line">    gripper.stop()</div>
 <div class="line">    success_future.wait()</div>
 <div class="line">    print(&quot;Gripper motion timed out.&quot;)</div>
-</div><!-- fragment --><h2>Documentation</h2>
-<p>An auto-generated documentation can be found at <a href="https://timschneider42.github.io/franky/">https://timschneider42.github.io/franky/</a>. Moreover, there are multiple examples for both C++ and Python in the <a href="https://github.com/TimSchneider42/franky/tree/master/examples">examples</a> directory.</p>
-<h2>Development</h2>
+</div><!-- fragment --><h2>Development</h2>
 <p>Franky is written in C++17 and Python3.7. It is currently tested against following versions</p>
 <ul>
 <li>Libfranka v0.7.1, v0.8.0, v0.9.2, v0.10.0, v0.11.0, v0.12.1, v0.13.3</li>
