@@ -128,7 +128,7 @@ $(function() {
 <div class="line">cmake -DCMAKE_BUILD_TYPE=Release ..</div>
 <div class="line">make</div>
 <div class="line">make install</div>
-</div><!-- fragment --><p>To use franky, you can also include it as a subproject in your parent CMake via <code>add_subdirectory(franky)</code> and then <code>target_link_libraries(&lt;target&gt; libfranky)</code>.</p>
+</div><!-- fragment --><p>To use franky, you can also include it as a subproject in your parent CMake via <code>add_subdirectory(franky)</code> and then <code>target_link_libraries(&lt;target&gt; franky)</code>.</p>
 <p>If you need only the Python module, you can install franky via </p><div class="fragment"><div class="line">pip install .</div>
 </div><!-- fragment --><p> Make sure that the built library <code>_franky.cpython-3**-****-linux-gnu.so</code> is in the Python path, e.g. by adjusting <code>PYTHONPATH</code> accordingly.</p>
 <h4>Using Docker</h4>
@@ -154,10 +154,10 @@ $(function() {
 <div class="line">Robot robot(&quot;172.16.0.2&quot;);</div>
 <div class="line"> </div>
 <div class="line">// Reduce velocity and acceleration of the robot</div>
-<div class="line">robot.setDynamicRel(0.05);</div>
+<div class="line">robot.setRelativeDynamicsFactor(0.05);</div>
 <div class="line"> </div>
 <div class="line">// Move the end-effector 20cm in positive x-direction</div>
-<div class="line">auto motion = CartesianMotion(RobotPose(Affine({0.2, 0.0, 0.0}), 0.0), ReferenceType::Relative);</div>
+<div class="line">auto motion = std::make_shared&lt;CartesianMotion&gt;(RobotPose(Affine({0.2, 0.0, 0.0}), 0.0), ReferenceType::Relative);</div>
 <div class="line"> </div>
 <div class="line">// Finally move the robot</div>
 <div class="line">robot.move(motion);</div>
