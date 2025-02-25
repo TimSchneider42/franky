@@ -8,8 +8,6 @@ var searchData=
   ['initwaypointmotion_5',['initwaypointmotion',['../classfranky_1_1_cartesian_waypoint_motion.html#a00714dd79a63f21159989853a6ef5bb0',1,'franky::CartesianWaypointMotion::initWaypointMotion()'],['../classfranky_1_1_joint_waypoint_motion.html#a40f410c22ab38f95dd33369957d94285',1,'franky::JointWaypointMotion::initWaypointMotion()'],['../classfranky_1_1_waypoint_motion.html#ac80169f07d1f34cbce0ce3fdc9f154c6',1,'franky::WaypointMotion::initWaypointMotion()']]],
   ['intermediate_5ftarget_6',['intermediate_target',['../classfranky_1_1_impedance_motion.html#aabd59d6e0609d88130d71426324d12e2',1,'franky::ImpedanceMotion']]],
   ['invalidmotiontypeexception_7',['InvalidMotionTypeException',['../structfranky_1_1_invalid_motion_type_exception.html',1,'franky']]],
-  ['inverse_8',['inverse',['../structfranky_1_1_kinematics.html#ae2852b689724a0a38cbf23aef9c99193',1,'franky::Kinematics']]],
-  ['inversekinematics_9',['inverseKinematics',['../classfranky_1_1_robot.html#acae6f09215934cdc31bc5710fe395015',1,'franky::Robot']]],
-  ['is_5fgrasped_10',['is_grasped',['../classfranky_1_1_gripper.html#a792b6d30ee087a4cddba5e3d2320d6e9',1,'franky::Gripper']]],
-  ['is_5fin_5fcontrol_11',['is_in_control',['../classfranky_1_1_robot.html#a971c769d2725f11c3437d28f9ad6de61',1,'franky::Robot']]]
+  ['is_5fgrasped_8',['is_grasped',['../classfranky_1_1_gripper.html#a792b6d30ee087a4cddba5e3d2320d6e9',1,'franky::Gripper']]],
+  ['is_5fin_5fcontrol_9',['is_in_control',['../classfranky_1_1_robot.html#a971c769d2725f11c3437d28f9ad6de61',1,'franky::Robot']]]
 ];

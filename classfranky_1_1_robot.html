@@ -195,11 +195,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:acae6f09215934cdc31bc5710fe395015" id="r_acae6f09215934cdc31bc5710fe395015"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#acae6f09215934cdc31bc5710fe395015">inverseKinematics</a> (const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;target, const <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;q0)</td></tr>
-<tr class="memdesc:acae6f09215934cdc31bc5710fe395015"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the inverse kinematics for the given target pose.  <br /></td></tr>
-<tr class="separator:acae6f09215934cdc31bc5710fe395015"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1be6bdcdcea8b3f1c81a9b607068ca03" id="r_a1be6bdcdcea8b3f1c81a9b607068ca03"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a1be6bdcdcea8b3f1c81a9b607068ca03">forwardKinematics</a> (const <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;q)</td></tr>
-<tr class="memdesc:a1be6bdcdcea8b3f1c81a9b607068ca03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the forward kinematics for the given joint positions.  <br /></td></tr>
+<tr class="memdesc:a1be6bdcdcea8b3f1c81a9b607068ca03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the inverse kinematics for the given target pose.  <br /></td></tr>
 <tr class="separator:a1be6bdcdcea8b3f1c81a9b607068ca03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -544,8 +541,16 @@ template&lt;size_t dims&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Calculate the forward kinematics for the given joint positions. </p>
+<p>Calculate the inverse kinematics for the given target pose. </p>
 <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target</td><td>The target pose. </td></tr>
+    <tr><td class="paramname">q0</td><td>The initial guess for the joint positions. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector containing the joint positions.</dd></dl>
+<p>Calculate the forward kinematics for the given joint positions. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">q</td><td>The joint positions. </td></tr>
   </table>
@@ -572,52 +577,6 @@ template&lt;size_t dims&gt; </div>
 
 <p>Returns whether the robot has errors. </p>
 <dl class="section return"><dt>Returns</dt><dd>Whether the robot has errors. </dd></dl>
-
-</div>
-</div>
-<a id="acae6f09215934cdc31bc5710fe395015" name="acae6f09215934cdc31bc5710fe395015"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acae6f09215934cdc31bc5710fe395015">&#9670;&#160;</a></span>inverseKinematics()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> franky::Robot::inverseKinematics </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;&#160;</td>
-          <td class="paramname"><em>target</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;&#160;</td>
-          <td class="paramname"><em>q0</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Calculate the inverse kinematics for the given target pose. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">target</td><td>The target pose. </td></tr>
-    <tr><td class="paramname">q0</td><td>The initial guess for the joint positions. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A vector containing the joint positions. </dd></dl>
 
 </div>
 </div>
