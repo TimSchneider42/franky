@@ -7,6 +7,6 @@ var searchData=
   ['setrelativedynamicsfactor_4',['setRelativeDynamicsFactor',['../classfranky_1_1_robot.html#ad19caa63f0237d39463e5a3dd0b3e793',1,'franky::Robot']]],
   ['start_5',['start',['../classfranky_1_1_linear_path.html#ab865328fb62b1925a8fc63704fff413f',1,'franky::LinearPath']]],
   ['state_6',['state',['../classfranky_1_1_gripper.html#abb8531bbdefc46cbd15f36a3ad40b1e8',1,'franky::Gripper::state()'],['../classfranky_1_1_robot.html#a8fd74136334e010a7695f31507fd8775',1,'franky::Robot::state()']]],
-  ['stopasync_7',['stopAsync',['../classfranky_1_1_gripper.html#aabe1916e6f02e1357c30d37f0d4c27a0',1,'franky::Gripper']]],
+  ['stopasync_7',['stopAsync',['../classfranky_1_1_gripper.html#aa272b7106a9a5262a0bfc76ed36e002b',1,'franky::Gripper']]],
   ['stopmotion_8',['stopmotion',['../classfranky_1_1_stop_motion_3_01franka_1_1_joint_positions_01_4.html#a5f913e5b32f30096226433171d5964b9',1,'franky::StopMotion&lt; franka::JointPositions &gt;::StopMotion()'],['../classfranky_1_1_stop_motion_3_01franka_1_1_cartesian_pose_01_4.html#a6fdd50ae2bd15d6de2c2635c498e0f71',1,'franky::StopMotion&lt; franka::CartesianPose &gt;::StopMotion()']]]
 ];
