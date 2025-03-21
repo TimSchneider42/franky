@@ -26,7 +26,7 @@
   </a>
 </p>
 
-Franky is a high-level motion library for Franka robots offering Python and C++ support. 
+Franky is a high-level control library for Franka robots offering Python and C++ support. 
 By wrapping [libfranka](https://frankaemika.github.io/docs/libfranka.html) in a Python interface, Franky eliminates the need for strict real-time programming at 1 kHz. 
 Instead, you can define higher-level motion targets in Python, and Franky will use [Ruckig](https://github.com/pantor/ruckig) to plan time-optimal trajectories in real time.
 
