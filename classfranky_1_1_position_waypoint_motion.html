@@ -129,8 +129,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:abef0db2c08a60b88aae42404a279e2e8" id="r_abef0db2c08a60b88aae42404a279e2e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_position_waypoint_motion.html#abef0db2c08a60b88aae42404a279e2e8">setInputLimits</a> (ruckig::InputParameter&lt; 7 &gt; &amp;input_parameter, const <a class="el" href="structfranky_1_1_position_waypoint.html">PositionWaypoint</a>&lt; TargetType &gt; &amp;waypoint) const override</td></tr>
-<tr class="separator:abef0db2c08a60b88aae42404a279e2e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ebb35ebb3363acfec93c9228418804a" id="r_a8ebb35ebb3363acfec93c9228418804a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_position_waypoint_motion.html#a8ebb35ebb3363acfec93c9228418804a">setInputLimits</a> (const <a class="el" href="structfranky_1_1_position_waypoint.html">PositionWaypoint</a>&lt; TargetType &gt; &amp;waypoint, ruckig::InputParameter&lt; 7 &gt; &amp;input_parameter) const override</td></tr>
+<tr class="separator:a8ebb35ebb3363acfec93c9228418804a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d8e188866004d67aa48769475dbb6f7" id="r_a1d8e188866004d67aa48769475dbb6f7"><td class="memItemLeft" align="right" valign="top">virtual std::tuple&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_position_waypoint_motion.html#a1d8e188866004d67aa48769475dbb6f7">getAbsoluteInputLimits</a> () const =0</td></tr>
 <tr class="separator:a1d8e188866004d67aa48769475dbb6f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classfranky_1_1_waypoint_motion"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classfranky_1_1_waypoint_motion')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classfranky_1_1_waypoint_motion.html">franky::WaypointMotion&lt; ControlSignalType, PositionWaypoint&lt; TargetType &gt;, TargetType &gt;</a></td></tr>
@@ -251,8 +251,8 @@ template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e343
 
 </div>
 </div>
-<a id="abef0db2c08a60b88aae42404a279e2e8" name="abef0db2c08a60b88aae42404a279e2e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abef0db2c08a60b88aae42404a279e2e8">&#9670;&#160;</a></span>setInputLimits()</h2>
+<a id="a8ebb35ebb3363acfec93c9228418804a" name="a8ebb35ebb3363acfec93c9228418804a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ebb35ebb3363acfec93c9228418804a">&#9670;&#160;</a></span>setInputLimits()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -265,14 +265,14 @@ template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e343
         <tr>
           <td class="memname">void <a class="el" href="classfranky_1_1_position_waypoint_motion.html">franky::PositionWaypointMotion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>, TargetType &gt;::setInputLimits </td>
           <td>(</td>
-          <td class="paramtype">ruckig::InputParameter&lt; 7 &gt; &amp;&#160;</td>
-          <td class="paramname"><em>input_parameter</em>, </td>
+          <td class="paramtype">const <a class="el" href="structfranky_1_1_position_waypoint.html">PositionWaypoint</a>&lt; TargetType &gt; &amp;&#160;</td>
+          <td class="paramname"><em>waypoint</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structfranky_1_1_position_waypoint.html">PositionWaypoint</a>&lt; TargetType &gt; &amp;&#160;</td>
-          <td class="paramname"><em>waypoint</em>&#160;</td>
+          <td class="paramtype">ruckig::InputParameter&lt; 7 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>input_parameter</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -287,7 +287,7 @@ template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e343
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="classfranky_1_1_waypoint_motion.html#ac1af39fed055d71f1ecf5e94659fb9e9">franky::WaypointMotion&lt; ControlSignalType, PositionWaypoint&lt; TargetType &gt;, TargetType &gt;</a>.</p>
+<p>Implements <a class="el" href="classfranky_1_1_waypoint_motion.html#a4a54f0791590e317159518eb0353a199">franky::WaypointMotion&lt; ControlSignalType, PositionWaypoint&lt; TargetType &gt;, TargetType &gt;</a>.</p>
 
 </div>
 </div>
