@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['scalarorarray_0',['ScalarOrArray',['../classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02',1,'franky::Robot']]]
+  ['vector6d_0',['Vector6d',['../namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb',1,'franky']]],
+  ['vector7d_1',['Vector7d',['../namespacefranky.html#a4c36e6539a78f808bf759142dec935c4',1,'franky']]]
 ];

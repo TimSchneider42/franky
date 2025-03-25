@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['linearmotion_0',['LinearMotion',['../namespacefranky.html#a1c45a73de42a7946775dc070b686635d',1,'franky']]]
+  ['scalarorarray_0',['ScalarOrArray',['../classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02',1,'franky::Robot']]]
 ];
