@@ -11,7 +11,7 @@ var searchData=
   ['position_8',['position',['../classfranky_1_1_joint_state.html#addd9bedce775d28cef880644b635ccf0',1,'franky::JointState']]],
   ['position_5fwaypoint_5fmotion_2ehpp_9',['position_waypoint_motion.hpp',['../position__waypoint__motion_8hpp.html',1,'']]],
   ['positionwaypoint_10',['PositionWaypoint',['../structfranky_1_1_position_waypoint.html',1,'franky']]],
-  ['positionwaypointmotion_11',['positionwaypointmotion',['../classfranky_1_1_position_waypoint_motion.html#a5ae30437a138f29260d6a42b98f78f96',1,'franky::PositionWaypointMotion::PositionWaypointMotion()'],['../classfranky_1_1_position_waypoint_motion.html',1,'franky::PositionWaypointMotion&lt; ControlSignalType, TargetType &gt;']]],
+  ['positionwaypointmotion_11',['positionwaypointmotion',['../classfranky_1_1_position_waypoint_motion.html#ad5d16a0e7416918355c6110df27a93e4',1,'franky::PositionWaypointMotion::PositionWaypointMotion()'],['../classfranky_1_1_position_waypoint_motion.html',1,'franky::PositionWaypointMotion&lt; ControlSignalType, TargetType &gt;']]],
   ['positionwaypointmotion_3c_20franka_3a_3acartesianpose_2c_20cartesianstate_20_3e_12',['PositionWaypointMotion&lt; franka::CartesianPose, CartesianState &gt;',['../classfranky_1_1_position_waypoint_motion.html',1,'franky']]],
   ['positionwaypointmotion_3c_20franka_3a_3ajointpositions_2c_20jointstate_20_3e_13',['PositionWaypointMotion&lt; franka::JointPositions, JointState &gt;',['../classfranky_1_1_position_waypoint_motion.html',1,'franky']]],
   ['propagatethroughlink_14',['propagateThroughLink',['../classfranky_1_1_twist.html#a896c0f6949127e1c37f5716b3f771bdb',1,'franky::Twist']]]

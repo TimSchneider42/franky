@@ -9,9 +9,9 @@ var searchData=
   ['joint_5fstate_2ehpp_6',['joint_state.hpp',['../joint__state_8hpp.html',1,'']]],
   ['joint_5fwaypoint_5fmotion_2ecpp_7',['joint_waypoint_motion.cpp',['../joint__waypoint__motion_8cpp.html',1,'']]],
   ['joint_5fwaypoint_5fmotion_2ehpp_8',['joint_waypoint_motion.hpp',['../joint__waypoint__motion_8hpp.html',1,'']]],
-  ['jointmotion_9',['jointmotion',['../classfranky_1_1_joint_motion.html',1,'franky::JointMotion'],['../classfranky_1_1_joint_motion.html#ab73d53303e076c11480adaec8d39bc6d',1,'franky::JointMotion::JointMotion()']]],
+  ['jointmotion_9',['jointmotion',['../classfranky_1_1_joint_motion.html',1,'franky::JointMotion'],['../classfranky_1_1_joint_motion.html#a0148b712398a4aa57f2fb6849907595c',1,'franky::JointMotion::JointMotion()']]],
   ['jointpositions_10',['JointPositions',['../namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaacae53870521bf0d6aaf73f8435b4c53601',1,'franky']]],
   ['jointstate_11',['jointstate',['../classfranky_1_1_joint_state.html',1,'franky::JointState'],['../classfranky_1_1_joint_state.html#a330222fd0fea56aef1c1a7a6eb918e9b',1,'franky::JointState::JointState()=default'],['../classfranky_1_1_joint_state.html#a568e0e11672f5d9ad1f42b1d6cb9a576',1,'franky::JointState::JointState(const JointState &amp;)=default'],['../classfranky_1_1_joint_state.html#ad4a1bcb1c1f08f59f160c64f05462c1b',1,'franky::JointState::JointState(Vector7d position, Vector7d velocity)'],['../classfranky_1_1_joint_state.html#a58de323134a7b11599dafbcb3d9fcf1c',1,'franky::JointState::JointState(Vector7d position)']]],
   ['jointvelocities_12',['JointVelocities',['../namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaacadecb27858472a616860e32411b1a6854',1,'franky']]],
-  ['jointwaypointmotion_13',['jointwaypointmotion',['../classfranky_1_1_joint_waypoint_motion.html#ae5170c1a2a610dec64806017f0a94a7d',1,'franky::JointWaypointMotion::JointWaypointMotion()'],['../classfranky_1_1_joint_waypoint_motion.html',1,'franky::JointWaypointMotion']]]
+  ['jointwaypointmotion_13',['jointwaypointmotion',['../classfranky_1_1_joint_waypoint_motion.html#a6f0d8ac1afdbf632209a981e8d48ba36',1,'franky::JointWaypointMotion::JointWaypointMotion()'],['../classfranky_1_1_joint_waypoint_motion.html',1,'franky::JointWaypointMotion']]]
 ];
