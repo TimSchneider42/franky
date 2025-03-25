@@ -12,8 +12,7 @@ var searchData=
   ['forwardelbow_9',['forwardElbow',['../structfranky_1_1_kinematics.html#ae719b521cebd0e01b39ed8892368ae5d',1,'franky::Kinematics']]],
   ['forwardeuler_10',['forwardEuler',['../structfranky_1_1_kinematics.html#a9a8a8a9fae09ec1053b03ded920ee299',1,'franky::Kinematics']]],
   ['forwardkinematics_11',['forwardKinematics',['../classfranky_1_1_robot.html#a1be6bdcdcea8b3f1c81a9b607068ca03',1,'franky::Robot']]],
-  ['frame_12',['frame',['../structfranky_1_1_cartesian_waypoint_motion_1_1_params.html#a9518f48b10b574ed7254dca1cf4685fd',1,'franky::CartesianWaypointMotion::Params']]],
-  ['franky_13',['franky',['../index.html',1,'Franky'],['../namespacefranky.html',1,'franky']]],
-  ['franky_2ehpp_14',['franky.hpp',['../franky_8hpp.html',1,'']]],
-  ['fromvectorrepr_15',['fromVectorRepr',['../classfranky_1_1_twist.html#a39a4f6fc1cca31a7431618657d551f17',1,'franky::Twist']]]
+  ['franky_12',['franky',['../namespacefranky.html',1,'franky'],['../index.html',1,'Franky']]],
+  ['franky_2ehpp_13',['franky.hpp',['../franky_8hpp.html',1,'']]],
+  ['fromvectorrepr_14',['fromVectorRepr',['../classfranky_1_1_twist.html#a39a4f6fc1cca31a7431618657d551f17',1,'franky::Twist']]]
 ];
