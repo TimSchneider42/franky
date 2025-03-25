@@ -123,28 +123,28 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aed40663a195eb68318799d19451c5a0d inherit pub_methods_classfranky_1_1_motion" id="r_aed40663a195eb68318799d19451c5a0d"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classfranky_1_1_reaction.html">Reaction</a>&lt; franka::Torques &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#aed40663a195eb68318799d19451c5a0d">reactions</a> ()</td></tr>
 <tr class="memdesc:aed40663a195eb68318799d19451c5a0d inherit pub_methods_classfranky_1_1_motion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Currently registered reactions of the motion.  <br /></td></tr>
 <tr class="separator:aed40663a195eb68318799d19451c5a0d inherit pub_methods_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05ed2a4f6dbcd406f9298a7c8e4e76c2 inherit pub_methods_classfranky_1_1_motion" id="r_a05ed2a4f6dbcd406f9298a7c8e4e76c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#a05ed2a4f6dbcd406f9298a7c8e4e76c2">registerCallback</a> (<a class="el" href="classfranky_1_1_motion.html#a095a3db7a3672c9b1f236ec4af105c33">CallbackType</a> callback)</td></tr>
+<tr class="memitem:a05ed2a4f6dbcd406f9298a7c8e4e76c2 inherit pub_methods_classfranky_1_1_motion" id="r_a05ed2a4f6dbcd406f9298a7c8e4e76c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#a05ed2a4f6dbcd406f9298a7c8e4e76c2">registerCallback</a> (<a class="el" href="classfranky_1_1_motion.html#a3fdde43ced9e637a945d35fd90507b2c">CallbackType</a> callback)</td></tr>
 <tr class="memdesc:a05ed2a4f6dbcd406f9298a7c8e4e76c2 inherit pub_methods_classfranky_1_1_motion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a callback that is called in every step of the motion.  <br /></td></tr>
 <tr class="separator:a05ed2a4f6dbcd406f9298a7c8e4e76c2 inherit pub_methods_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6eb7e754962dd60f750c904f8f5ab7ed inherit pub_methods_classfranky_1_1_motion" id="r_a6eb7e754962dd60f750c904f8f5ab7ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#a6eb7e754962dd60f750c904f8f5ab7ed">init</a> (<a class="el" href="classfranky_1_1_robot.html">Robot</a> *robot, const franka::RobotState &amp;robot_state, const std::optional&lt; franka::Torques &gt; &amp;previous_command)</td></tr>
 <tr class="memdesc:a6eb7e754962dd60f750c904f8f5ab7ed inherit pub_methods_classfranky_1_1_motion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the motion.  <br /></td></tr>
 <tr class="separator:a6eb7e754962dd60f750c904f8f5ab7ed inherit pub_methods_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a84eab8ba8a0be27b2c0338e0578f11 inherit pub_methods_classfranky_1_1_motion" id="r_a7a84eab8ba8a0be27b2c0338e0578f11"><td class="memItemLeft" align="right" valign="top">franka::Torques&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#a7a84eab8ba8a0be27b2c0338e0578f11">nextCommand</a> (const franka::RobotState &amp;robot_state, franka::Duration time_step, std::chrono::duration&lt; double &gt; rel_time, std::chrono::duration&lt; double &gt; abs_time, const std::optional&lt; franka::Torques &gt; &amp;previous_command)</td></tr>
-<tr class="memdesc:a7a84eab8ba8a0be27b2c0338e0578f11 inherit pub_methods_classfranky_1_1_motion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the next command of the motion.  <br /></td></tr>
-<tr class="separator:a7a84eab8ba8a0be27b2c0338e0578f11 inherit pub_methods_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cd2fd074757e51b09fd81421d8d73c9 inherit pub_methods_classfranky_1_1_motion" id="r_a0cd2fd074757e51b09fd81421d8d73c9"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; franka::Torques &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#a0cd2fd074757e51b09fd81421d8d73c9">checkAndCallReactions</a> (const franka::RobotState &amp;robot_state, std::chrono::duration&lt; double &gt; rel_time, std::chrono::duration&lt; double &gt; abs_time)</td></tr>
-<tr class="memdesc:a0cd2fd074757e51b09fd81421d8d73c9 inherit pub_methods_classfranky_1_1_motion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check and call reactions.  <br /></td></tr>
-<tr class="separator:a0cd2fd074757e51b09fd81421d8d73c9 inherit pub_methods_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a261c0eb1f29626f42cd38d016f23b47e inherit pub_methods_classfranky_1_1_motion" id="r_a261c0eb1f29626f42cd38d016f23b47e"><td class="memItemLeft" align="right" valign="top">franka::Torques&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#a261c0eb1f29626f42cd38d016f23b47e">nextCommand</a> (const franka::RobotState &amp;robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time, const std::optional&lt; franka::Torques &gt; &amp;previous_command)</td></tr>
+<tr class="memdesc:a261c0eb1f29626f42cd38d016f23b47e inherit pub_methods_classfranky_1_1_motion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the next command of the motion.  <br /></td></tr>
+<tr class="separator:a261c0eb1f29626f42cd38d016f23b47e inherit pub_methods_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71632457b9b0695454a4a4d96d94f939 inherit pub_methods_classfranky_1_1_motion" id="r_a71632457b9b0695454a4a4d96d94f939"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; franka::Torques &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#a71632457b9b0695454a4a4d96d94f939">checkAndCallReactions</a> (const franka::RobotState &amp;robot_state, franka::Duration rel_time, franka::Duration abs_time)</td></tr>
+<tr class="memdesc:a71632457b9b0695454a4a4d96d94f939 inherit pub_methods_classfranky_1_1_motion"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check and call reactions.  <br /></td></tr>
+<tr class="separator:a71632457b9b0695454a4a4d96d94f939 inherit pub_methods_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a7a3f26da8730d67ba4f05cfbf83a7fad" id="r_a7a3f26da8730d67ba4f05cfbf83a7fad"><td class="memItemLeft" align="right" valign="top">std::tuple&lt; <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a>, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_exponential_impedance_motion.html#a7a3f26da8730d67ba4f05cfbf83a7fad">update</a> (const franka::RobotState &amp;robot_state, franka::Duration time_step, std::chrono::duration&lt; double &gt; time) override</td></tr>
-<tr class="separator:a7a3f26da8730d67ba4f05cfbf83a7fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7f0df0937af7d8c491883a000042269" id="r_ad7f0df0937af7d8c491883a000042269"><td class="memItemLeft" align="right" valign="top">std::tuple&lt; <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a>, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_exponential_impedance_motion.html#ad7f0df0937af7d8c491883a000042269">update</a> (const franka::RobotState &amp;robot_state, franka::Duration time_step, franka::Duration time) override</td></tr>
+<tr class="separator:ad7f0df0937af7d8c491883a000042269"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classfranky_1_1_impedance_motion"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classfranky_1_1_impedance_motion')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classfranky_1_1_impedance_motion.html">franky::ImpedanceMotion</a></td></tr>
 <tr class="memitem:a233a5ee3ab90b6cd9e02e39bf03a2000 inherit pro_methods_classfranky_1_1_impedance_motion" id="r_a233a5ee3ab90b6cd9e02e39bf03a2000"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_impedance_motion.html#a233a5ee3ab90b6cd9e02e39bf03a2000">initImpl</a> (const franka::RobotState &amp;robot_state, const std::optional&lt; franka::Torques &gt; &amp;previous_command) override</td></tr>
 <tr class="separator:a233a5ee3ab90b6cd9e02e39bf03a2000 inherit pro_methods_classfranky_1_1_impedance_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7eafda41d56aee176ca2c7fb502ba5a inherit pro_methods_classfranky_1_1_impedance_motion" id="r_ab7eafda41d56aee176ca2c7fb502ba5a"><td class="memItemLeft" align="right" valign="top">franka::Torques&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_impedance_motion.html#ab7eafda41d56aee176ca2c7fb502ba5a">nextCommandImpl</a> (const franka::RobotState &amp;robot_state, franka::Duration time_step, std::chrono::duration&lt; double &gt; rel_time, std::chrono::duration&lt; double &gt; abs_time, const std::optional&lt; franka::Torques &gt; &amp;previous_command) override</td></tr>
-<tr class="separator:ab7eafda41d56aee176ca2c7fb502ba5a inherit pro_methods_classfranky_1_1_impedance_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c605df98310bb3867d81f84d3a4a08a inherit pro_methods_classfranky_1_1_impedance_motion" id="r_a5c605df98310bb3867d81f84d3a4a08a"><td class="memItemLeft" align="right" valign="top">franka::Torques&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_impedance_motion.html#a5c605df98310bb3867d81f84d3a4a08a">nextCommandImpl</a> (const franka::RobotState &amp;robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time, const std::optional&lt; franka::Torques &gt; &amp;previous_command) override</td></tr>
+<tr class="separator:a5c605df98310bb3867d81f84d3a4a08a inherit pro_methods_classfranky_1_1_impedance_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aabd59d6e0609d88130d71426324d12e2 inherit pro_methods_classfranky_1_1_impedance_motion" id="r_aabd59d6e0609d88130d71426324d12e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_impedance_motion.html#aabd59d6e0609d88130d71426324d12e2">intermediate_target</a> () const</td></tr>
 <tr class="separator:aabd59d6e0609d88130d71426324d12e2 inherit pro_methods_classfranky_1_1_impedance_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ce961ddf51cd792482fd5ca2b299d97 inherit pro_methods_classfranky_1_1_impedance_motion" id="r_a1ce961ddf51cd792482fd5ca2b299d97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_impedance_motion.html#a1ce961ddf51cd792482fd5ca2b299d97">target</a> () const</td></tr>
@@ -158,8 +158,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_types_classfranky_1_1_motion"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classfranky_1_1_motion')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classfranky_1_1_motion.html">franky::Motion&lt; franka::Torques &gt;</a></td></tr>
-<tr class="memitem:a095a3db7a3672c9b1f236ec4af105c33 inherit pub_types_classfranky_1_1_motion" id="r_a095a3db7a3672c9b1f236ec4af105c33"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#a095a3db7a3672c9b1f236ec4af105c33">CallbackType</a> = std::function&lt; void(const franka::RobotState &amp;, franka::Duration, std::chrono::duration&lt; double &gt;, std::chrono::duration&lt; double &gt;, const franka::Torques &amp;)&gt;</td></tr>
-<tr class="separator:a095a3db7a3672c9b1f236ec4af105c33 inherit pub_types_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fdde43ced9e637a945d35fd90507b2c inherit pub_types_classfranky_1_1_motion" id="r_a3fdde43ced9e637a945d35fd90507b2c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#a3fdde43ced9e637a945d35fd90507b2c">CallbackType</a> = std::function&lt; void(const franka::RobotState &amp;, franka::Duration, franka::Duration, franka::Duration, const franka::Torques &amp;)&gt;</td></tr>
+<tr class="separator:a3fdde43ced9e637a945d35fd90507b2c inherit pub_types_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Exponential cartesian impedance motion. </p>
@@ -241,8 +241,8 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a7a3f26da8730d67ba4f05cfbf83a7fad" name="a7a3f26da8730d67ba4f05cfbf83a7fad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a3f26da8730d67ba4f05cfbf83a7fad">&#9670;&#160;</a></span>update()</h2>
+<a id="ad7f0df0937af7d8c491883a000042269" name="ad7f0df0937af7d8c491883a000042269"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7f0df0937af7d8c491883a000042269">&#9670;&#160;</a></span>update()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -265,7 +265,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::chrono::duration&lt; double &gt;&#160;</td>
+          <td class="paramtype">franka::Duration&#160;</td>
           <td class="paramname"><em>time</em>&#160;</td>
         </tr>
         <tr>
@@ -281,7 +281,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="classfranky_1_1_impedance_motion.html#acdf68c16d42748843f1032af906cd0c6">franky::ImpedanceMotion</a>.</p>
+<p>Implements <a class="el" href="classfranky_1_1_impedance_motion.html#a17aade197be2ae5e63bdc148151d7630">franky::ImpedanceMotion</a>.</p>
 
 </div>
 </div>
