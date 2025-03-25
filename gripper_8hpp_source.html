@@ -85,86 +85,85 @@ $(document).ready(function() { init_codefold(0); });
 <a href="gripper_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;future&gt;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;queue&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;franka/exception.h&gt;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;franka/gripper.h&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacefranky.html">franky</a> {</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="structfranky_1_1_gripper_exception.html">   14</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structfranky_1_1_gripper_exception.html">GripperException</a> : <span class="keyword">public</span> std::runtime_error {</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  <span class="keyword">using </span>std::runtime_error::runtime_error;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>};</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;franka/exception.h&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;franka/gripper.h&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacefranky.html">franky</a> {</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="structfranky_1_1_gripper_exception.html">   13</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structfranky_1_1_gripper_exception.html">GripperException</a> : <span class="keyword">public</span> std::runtime_error {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  <span class="keyword">using </span>std::runtime_error::runtime_error;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>};</div>
 </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="foldopen" id="foldopen00021" data-start="{" data-end="};">
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="classfranky_1_1_gripper.html">   21</a></span><span class="keyword">class </span><a class="code hl_class" href="classfranky_1_1_gripper.html">Gripper</a> : <span class="keyword">public</span> franka::Gripper {</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="classfranky_1_1_gripper.html#ad496a52d3a7a01926c8fd6e679901a89">   23</a></span>  <span class="keyword">explicit</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#ad496a52d3a7a01926c8fd6e679901a89">Gripper</a>(<span class="keyword">const</span> std::string &amp;franka_address) : franka::<a class="code hl_class" href="classfranky_1_1_gripper.html">Gripper</a>(franka_address) {}</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classfranky_1_1_gripper.html#ac6996e448e7a780d67682743cd836da9">   25</a></span>  <a class="code hl_function" href="classfranky_1_1_gripper.html#ac6996e448e7a780d67682743cd836da9">Gripper</a>(<a class="code hl_class" href="classfranky_1_1_gripper.html">Gripper</a> &amp;&amp;gripper) <span class="keyword">noexcept</span>: franka::Gripper(std::move(gripper)) {}</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  std::shared_future&lt;bool&gt; <a class="code hl_function" href="classfranky_1_1_gripper.html#a39998a7c1c4ea04403e9dc74e2459d5f">graspAsync</a>(</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>      <span class="keywordtype">double</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">width</a>, <span class="keywordtype">double</span> speed, <span class="keywordtype">double</span> force, <span class="keywordtype">double</span> epsilon_inner = 0.005, <span class="keywordtype">double</span> epsilon_outer = 0.005);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  std::shared_future&lt;bool&gt; <a class="code hl_function" href="classfranky_1_1_gripper.html#a9e8dbe460f5b1cf277ad281906fe8ed7">moveAsync</a>(<span class="keywordtype">double</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">width</a>, <span class="keywordtype">double</span> speed);</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#a6f9b3b3a14eefe618b480a4e932dce24">open</a>(<span class="keywordtype">double</span> speed);</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  std::shared_future&lt;bool&gt; <a class="code hl_function" href="classfranky_1_1_gripper.html#aa1b54a5041bdc3c8161cd8da895388c6">openAsync</a>(<span class="keywordtype">double</span> speed);</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  std::shared_future&lt;bool&gt; <a class="code hl_function" href="classfranky_1_1_gripper.html#af81ac0bf44132f338e43e64d8c10ea7e">homingAsync</a>();</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  std::shared_future&lt;bool&gt; <a class="code hl_function" href="classfranky_1_1_gripper.html#aa272b7106a9a5262a0bfc76ed36e002b">stopAsync</a>();</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="foldopen" id="foldopen00081" data-start="{" data-end="}">
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">   81</a></span>  [[nodiscard]] <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">width</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#abb8531bbdefc46cbd15f36a3ad40b1e8">state</a>().width;</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  }</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="foldopen" id="foldopen00020" data-start="{" data-end="};">
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classfranky_1_1_gripper.html">   20</a></span><span class="keyword">class </span><a class="code hl_class" href="classfranky_1_1_gripper.html">Gripper</a> : <span class="keyword">public</span> franka::Gripper {</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="classfranky_1_1_gripper.html#ad496a52d3a7a01926c8fd6e679901a89">   22</a></span>  <span class="keyword">explicit</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#ad496a52d3a7a01926c8fd6e679901a89">Gripper</a>(<span class="keyword">const</span> std::string &amp;franka_address) : franka::<a class="code hl_class" href="classfranky_1_1_gripper.html">Gripper</a>(franka_address) {}</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classfranky_1_1_gripper.html#ac6996e448e7a780d67682743cd836da9">   24</a></span>  <a class="code hl_function" href="classfranky_1_1_gripper.html#ac6996e448e7a780d67682743cd836da9">Gripper</a>(<a class="code hl_class" href="classfranky_1_1_gripper.html">Gripper</a> &amp;&amp;gripper) <span class="keyword">noexcept</span>: franka::Gripper(std::move(gripper)) {}</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  std::shared_future&lt;bool&gt; <a class="code hl_function" href="classfranky_1_1_gripper.html#a39998a7c1c4ea04403e9dc74e2459d5f">graspAsync</a>(</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>      <span class="keywordtype">double</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">width</a>, <span class="keywordtype">double</span> speed, <span class="keywordtype">double</span> force, <span class="keywordtype">double</span> epsilon_inner = 0.005, <span class="keywordtype">double</span> epsilon_outer = 0.005);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  std::shared_future&lt;bool&gt; <a class="code hl_function" href="classfranky_1_1_gripper.html#a9e8dbe460f5b1cf277ad281906fe8ed7">moveAsync</a>(<span class="keywordtype">double</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">width</a>, <span class="keywordtype">double</span> speed);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#a6f9b3b3a14eefe618b480a4e932dce24">open</a>(<span class="keywordtype">double</span> speed);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  std::shared_future&lt;bool&gt; <a class="code hl_function" href="classfranky_1_1_gripper.html#aa1b54a5041bdc3c8161cd8da895388c6">openAsync</a>(<span class="keywordtype">double</span> speed);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  std::shared_future&lt;bool&gt; <a class="code hl_function" href="classfranky_1_1_gripper.html#af81ac0bf44132f338e43e64d8c10ea7e">homingAsync</a>();</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  std::shared_future&lt;bool&gt; <a class="code hl_function" href="classfranky_1_1_gripper.html#aa272b7106a9a5262a0bfc76ed36e002b">stopAsync</a>();</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="foldopen" id="foldopen00080" data-start="{" data-end="}">
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">   80</a></span>  [[nodiscard]] <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">width</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#abb8531bbdefc46cbd15f36a3ad40b1e8">state</a>().width;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  }</div>
 </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="foldopen" id="foldopen00088" data-start="{" data-end="}">
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="classfranky_1_1_gripper.html#a792b6d30ee087a4cddba5e3d2320d6e9">   88</a></span>  [[nodiscard]] <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#a792b6d30ee087a4cddba5e3d2320d6e9">is_grasped</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#abb8531bbdefc46cbd15f36a3ad40b1e8">state</a>().is_grasped;</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  }</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="foldopen" id="foldopen00087" data-start="{" data-end="}">
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="classfranky_1_1_gripper.html#a792b6d30ee087a4cddba5e3d2320d6e9">   87</a></span>  [[nodiscard]] <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#a792b6d30ee087a4cddba5e3d2320d6e9">is_grasped</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#abb8531bbdefc46cbd15f36a3ad40b1e8">state</a>().is_grasped;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  }</div>
 </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
-<div class="foldopen" id="foldopen00095" data-start="{" data-end="}">
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classfranky_1_1_gripper.html#a5ae2659a6edf6e117fc461f60191c9db">   95</a></span>  [[nodiscard]] <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#a5ae2659a6edf6e117fc461f60191c9db">max_width</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#abb8531bbdefc46cbd15f36a3ad40b1e8">state</a>().max_width;</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  }</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="foldopen" id="foldopen00094" data-start="{" data-end="}">
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="classfranky_1_1_gripper.html#a5ae2659a6edf6e117fc461f60191c9db">   94</a></span>  [[nodiscard]] <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#a5ae2659a6edf6e117fc461f60191c9db">max_width</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classfranky_1_1_gripper.html#abb8531bbdefc46cbd15f36a3ad40b1e8">state</a>().max_width;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  }</div>
 </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="foldopen" id="foldopen00102" data-start="{" data-end="}">
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="classfranky_1_1_gripper.html#abb8531bbdefc46cbd15f36a3ad40b1e8">  102</a></span>  [[nodiscard]] <span class="keyword">inline</span> franka::GripperState <a class="code hl_function" href="classfranky_1_1_gripper.html#abb8531bbdefc46cbd15f36a3ad40b1e8">state</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="keywordflow">return</span> readOnce();</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  }</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="foldopen" id="foldopen00101" data-start="{" data-end="}">
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="classfranky_1_1_gripper.html#abb8531bbdefc46cbd15f36a3ad40b1e8">  101</a></span>  [[nodiscard]] <span class="keyword">inline</span> franka::GripperState <a class="code hl_function" href="classfranky_1_1_gripper.html#abb8531bbdefc46cbd15f36a3ad40b1e8">state</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="keywordflow">return</span> readOnce();</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  }</div>
 </div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  std::queue&lt;std::shared_future&lt;bool&gt;&gt; current_futures_;</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>  std::shared_future&lt;bool&gt; addCurrentFuture(std::future&lt;bool&gt; future);</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>};</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  std::shared_future&lt;bool&gt; current_future_;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  std::shared_future&lt;bool&gt; setCurrentFuture(std::future&lt;bool&gt; future);</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>};</div>
 </div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>} <span class="comment">// namespace franky</span></div>
-<div class="ttc" id="aclassfranky_1_1_gripper_html"><div class="ttname"><a href="classfranky_1_1_gripper.html">franky::Gripper</a></div><div class="ttdoc">A wrapper around the franka::Gripper class that adds asynchronous functionality.</div><div class="ttdef"><b>Definition</b> gripper.hpp:21</div></div>
-<div class="ttc" id="aclassfranky_1_1_gripper_html_a176c18c2ca98694075eea1085dc65a7e"><div class="ttname"><a href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">franky::Gripper::width</a></div><div class="ttdeci">double width() const</div><div class="ttdoc">Current opening width of the gripper [m].</div><div class="ttdef"><b>Definition</b> gripper.hpp:81</div></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>} <span class="comment">// namespace franky</span></div>
+<div class="ttc" id="aclassfranky_1_1_gripper_html"><div class="ttname"><a href="classfranky_1_1_gripper.html">franky::Gripper</a></div><div class="ttdoc">A wrapper around the franka::Gripper class that adds asynchronous functionality.</div><div class="ttdef"><b>Definition</b> gripper.hpp:20</div></div>
+<div class="ttc" id="aclassfranky_1_1_gripper_html_a176c18c2ca98694075eea1085dc65a7e"><div class="ttname"><a href="classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e">franky::Gripper::width</a></div><div class="ttdeci">double width() const</div><div class="ttdoc">Current opening width of the gripper [m].</div><div class="ttdef"><b>Definition</b> gripper.hpp:80</div></div>
 <div class="ttc" id="aclassfranky_1_1_gripper_html_a39998a7c1c4ea04403e9dc74e2459d5f"><div class="ttname"><a href="classfranky_1_1_gripper.html#a39998a7c1c4ea04403e9dc74e2459d5f">franky::Gripper::graspAsync</a></div><div class="ttdeci">std::shared_future&lt; bool &gt; graspAsync(double width, double speed, double force, double epsilon_inner=0.005, double epsilon_outer=0.005)</div><div class="ttdoc">Asynchronous variant of the franka::Gripper::grasp function.</div><div class="ttdef"><b>Definition</b> gripper.cpp:4</div></div>
-<div class="ttc" id="aclassfranky_1_1_gripper_html_a5ae2659a6edf6e117fc461f60191c9db"><div class="ttname"><a href="classfranky_1_1_gripper.html#a5ae2659a6edf6e117fc461f60191c9db">franky::Gripper::max_width</a></div><div class="ttdeci">double max_width() const</div><div class="ttdoc">Maximum width of the gripper [m].</div><div class="ttdef"><b>Definition</b> gripper.hpp:95</div></div>
+<div class="ttc" id="aclassfranky_1_1_gripper_html_a5ae2659a6edf6e117fc461f60191c9db"><div class="ttname"><a href="classfranky_1_1_gripper.html#a5ae2659a6edf6e117fc461f60191c9db">franky::Gripper::max_width</a></div><div class="ttdeci">double max_width() const</div><div class="ttdoc">Maximum width of the gripper [m].</div><div class="ttdef"><b>Definition</b> gripper.hpp:94</div></div>
 <div class="ttc" id="aclassfranky_1_1_gripper_html_a6f9b3b3a14eefe618b480a4e932dce24"><div class="ttname"><a href="classfranky_1_1_gripper.html#a6f9b3b3a14eefe618b480a4e932dce24">franky::Gripper::open</a></div><div class="ttdeci">bool open(double speed)</div><div class="ttdoc">Opens the gripper fully.</div><div class="ttdef"><b>Definition</b> gripper.cpp:14</div></div>
-<div class="ttc" id="aclassfranky_1_1_gripper_html_a792b6d30ee087a4cddba5e3d2320d6e9"><div class="ttname"><a href="classfranky_1_1_gripper.html#a792b6d30ee087a4cddba5e3d2320d6e9">franky::Gripper::is_grasped</a></div><div class="ttdeci">bool is_grasped() const</div><div class="ttdoc">Whether the gripper is grasping.</div><div class="ttdef"><b>Definition</b> gripper.hpp:88</div></div>
+<div class="ttc" id="aclassfranky_1_1_gripper_html_a792b6d30ee087a4cddba5e3d2320d6e9"><div class="ttname"><a href="classfranky_1_1_gripper.html#a792b6d30ee087a4cddba5e3d2320d6e9">franky::Gripper::is_grasped</a></div><div class="ttdeci">bool is_grasped() const</div><div class="ttdoc">Whether the gripper is grasping.</div><div class="ttdef"><b>Definition</b> gripper.hpp:87</div></div>
 <div class="ttc" id="aclassfranky_1_1_gripper_html_a9e8dbe460f5b1cf277ad281906fe8ed7"><div class="ttname"><a href="classfranky_1_1_gripper.html#a9e8dbe460f5b1cf277ad281906fe8ed7">franky::Gripper::moveAsync</a></div><div class="ttdeci">std::shared_future&lt; bool &gt; moveAsync(double width, double speed)</div><div class="ttdoc">Asynchronous variant of the franka::Gripper::move function.</div><div class="ttdef"><b>Definition</b> gripper.cpp:10</div></div>
 <div class="ttc" id="aclassfranky_1_1_gripper_html_aa1b54a5041bdc3c8161cd8da895388c6"><div class="ttname"><a href="classfranky_1_1_gripper.html#aa1b54a5041bdc3c8161cd8da895388c6">franky::Gripper::openAsync</a></div><div class="ttdeci">std::shared_future&lt; bool &gt; openAsync(double speed)</div><div class="ttdoc">Asynchronous variant of the open function.</div><div class="ttdef"><b>Definition</b> gripper.cpp:16</div></div>
 <div class="ttc" id="aclassfranky_1_1_gripper_html_aa272b7106a9a5262a0bfc76ed36e002b"><div class="ttname"><a href="classfranky_1_1_gripper.html#aa272b7106a9a5262a0bfc76ed36e002b">franky::Gripper::stopAsync</a></div><div class="ttdeci">std::shared_future&lt; bool &gt; stopAsync()</div><div class="ttdoc">Asynchronous variant of the franka::Gripper::stop function.</div><div class="ttdef"><b>Definition</b> gripper.cpp:24</div></div>
-<div class="ttc" id="aclassfranky_1_1_gripper_html_abb8531bbdefc46cbd15f36a3ad40b1e8"><div class="ttname"><a href="classfranky_1_1_gripper.html#abb8531bbdefc46cbd15f36a3ad40b1e8">franky::Gripper::state</a></div><div class="ttdeci">franka::GripperState state() const</div><div class="ttdoc">Current gripper state.</div><div class="ttdef"><b>Definition</b> gripper.hpp:102</div></div>
-<div class="ttc" id="aclassfranky_1_1_gripper_html_ac6996e448e7a780d67682743cd836da9"><div class="ttname"><a href="classfranky_1_1_gripper.html#ac6996e448e7a780d67682743cd836da9">franky::Gripper::Gripper</a></div><div class="ttdeci">Gripper(Gripper &amp;&amp;gripper) noexcept</div><div class="ttdef"><b>Definition</b> gripper.hpp:25</div></div>
-<div class="ttc" id="aclassfranky_1_1_gripper_html_ad496a52d3a7a01926c8fd6e679901a89"><div class="ttname"><a href="classfranky_1_1_gripper.html#ad496a52d3a7a01926c8fd6e679901a89">franky::Gripper::Gripper</a></div><div class="ttdeci">Gripper(const std::string &amp;franka_address)</div><div class="ttdef"><b>Definition</b> gripper.hpp:23</div></div>
+<div class="ttc" id="aclassfranky_1_1_gripper_html_abb8531bbdefc46cbd15f36a3ad40b1e8"><div class="ttname"><a href="classfranky_1_1_gripper.html#abb8531bbdefc46cbd15f36a3ad40b1e8">franky::Gripper::state</a></div><div class="ttdeci">franka::GripperState state() const</div><div class="ttdoc">Current gripper state.</div><div class="ttdef"><b>Definition</b> gripper.hpp:101</div></div>
+<div class="ttc" id="aclassfranky_1_1_gripper_html_ac6996e448e7a780d67682743cd836da9"><div class="ttname"><a href="classfranky_1_1_gripper.html#ac6996e448e7a780d67682743cd836da9">franky::Gripper::Gripper</a></div><div class="ttdeci">Gripper(Gripper &amp;&amp;gripper) noexcept</div><div class="ttdef"><b>Definition</b> gripper.hpp:24</div></div>
+<div class="ttc" id="aclassfranky_1_1_gripper_html_ad496a52d3a7a01926c8fd6e679901a89"><div class="ttname"><a href="classfranky_1_1_gripper.html#ad496a52d3a7a01926c8fd6e679901a89">franky::Gripper::Gripper</a></div><div class="ttdeci">Gripper(const std::string &amp;franka_address)</div><div class="ttdef"><b>Definition</b> gripper.hpp:22</div></div>
 <div class="ttc" id="aclassfranky_1_1_gripper_html_af81ac0bf44132f338e43e64d8c10ea7e"><div class="ttname"><a href="classfranky_1_1_gripper.html#af81ac0bf44132f338e43e64d8c10ea7e">franky::Gripper::homingAsync</a></div><div class="ttdeci">std::shared_future&lt; bool &gt; homingAsync()</div><div class="ttdoc">Asynchronous variant of the franka::Gripper::homing function.</div><div class="ttdef"><b>Definition</b> gripper.cpp:20</div></div>
 <div class="ttc" id="anamespacefranky_html"><div class="ttname"><a href="namespacefranky.html">franky</a></div><div class="ttdef"><b>Definition</b> gripper.cpp:3</div></div>
-<div class="ttc" id="astructfranky_1_1_gripper_exception_html"><div class="ttname"><a href="structfranky_1_1_gripper_exception.html">franky::GripperException</a></div><div class="ttdoc">Exception thrown by the gripper class.</div><div class="ttdef"><b>Definition</b> gripper.hpp:14</div></div>
+<div class="ttc" id="astructfranky_1_1_gripper_exception_html"><div class="ttname"><a href="structfranky_1_1_gripper_exception.html">franky::GripperException</a></div><div class="ttdoc">Exception thrown by the gripper class.</div><div class="ttdef"><b>Definition</b> gripper.hpp:13</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
