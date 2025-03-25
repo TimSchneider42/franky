@@ -5,7 +5,7 @@ var indexSectionsWithContent =
   2: "f",
   3: "acefgijklmpqrstuw",
   4: "acefghijklmnopqrstuvw~",
-  5: "bcdefjkmpqrstv",
+  5: "bcdefhjkmpqrstv",
   6: "acelsv",
   7: "cr",
   8: "acjrt",
