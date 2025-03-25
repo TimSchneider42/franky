@@ -8,5 +8,6 @@ var searchData=
   ['velocity_5fwaypoint_5fmotion_2ehpp_5',['velocity_waypoint_motion.hpp',['../velocity__waypoint__motion_8hpp.html',1,'']]],
   ['velocitywaypoint_6',['VelocityWaypoint',['../namespacefranky.html#a7af3aea8bf2e7bc0f366814328c1fb32',1,'franky']]],
   ['velocitywaypointmotion_7',['velocitywaypointmotion',['../classfranky_1_1_velocity_waypoint_motion.html',1,'franky::VelocityWaypointMotion&lt; ControlSignalType, TargetType &gt;'],['../classfranky_1_1_velocity_waypoint_motion.html#aa7cb87ffe6b03a25bf14efbb3e547405',1,'franky::VelocityWaypointMotion::VelocityWaypointMotion()']]],
-  ['velocitywaypointmotion_3c_20franka_3a_3ajointvelocities_2c_20vector7d_20_3e_8',['VelocityWaypointMotion&lt; franka::JointVelocities, Vector7d &gt;',['../classfranky_1_1_velocity_waypoint_motion.html',1,'franky']]]
+  ['velocitywaypointmotion_3c_20franka_3a_3acartesianvelocities_2c_20robotvelocity_20_3e_8',['VelocityWaypointMotion&lt; franka::CartesianVelocities, RobotVelocity &gt;',['../classfranky_1_1_velocity_waypoint_motion.html',1,'franky']]],
+  ['velocitywaypointmotion_3c_20franka_3a_3ajointvelocities_2c_20vector7d_20_3e_9',['VelocityWaypointMotion&lt; franka::JointVelocities, Vector7d &gt;',['../classfranky_1_1_velocity_waypoint_motion.html',1,'franky']]]
 ];
