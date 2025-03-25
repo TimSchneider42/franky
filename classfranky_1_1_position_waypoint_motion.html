@@ -131,8 +131,8 @@ Public Member Functions</h2></td></tr>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a8ebb35ebb3363acfec93c9228418804a" id="r_a8ebb35ebb3363acfec93c9228418804a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_position_waypoint_motion.html#a8ebb35ebb3363acfec93c9228418804a">setInputLimits</a> (const <a class="el" href="structfranky_1_1_position_waypoint.html">PositionWaypoint</a>&lt; TargetType &gt; &amp;waypoint, ruckig::InputParameter&lt; 7 &gt; &amp;input_parameter) const override</td></tr>
 <tr class="separator:a8ebb35ebb3363acfec93c9228418804a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d8e188866004d67aa48769475dbb6f7" id="r_a1d8e188866004d67aa48769475dbb6f7"><td class="memItemLeft" align="right" valign="top">virtual std::tuple&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_position_waypoint_motion.html#a1d8e188866004d67aa48769475dbb6f7">getAbsoluteInputLimits</a> () const =0</td></tr>
-<tr class="separator:a1d8e188866004d67aa48769475dbb6f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98d70e2d1e3113b5e5f86da03a21f714" id="r_a98d70e2d1e3113b5e5f86da03a21f714"><td class="memItemLeft" align="right" valign="top">std::tuple&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_position_waypoint_motion.html#a98d70e2d1e3113b5e5f86da03a21f714">getAbsoluteInputLimits</a> () const override=0</td></tr>
+<tr class="separator:a98d70e2d1e3113b5e5f86da03a21f714"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classfranky_1_1_waypoint_motion"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classfranky_1_1_waypoint_motion')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classfranky_1_1_waypoint_motion.html">franky::WaypointMotion&lt; ControlSignalType, PositionWaypoint&lt; TargetType &gt;, TargetType &gt;</a></td></tr>
 <tr class="memitem:afe661497b79f8d4827d6045388464cf1 inherit pro_methods_classfranky_1_1_waypoint_motion" id="r_afe661497b79f8d4827d6045388464cf1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_waypoint_motion.html#afe661497b79f8d4827d6045388464cf1">initImpl</a> (const franka::RobotState &amp;robot_state, const std::optional&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &amp;previous_command) override</td></tr>
 <tr class="separator:afe661497b79f8d4827d6045388464cf1 inherit pro_methods_classfranky_1_1_waypoint_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -222,8 +222,8 @@ template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e343
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1d8e188866004d67aa48769475dbb6f7" name="a1d8e188866004d67aa48769475dbb6f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d8e188866004d67aa48769475dbb6f7">&#9670;&#160;</a></span>getAbsoluteInputLimits()</h2>
+<a id="a98d70e2d1e3113b5e5f86da03a21f714" name="a98d70e2d1e3113b5e5f86da03a21f714"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98d70e2d1e3113b5e5f86da03a21f714">&#9670;&#160;</a></span>getAbsoluteInputLimits()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -234,7 +234,7 @@ template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e343
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::tuple&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt; <a class="el" href="classfranky_1_1_position_waypoint_motion.html">franky::PositionWaypointMotion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>, TargetType &gt;::getAbsoluteInputLimits </td>
+          <td class="memname">std::tuple&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt; <a class="el" href="classfranky_1_1_position_waypoint_motion.html">franky::PositionWaypointMotion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>, TargetType &gt;::getAbsoluteInputLimits </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -242,7 +242,7 @@ template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e343
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
