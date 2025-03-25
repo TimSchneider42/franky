@@ -6,12 +6,13 @@ var searchData=
   ['cartesianwaypointmotion_3',['CartesianWaypointMotion',['../classfranky_1_1_cartesian_waypoint_motion.html#a44e1427be103627f2c62b7bca348de3f',1,'franky::CartesianWaypointMotion']]],
   ['changeendeffectorframe_4',['changeendeffectorframe',['../classfranky_1_1_cartesian_state.html#a95522df649508eed67ac81cf21ca1b08',1,'franky::CartesianState::changeEndEffectorFrame()'],['../classfranky_1_1_robot_pose.html#a132eef8bd15ba00132fb64ed441382ba',1,'franky::RobotPose::changeEndEffectorFrame()'],['../classfranky_1_1_robot_velocity.html#ab7fe3ffb8b3a627027d6441d57223c95',1,'franky::RobotVelocity::changeEndEffectorFrame()']]],
   ['checkandcallreactions_5',['checkAndCallReactions',['../classfranky_1_1_motion.html#a0cd2fd074757e51b09fd81421d8d73c9',1,'franky::Motion']]],
-  ['condition_6',['condition',['../classfranky_1_1_condition.html#adf78d10504bce34caef779390e108644',1,'franky::Condition::Condition(CheckFunc check_func, std::string repr=&quot;NULL&quot;)'],['../classfranky_1_1_condition.html#af73a963ea6eab3309116b399b9726c76',1,'franky::Condition::Condition(bool constant_value)'],['../classfranky_1_1_reaction.html#a8bffc25b5455683d52cd6c5403f1d613',1,'franky::Reaction::condition()']]],
-  ['current_5fcontrol_5fsignal_5ftype_7',['current_control_signal_type',['../classfranky_1_1_robot.html#a15b55042954d0bec0f2190abf2c8bb59',1,'franky::Robot']]],
-  ['currentcartesianstate_8',['currentCartesianState',['../classfranky_1_1_robot.html#a4d2595f5969257dd18dce4997d59f7cd',1,'franky::Robot']]],
-  ['currentcartesianvelocity_9',['currentCartesianVelocity',['../classfranky_1_1_robot.html#acb900ba5048aa792f4c16150703d8a6b',1,'franky::Robot']]],
-  ['currentjointpositions_10',['currentJointPositions',['../classfranky_1_1_robot.html#a4aae0b9dbfe4d88615810d1743c43646',1,'franky::Robot']]],
-  ['currentjointstate_11',['currentJointState',['../classfranky_1_1_robot.html#aab5abbad176d18599f25a4204e354cfb',1,'franky::Robot']]],
-  ['currentjointvelocities_12',['currentJointVelocities',['../classfranky_1_1_robot.html#a2d118e16b5789a8442c486cca80ed3c6',1,'franky::Robot']]],
-  ['currentpose_13',['currentPose',['../classfranky_1_1_robot.html#adf04b2531a0ac4a16a759cc048d82e15',1,'franky::Robot']]]
+  ['checkwaypoint_6',['checkwaypoint',['../classfranky_1_1_velocity_waypoint_motion.html#ad1d40f7990fad3c22aff486e71d291f4',1,'franky::VelocityWaypointMotion::checkWaypoint()'],['../classfranky_1_1_waypoint_motion.html#a9d8d450f3d2748cc32eb6bd2afd6f46c',1,'franky::WaypointMotion::checkWaypoint()']]],
+  ['condition_7',['condition',['../classfranky_1_1_reaction.html#a8bffc25b5455683d52cd6c5403f1d613',1,'franky::Reaction::condition()'],['../classfranky_1_1_condition.html#adf78d10504bce34caef779390e108644',1,'franky::Condition::Condition(CheckFunc check_func, std::string repr=&quot;NULL&quot;)'],['../classfranky_1_1_condition.html#af73a963ea6eab3309116b399b9726c76',1,'franky::Condition::Condition(bool constant_value)']]],
+  ['current_5fcontrol_5fsignal_5ftype_8',['current_control_signal_type',['../classfranky_1_1_robot.html#a15b55042954d0bec0f2190abf2c8bb59',1,'franky::Robot']]],
+  ['currentcartesianstate_9',['currentCartesianState',['../classfranky_1_1_robot.html#a4d2595f5969257dd18dce4997d59f7cd',1,'franky::Robot']]],
+  ['currentcartesianvelocity_10',['currentCartesianVelocity',['../classfranky_1_1_robot.html#acb900ba5048aa792f4c16150703d8a6b',1,'franky::Robot']]],
+  ['currentjointpositions_11',['currentJointPositions',['../classfranky_1_1_robot.html#a4aae0b9dbfe4d88615810d1743c43646',1,'franky::Robot']]],
+  ['currentjointstate_12',['currentJointState',['../classfranky_1_1_robot.html#aab5abbad176d18599f25a4204e354cfb',1,'franky::Robot']]],
+  ['currentjointvelocities_13',['currentJointVelocities',['../classfranky_1_1_robot.html#a2d118e16b5789a8442c486cca80ed3c6',1,'franky::Robot']]],
+  ['currentpose_14',['currentPose',['../classfranky_1_1_robot.html#adf04b2531a0ac4a16a759cc048d82e15',1,'franky::Robot']]]
 ];
