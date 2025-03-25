@@ -89,19 +89,19 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a9125e1116845be84750cd88f76f76848" id="r_a9125e1116845be84750cd88f76f76848"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_condition.html#a9125e1116845be84750cd88f76f76848">CheckFunc</a> = std::function&lt; bool(const franka::RobotState &amp;, double, double)&gt;</td></tr>
-<tr class="separator:a9125e1116845be84750cd88f76f76848"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a254dda39e0ece494f29299cfce891594" id="r_a254dda39e0ece494f29299cfce891594"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_condition.html#a254dda39e0ece494f29299cfce891594">CheckFunc</a> = std::function&lt; bool(const franka::RobotState &amp;, std::chrono::duration&lt; double &gt;, std::chrono::duration&lt; double &gt;)&gt;</td></tr>
+<tr class="separator:a254dda39e0ece494f29299cfce891594"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:adf78d10504bce34caef779390e108644" id="r_adf78d10504bce34caef779390e108644"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_condition.html#adf78d10504bce34caef779390e108644">Condition</a> (<a class="el" href="classfranky_1_1_condition.html#a9125e1116845be84750cd88f76f76848">CheckFunc</a> check_func, std::string <a class="el" href="classfranky_1_1_condition.html#afaae7e02e68860afdf7c40a75bf91d25">repr</a>=&quot;NULL&quot;)</td></tr>
+<tr class="memitem:adf78d10504bce34caef779390e108644" id="r_adf78d10504bce34caef779390e108644"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_condition.html#adf78d10504bce34caef779390e108644">Condition</a> (<a class="el" href="classfranky_1_1_condition.html#a254dda39e0ece494f29299cfce891594">CheckFunc</a> check_func, std::string <a class="el" href="classfranky_1_1_condition.html#afaae7e02e68860afdf7c40a75bf91d25">repr</a>=&quot;NULL&quot;)</td></tr>
 <tr class="separator:adf78d10504bce34caef779390e108644"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af73a963ea6eab3309116b399b9726c76" id="r_af73a963ea6eab3309116b399b9726c76"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_condition.html#af73a963ea6eab3309116b399b9726c76">Condition</a> (bool constant_value)</td></tr>
 <tr class="memdesc:af73a963ea6eab3309116b399b9726c76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit constructor for constant conditions.  <br /></td></tr>
 <tr class="separator:af73a963ea6eab3309116b399b9726c76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43d9ddead58203dae3a790ce950dbccf" id="r_a43d9ddead58203dae3a790ce950dbccf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_condition.html#a43d9ddead58203dae3a790ce950dbccf">operator()</a> (const franka::RobotState &amp;robot_state, double rel_time, double abs_time) const</td></tr>
-<tr class="memdesc:a43d9ddead58203dae3a790ce950dbccf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the condition is met.  <br /></td></tr>
-<tr class="separator:a43d9ddead58203dae3a790ce950dbccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fa652c1d3dd58751a1173ec00112f96" id="r_a0fa652c1d3dd58751a1173ec00112f96"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_condition.html#a0fa652c1d3dd58751a1173ec00112f96">operator()</a> (const franka::RobotState &amp;robot_state, std::chrono::duration&lt; double &gt; rel_time, std::chrono::duration&lt; double &gt; abs_time) const</td></tr>
+<tr class="memdesc:a0fa652c1d3dd58751a1173ec00112f96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the condition is met.  <br /></td></tr>
+<tr class="separator:a0fa652c1d3dd58751a1173ec00112f96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afaae7e02e68860afdf7c40a75bf91d25" id="r_afaae7e02e68860afdf7c40a75bf91d25"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_condition.html#afaae7e02e68860afdf7c40a75bf91d25">repr</a> () const</td></tr>
 <tr class="memdesc:afaae7e02e68860afdf7c40a75bf91d25"><td class="mdescLeft">&#160;</td><td class="mdescRight">The string representation of the condition.  <br /></td></tr>
 <tr class="separator:afaae7e02e68860afdf7c40a75bf91d25"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -110,14 +110,14 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>A condition on the robot state. </p>
 <p>This class defines a condition on the robot state, which can be used to define a condition for a reaction in a motion. Conditions support logical operations (&amp;&amp;, ||, ==, !=, !) and can be combined to form more complex conditions. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a9125e1116845be84750cd88f76f76848" name="a9125e1116845be84750cd88f76f76848"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9125e1116845be84750cd88f76f76848">&#9670;&#160;</a></span>CheckFunc</h2>
+<a id="a254dda39e0ece494f29299cfce891594" name="a254dda39e0ece494f29299cfce891594"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a254dda39e0ece494f29299cfce891594">&#9670;&#160;</a></span>CheckFunc</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classfranky_1_1_condition.html#a9125e1116845be84750cd88f76f76848">franky::Condition::CheckFunc</a> =  std::function&lt;bool(const franka::RobotState &amp;, double, double)&gt;</td>
+          <td class="memname">using <a class="el" href="classfranky_1_1_condition.html#a254dda39e0ece494f29299cfce891594">franky::Condition::CheckFunc</a> =  std::function&lt;bool( const franka::RobotState &amp;, std::chrono::duration&lt;double&gt;, std::chrono::duration&lt;double&gt;)&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -137,7 +137,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">franky::Condition::Condition </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classfranky_1_1_condition.html#a9125e1116845be84750cd88f76f76848">Condition::CheckFunc</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classfranky_1_1_condition.html#a254dda39e0ece494f29299cfce891594">Condition::CheckFunc</a>&#160;</td>
           <td class="paramname"><em>check_func</em>, </td>
         </tr>
         <tr>
@@ -195,8 +195,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a43d9ddead58203dae3a790ce950dbccf" name="a43d9ddead58203dae3a790ce950dbccf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43d9ddead58203dae3a790ce950dbccf">&#9670;&#160;</a></span>operator()()</h2>
+<a id="a0fa652c1d3dd58751a1173ec00112f96" name="a0fa652c1d3dd58751a1173ec00112f96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fa652c1d3dd58751a1173ec00112f96">&#9670;&#160;</a></span>operator()()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -213,13 +213,13 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
+          <td class="paramtype">std::chrono::duration&lt; double &gt;&#160;</td>
           <td class="paramname"><em>rel_time</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
+          <td class="paramtype">std::chrono::duration&lt; double &gt;&#160;</td>
           <td class="paramname"><em>abs_time</em>&#160;</td>
         </tr>
         <tr>

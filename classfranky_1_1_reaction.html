@@ -88,19 +88,19 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad19e535f89aa97ec6b949ca48390510d" id="r_ad19e535f89aa97ec6b949ca48390510d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_reaction.html#ad19e535f89aa97ec6b949ca48390510d">Reaction</a> (const <a class="el" href="classfranky_1_1_condition.html">Condition</a> &amp;<a class="el" href="classfranky_1_1_reaction.html#a54f43da1036cd95e187f54e00a93b083">condition</a>, std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &gt; new_motion=nullptr)</td></tr>
+<tr class="memitem:ad19e535f89aa97ec6b949ca48390510d" id="r_ad19e535f89aa97ec6b949ca48390510d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_reaction.html#ad19e535f89aa97ec6b949ca48390510d">Reaction</a> (const <a class="el" href="classfranky_1_1_condition.html">Condition</a> &amp;<a class="el" href="classfranky_1_1_reaction.html#a8bffc25b5455683d52cd6c5403f1d613">condition</a>, std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &gt; new_motion=nullptr)</td></tr>
 <tr class="separator:ad19e535f89aa97ec6b949ca48390510d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2bf1b2f2d5450e197e76f6d556694954" id="r_a2bf1b2f2d5450e197e76f6d556694954"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_reaction.html#a2bf1b2f2d5450e197e76f6d556694954">Reaction</a> (<a class="el" href="classfranky_1_1_condition.html">Condition</a> <a class="el" href="classfranky_1_1_reaction.html#a54f43da1036cd95e187f54e00a93b083">condition</a>, const MotionFunc &amp;motion_func)</td></tr>
+<tr class="memitem:a2bf1b2f2d5450e197e76f6d556694954" id="r_a2bf1b2f2d5450e197e76f6d556694954"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_reaction.html#a2bf1b2f2d5450e197e76f6d556694954">Reaction</a> (<a class="el" href="classfranky_1_1_condition.html">Condition</a> <a class="el" href="classfranky_1_1_reaction.html#a8bffc25b5455683d52cd6c5403f1d613">condition</a>, const MotionFunc &amp;motion_func)</td></tr>
 <tr class="separator:a2bf1b2f2d5450e197e76f6d556694954"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1906a5e500902ca4e1ac75e7fbd15947" id="r_a1906a5e500902ca4e1ac75e7fbd15947"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_reaction.html#a1906a5e500902ca4e1ac75e7fbd15947">operator()</a> (const franka::RobotState &amp;robot_state, double rel_time, double abs_time)</td></tr>
-<tr class="memdesc:a1906a5e500902ca4e1ac75e7fbd15947"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the new motion if the condition is met.  <br /></td></tr>
-<tr class="separator:a1906a5e500902ca4e1ac75e7fbd15947"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54f43da1036cd95e187f54e00a93b083" id="r_a54f43da1036cd95e187f54e00a93b083"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_reaction.html#a54f43da1036cd95e187f54e00a93b083">condition</a> (const franka::RobotState &amp;robot_state, double rel_time, double abs_time) const</td></tr>
-<tr class="memdesc:a54f43da1036cd95e187f54e00a93b083"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the condition is met.  <br /></td></tr>
-<tr class="separator:a54f43da1036cd95e187f54e00a93b083"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af868bc4dd1928724d3408de3d203cb68" id="r_af868bc4dd1928724d3408de3d203cb68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_reaction.html#af868bc4dd1928724d3408de3d203cb68">registerCallback</a> (std::function&lt; void(const franka::RobotState &amp;, double, double)&gt; callback)</td></tr>
-<tr class="memdesc:af868bc4dd1928724d3408de3d203cb68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a callback that is called when the condition of this reaction is met.  <br /></td></tr>
-<tr class="separator:af868bc4dd1928724d3408de3d203cb68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92501e588045976ba0bd1b40cbf939f3" id="r_a92501e588045976ba0bd1b40cbf939f3"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_reaction.html#a92501e588045976ba0bd1b40cbf939f3">operator()</a> (const franka::RobotState &amp;robot_state, std::chrono::duration&lt; double &gt; rel_time, std::chrono::duration&lt; double &gt; abs_time)</td></tr>
+<tr class="memdesc:a92501e588045976ba0bd1b40cbf939f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the new motion if the condition is met.  <br /></td></tr>
+<tr class="separator:a92501e588045976ba0bd1b40cbf939f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bffc25b5455683d52cd6c5403f1d613" id="r_a8bffc25b5455683d52cd6c5403f1d613"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_reaction.html#a8bffc25b5455683d52cd6c5403f1d613">condition</a> (const franka::RobotState &amp;robot_state, std::chrono::duration&lt; double &gt; rel_time, std::chrono::duration&lt; double &gt; abs_time) const</td></tr>
+<tr class="memdesc:a8bffc25b5455683d52cd6c5403f1d613"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the condition is met.  <br /></td></tr>
+<tr class="separator:a8bffc25b5455683d52cd6c5403f1d613"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb7fffca1af92a833951d1eca7311608" id="r_acb7fffca1af92a833951d1eca7311608"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_reaction.html#acb7fffca1af92a833951d1eca7311608">registerCallback</a> (std::function&lt; void(const franka::RobotState &amp;, std::chrono::duration&lt; double &gt;, std::chrono::duration&lt; double &gt;)&gt; callback)</td></tr>
+<tr class="memdesc:acb7fffca1af92a833951d1eca7311608"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a callback that is called when the condition of this reaction is met.  <br /></td></tr>
+<tr class="separator:acb7fffca1af92a833951d1eca7311608"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>&gt;<br />
@@ -198,8 +198,8 @@ template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e343
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a54f43da1036cd95e187f54e00a93b083" name="a54f43da1036cd95e187f54e00a93b083"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a54f43da1036cd95e187f54e00a93b083">&#9670;&#160;</a></span>condition()</h2>
+<a id="a8bffc25b5455683d52cd6c5403f1d613" name="a8bffc25b5455683d52cd6c5403f1d613"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bffc25b5455683d52cd6c5403f1d613">&#9670;&#160;</a></span>condition()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -218,13 +218,13 @@ template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e343
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
+          <td class="paramtype">std::chrono::duration&lt; double &gt;&#160;</td>
           <td class="paramname"><em>rel_time</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
+          <td class="paramtype">std::chrono::duration&lt; double &gt;&#160;</td>
           <td class="paramname"><em>abs_time</em>&#160;</td>
         </tr>
         <tr>
@@ -253,8 +253,8 @@ template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e343
 
 </div>
 </div>
-<a id="a1906a5e500902ca4e1ac75e7fbd15947" name="a1906a5e500902ca4e1ac75e7fbd15947"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1906a5e500902ca4e1ac75e7fbd15947">&#9670;&#160;</a></span>operator()()</h2>
+<a id="a92501e588045976ba0bd1b40cbf939f3" name="a92501e588045976ba0bd1b40cbf939f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92501e588045976ba0bd1b40cbf939f3">&#9670;&#160;</a></span>operator()()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -270,13 +270,13 @@ template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e343
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
+          <td class="paramtype">std::chrono::duration&lt; double &gt;&#160;</td>
           <td class="paramname"><em>rel_time</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
+          <td class="paramtype">std::chrono::duration&lt; double &gt;&#160;</td>
           <td class="paramname"><em>abs_time</em>&#160;</td>
         </tr>
         <tr>
@@ -300,8 +300,8 @@ template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e343
 
 </div>
 </div>
-<a id="af868bc4dd1928724d3408de3d203cb68" name="af868bc4dd1928724d3408de3d203cb68"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af868bc4dd1928724d3408de3d203cb68">&#9670;&#160;</a></span>registerCallback()</h2>
+<a id="acb7fffca1af92a833951d1eca7311608" name="acb7fffca1af92a833951d1eca7311608"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb7fffca1af92a833951d1eca7311608">&#9670;&#160;</a></span>registerCallback()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -311,7 +311,7 @@ template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e343
         <tr>
           <td class="memname">void <a class="el" href="classfranky_1_1_reaction.html">franky::Reaction</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;::registerCallback </td>
           <td>(</td>
-          <td class="paramtype">std::function&lt; void(const franka::RobotState &amp;, double, double)&gt;&#160;</td>
+          <td class="paramtype">std::function&lt; void(const franka::RobotState &amp;, std::chrono::duration&lt; double &gt;, std::chrono::duration&lt; double &gt;)&gt;&#160;</td>
           <td class="paramname"><em>callback</em></td><td>)</td>
           <td></td>
         </tr>

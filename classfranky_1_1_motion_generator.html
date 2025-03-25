@@ -94,9 +94,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a59afd2fd02e86eda578b757cdaafcafc" id="r_a59afd2fd02e86eda578b757cdaafcafc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#a59afd2fd02e86eda578b757cdaafcafc">operator()</a> (const franka::RobotState &amp;robot_state, franka::Duration period)</td></tr>
 <tr class="memdesc:a59afd2fd02e86eda578b757cdaafcafc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the motion generator and get the next control signal.  <br /></td></tr>
 <tr class="separator:a59afd2fd02e86eda578b757cdaafcafc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a051feee2d761e6613886919357eb9a42" id="r_a051feee2d761e6613886919357eb9a42"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#a051feee2d761e6613886919357eb9a42">registerUpdateCallback</a> (const std::function&lt; void(const franka::RobotState &amp;, franka::Duration, double)&gt; &amp;callback)</td></tr>
-<tr class="memdesc:a051feee2d761e6613886919357eb9a42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a callback that is called in every step of the motion.  <br /></td></tr>
-<tr class="separator:a051feee2d761e6613886919357eb9a42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a882aed3e5100c735e35fb3355f6ea6" id="r_a2a882aed3e5100c735e35fb3355f6ea6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#a2a882aed3e5100c735e35fb3355f6ea6">registerUpdateCallback</a> (const std::function&lt; void(const franka::RobotState &amp;, franka::Duration, std::chrono::duration&lt; double &gt;)&gt; &amp;callback)</td></tr>
+<tr class="memdesc:a2a882aed3e5100c735e35fb3355f6ea6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a callback that is called in every step of the motion.  <br /></td></tr>
+<tr class="separator:a2a882aed3e5100c735e35fb3355f6ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aecb5394cc1571687e1117e268f91e9c1" id="r_aecb5394cc1571687e1117e268f91e9c1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#aecb5394cc1571687e1117e268f91e9c1">updateMotion</a> (std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &gt; new_motion)</td></tr>
 <tr class="memdesc:aecb5394cc1571687e1117e268f91e9c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the current motion.  <br /></td></tr>
 <tr class="separator:aecb5394cc1571687e1117e268f91e9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -224,8 +224,8 @@ template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e343
 
 </div>
 </div>
-<a id="a051feee2d761e6613886919357eb9a42" name="a051feee2d761e6613886919357eb9a42"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a051feee2d761e6613886919357eb9a42">&#9670;&#160;</a></span>registerUpdateCallback()</h2>
+<a id="a2a882aed3e5100c735e35fb3355f6ea6" name="a2a882aed3e5100c735e35fb3355f6ea6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a882aed3e5100c735e35fb3355f6ea6">&#9670;&#160;</a></span>registerUpdateCallback()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -238,7 +238,7 @@ template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e343
         <tr>
           <td class="memname">void <a class="el" href="classfranky_1_1_motion_generator.html">franky::MotionGenerator</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;::registerUpdateCallback </td>
           <td>(</td>
-          <td class="paramtype">const std::function&lt; void(const franka::RobotState &amp;, franka::Duration, double)&gt; &amp;&#160;</td>
+          <td class="paramtype">const std::function&lt; void(const franka::RobotState &amp;, franka::Duration, std::chrono::duration&lt; double &gt;)&gt; &amp;&#160;</td>
           <td class="paramname"><em>callback</em></td><td>)</td>
           <td></td>
         </tr>
