@@ -135,7 +135,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="foldopen" id="foldopen00077" data-start="{" data-end="}">
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="classfranky_1_1_waypoint_motion.html#a2655eac005240a3e5fe02f6c74ec0826">   77</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classfranky_1_1_waypoint_motion.html#a2655eac005240a3e5fe02f6c74ec0826">initImpl</a>(<span class="keyword">const</span> franka::RobotState &amp;robot_state,</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                <span class="keyword">const</span> std::optional&lt;ControlSignalType&gt; &amp;previous_command)<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    target_reached_time_ = 0;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    current_cooldown_iteration_ = 0;</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <a class="code hl_function" href="classfranky_1_1_waypoint_motion.html#ac80169f07d1f34cbce0ce3fdc9f154c6">initWaypointMotion</a>(robot_state, previous_command, input_para_);</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
@@ -168,8 +168,8 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>          <span class="comment">// Allow cooldown of motion, so that the low-pass filter has time to adjust to target values</span></div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>          <span class="keywordflow">if</span> (!params_.<a class="code hl_variable" href="structfranky_1_1_waypoint_motion_1_1_params.html#a9fa647a0354691ad7eed675c1aaa7fe1">return_when_finished</a>) {</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            <span class="keywordflow">return</span> output_pose;</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>          } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (target_reached_time_ &lt; cooldown_iterations_) {</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            target_reached_time_ += 1;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>          } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (current_cooldown_iteration_ &lt; cooldown_iterations_) {</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            current_cooldown_iteration_ += 1;</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            <span class="keywordflow">return</span> output_pose;</div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>          }</div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>          <span class="keywordflow">return</span> franka::MotionFinished(output_pose);</div>
@@ -218,7 +218,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>  <span class="keyword">typename</span> std::vector&lt;Waypoint&lt;TargetType&gt;&gt;::iterator waypoint_iterator_;</div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>  <span class="keyword">constexpr</span> <span class="keyword">static</span> <span class="keywordtype">size_t</span> cooldown_iterations_{5};</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>  <span class="keywordtype">size_t</span> target_reached_time_{0};</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>  <span class="keywordtype">size_t</span> current_cooldown_iteration_{0};</div>
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>  <span class="keywordtype">void</span> setInputLimits(<span class="keyword">const</span> Waypoint&lt;TargetType&gt; &amp;waypoint) {</div>
 <div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    <span class="keyword">auto</span> <a class="code hl_function" href="classfranky_1_1_motion.html#a4a279dafcbb7ae10605f58d27a3a368f">robot</a> = this-&gt;<a class="code hl_function" href="classfranky_1_1_motion.html#a4a279dafcbb7ae10605f58d27a3a368f">robot</a>();</div>
