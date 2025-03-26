@@ -145,6 +145,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a8653d525b32035e8b774da7b7fb6051e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2bd63b635665230146a70393f03980d" id="r_ad2bd63b635665230146a70393f03980d"><td class="memItemLeft" align="right" valign="top">franka::CartesianVelocities&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_cartesian_velocity_waypoint_motion.html#ad2bd63b635665230146a70393f03980d">getControlSignal</a> (const ruckig::InputParameter&lt; 7 &gt; &amp;input_parameter) const override</td></tr>
 <tr class="separator:ad2bd63b635665230146a70393f03980d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afccf5cfc216f198b6b97099a3c73105e" id="r_afccf5cfc216f198b6b97099a3c73105e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_cartesian_velocity_waypoint_motion.html#afccf5cfc216f198b6b97099a3c73105e">setInputLimits</a> (const <a class="el" href="namespacefranky.html#a7af3aea8bf2e7bc0f366814328c1fb32">VelocityWaypoint</a>&lt; <a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a> &gt; &amp;waypoint, ruckig::InputParameter&lt; 7 &gt; &amp;input_parameter) const override</td></tr>
+<tr class="separator:afccf5cfc216f198b6b97099a3c73105e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classfranky_1_1_velocity_waypoint_motion"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classfranky_1_1_velocity_waypoint_motion')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classfranky_1_1_velocity_waypoint_motion.html">franky::VelocityWaypointMotion&lt; franka::CartesianVelocities, RobotVelocity &gt;</a></td></tr>
 <tr class="memitem:a1cfd2cbfa762565d6d95a9db2d911fba inherit pro_methods_classfranky_1_1_velocity_waypoint_motion" id="r_a1cfd2cbfa762565d6d95a9db2d911fba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_velocity_waypoint_motion.html#a1cfd2cbfa762565d6d95a9db2d911fba">setInputLimits</a> (const <a class="el" href="namespacefranky.html#a7af3aea8bf2e7bc0f366814328c1fb32">VelocityWaypoint</a>&lt; <a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a> &gt; &amp;waypoint, ruckig::InputParameter&lt; 7 &gt; &amp;input_parameter) const override</td></tr>
 <tr class="separator:a1cfd2cbfa762565d6d95a9db2d911fba inherit pro_methods_classfranky_1_1_velocity_waypoint_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -172,6 +174,9 @@ Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_types_classfranky_1_1_motion"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classfranky_1_1_motion')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classfranky_1_1_motion.html">franky::Motion&lt; ControlSignalType &gt;</a></td></tr>
 <tr class="memitem:a3fdde43ced9e637a945d35fd90507b2c inherit pub_types_classfranky_1_1_motion" id="r_a3fdde43ced9e637a945d35fd90507b2c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#a3fdde43ced9e637a945d35fd90507b2c">CallbackType</a> = std::function&lt; void(const franka::RobotState &amp;, franka::Duration, franka::Duration, franka::Duration, const <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &amp;)&gt;</td></tr>
 <tr class="separator:a3fdde43ced9e637a945d35fd90507b2c inherit pub_types_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classfranky_1_1_velocity_waypoint_motion"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classfranky_1_1_velocity_waypoint_motion')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classfranky_1_1_velocity_waypoint_motion.html">franky::VelocityWaypointMotion&lt; franka::CartesianVelocities, RobotVelocity &gt;</a></td></tr>
+<tr class="memitem:ab9497a6b664fa9492678c08e58d88396 inherit pro_attribs_classfranky_1_1_velocity_waypoint_motion" id="r_ab9497a6b664fa9492678c08e58d88396"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_relative_dynamics_factor.html">RelativeDynamicsFactor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_velocity_waypoint_motion.html#ab9497a6b664fa9492678c08e58d88396">relative_dynamics_factor_</a></td></tr>
+<tr class="separator:ab9497a6b664fa9492678c08e58d88396 inherit pro_attribs_classfranky_1_1_velocity_waypoint_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Cartesian velocity waypoint motion. </p>
@@ -340,6 +345,42 @@ Additional Inherited Members</h2></td></tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afccf5cfc216f198b6b97099a3c73105e" name="afccf5cfc216f198b6b97099a3c73105e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afccf5cfc216f198b6b97099a3c73105e">&#9670;&#160;</a></span>setInputLimits()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void franky::CartesianVelocityWaypointMotion::setInputLimits </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacefranky.html#a7af3aea8bf2e7bc0f366814328c1fb32">VelocityWaypoint</a>&lt; <a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>waypoint</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ruckig::InputParameter&lt; 7 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>input_parameter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
         </tr>
       </table>
   </td>

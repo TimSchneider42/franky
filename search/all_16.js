@@ -10,5 +10,6 @@ var searchData=
   ['waypointmotion_3c_20franka_3a_3ajointpositions_2c_20positionwaypoint_3c_20jointstate_20_3e_2c_20jointstate_20_3e_7',['WaypointMotion&lt; franka::JointPositions, PositionWaypoint&lt; JointState &gt;, JointState &gt;',['../classfranky_1_1_waypoint_motion.html',1,'franky']]],
   ['waypointmotion_3c_20franka_3a_3ajointvelocities_2c_20velocitywaypoint_3c_20vector7d_20_3e_2c_20vector7d_20_3e_8',['WaypointMotion&lt; franka::JointVelocities, VelocityWaypoint&lt; Vector7d &gt;, Vector7d &gt;',['../classfranky_1_1_waypoint_motion.html',1,'franky']]],
   ['width_9',['width',['../classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e',1,'franky::Gripper']]],
-  ['withelbowposition_10',['withElbowPosition',['../classfranky_1_1_robot_pose.html#a628f8f3342dd6cb0bb60e1a8b08ea8bb',1,'franky::RobotPose']]]
+  ['withelbow_10',['withElbow',['../classfranky_1_1_robot_velocity.html#a22770d683bed909142dfe0f4613cc7bf',1,'franky::RobotVelocity']]],
+  ['withelbowposition_11',['withElbowPosition',['../classfranky_1_1_robot_pose.html#a628f8f3342dd6cb0bb60e1a8b08ea8bb',1,'franky::RobotPose']]]
 ];
