@@ -310,9 +310,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a766a517bf90c5e206533addb2a7153d6" id="r_a766a517bf90c5e206533addb2a7153d6"><td class="memTemplParams" colspan="2">template&lt;size_t dims&gt; </td></tr>
 <tr class="memitem:a766a517bf90c5e206533addb2a7153d6"><td class="memTemplItemLeft" align="right" valign="top">std::array&lt; double, dims &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">toStd</a> (const Eigen::Matrix&lt; double, dims, 1 &gt; &amp;vector)</td></tr>
 <tr class="separator:a766a517bf90c5e206533addb2a7153d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85c42bc386ad06560a45d56a50332eda" id="r_a85c42bc386ad06560a45d56a50332eda"><td class="memTemplParams" colspan="2">template&lt;size_t dims&gt; </td></tr>
-<tr class="memitem:a85c42bc386ad06560a45d56a50332eda"><td class="memTemplItemLeft" align="right" valign="top">Eigen::Matrix&lt; double, dims, 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a85c42bc386ad06560a45d56a50332eda">toEigen</a> (const std::array&lt; double, dims &gt; &amp;vector)</td></tr>
-<tr class="separator:a85c42bc386ad06560a45d56a50332eda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a246b8f841f3b7b07838f181539a5e35f" id="r_a246b8f841f3b7b07838f181539a5e35f"><td class="memTemplParams" colspan="2">template&lt;size_t dims, typename T &gt; </td></tr>
+<tr class="memitem:a246b8f841f3b7b07838f181539a5e35f"><td class="memTemplItemLeft" align="right" valign="top">Eigen::Matrix&lt; T, dims, 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a246b8f841f3b7b07838f181539a5e35f">toEigen</a> (const std::array&lt; T, dims &gt; &amp;vector)</td></tr>
+<tr class="separator:a246b8f841f3b7b07838f181539a5e35f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea642ac2353991b394de429b7932dccf" id="r_aea642ac2353991b394de429b7932dccf"><td class="memTemplParams" colspan="2">template&lt;size_t dims&gt; </td></tr>
+<tr class="memitem:aea642ac2353991b394de429b7932dccf"><td class="memTemplItemLeft" align="right" valign="top">Eigen::Matrix&lt; double, dims, 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacefranky.html#aea642ac2353991b394de429b7932dccf">toEigenD</a> (const std::array&lt; double, dims &gt; &amp;vector)</td></tr>
+<tr class="separator:aea642ac2353991b394de429b7932dccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="afab9faf133666ada543b15236a8c4b5f" name="afab9faf133666ada543b15236a8c4b5f"></a>
@@ -1189,8 +1192,36 @@ template&lt;typename RotationMatrixType &gt; </div>
 
 </div>
 </div>
-<a id="a85c42bc386ad06560a45d56a50332eda" name="a85c42bc386ad06560a45d56a50332eda"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85c42bc386ad06560a45d56a50332eda">&#9670;&#160;</a></span>toEigen()</h2>
+<a id="a246b8f841f3b7b07838f181539a5e35f" name="a246b8f841f3b7b07838f181539a5e35f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a246b8f841f3b7b07838f181539a5e35f">&#9670;&#160;</a></span>toEigen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t dims, typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Matrix&lt; T, dims, 1 &gt; franky::toEigen </td>
+          <td>(</td>
+          <td class="paramtype">const std::array&lt; T, dims &gt; &amp;&#160;</td>
+          <td class="paramname"><em>vector</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aea642ac2353991b394de429b7932dccf" name="aea642ac2353991b394de429b7932dccf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea642ac2353991b394de429b7932dccf">&#9670;&#160;</a></span>toEigenD()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1201,7 +1232,7 @@ template&lt;size_t dims&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::Matrix&lt; double, dims, 1 &gt; franky::toEigen </td>
+          <td class="memname">Eigen::Matrix&lt; double, dims, 1 &gt; franky::toEigenD </td>
           <td>(</td>
           <td class="paramtype">const std::array&lt; double, dims &gt; &amp;&#160;</td>
           <td class="paramname"><em>vector</em></td><td>)</td>
