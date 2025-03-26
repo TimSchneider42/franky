@@ -101,8 +101,8 @@ Inheritance diagram for franky::JointVelocityMotion:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a671e1f2d8e0a65bfceb5f1b6c4d81550" id="r_a671e1f2d8e0a65bfceb5f1b6c4d81550"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_joint_velocity_motion.html#a671e1f2d8e0a65bfceb5f1b6c4d81550">JointVelocityMotion</a> (const <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;target, const <a class="el" href="classfranky_1_1_relative_dynamics_factor.html">RelativeDynamicsFactor</a> &amp;relative_dynamics_factor=1.0)</td></tr>
-<tr class="separator:a671e1f2d8e0a65bfceb5f1b6c4d81550"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6b66f806036e8a35354fe4483aa631a" id="r_ac6b66f806036e8a35354fe4483aa631a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_joint_velocity_motion.html#ac6b66f806036e8a35354fe4483aa631a">JointVelocityMotion</a> (const <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;target, const franka::Duration &amp;hold_target_duration=franka::Duration(0), const <a class="el" href="classfranky_1_1_relative_dynamics_factor.html">RelativeDynamicsFactor</a> &amp;relative_dynamics_factor=1.0)</td></tr>
+<tr class="separator:ac6b66f806036e8a35354fe4483aa631a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classfranky_1_1_joint_velocity_waypoint_motion"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classfranky_1_1_joint_velocity_waypoint_motion')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classfranky_1_1_joint_velocity_waypoint_motion.html">franky::JointVelocityWaypointMotion</a></td></tr>
 <tr class="memitem:a42129c9f2d942dfe5200425f1eaed709 inherit pub_methods_classfranky_1_1_joint_velocity_waypoint_motion" id="r_a42129c9f2d942dfe5200425f1eaed709"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_joint_velocity_waypoint_motion.html#a42129c9f2d942dfe5200425f1eaed709">JointVelocityWaypointMotion</a> (const std::vector&lt; <a class="el" href="namespacefranky.html#a7af3aea8bf2e7bc0f366814328c1fb32">VelocityWaypoint</a>&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt; &gt; &amp;waypoints, const <a class="el" href="classfranky_1_1_relative_dynamics_factor.html">RelativeDynamicsFactor</a> &amp;relative_dynamics_factor=1.0)</td></tr>
 <tr class="separator:a42129c9f2d942dfe5200425f1eaed709 inherit pub_methods_classfranky_1_1_joint_velocity_waypoint_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -176,8 +176,8 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Joint velocity motion with a single target. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a671e1f2d8e0a65bfceb5f1b6c4d81550" name="a671e1f2d8e0a65bfceb5f1b6c4d81550"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a671e1f2d8e0a65bfceb5f1b6c4d81550">&#9670;&#160;</a></span>JointVelocityMotion()</h2>
+<a id="ac6b66f806036e8a35354fe4483aa631a" name="ac6b66f806036e8a35354fe4483aa631a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6b66f806036e8a35354fe4483aa631a">&#9670;&#160;</a></span>JointVelocityMotion()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -190,6 +190,12 @@ Additional Inherited Members</h2></td></tr>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;&#160;</td>
           <td class="paramname"><em>target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const franka::Duration &amp;&#160;</td>
+          <td class="paramname"><em>hold_target_duration</em> = <code>franka::Duration(0)</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -212,6 +218,7 @@ Additional Inherited Members</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">target</td><td>The target joint velocity. </td></tr>
+    <tr><td class="paramname">hold_target_duration</td><td>For how long to hold the target velocity after it has been reached. </td></tr>
     <tr><td class="paramname">relative_dynamics_factor</td><td>The relative dynamics factor for this motion. The factor will get multiplied with the robot's global dynamics factor to get the actual dynamics factor for this motion. </td></tr>
   </table>
   </dd>

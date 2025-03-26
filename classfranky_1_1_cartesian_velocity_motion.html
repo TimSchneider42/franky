@@ -101,9 +101,9 @@ Inheritance diagram for franky::CartesianVelocityMotion:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aafa0b512d638126005e9f551f3ef7795" id="r_aafa0b512d638126005e9f551f3ef7795"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_cartesian_velocity_motion.html#aafa0b512d638126005e9f551f3ef7795">CartesianVelocityMotion</a> (const <a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a> &amp;target, const <a class="el" href="classfranky_1_1_relative_dynamics_factor.html">RelativeDynamicsFactor</a> &amp;relative_dynamics_factor=1.0, const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;frame=Affine::Identity())</td></tr>
-<tr class="memdesc:aafa0b512d638126005e9f551f3ef7795"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a Cartesian motion.  <br /></td></tr>
-<tr class="separator:aafa0b512d638126005e9f551f3ef7795"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3196d7afdfa44ca86db9bba5effd7a91" id="r_a3196d7afdfa44ca86db9bba5effd7a91"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_cartesian_velocity_motion.html#a3196d7afdfa44ca86db9bba5effd7a91">CartesianVelocityMotion</a> (const <a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a> &amp;target, const franka::Duration &amp;hold_target_duration=franka::Duration(0), const <a class="el" href="classfranky_1_1_relative_dynamics_factor.html">RelativeDynamicsFactor</a> &amp;relative_dynamics_factor=1.0, const <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;frame=Affine::Identity())</td></tr>
+<tr class="memdesc:a3196d7afdfa44ca86db9bba5effd7a91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a Cartesian motion.  <br /></td></tr>
+<tr class="separator:a3196d7afdfa44ca86db9bba5effd7a91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classfranky_1_1_cartesian_velocity_waypoint_motion"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classfranky_1_1_cartesian_velocity_waypoint_motion')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classfranky_1_1_cartesian_velocity_waypoint_motion.html">franky::CartesianVelocityWaypointMotion</a></td></tr>
 <tr class="memitem:aaa63e51c2a4e35a52ec6c0b99b24603f inherit pub_methods_classfranky_1_1_cartesian_velocity_waypoint_motion" id="r_aaa63e51c2a4e35a52ec6c0b99b24603f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_cartesian_velocity_waypoint_motion.html#aaa63e51c2a4e35a52ec6c0b99b24603f">CartesianVelocityWaypointMotion</a> (const std::vector&lt; <a class="el" href="namespacefranky.html#a7af3aea8bf2e7bc0f366814328c1fb32">VelocityWaypoint</a>&lt; <a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a> &gt; &gt; &amp;waypoints, const <a class="el" href="classfranky_1_1_relative_dynamics_factor.html">RelativeDynamicsFactor</a> &amp;relative_dynamics_factor=1.0, <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> ee_frame=Affine::Identity())</td></tr>
 <tr class="separator:aaa63e51c2a4e35a52ec6c0b99b24603f inherit pub_methods_classfranky_1_1_cartesian_velocity_waypoint_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -177,8 +177,8 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Cartesian velocity motion with a single target velocity. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aafa0b512d638126005e9f551f3ef7795" name="aafa0b512d638126005e9f551f3ef7795"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aafa0b512d638126005e9f551f3ef7795">&#9670;&#160;</a></span>CartesianVelocityMotion()</h2>
+<a id="a3196d7afdfa44ca86db9bba5effd7a91" name="a3196d7afdfa44ca86db9bba5effd7a91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3196d7afdfa44ca86db9bba5effd7a91">&#9670;&#160;</a></span>CartesianVelocityMotion()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -191,6 +191,12 @@ Additional Inherited Members</h2></td></tr>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a> &amp;&#160;</td>
           <td class="paramname"><em>target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const franka::Duration &amp;&#160;</td>
+          <td class="paramname"><em>hold_target_duration</em> = <code>franka::Duration(0)</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -221,6 +227,7 @@ Additional Inherited Members</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">target</td><td>The target Cartesian velocity. </td></tr>
+    <tr><td class="paramname">hold_target_duration</td><td>For how long to hold the target velocity after it has been reached. </td></tr>
     <tr><td class="paramname">relative_dynamics_factor</td><td>The relative dynamics factor for this motion. The factor will get multiplied with the robot's global dynamics factor to get the actual dynamics factor for this motion. </td></tr>
     <tr><td class="paramname">frame</td><td>The end-effector frame for which the target is defined. This is a transformation from the configured end-effector frame to the end-effector frame the target is defined for. </td></tr>
   </table>
