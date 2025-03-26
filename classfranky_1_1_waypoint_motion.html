@@ -153,8 +153,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a9d8d450f3d2748cc32eb6bd2afd6f46c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3c92f31c20dcb7f48107c1991d8be33" id="r_ae3c92f31c20dcb7f48107c1991d8be33"><td class="memItemLeft" align="right" valign="top">virtual std::tuple&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_waypoint_motion.html#ae3c92f31c20dcb7f48107c1991d8be33">getAbsoluteInputLimits</a> () const =0</td></tr>
 <tr class="separator:ae3c92f31c20dcb7f48107c1991d8be33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06cd3910d5669ba9a5da66a6568957e9" id="r_a06cd3910d5669ba9a5da66a6568957e9"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_waypoint_motion.html#a06cd3910d5669ba9a5da66a6568957e9">getControlSignal</a> (const ruckig::InputParameter&lt; 7 &gt; &amp;input_parameter) const =0</td></tr>
-<tr class="separator:a06cd3910d5669ba9a5da66a6568957e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a344d779e2849f71342e20386c8e56103" id="r_a344d779e2849f71342e20386c8e56103"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_waypoint_motion.html#a344d779e2849f71342e20386c8e56103">getControlSignal</a> (const franka::Duration &amp;time_step, const ruckig::InputParameter&lt; 7 &gt; &amp;input_parameter)=0</td></tr>
+<tr class="separator:a344d779e2849f71342e20386c8e56103"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a54f0791590e317159518eb0353a199" id="r_a4a54f0791590e317159518eb0353a199"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_waypoint_motion.html#a4a54f0791590e317159518eb0353a199">setInputLimits</a> (const WaypointType &amp;waypoint, ruckig::InputParameter&lt; 7 &gt; &amp;input_parameter) const =0</td></tr>
 <tr class="separator:a4a54f0791590e317159518eb0353a199"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classfranky_1_1_motion"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classfranky_1_1_motion')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classfranky_1_1_motion.html">franky::Motion&lt; ControlSignalType &gt;</a></td></tr>
@@ -284,8 +284,8 @@ template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e343
 
 </div>
 </div>
-<a id="a06cd3910d5669ba9a5da66a6568957e9" name="a06cd3910d5669ba9a5da66a6568957e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06cd3910d5669ba9a5da66a6568957e9">&#9670;&#160;</a></span>getControlSignal()</h2>
+<a id="a344d779e2849f71342e20386c8e56103" name="a344d779e2849f71342e20386c8e56103"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a344d779e2849f71342e20386c8e56103">&#9670;&#160;</a></span>getControlSignal()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -298,9 +298,19 @@ template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e343
         <tr>
           <td class="memname">virtual <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> <a class="el" href="classfranky_1_1_waypoint_motion.html">franky::WaypointMotion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>, WaypointType, TargetType &gt;::getControlSignal </td>
           <td>(</td>
+          <td class="paramtype">const franka::Duration &amp;&#160;</td>
+          <td class="paramname"><em>time_step</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const ruckig::InputParameter&lt; 7 &gt; &amp;&#160;</td>
-          <td class="paramname"><em>input_parameter</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramname"><em>input_parameter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -310,7 +320,7 @@ template&lt;typename <a class="el" href="namespacefranky.html#a9a12fea9c3341e343
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="classfranky_1_1_cartesian_velocity_waypoint_motion.html#ad2bd63b635665230146a70393f03980d">franky::CartesianVelocityWaypointMotion</a>, <a class="el" href="classfranky_1_1_cartesian_waypoint_motion.html#ad3089b89c08a357168e176bb3fd4b1cf">franky::CartesianWaypointMotion</a>, <a class="el" href="classfranky_1_1_joint_velocity_waypoint_motion.html#a0b20c585a5856af96ca59b394a34cf66">franky::JointVelocityWaypointMotion</a>, and <a class="el" href="classfranky_1_1_joint_waypoint_motion.html#a88e3ae914318a3a4882c9d146e60f23c">franky::JointWaypointMotion</a>.</p>
+<p>Implemented in <a class="el" href="classfranky_1_1_cartesian_velocity_waypoint_motion.html#ab26b6972fa28098767475b7f4c5f445d">franky::CartesianVelocityWaypointMotion</a>, <a class="el" href="classfranky_1_1_cartesian_waypoint_motion.html#a2a4df2bcc04779a6b94b0181a697a29c">franky::CartesianWaypointMotion</a>, <a class="el" href="classfranky_1_1_joint_velocity_waypoint_motion.html#a688b6453e4ad77dcb641c8242360bf22">franky::JointVelocityWaypointMotion</a>, and <a class="el" href="classfranky_1_1_joint_waypoint_motion.html#aef3319297b75d6be6b0d89ec8b7a69c4">franky::JointWaypointMotion</a>.</p>
 
 </div>
 </div>

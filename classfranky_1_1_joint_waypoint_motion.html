@@ -141,8 +141,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a823f3796e97e3ffe45d725a8990500e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a861df703835e15f447a9f40affe3625a" id="r_a861df703835e15f447a9f40affe3625a"><td class="memItemLeft" align="right" valign="top">std::tuple&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_joint_waypoint_motion.html#a861df703835e15f447a9f40affe3625a">getAbsoluteInputLimits</a> () const override</td></tr>
 <tr class="separator:a861df703835e15f447a9f40affe3625a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88e3ae914318a3a4882c9d146e60f23c" id="r_a88e3ae914318a3a4882c9d146e60f23c"><td class="memItemLeft" align="right" valign="top">franka::JointPositions&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_joint_waypoint_motion.html#a88e3ae914318a3a4882c9d146e60f23c">getControlSignal</a> (const ruckig::InputParameter&lt; 7 &gt; &amp;input_parameter) const override</td></tr>
-<tr class="separator:a88e3ae914318a3a4882c9d146e60f23c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef3319297b75d6be6b0d89ec8b7a69c4" id="r_aef3319297b75d6be6b0d89ec8b7a69c4"><td class="memItemLeft" align="right" valign="top">franka::JointPositions&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_joint_waypoint_motion.html#aef3319297b75d6be6b0d89ec8b7a69c4">getControlSignal</a> (const franka::Duration &amp;time_step, const ruckig::InputParameter&lt; 7 &gt; &amp;input_parameter) override</td></tr>
+<tr class="separator:aef3319297b75d6be6b0d89ec8b7a69c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classfranky_1_1_position_waypoint_motion"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classfranky_1_1_position_waypoint_motion')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classfranky_1_1_position_waypoint_motion.html">franky::PositionWaypointMotion&lt; franka::JointPositions, JointState &gt;</a></td></tr>
 <tr class="memitem:a8ebb35ebb3363acfec93c9228418804a inherit pro_methods_classfranky_1_1_position_waypoint_motion" id="r_a8ebb35ebb3363acfec93c9228418804a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_position_waypoint_motion.html#a8ebb35ebb3363acfec93c9228418804a">setInputLimits</a> (const <a class="el" href="structfranky_1_1_position_waypoint.html">PositionWaypoint</a>&lt; <a class="el" href="classfranky_1_1_joint_state.html">JointState</a> &gt; &amp;waypoint, ruckig::InputParameter&lt; 7 &gt; &amp;input_parameter) const override</td></tr>
 <tr class="separator:a8ebb35ebb3363acfec93c9228418804a inherit pro_methods_classfranky_1_1_position_waypoint_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -252,8 +252,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a88e3ae914318a3a4882c9d146e60f23c" name="a88e3ae914318a3a4882c9d146e60f23c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a88e3ae914318a3a4882c9d146e60f23c">&#9670;&#160;</a></span>getControlSignal()</h2>
+<a id="aef3319297b75d6be6b0d89ec8b7a69c4" name="aef3319297b75d6be6b0d89ec8b7a69c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef3319297b75d6be6b0d89ec8b7a69c4">&#9670;&#160;</a></span>getControlSignal()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -264,9 +264,19 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">franka::JointPositions franky::JointWaypointMotion::getControlSignal </td>
           <td>(</td>
+          <td class="paramtype">const franka::Duration &amp;&#160;</td>
+          <td class="paramname"><em>time_step</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const ruckig::InputParameter&lt; 7 &gt; &amp;&#160;</td>
-          <td class="paramname"><em>input_parameter</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramname"><em>input_parameter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -276,7 +286,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="classfranky_1_1_waypoint_motion.html#a06cd3910d5669ba9a5da66a6568957e9">franky::WaypointMotion&lt; ControlSignalType, WaypointType, TargetType &gt;</a>.</p>
+<p>Implements <a class="el" href="classfranky_1_1_waypoint_motion.html#a344d779e2849f71342e20386c8e56103">franky::WaypointMotion&lt; ControlSignalType, WaypointType, TargetType &gt;</a>.</p>
 
 </div>
 </div>
