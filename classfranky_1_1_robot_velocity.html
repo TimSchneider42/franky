@@ -116,6 +116,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab7fe3ffb8b3a627027d6441d57223c95" id="r_ab7fe3ffb8b3a627027d6441d57223c95"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_velocity.html#ab7fe3ffb8b3a627027d6441d57223c95">changeEndEffectorFrame</a> (const Eigen::Vector3d &amp;offset_world_frame) const</td></tr>
 <tr class="memdesc:ab7fe3ffb8b3a627027d6441d57223c95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the end-effector frame by adding the given offset to the current end-effector frame. Note that the offset must be given in world coordinates.  <br /></td></tr>
 <tr class="separator:ab7fe3ffb8b3a627027d6441d57223c95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa53f2a9297f426cb327ee4172bd3ccd1" id="r_aa53f2a9297f426cb327ee4172bd3ccd1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_velocity.html#aa53f2a9297f426cb327ee4172bd3ccd1">withElbowVelocity</a> (const std::optional&lt; double &gt; <a class="el" href="classfranky_1_1_robot_velocity.html#ac7f635a3ee546c5fb8c0d6ffbd3e0467">elbow_velocity</a>) const</td></tr>
+<tr class="memdesc:aa53f2a9297f426cb327ee4172bd3ccd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the velocity with a new elbow velocity.  <br /></td></tr>
+<tr class="separator:aa53f2a9297f426cb327ee4172bd3ccd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:addf40a07374fd18d74d84c7027291b2b" id="r_addf40a07374fd18d74d84c7027291b2b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_twist.html">Twist</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_velocity.html#addf40a07374fd18d74d84c7027291b2b">end_effector_twist</a> () const</td></tr>
 <tr class="memdesc:addf40a07374fd18d74d84c7027291b2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the end effector twist.  <br /></td></tr>
 <tr class="separator:addf40a07374fd18d74d84c7027291b2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -532,6 +535,41 @@ template&lt;typename RotationMatrixType &gt; </div>
 
 <p>Get the vector representation of the velocity. It consists of the linear and angular velocity of the end effector and the joint velocity of the elbow. </p>
 <dl class="section return"><dt>Returns</dt><dd>The vector representation of the velocity. </dd></dl>
+
+</div>
+</div>
+<a id="aa53f2a9297f426cb327ee4172bd3ccd1" name="aa53f2a9297f426cb327ee4172bd3ccd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa53f2a9297f426cb327ee4172bd3ccd1">&#9670;&#160;</a></span>withElbowVelocity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a> franky::RobotVelocity::withElbowVelocity </td>
+          <td>(</td>
+          <td class="paramtype">const std::optional&lt; double &gt;&#160;</td>
+          <td class="paramname"><em>elbow_velocity</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the velocity with a new elbow velocity. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">elbow_velocity</td><td>The new elbow velocity. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The velocity with the new elbow velocity. </dd></dl>
 
 </div>
 </div>
