@@ -15,7 +15,7 @@ var searchData=
   ['joint_5fvelocity_5fwaypoint_5fmotion_2ehpp_12',['joint_velocity_waypoint_motion.hpp',['../joint__velocity__waypoint__motion_8hpp.html',1,'']]],
   ['joint_5fwaypoint_5fmotion_2ecpp_13',['joint_waypoint_motion.cpp',['../joint__waypoint__motion_8cpp.html',1,'']]],
   ['joint_5fwaypoint_5fmotion_2ehpp_14',['joint_waypoint_motion.hpp',['../joint__waypoint__motion_8hpp.html',1,'']]],
-  ['jointmotion_15',['jointmotion',['../classfranky_1_1_joint_motion.html',1,'franky::JointMotion'],['../classfranky_1_1_joint_motion.html#a0148b712398a4aa57f2fb6849907595c',1,'franky::JointMotion::JointMotion()']]],
+  ['jointmotion_15',['jointmotion',['../classfranky_1_1_joint_motion.html',1,'franky::JointMotion'],['../classfranky_1_1_joint_motion.html#a88ad2b94f83d7f50383dad6a67dabf4a',1,'franky::JointMotion::JointMotion()']]],
   ['jointpositions_16',['JointPositions',['../namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaacae53870521bf0d6aaf73f8435b4c53601',1,'franky']]],
   ['jointstate_17',['jointstate',['../classfranky_1_1_joint_state.html#a568e0e11672f5d9ad1f42b1d6cb9a576',1,'franky::JointState::JointState(const JointState &amp;)=default'],['../classfranky_1_1_joint_state.html#a330222fd0fea56aef1c1a7a6eb918e9b',1,'franky::JointState::JointState()=default'],['../classfranky_1_1_joint_state.html',1,'franky::JointState'],['../classfranky_1_1_joint_state.html#ad4a1bcb1c1f08f59f160c64f05462c1b',1,'franky::JointState::JointState(Vector7d position, Vector7d velocity)'],['../classfranky_1_1_joint_state.html#a58de323134a7b11599dafbcb3d9fcf1c',1,'franky::JointState::JointState(Vector7d position)']]],
   ['jointvelocities_18',['JointVelocities',['../namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaacadecb27858472a616860e32411b1a6854',1,'franky']]],
