@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Franky: /home/runner/work/franky/franky/include/franky/robot_velocity.hpp File Reference</title>
+<title>Franky: /home/runner/work/franky/franky/include/franky/elbow_state.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -77,23 +77,19 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">robot_velocity.hpp File Reference</div></div>
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle"><div class="title">elbow_state.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;optional&gt;</code><br />
-<code>#include &lt;Eigen/Core&gt;</code><br />
-<code>#include &lt;franka/control_types.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="types_8hpp_source.html">franky/types.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="twist_8hpp_source.html">franky/twist.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="elbow__state_8hpp_source.html">franky/elbow_state.hpp</a>&quot;</code><br />
+<code>#include &lt;array&gt;</code><br />
 </div>
-<p><a href="robot__velocity_8hpp_source.html">Go to the source code of this file.</a></p>
+<p><a href="elbow__state_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_velocity.html">franky::RobotVelocity</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cartesian velocity of a robot.  <a href="classfranky_1_1_robot_velocity.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_elbow_state.html">franky::ElbowState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Elbow state of the robot.  <a href="classfranky_1_1_elbow_state.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -101,13 +97,14 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacefranky" id="r_namespacefranky"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html">franky</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a27bbe5029544c4333715a85a7a43eaf5" id="r_a27bbe5029544c4333715a85a7a43eaf5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a27bbe5029544c4333715a85a7a43eaf5">franky::operator*</a> (<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">affine</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a> &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">robot_velocity</a>)</td></tr>
-<tr class="separator:a27bbe5029544c4333715a85a7a43eaf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6fc3324a4cf6df2787a64d6e84abb24" id="r_ac6fc3324a4cf6df2787a64d6e84abb24"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">typename</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">RotationMatrixType</a> &gt; </td></tr>
-<tr class="memitem:ac6fc3324a4cf6df2787a64d6e84abb24"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacefranky.html#ac6fc3324a4cf6df2787a64d6e84abb24">franky::operator*</a> (<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">RotationMatrixType</a> &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">rotation</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a> &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">robot_velocity</a>)</td></tr>
-<tr class="separator:ac6fc3324a4cf6df2787a64d6e84abb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:aaebafd6d1e78da2a42cf35eb266cb43b" id="r_aaebafd6d1e78da2a42cf35eb266cb43b"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43b">franky::FlipDirection</a> { <a class="el" href="namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43ba25b105cbe0fd4622cdb36360c85e89c3">franky::kNegative</a> = -1
+, <a class="el" href="namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43ba5c9755c01963e8444ea5ee1802139851">franky::kNeutral</a> = 0
+, <a class="el" href="namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43bafe449700ac27fbd09863263d74e7735f">franky::kPositive</a> = 1
+ }</td></tr>
+<tr class="memdesc:aaebafd6d1e78da2a42cf35eb266cb43b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flip direction of a joint.  <a href="namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43b">More...</a><br /></td></tr>
+<tr class="separator:aaebafd6d1e78da2a42cf35eb266cb43b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['referencetype_0',['ReferenceType',['../namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80e',1,'franky']]]
+  ['flipdirection_0',['FlipDirection',['../namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43b',1,'franky']]]
 ];

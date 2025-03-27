@@ -101,6 +101,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_condition.html">Condition</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A condition on the robot state.  <a href="classfranky_1_1_condition.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_elbow_state.html">ElbowState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Elbow state of the robot.  <a href="classfranky_1_1_elbow_state.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_exponential_impedance_motion.html">ExponentialImpedanceMotion</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exponential cartesian impedance motion.  <a href="classfranky_1_1_exponential_impedance_motion.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -229,8 +232,14 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a9a12fea9c3341e3437af837efe8ebaac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of control signal.  <a href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">More...</a><br /></td></tr>
 <tr class="separator:a9a12fea9c3341e3437af837efe8ebaac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2354a27cfe3100f07e0ad71513ded80e" id="r_a2354a27cfe3100f07e0ad71513ded80e"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80e">ReferenceType</a> { <a class="el" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80eab51ca26c6c89cfc9bec338f7a0d3e0c8">Absolute</a>
-, <a class="el" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80ea2ca9469819fb0fb61ff98e914a7ccca0">Relative</a>
+<tr class="memitem:aaebafd6d1e78da2a42cf35eb266cb43b" id="r_aaebafd6d1e78da2a42cf35eb266cb43b"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43b">FlipDirection</a> { <a class="el" href="namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43ba25b105cbe0fd4622cdb36360c85e89c3">kNegative</a> = -1
+, <a class="el" href="namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43ba5c9755c01963e8444ea5ee1802139851">kNeutral</a> = 0
+, <a class="el" href="namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43bafe449700ac27fbd09863263d74e7735f">kPositive</a> = 1
+ }</td></tr>
+<tr class="memdesc:aaebafd6d1e78da2a42cf35eb266cb43b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flip direction of a joint.  <a href="namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43b">More...</a><br /></td></tr>
+<tr class="separator:aaebafd6d1e78da2a42cf35eb266cb43b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2354a27cfe3100f07e0ad71513ded80e" id="r_a2354a27cfe3100f07e0ad71513ded80e"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80e">ReferenceType</a> { <a class="el" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80eabab0767e88027de9944aa55c24c8387a">kAbsolute</a>
+, <a class="el" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80eaf460a96ab20647996c15854794763384">kRelative</a>
  }</td></tr>
 <tr class="memdesc:a2354a27cfe3100f07e0ad71513ded80e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum class for reference types.  <a href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80e">More...</a><br /></td></tr>
 <tr class="separator:a2354a27cfe3100f07e0ad71513ded80e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -402,6 +411,35 @@ template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a
 
 </div>
 </div>
+<a id="aaebafd6d1e78da2a42cf35eb266cb43b" name="aaebafd6d1e78da2a42cf35eb266cb43b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaebafd6d1e78da2a42cf35eb266cb43b">&#9670;&#160;</a></span>FlipDirection</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">enum</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">class</a> <a class="el" href="namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43b">franky::FlipDirection</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Flip direction of a joint. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aaebafd6d1e78da2a42cf35eb266cb43ba25b105cbe0fd4622cdb36360c85e89c3" name="aaebafd6d1e78da2a42cf35eb266cb43ba25b105cbe0fd4622cdb36360c85e89c3"></a>kNegative&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aaebafd6d1e78da2a42cf35eb266cb43ba5c9755c01963e8444ea5ee1802139851" name="aaebafd6d1e78da2a42cf35eb266cb43ba5c9755c01963e8444ea5ee1802139851"></a>kNeutral&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aaebafd6d1e78da2a42cf35eb266cb43bafe449700ac27fbd09863263d74e7735f" name="aaebafd6d1e78da2a42cf35eb266cb43bafe449700ac27fbd09863263d74e7735f"></a>kPositive&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
 <a id="a2354a27cfe3100f07e0ad71513ded80e" name="a2354a27cfe3100f07e0ad71513ded80e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2354a27cfe3100f07e0ad71513ded80e">&#9670;&#160;</a></span>ReferenceType</h2>
 
@@ -425,8 +463,8 @@ template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a
 <p>Enum class for reference types. </p>
 <p>This enum class defines the reference types for motions (absolute or relative). </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a2354a27cfe3100f07e0ad71513ded80eab51ca26c6c89cfc9bec338f7a0d3e0c8" name="a2354a27cfe3100f07e0ad71513ded80eab51ca26c6c89cfc9bec338f7a0d3e0c8"></a>Absolute&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a2354a27cfe3100f07e0ad71513ded80ea2ca9469819fb0fb61ff98e914a7ccca0" name="a2354a27cfe3100f07e0ad71513ded80ea2ca9469819fb0fb61ff98e914a7ccca0"></a>Relative&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a2354a27cfe3100f07e0ad71513ded80eabab0767e88027de9944aa55c24c8387a" name="a2354a27cfe3100f07e0ad71513ded80eabab0767e88027de9944aa55c24c8387a"></a>kAbsolute&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2354a27cfe3100f07e0ad71513ded80eaf460a96ab20647996c15854794763384" name="a2354a27cfe3100f07e0ad71513ded80eaf460a96ab20647996c15854794763384"></a>kRelative&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
