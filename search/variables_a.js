@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['q_0',['q',['../structfranky_1_1_path_step.html#a57df49fb15c617236799a53aaf60819c',1,'franky::PathStep']]]
+  ['value_0',['value',['../structfranky_1_1_kinematics_1_1_null_space_handling.html#a6896c0ba84d77e443908e15ff5b24f0a',1,'franky::Kinematics::NullSpaceHandling']]]
 ];

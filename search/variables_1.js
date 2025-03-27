@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['control_5frate_0',['control_rate',['../classfranky_1_1_robot.html#a3155de462f5590cc67b2874acf846f53',1,'franky::Robot']]],
-  ['controller_5fmode_1',['controller_mode',['../structfranky_1_1_robot_1_1_params.html#a598cc77f3116a601bac482ddc4c74083',1,'franky::Robot::Params']]]
+  ['default_5fforce_5fthreshold_0',['default_force_threshold',['../structfranky_1_1_robot_1_1_params.html#a2535f117ddde7fd4294eeb952d4746bd',1,'franky::Robot::Params']]],
+  ['default_5ftorque_5fthreshold_1',['default_torque_threshold',['../structfranky_1_1_robot_1_1_params.html#ac52be6b32e29563c8bb6576679bcbfa5',1,'franky::Robot::Params']]],
+  ['degrees_5fof_5ffreedoms_2',['degrees_of_freedoms',['../classfranky_1_1_robot.html#aba9f9254a1af4fea2af758c450399c4c',1,'franky::Robot']]]
 ];

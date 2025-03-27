@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['dddq_0',['dddq',['../structfranky_1_1_path_step.html#a88bb2093afc4f33b6ffd729f79345f5c',1,'franky::PathStep']]],
-  ['ddds_1',['ddds',['../structfranky_1_1_trajectory_state.html#a04e5f32744dfddd807daa3cc19b43126',1,'franky::TrajectoryState']]],
-  ['ddq_2',['ddq',['../structfranky_1_1_path_step.html#a4212b9c724dfdfb612d0635d07fba9fe',1,'franky::PathStep']]],
-  ['dds_3',['dds',['../structfranky_1_1_trajectory_state.html#a308260d919a68ce939cd1e541348d385',1,'franky::TrajectoryState']]],
-  ['default_5fforce_5fthreshold_4',['default_force_threshold',['../structfranky_1_1_robot_1_1_params.html#a2535f117ddde7fd4294eeb952d4746bd',1,'franky::Robot::Params']]],
-  ['default_5ftorque_5fthreshold_5',['default_torque_threshold',['../structfranky_1_1_robot_1_1_params.html#ac52be6b32e29563c8bb6576679bcbfa5',1,'franky::Robot::Params']]],
-  ['degrees_5fof_5ffreedoms_6',['degrees_of_freedoms',['../classfranky_1_1_robot.html#aba9f9254a1af4fea2af758c450399c4c',1,'franky::Robot']]],
-  ['dq_7',['dq',['../structfranky_1_1_path_step.html#a915bee7abf2eb2431d3bc7aa1b5e296c',1,'franky::PathStep']]],
-  ['ds_8',['ds',['../structfranky_1_1_trajectory_state.html#ae72e570edb34f2d27d5c6f60426b3c4b',1,'franky::TrajectoryState']]]
+  ['elbow_5fposition_0',['elbow_position',['../classfranky_1_1_robot_pose.html#aee72ca83ba9d97dc1850394259b44fda',1,'franky::RobotPose']]],
+  ['elbow_5fvelocity_1',['elbow_velocity',['../classfranky_1_1_robot_velocity.html#ac7f635a3ee546c5fb8c0d6ffbd3e0467',1,'franky::RobotVelocity']]],
+  ['end_5feffector_5fpose_2',['end_effector_pose',['../classfranky_1_1_robot_pose.html#abe83d0dc121a5e1312ac4f2acdbd9fbd',1,'franky::RobotPose']]],
+  ['end_5feffector_5ftwist_3',['end_effector_twist',['../classfranky_1_1_robot_velocity.html#addf40a07374fd18d74d84c7027291b2b',1,'franky::RobotVelocity']]],
+  ['euler_4',['Euler',['../namespacefranky.html#aead71bda923ed8b1060241612b057e99',1,'franky']]],
+  ['exponential_5fdecay_5',['exponential_decay',['../structfranky_1_1_exponential_impedance_motion_1_1_params.html#ae0c147c8036555b808a53ee71c3f18da',1,'franky::ExponentialImpedanceMotion::Params']]],
+  ['exponential_5fimpedance_5fmotion_2ecpp_6',['exponential_impedance_motion.cpp',['../exponential__impedance__motion_8cpp.html',1,'']]],
+  ['exponential_5fimpedance_5fmotion_2ehpp_7',['exponential_impedance_motion.hpp',['../exponential__impedance__motion_8hpp.html',1,'']]],
+  ['exponentialimpedancemotion_8',['exponentialimpedancemotion',['../classfranky_1_1_exponential_impedance_motion.html',1,'franky::ExponentialImpedanceMotion'],['../classfranky_1_1_exponential_impedance_motion.html#a4c87760c474f602956c43519724a8e54',1,'franky::ExponentialImpedanceMotion::ExponentialImpedanceMotion(const Affine &amp;target)'],['../classfranky_1_1_exponential_impedance_motion.html#a4c8e1c7079e9992457b063f43131e979',1,'franky::ExponentialImpedanceMotion::ExponentialImpedanceMotion(const Affine &amp;target, const Params &amp;params)']]]
 ];

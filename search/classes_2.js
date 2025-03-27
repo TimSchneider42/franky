@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['exponentialimpedancemotion_0',['ExponentialImpedanceMotion',['../classfranky_1_1_exponential_impedance_motion.html',1,'franky']]]
+  ['gripper_0',['Gripper',['../classfranky_1_1_gripper.html',1,'franky']]],
+  ['gripperexception_1',['GripperException',['../structfranky_1_1_gripper_exception.html',1,'franky']]]
 ];

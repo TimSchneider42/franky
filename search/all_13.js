@@ -1,21 +1,13 @@
 var searchData=
 [
-  ['t_0',['t',['../structfranky_1_1_trajectory_state.html#a4e5bcdc457ab4eac73bdcdb60d31bf0c',1,'franky::TrajectoryState']]],
-  ['target_1',['target',['../structfranky_1_1_waypoint.html#a857fb8417fc17ff5e171494b1d398355',1,'franky::Waypoint::target'],['../classfranky_1_1_impedance_motion.html#a1ce961ddf51cd792482fd5ca2b299d97',1,'franky::ImpedanceMotion::target()']]],
-  ['target_5ftype_2',['target_type',['../structfranky_1_1_impedance_motion_1_1_params.html#a38a921916482fa544b8f6583c8f6850f',1,'franky::ImpedanceMotion::Params']]],
-  ['time_5fparametrization_2ehpp_3',['time_parametrization.hpp',['../time__parametrization_8hpp.html',1,'']]],
-  ['timeparametrization_4',['timeparametrization',['../classfranky_1_1_time_parametrization.html',1,'franky::TimeParametrization'],['../classfranky_1_1_time_parametrization.html#ac03cffe075949f1223f3ffef3fda374e',1,'franky::TimeParametrization::TimeParametrization()']]],
-  ['toeigen_5',['toEigen',['../namespacefranky.html#a246b8f841f3b7b07838f181539a5e35f',1,'franky']]],
-  ['toeigend_6',['toEigenD',['../namespacefranky.html#aea642ac2353991b394de429b7932dccf',1,'franky']]],
-  ['torques_7',['Torques',['../namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaacafebe00005b96de2fff86702fc305174a',1,'franky']]],
-  ['tostd_8',['toStd',['../namespacefranky.html#a766a517bf90c5e206533addb2a7153d6',1,'franky']]],
-  ['trajectory_9',['Trajectory',['../structfranky_1_1_trajectory.html',1,'franky']]],
-  ['trajectory_2ehpp_10',['trajectory.hpp',['../trajectory_8hpp.html',1,'']]],
-  ['trajectorystate_11',['TrajectoryState',['../structfranky_1_1_trajectory_state.html',1,'franky']]],
-  ['transform_12',['transform',['../classfranky_1_1_robot_velocity.html#a7e10894668e53f945a34939cc828716e',1,'franky::RobotVelocity::transform(const Affine &amp;affine) const'],['../classfranky_1_1_robot_velocity.html#a4e2cbc0ba39425815403cffcffdb6545',1,'franky::RobotVelocity::transform(const RotationMatrixType &amp;rotation) const']]],
-  ['transformwith_13',['transformwith',['../classfranky_1_1_cartesian_state.html#a9f7b644b3920e5816554b8855854a1aa',1,'franky::CartesianState::transformWith()'],['../classfranky_1_1_twist.html#a3f75fc666b90701fb5b518ca44e7542a',1,'franky::Twist::transformWith(const Affine &amp;transformation) const'],['../classfranky_1_1_twist.html#a8877c2da86231733a7ee309bd6378434',1,'franky::Twist::transformWith(const RotationMatrixType &amp;rotation) const']]],
-  ['translational_5fstiffness_14',['translational_stiffness',['../structfranky_1_1_impedance_motion_1_1_params.html#a122b129596499ae590225f7b1fe3bfd0',1,'franky::ImpedanceMotion::Params']]],
-  ['twist_15',['twist',['../classfranky_1_1_twist.html#acc5436a6628d7685aacf10d56e915126',1,'franky::Twist::Twist(const Twist &amp;twist)=default'],['../classfranky_1_1_twist.html#a9c27d104e1b1ede05906e1a4b8260aa2',1,'franky::Twist::Twist(Eigen::Vector3d linear_velocity=Eigen::Vector3d::Zero(), Eigen::Vector3d angular_velocity=Eigen::Vector3d::Zero())'],['../classfranky_1_1_twist.html',1,'franky::Twist']]],
-  ['twist_2ehpp_16',['twist.hpp',['../twist_8hpp.html',1,'']]],
-  ['types_2ehpp_17',['types.hpp',['../types_8hpp.html',1,'']]]
+  ['value_0',['value',['../structfranky_1_1_kinematics_1_1_null_space_handling.html#a6896c0ba84d77e443908e15ff5b24f0a',1,'franky::Kinematics::NullSpaceHandling']]],
+  ['vector6d_1',['Vector6d',['../namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb',1,'franky']]],
+  ['vector7d_2',['Vector7d',['../namespacefranky.html#a4c36e6539a78f808bf759142dec935c4',1,'franky']]],
+  ['vector_5frepr_3',['vector_repr',['../classfranky_1_1_robot_pose.html#a49bde12b0fbe8a2cc7e95c923b170c8d',1,'franky::RobotPose::vector_repr()'],['../classfranky_1_1_robot_velocity.html#ab5457d7739425402e41821a66d7ab32c',1,'franky::RobotVelocity::vector_repr()'],['../classfranky_1_1_twist.html#a31a3a4886d8ef4ee37b4d12acec1162e',1,'franky::Twist::vector_repr()']]],
+  ['velocity_4',['velocity',['../classfranky_1_1_cartesian_state.html#ac212d0fc0f7b8f05baa3da6389bcf52f',1,'franky::CartesianState::velocity()'],['../classfranky_1_1_joint_state.html#a5210d159dcb06ea28000f90060acf100',1,'franky::JointState::velocity()'],['../classfranky_1_1_relative_dynamics_factor.html#afd6505e3977f86efea0cae6bd3dca074',1,'franky::RelativeDynamicsFactor::velocity()']]],
+  ['velocity_5fwaypoint_5fmotion_2ehpp_5',['velocity_waypoint_motion.hpp',['../velocity__waypoint__motion_8hpp.html',1,'']]],
+  ['velocitywaypoint_6',['VelocityWaypoint',['../namespacefranky.html#a7af3aea8bf2e7bc0f366814328c1fb32',1,'franky']]],
+  ['velocitywaypointmotion_7',['velocitywaypointmotion',['../classfranky_1_1_velocity_waypoint_motion.html',1,'franky::VelocityWaypointMotion&lt; ControlSignalType, TargetType &gt;'],['../classfranky_1_1_velocity_waypoint_motion.html#aa7cb87ffe6b03a25bf14efbb3e547405',1,'franky::VelocityWaypointMotion::VelocityWaypointMotion()']]],
+  ['velocitywaypointmotion_3c_20franka_3a_3acartesianvelocities_2c_20robotvelocity_20_3e_8',['VelocityWaypointMotion&lt; franka::CartesianVelocities, RobotVelocity &gt;',['../classfranky_1_1_velocity_waypoint_motion.html',1,'franky']]],
+  ['velocitywaypointmotion_3c_20franka_3a_3ajointvelocities_2c_20vector7d_20_3e_9',['VelocityWaypointMotion&lt; franka::JointVelocities, Vector7d &gt;',['../classfranky_1_1_velocity_waypoint_motion.html',1,'franky']]]
 ];

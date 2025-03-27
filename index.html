@@ -153,7 +153,7 @@ $(function() {
 <div class="line">docker compose run --rm franky-build run-tests  # To run the tests</div>
 <div class="line">docker compose run --rm franky-build build-wheels  # To build wheels for all supported python versions</div>
 </div><!-- fragment --><h2>Tutorial</h2>
-<p>Franky comes with both a C++ and Python API that differ only regarding real-time capability. We will introduce both languages next to each other. In your C++ project, just include <code>include &lt;<a class="el" href="franky_8hpp.html">franky.hpp</a>&gt;</code> and link the library. For Python, just <code>import franky</code>. As a first example, only four lines of code are needed for simple robotic motions.</p>
+<p>Franky comes with both a C++ and Python API that differ only regarding real-time capability. We will introduce both languages next to each other. In your C++ project, just include <code>include &lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">franky.hpp</a>&gt;</code> and link the library. For Python, just <code>import franky</code>. As a first example, only four lines of code are needed for simple robotic motions.</p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="franky_8hpp.html">franky.hpp</a>&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespacefranky.html">franky</a>;</div>
@@ -215,7 +215,7 @@ $(function() {
 </div><!-- fragment --><h3>Robot State</h3>
 <p>The robot state can be retrieved by calling the following methods:</p>
 <ul>
-<li><code>state</code>: Object of type <code>franky.RobotState</code>, which is a wrapper of the libfranka <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html">franka::RobotState</a> structure.</li>
+<li><code>state</code>: Object of type <code><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">franky.RobotState</a></code>, which is a wrapper of the libfranka <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html">franka::RobotState</a> structure.</li>
 <li><code>current_cartesian_state</code>: Object of type <code><a class="el" href="classfranky_1_1_cartesian_state.html">franky.CartesianState</a></code>, which contains the end-effector pose and velocity obtained from <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#a193781d47722b32925e0ea7ac415f442">franka::RobotState::O_T_EE</a> and <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#a4be112bd1a9a7d777a67aea4a18a8dcc">franka::RobotState::O_dP_EE_c</a>.</li>
 <li><code>current_joint_position</code>: Object of type <code><a class="el" href="classfranky_1_1_joint_state.html" title="Joint state of a robot.">franky.JointState</a></code>, which contains the joint positions and velocities obtained from <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#ade3335d1ac2f6c44741a916d565f7091">franka::RobotState::q</a> and <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#a706045af1b176049e9e56df755325bd2">franka::RobotState::dq</a>.</li>
 </ul>
