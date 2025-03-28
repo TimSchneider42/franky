@@ -76,7 +76,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
@@ -103,12 +102,6 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global parameters for the robot.  <a href="structfranky_1_1_robot_1_1_params.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:a369cce243389413446ae49940f0bab02" id="r_a369cce243389413446ae49940f0bab02"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">size_t</a> dims&gt; </td></tr>
-<tr class="memitem:a369cce243389413446ae49940f0bab02"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">using</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a> = std::variant&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, std::array&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">dims</a> &gt;, Eigen::Vector&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">dims</a> &gt; &gt;</td></tr>
-<tr class="separator:a369cce243389413446ae49940f0bab02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab017d5bb8451915dbc0fde436782c771" id="r_ab017d5bb8451915dbc0fde436782c771"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#ab017d5bb8451915dbc0fde436782c771">Robot</a> (<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> std::string &amp;<a class="el" href="classfranky_1_1_robot.html#a25ca7e90c8a10848921fb35a378a7d33">fci_hostname</a>)</td></tr>
@@ -116,13 +109,13 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab017d5bb8451915dbc0fde436782c771"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a242b157f9b7fa39617a84680b92ee477" id="r_a242b157f9b7fa39617a84680b92ee477"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a242b157f9b7fa39617a84680b92ee477">Robot</a> (<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> std::string &amp;<a class="el" href="classfranky_1_1_robot.html#a25ca7e90c8a10848921fb35a378a7d33">fci_hostname</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="structfranky_1_1_robot_1_1_params.html">Params</a> &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">params</a>)</td></tr>
 <tr class="separator:a242b157f9b7fa39617a84680b92ee477"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad586cb00aa450d5c51bc8260b9ad373" id="r_aad586cb00aa450d5c51bc8260b9ad373"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#aad586cb00aa450d5c51bc8260b9ad373">setCollisionBehavior</a> (<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">torque_threshold</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">force_threshold</a>)</td></tr>
+<tr class="memitem:aad586cb00aa450d5c51bc8260b9ad373" id="r_aad586cb00aa450d5c51bc8260b9ad373"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#aad586cb00aa450d5c51bc8260b9ad373">setCollisionBehavior</a> (<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">torque_threshold</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 6 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">force_threshold</a>)</td></tr>
 <tr class="memdesc:aad586cb00aa450d5c51bc8260b9ad373"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the collision behavior of the robot.  <br /></td></tr>
 <tr class="separator:aad586cb00aa450d5c51bc8260b9ad373"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56b550916fb5b9df587e24a6b2353b68" id="r_a56b550916fb5b9df587e24a6b2353b68"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a56b550916fb5b9df587e24a6b2353b68">setCollisionBehavior</a> (<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">lower_torque_threshold</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">upper_torque_threshold</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">lower_force_threshold</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">upper_force_threshold</a>)</td></tr>
+<tr class="memitem:a56b550916fb5b9df587e24a6b2353b68" id="r_a56b550916fb5b9df587e24a6b2353b68"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a56b550916fb5b9df587e24a6b2353b68">setCollisionBehavior</a> (<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">lower_torque_threshold</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">upper_torque_threshold</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 6 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">lower_force_threshold</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 6 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">upper_force_threshold</a>)</td></tr>
 <tr class="memdesc:a56b550916fb5b9df587e24a6b2353b68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the collision behavior of the robot.  <br /></td></tr>
 <tr class="separator:a56b550916fb5b9df587e24a6b2353b68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b1476422439a82844e934873c88888a" id="r_a8b1476422439a82844e934873c88888a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a8b1476422439a82844e934873c88888a">setCollisionBehavior</a> (<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">lower_torque_threshold_acceleration</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">upper_torque_threshold_acceleration</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">lower_torque_threshold_nominal</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">upper_torque_threshold_nominal</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">lower_force_threshold_acceleration</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">upper_force_threshold_acceleration</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">lower_force_threshold_nominal</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">upper_force_threshold_nominal</a>)</td></tr>
+<tr class="memitem:a8b1476422439a82844e934873c88888a" id="r_a8b1476422439a82844e934873c88888a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a8b1476422439a82844e934873c88888a">setCollisionBehavior</a> (<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">lower_torque_threshold_acceleration</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">upper_torque_threshold_acceleration</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">lower_torque_threshold_nominal</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">upper_torque_threshold_nominal</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 6 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">lower_force_threshold_acceleration</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 6 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">upper_force_threshold_acceleration</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 6 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">lower_force_threshold_nominal</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 6 &gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">upper_force_threshold_nominal</a>)</td></tr>
 <tr class="memdesc:a8b1476422439a82844e934873c88888a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the collision behavior of the robot.  <br /></td></tr>
 <tr class="separator:a8b1476422439a82844e934873c88888a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7389f6e088ba456dd689c093ee6640e0" id="r_a7389f6e088ba456dd689c093ee6640e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a7389f6e088ba456dd689c093ee6640e0">recoverFromErrors</a> ()</td></tr>
@@ -204,33 +197,42 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a92cd026dc21f2228fee51626a11fecce" id="r_a92cd026dc21f2228fee51626a11fecce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_kinematic_chain.html">KinematicChain</a>&lt; 7 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a92cd026dc21f2228fee51626a11fecce">kinematics</a></td></tr>
 <tr class="memdesc:a92cd026dc21f2228fee51626a11fecce"><td class="mdescLeft">&#160;</td><td class="mdescRight">The kinematic chain of the robot.  <br /></td></tr>
 <tr class="separator:a92cd026dc21f2228fee51626a11fecce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7165eb847d474a244c6fba5b595cd84b" id="r_a7165eb847d474a244c6fba5b595cd84b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a7165eb847d474a244c6fba5b595cd84b">translation_velocity_limit</a></td></tr>
+<tr class="memdesc:a7165eb847d474a244c6fba5b595cd84b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translational velocity limit [m/s].  <br /></td></tr>
+<tr class="separator:a7165eb847d474a244c6fba5b595cd84b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83a0166687db4309de4f9cd7b76eb723" id="r_a83a0166687db4309de4f9cd7b76eb723"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a83a0166687db4309de4f9cd7b76eb723">rotation_velocity_limit</a></td></tr>
+<tr class="memdesc:a83a0166687db4309de4f9cd7b76eb723"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotational velocity limit [rad/s].  <br /></td></tr>
+<tr class="separator:a83a0166687db4309de4f9cd7b76eb723"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a823551f59caa0f025f1d6af381e38471" id="r_a823551f59caa0f025f1d6af381e38471"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a823551f59caa0f025f1d6af381e38471">elbow_velocity_limit</a></td></tr>
+<tr class="memdesc:a823551f59caa0f025f1d6af381e38471"><td class="mdescLeft">&#160;</td><td class="mdescRight">Elbow velocity limit [rad/s].  <br /></td></tr>
+<tr class="separator:a823551f59caa0f025f1d6af381e38471"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad31901ce61f3fce2adf885c776b7bb8a" id="r_ad31901ce61f3fce2adf885c776b7bb8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#ad31901ce61f3fce2adf885c776b7bb8a">translation_acceleration_limit</a></td></tr>
+<tr class="memdesc:ad31901ce61f3fce2adf885c776b7bb8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translational acceleration limit [m/s²].  <br /></td></tr>
+<tr class="separator:ad31901ce61f3fce2adf885c776b7bb8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7725e4fffdc28b8db727068a105707a" id="r_ae7725e4fffdc28b8db727068a105707a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#ae7725e4fffdc28b8db727068a105707a">rotation_acceleration_limit</a></td></tr>
+<tr class="memdesc:ae7725e4fffdc28b8db727068a105707a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotational acceleration limit [rad/s²].  <br /></td></tr>
+<tr class="separator:ae7725e4fffdc28b8db727068a105707a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3790d2dd31a3b2e2ccc32f39b11816fb" id="r_a3790d2dd31a3b2e2ccc32f39b11816fb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a3790d2dd31a3b2e2ccc32f39b11816fb">elbow_acceleration_limit</a></td></tr>
+<tr class="memdesc:a3790d2dd31a3b2e2ccc32f39b11816fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Elbow acceleration limit [rad/s²].  <br /></td></tr>
+<tr class="separator:a3790d2dd31a3b2e2ccc32f39b11816fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a676d0b273cc01dd02fa536ce07992a73" id="r_a676d0b273cc01dd02fa536ce07992a73"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a676d0b273cc01dd02fa536ce07992a73">translation_jerk_limit</a></td></tr>
+<tr class="memdesc:a676d0b273cc01dd02fa536ce07992a73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translational jerk limit [m/s³].  <br /></td></tr>
+<tr class="separator:a676d0b273cc01dd02fa536ce07992a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace7d9414a2e80b4a6c760578ebd382d3" id="r_ace7d9414a2e80b4a6c760578ebd382d3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#ace7d9414a2e80b4a6c760578ebd382d3">rotation_jerk_limit</a></td></tr>
+<tr class="memdesc:ace7d9414a2e80b4a6c760578ebd382d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotational jerk limit [rad/s³].  <br /></td></tr>
+<tr class="separator:ace7d9414a2e80b4a6c760578ebd382d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87e2193710fe1cc287a21729bba88106" id="r_a87e2193710fe1cc287a21729bba88106"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a87e2193710fe1cc287a21729bba88106">elbow_jerk_limit</a></td></tr>
+<tr class="memdesc:a87e2193710fe1cc287a21729bba88106"><td class="mdescLeft">&#160;</td><td class="mdescRight">Elbow jerk limit [rad/s³].  <br /></td></tr>
+<tr class="separator:a87e2193710fe1cc287a21729bba88106"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a720e5bf2fdcf23b0dd1b8ac01aa7665a" id="r_a720e5bf2fdcf23b0dd1b8ac01aa7665a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt; std::array&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, 7 &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a720e5bf2fdcf23b0dd1b8ac01aa7665a">joint_velocity_limit</a></td></tr>
+<tr class="separator:a720e5bf2fdcf23b0dd1b8ac01aa7665a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8700f27c52a590368f8133efd0020131" id="r_a8700f27c52a590368f8133efd0020131"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt; std::array&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, 7 &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a8700f27c52a590368f8133efd0020131">joint_acceleration_limit</a></td></tr>
+<tr class="separator:a8700f27c52a590368f8133efd0020131"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a648d7220634a4a0db0cee7af7324cc" id="r_a0a648d7220634a4a0db0cee7af7324cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt; std::array&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, 7 &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a0a648d7220634a4a0db0cee7af7324cc">joint_jerk_limit</a></td></tr>
+<tr class="separator:a0a648d7220634a4a0db0cee7af7324cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a8cea25be9024598cbcb8a4a57ce5281f" id="r_a8cea25be9024598cbcb8a4a57ce5281f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">static</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a8cea25be9024598cbcb8a4a57ce5281f">max_translation_velocity</a> {1.7}</td></tr>
-<tr class="separator:a8cea25be9024598cbcb8a4a57ce5281f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab128d55a91160b8646e4326f22b7273c" id="r_ab128d55a91160b8646e4326f22b7273c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">static</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#ab128d55a91160b8646e4326f22b7273c">max_rotation_velocity</a> {2.5}</td></tr>
-<tr class="separator:ab128d55a91160b8646e4326f22b7273c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a071177c1c10d0cfcfe659594e048cc07" id="r_a071177c1c10d0cfcfe659594e048cc07"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">static</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a071177c1c10d0cfcfe659594e048cc07">max_elbow_velocity</a> {2.175}</td></tr>
-<tr class="separator:a071177c1c10d0cfcfe659594e048cc07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af707350cc0676544fad2c024ae3e1387" id="r_af707350cc0676544fad2c024ae3e1387"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">static</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#af707350cc0676544fad2c024ae3e1387">max_translation_acceleration</a> {13.0}</td></tr>
-<tr class="separator:af707350cc0676544fad2c024ae3e1387"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ac091a11b7306d7e4ae710b26f656c4" id="r_a5ac091a11b7306d7e4ae710b26f656c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">static</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a5ac091a11b7306d7e4ae710b26f656c4">max_rotation_acceleration</a> {25.0}</td></tr>
-<tr class="separator:a5ac091a11b7306d7e4ae710b26f656c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af72648c3440d9303c66568bec318149b" id="r_af72648c3440d9303c66568bec318149b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">static</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#af72648c3440d9303c66568bec318149b">max_elbow_acceleration</a> {10.0}</td></tr>
-<tr class="separator:af72648c3440d9303c66568bec318149b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afaeb6bc497b593c9f53f3e5e08c1b93d" id="r_afaeb6bc497b593c9f53f3e5e08c1b93d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">static</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#afaeb6bc497b593c9f53f3e5e08c1b93d">max_translation_jerk</a> {6500.0}</td></tr>
-<tr class="separator:afaeb6bc497b593c9f53f3e5e08c1b93d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af125a46cbe0d30ace3a0710092a11538" id="r_af125a46cbe0d30ace3a0710092a11538"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">static</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#af125a46cbe0d30ace3a0710092a11538">max_rotation_jerk</a> {12500.0}</td></tr>
-<tr class="separator:af125a46cbe0d30ace3a0710092a11538"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a73a68ce94399bfd0d85a32fc0687d2" id="r_a1a73a68ce94399bfd0d85a32fc0687d2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">static</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a1a73a68ce94399bfd0d85a32fc0687d2">max_elbow_jerk</a> {5000.0}</td></tr>
-<tr class="separator:a1a73a68ce94399bfd0d85a32fc0687d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea89465ef8955707cd3e09f6d8dfafae" id="r_aea89465ef8955707cd3e09f6d8dfafae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">static</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> std::array&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, 7 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#aea89465ef8955707cd3e09f6d8dfafae">max_joint_velocity</a></td></tr>
-<tr class="separator:aea89465ef8955707cd3e09f6d8dfafae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7bfd5d2c673b14344aaa46aa5fccc525" id="r_a7bfd5d2c673b14344aaa46aa5fccc525"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">static</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> std::array&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, 7 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a7bfd5d2c673b14344aaa46aa5fccc525">max_joint_acceleration</a></td></tr>
-<tr class="separator:a7bfd5d2c673b14344aaa46aa5fccc525"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1b801f4105946b9e7edd682204bcb19" id="r_ac1b801f4105946b9e7edd682204bcb19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">static</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> std::array&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, 7 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#ac1b801f4105946b9e7edd682204bcb19">max_joint_jerk</a></td></tr>
-<tr class="separator:ac1b801f4105946b9e7edd682204bcb19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba9f9254a1af4fea2af758c450399c4c" id="r_aba9f9254a1af4fea2af758c450399c4c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">static</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#aba9f9254a1af4fea2af758c450399c4c">degrees_of_freedoms</a> {7}</td></tr>
 <tr class="separator:aba9f9254a1af4fea2af758c450399c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3155de462f5590cc67b2874acf846f53" id="r_a3155de462f5590cc67b2874acf846f53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">static</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a3155de462f5590cc67b2874acf846f53">control_rate</a> {0.001}</td></tr>
@@ -239,24 +241,7 @@ Static Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class representing a Franka robot. </p>
 <p>This class extends the franka::Robot class and adds additional functionality to it. </p>
-</div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a369cce243389413446ae49940f0bab02" name="a369cce243389413446ae49940f0bab02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a369cce243389413446ae49940f0bab02">&#9670;&#160;</a></span>ScalarOrArray</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">size_t</a> dims&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">using</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">franky::Robot::ScalarOrArray</a> =  std::variant&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, std::array&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">dims</a>&gt;, Eigen::Vector&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">dims</a>&gt; &gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab017d5bb8451915dbc0fde436782c771" name="ab017d5bb8451915dbc0fde436782c771"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab017d5bb8451915dbc0fde436782c771">&#9670;&#160;</a></span>Robot() <span class="overload">[1/2]</span></h2>
 
@@ -965,25 +950,25 @@ template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a
         <tr>
           <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">void</a> franky::Robot::setCollisionBehavior </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
           <td class="paramname"><em>lower_torque_threshold</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
           <td class="paramname"><em>upper_torque_threshold</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
           <td class="paramname"><em>lower_force_threshold</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
           <td class="paramname"><em>upper_force_threshold</em>&#160;</td>
         </tr>
         <tr>
@@ -1016,49 +1001,49 @@ template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a
         <tr>
           <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">void</a> franky::Robot::setCollisionBehavior </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
           <td class="paramname"><em>lower_torque_threshold_acceleration</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
           <td class="paramname"><em>upper_torque_threshold_acceleration</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
           <td class="paramname"><em>lower_torque_threshold_nominal</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
           <td class="paramname"><em>upper_torque_threshold_nominal</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
           <td class="paramname"><em>lower_force_threshold_acceleration</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
           <td class="paramname"><em>upper_force_threshold_acceleration</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
           <td class="paramname"><em>lower_force_threshold_nominal</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
           <td class="paramname"><em>upper_force_threshold_nominal</em>&#160;</td>
         </tr>
         <tr>
@@ -1095,13 +1080,13 @@ template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a
         <tr>
           <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">void</a> franky::Robot::setCollisionBehavior </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 7 &gt; &amp;&#160;</td>
           <td class="paramname"><em>torque_threshold</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_robot.html#a369cce243389413446ae49940f0bab02">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 6 &gt; &amp;&#160;</td>
           <td class="paramname"><em>force_threshold</em>&#160;</td>
         </tr>
         <tr>
@@ -1216,6 +1201,118 @@ template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a
 
 </div>
 </div>
+<a id="a3790d2dd31a3b2e2ccc32f39b11816fb" name="a3790d2dd31a3b2e2ccc32f39b11816fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3790d2dd31a3b2e2ccc32f39b11816fb">&#9670;&#160;</a></span>elbow_acceleration_limit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&gt; franky::Robot::elbow_acceleration_limit</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    <span class="stringliteral">&quot;elbow acceleration&quot;</span>, 10.0, 4.0, control_mutex_, std::bind(&amp;Robot::is_in_control_unsafe, <span class="keyword">this</span>)}</div>
+</div><!-- fragment -->
+<p>Elbow acceleration limit [rad/s²]. </p>
+
+</div>
+</div>
+<a id="a87e2193710fe1cc287a21729bba88106" name="a87e2193710fe1cc287a21729bba88106"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87e2193710fe1cc287a21729bba88106">&#9670;&#160;</a></span>elbow_jerk_limit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&gt; franky::Robot::elbow_jerk_limit</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    <span class="stringliteral">&quot;elbow jerk&quot;</span>, 5000.0, 800.0, control_mutex_, std::bind(&amp;Robot::is_in_control_unsafe, <span class="keyword">this</span>)}</div>
+</div><!-- fragment -->
+<p>Elbow jerk limit [rad/s³]. </p>
+
+</div>
+</div>
+<a id="a823551f59caa0f025f1d6af381e38471" name="a823551f59caa0f025f1d6af381e38471"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a823551f59caa0f025f1d6af381e38471">&#9670;&#160;</a></span>elbow_velocity_limit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&gt; franky::Robot::elbow_velocity_limit</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    <span class="stringliteral">&quot;elbow velocity&quot;</span>, 2.175, 2.175, control_mutex_, std::bind(&amp;Robot::is_in_control_unsafe, <span class="keyword">this</span>)}</div>
+</div><!-- fragment -->
+<p>Elbow velocity limit [rad/s]. </p>
+
+</div>
+</div>
+<a id="a8700f27c52a590368f8133efd0020131" name="a8700f27c52a590368f8133efd0020131"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8700f27c52a590368f8133efd0020131">&#9670;&#160;</a></span>joint_acceleration_limit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt;std::array&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, 7&gt; &gt; franky::Robot::joint_acceleration_limit</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    <span class="stringliteral">&quot;joint_acceleration&quot;</span>, <a class="code hl_define" href="robot_8hpp.html#a103d582b94a7b925a5895727eb068419">MAX_JOINT_ACC</a>, <a class="code hl_function" href="namespacefranky.html#abdb30941fcbafafaaf77956da0eebfe2">scaleArr7</a>(<a class="code hl_define" href="robot_8hpp.html#a103d582b94a7b925a5895727eb068419">MAX_JOINT_ACC</a>, 0.3), control_mutex_,</div>
+<div class="line">    std::bind(&amp;Robot::is_in_control_unsafe, <span class="keyword">this</span>)</div>
+<div class="line">  }</div>
+<div class="ttc" id="anamespacefranky_html_abdb30941fcbafafaaf77956da0eebfe2"><div class="ttname"><a href="namespacefranky.html#abdb30941fcbafafaaf77956da0eebfe2">franky::scaleArr7</a></div><div class="ttdeci">constexpr std::array&lt; double, 7 &gt; scaleArr7(const std::array&lt; double, 7 &gt; &amp;arr, const double factor)</div><div class="ttdef"><b>Definition</b> robot.hpp:40</div></div>
+<div class="ttc" id="arobot_8hpp_html_a103d582b94a7b925a5895727eb068419"><div class="ttname"><a href="robot_8hpp.html#a103d582b94a7b925a5895727eb068419">MAX_JOINT_ACC</a></div><div class="ttdeci">#define MAX_JOINT_ACC</div><div class="ttdoc">Joint acceleration limit [rad/s²].</div><div class="ttdef"><b>Definition</b> robot.hpp:171</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0a648d7220634a4a0db0cee7af7324cc" name="a0a648d7220634a4a0db0cee7af7324cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a648d7220634a4a0db0cee7af7324cc">&#9670;&#160;</a></span>joint_jerk_limit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt;std::array&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, 7&gt; &gt; franky::Robot::joint_jerk_limit</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    <span class="stringliteral">&quot;joint_jerk&quot;</span>, <a class="code hl_define" href="robot_8hpp.html#a09d00629886bbb51cdf0dc76f4b58962">MAX_JOINT_JERK</a>, <a class="code hl_function" href="namespacefranky.html#abdb30941fcbafafaaf77956da0eebfe2">scaleArr7</a>(<a class="code hl_define" href="robot_8hpp.html#a09d00629886bbb51cdf0dc76f4b58962">MAX_JOINT_JERK</a>, 0.3), control_mutex_,</div>
+<div class="line">    std::bind(&amp;Robot::is_in_control_unsafe, <span class="keyword">this</span>)</div>
+<div class="line">  }</div>
+<div class="ttc" id="arobot_8hpp_html_a09d00629886bbb51cdf0dc76f4b58962"><div class="ttname"><a href="robot_8hpp.html#a09d00629886bbb51cdf0dc76f4b58962">MAX_JOINT_JERK</a></div><div class="ttdeci">#define MAX_JOINT_JERK</div><div class="ttdoc">Joint jerk limit [rad/s³].</div><div class="ttdef"><b>Definition</b> robot.hpp:180</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a720e5bf2fdcf23b0dd1b8ac01aa7665a" name="a720e5bf2fdcf23b0dd1b8ac01aa7665a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a720e5bf2fdcf23b0dd1b8ac01aa7665a">&#9670;&#160;</a></span>joint_velocity_limit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt;std::array&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, 7&gt; &gt; franky::Robot::joint_velocity_limit</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    <span class="stringliteral">&quot;joint_velocity&quot;</span>, <a class="code hl_define" href="robot_8hpp.html#a7fefc67ecba9779f456f15e8236d780a">MAX_JOINT_VEL</a>, <a class="code hl_define" href="robot_8hpp.html#a7fefc67ecba9779f456f15e8236d780a">MAX_JOINT_VEL</a>, control_mutex_,</div>
+<div class="line">    std::bind(&amp;Robot::is_in_control_unsafe, <span class="keyword">this</span>)</div>
+<div class="line">  }</div>
+<div class="ttc" id="arobot_8hpp_html_a7fefc67ecba9779f456f15e8236d780a"><div class="ttname"><a href="robot_8hpp.html#a7fefc67ecba9779f456f15e8236d780a">MAX_JOINT_VEL</a></div><div class="ttdeci">#define MAX_JOINT_VEL</div><div class="ttdoc">Joint velocity limit [rad/s].</div><div class="ttdef"><b>Definition</b> robot.hpp:162</div></div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a92cd026dc21f2228fee51626a11fecce" name="a92cd026dc21f2228fee51626a11fecce"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a92cd026dc21f2228fee51626a11fecce">&#9670;&#160;</a></span>kinematics</h2>
 
@@ -1242,295 +1339,118 @@ template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a
 <div class="line">          Eigen::Matrix&lt;double, 3, 1&gt;::Ones())</div>
 <div class="line">  )</div>
 <div class="ttc" id="anamespacefranky_html_a766a517bf90c5e206533addb2a7153d6"><div class="ttname"><a href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">franky::toStd</a></div><div class="ttdeci">std::array&lt; double, dims &gt; toStd(const Eigen::Matrix&lt; double, dims, 1 &gt; &amp;vector)</div><div class="ttdef"><b>Definition</b> util.hpp:9</div></div>
-<div class="ttc" id="anamespacefranky_html_aead71bda923ed8b1060241612b057e99"><div class="ttname"><a href="namespacefranky.html#aead71bda923ed8b1060241612b057e99">franky::Euler</a></div><div class="ttdeci">Eigen::EulerAngles&lt; double, Eigen::EulerSystemXYZ &gt; Euler</div><div class="ttdef"><b>Definition</b> types.hpp:11</div></div>
-<div class="ttc" id="anamespacefranky_html_afab9faf133666ada543b15236a8c4b5f"><div class="ttname"><a href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">franky::Affine</a></div><div class="ttdeci">Eigen::Affine3d Affine</div><div class="ttdef"><b>Definition</b> types.hpp:13</div></div>
+<div class="ttc" id="anamespacefranky_html_aead71bda923ed8b1060241612b057e99"><div class="ttname"><a href="namespacefranky.html#aead71bda923ed8b1060241612b057e99">franky::Euler</a></div><div class="ttdeci">Eigen::EulerAngles&lt; double, Eigen::EulerSystemXYZ &gt; Euler</div><div class="ttdef"><b>Definition</b> types.hpp:14</div></div>
+<div class="ttc" id="anamespacefranky_html_afab9faf133666ada543b15236a8c4b5f"><div class="ttname"><a href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">franky::Affine</a></div><div class="ttdeci">Eigen::Affine3d Affine</div><div class="ttdef"><b>Definition</b> types.hpp:16</div></div>
 </div><!-- fragment -->
 <p>The kinematic chain of the robot. </p>
 
 </div>
 </div>
-<a id="af72648c3440d9303c66568bec318149b" name="af72648c3440d9303c66568bec318149b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af72648c3440d9303c66568bec318149b">&#9670;&#160;</a></span>max_elbow_acceleration</h2>
+<a id="ae7725e4fffdc28b8db727068a105707a" name="ae7725e4fffdc28b8db727068a105707a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7725e4fffdc28b8db727068a105707a">&#9670;&#160;</a></span>rotation_acceleration_limit</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> franky::Robot::max_elbow_acceleration {10.0}</td>
+          <td class="memname"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&gt; franky::Robot::rotation_acceleration_limit</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Maximum elbow acceleration [rad/s²] </p>
-
-</div>
-</div>
-<a id="a1a73a68ce94399bfd0d85a32fc0687d2" name="a1a73a68ce94399bfd0d85a32fc0687d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a73a68ce94399bfd0d85a32fc0687d2">&#9670;&#160;</a></span>max_elbow_jerk</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> franky::Robot::max_elbow_jerk {5000.0}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Maximum elbow jerk [rad/s³] </p>
-
-</div>
-</div>
-<a id="a071177c1c10d0cfcfe659594e048cc07" name="a071177c1c10d0cfcfe659594e048cc07"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a071177c1c10d0cfcfe659594e048cc07">&#9670;&#160;</a></span>max_elbow_velocity</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> franky::Robot::max_elbow_velocity {2.175}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Maximum elbow velocity [rad/s] </p>
-
-</div>
-</div>
-<a id="a7bfd5d2c673b14344aaa46aa5fccc525" name="a7bfd5d2c673b14344aaa46aa5fccc525"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7bfd5d2c673b14344aaa46aa5fccc525">&#9670;&#160;</a></span>max_joint_acceleration</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> std::array&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, 7&gt; franky::Robot::max_joint_acceleration</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">      {15.0, 7.5, 10.0, 12.5, 15.0, 20.0, 20.0}</div>
-<div class="line">  }</div>
-</div><!-- fragment --><p>Maximum joint acceleration [rad/s²] </p>
+<div class="line">    <span class="stringliteral">&quot;rotational acceleration&quot;</span>, 25.0, 10.0, control_mutex_, std::bind(&amp;Robot::is_in_control_unsafe, <span class="keyword">this</span>)}</div>
+</div><!-- fragment -->
+<p>Rotational acceleration limit [rad/s²]. </p>
 
 </div>
 </div>
-<a id="ac1b801f4105946b9e7edd682204bcb19" name="ac1b801f4105946b9e7edd682204bcb19"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac1b801f4105946b9e7edd682204bcb19">&#9670;&#160;</a></span>max_joint_jerk</h2>
+<a id="ace7d9414a2e80b4a6c760578ebd382d3" name="ace7d9414a2e80b4a6c760578ebd382d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace7d9414a2e80b4a6c760578ebd382d3">&#9670;&#160;</a></span>rotation_jerk_limit</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> std::array&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, 7&gt; franky::Robot::max_joint_jerk</td>
+          <td class="memname"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&gt; franky::Robot::rotation_jerk_limit</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">      {7500.0, 3750.0, 5000.0, 6250.0, 7500.0, 10000.0, 10000.0}</div>
-<div class="line">  }</div>
-</div><!-- fragment --><p>Maximum joint jerk [rad/s³] </p>
+<div class="line">    <span class="stringliteral">&quot;rotational jerk&quot;</span>, 12500.0, 2000.0, control_mutex_, std::bind(&amp;Robot::is_in_control_unsafe, <span class="keyword">this</span>)}</div>
+</div><!-- fragment -->
+<p>Rotational jerk limit [rad/s³]. </p>
 
 </div>
 </div>
-<a id="aea89465ef8955707cd3e09f6d8dfafae" name="aea89465ef8955707cd3e09f6d8dfafae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea89465ef8955707cd3e09f6d8dfafae">&#9670;&#160;</a></span>max_joint_velocity</h2>
+<a id="a83a0166687db4309de4f9cd7b76eb723" name="a83a0166687db4309de4f9cd7b76eb723"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83a0166687db4309de4f9cd7b76eb723">&#9670;&#160;</a></span>rotation_velocity_limit</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> std::array&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>, 7&gt; franky::Robot::max_joint_velocity</td>
+          <td class="memname"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&gt; franky::Robot::rotation_velocity_limit</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">      {2.175, 2.175, 2.175, 2.175, 2.610, 2.610, 2.610}</div>
-<div class="line">  }</div>
-</div><!-- fragment --><p>Maximum joint velocity [rad/s] </p>
+<div class="line">    <span class="stringliteral">&quot;rotational velocity&quot;</span>, 2.5, 2.5, control_mutex_, std::bind(&amp;Robot::is_in_control_unsafe, <span class="keyword">this</span>)}</div>
+</div><!-- fragment -->
+<p>Rotational velocity limit [rad/s]. </p>
 
 </div>
 </div>
-<a id="a5ac091a11b7306d7e4ae710b26f656c4" name="a5ac091a11b7306d7e4ae710b26f656c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ac091a11b7306d7e4ae710b26f656c4">&#9670;&#160;</a></span>max_rotation_acceleration</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> franky::Robot::max_rotation_acceleration {25.0}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Maximum rotational acceleration [rad/s²] </p>
-
-</div>
-</div>
-<a id="af125a46cbe0d30ace3a0710092a11538" name="af125a46cbe0d30ace3a0710092a11538"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af125a46cbe0d30ace3a0710092a11538">&#9670;&#160;</a></span>max_rotation_jerk</h2>
+<a id="ad31901ce61f3fce2adf885c776b7bb8a" name="ad31901ce61f3fce2adf885c776b7bb8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad31901ce61f3fce2adf885c776b7bb8a">&#9670;&#160;</a></span>translation_acceleration_limit</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> franky::Robot::max_rotation_jerk {12500.0}</td>
+          <td class="memname"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&gt; franky::Robot::translation_acceleration_limit</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>Maximum rotational jerk [rad/s³] </p>
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    <span class="stringliteral">&quot;translational acceleration&quot;</span>, 13.0, 2.0, control_mutex_, std::bind(&amp;Robot::is_in_control_unsafe, <span class="keyword">this</span>)}</div>
+</div><!-- fragment -->
+<p>Translational acceleration limit [m/s²]. </p>
 
 </div>
 </div>
-<a id="ab128d55a91160b8646e4326f22b7273c" name="ab128d55a91160b8646e4326f22b7273c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab128d55a91160b8646e4326f22b7273c">&#9670;&#160;</a></span>max_rotation_velocity</h2>
+<a id="a676d0b273cc01dd02fa536ce07992a73" name="a676d0b273cc01dd02fa536ce07992a73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a676d0b273cc01dd02fa536ce07992a73">&#9670;&#160;</a></span>translation_jerk_limit</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> franky::Robot::max_rotation_velocity {2.5}</td>
+          <td class="memname"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&gt; franky::Robot::translation_jerk_limit</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>Maximum rotational velocity [rad/s] </p>
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    <span class="stringliteral">&quot;translational jerk&quot;</span>, 6500.0, 500.0, control_mutex_, std::bind(&amp;Robot::is_in_control_unsafe, <span class="keyword">this</span>)}</div>
+</div><!-- fragment -->
+<p>Translational jerk limit [m/s³]. </p>
 
 </div>
 </div>
-<a id="af707350cc0676544fad2c024ae3e1387" name="af707350cc0676544fad2c024ae3e1387"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af707350cc0676544fad2c024ae3e1387">&#9670;&#160;</a></span>max_translation_acceleration</h2>
+<a id="a7165eb847d474a244c6fba5b595cd84b" name="a7165eb847d474a244c6fba5b595cd84b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7165eb847d474a244c6fba5b595cd84b">&#9670;&#160;</a></span>translation_velocity_limit</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> franky::Robot::max_translation_acceleration {13.0}</td>
+          <td class="memname"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a>&gt; franky::Robot::translation_velocity_limit</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>Maximum translational acceleration [m/s²] </p>
-
-</div>
-</div>
-<a id="afaeb6bc497b593c9f53f3e5e08c1b93d" name="afaeb6bc497b593c9f53f3e5e08c1b93d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afaeb6bc497b593c9f53f3e5e08c1b93d">&#9670;&#160;</a></span>max_translation_jerk</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> franky::Robot::max_translation_jerk {6500.0}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Maximum translational jerk [m/s³] </p>
-
-</div>
-</div>
-<a id="a8cea25be9024598cbcb8a4a57ce5281f" name="a8cea25be9024598cbcb8a4a57ce5281f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8cea25be9024598cbcb8a4a57ce5281f">&#9670;&#160;</a></span>max_translation_velocity</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> franky::Robot::max_translation_velocity {1.7}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Maximum translational velocity [m/s] </p>
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    <span class="stringliteral">&quot;translational velocity&quot;</span>, 1.7, 0.7, control_mutex_, std::bind(&amp;Robot::is_in_control_unsafe, <span class="keyword">this</span>)}</div>
+</div><!-- fragment -->
+<p>Translational velocity limit [m/s]. </p>
 
 </div>
 </div>

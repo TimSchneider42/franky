@@ -1,13 +1,11 @@
 var searchData=
 [
-  ['fci_5fhostname_0',['fci_hostname',['../classfranky_1_1_robot.html#a25ca7e90c8a10848921fb35a378a7d33',1,'franky::Robot']]],
-  ['forcex_1',['ForceX',['../classfranky_1_1_measure.html#a7aa92d415e33ca64b07aa598cb5e9ec4',1,'franky::Measure']]],
-  ['forcey_2',['ForceY',['../classfranky_1_1_measure.html#a47fbb5bf68412799ab22234596832793',1,'franky::Measure']]],
-  ['forcez_3',['ForceZ',['../classfranky_1_1_measure.html#a9f8c4110a4ee5a1b102efaa6a424b0f3',1,'franky::Measure']]],
-  ['forward_4',['forward',['../structfranky_1_1_kinematics.html#a924a41cbdb791771158346cacf655744',1,'franky::Kinematics']]],
-  ['forward_5fchain_5',['forward_chain',['../classfranky_1_1_kinematic_chain.html#af5095a209f6d1128a20296df0721b609',1,'franky::KinematicChain']]],
-  ['forwardelbow_6',['forwardElbow',['../structfranky_1_1_kinematics.html#ae719b521cebd0e01b39ed8892368ae5d',1,'franky::Kinematics']]],
-  ['forwardeuler_7',['forwardEuler',['../structfranky_1_1_kinematics.html#a9a8a8a9fae09ec1053b03ded920ee299',1,'franky::Kinematics']]],
-  ['forwardkinematics_8',['forwardKinematics',['../classfranky_1_1_robot.html#a1be6bdcdcea8b3f1c81a9b607068ca03',1,'franky::Robot']]],
-  ['fromvectorrepr_9',['fromVectorRepr',['../classfranky_1_1_twist.html#a39a4f6fc1cca31a7431618657d551f17',1,'franky::Twist']]]
+  ['elbow_5fstate_0',['elbow_state',['../classfranky_1_1_robot_pose.html#aca6a0cfec885c9aa09800603b2487a55',1,'franky::RobotPose']]],
+  ['elbow_5fvelocity_1',['elbow_velocity',['../classfranky_1_1_robot_velocity.html#ac7f635a3ee546c5fb8c0d6ffbd3e0467',1,'franky::RobotVelocity']]],
+  ['elbowstate_2',['elbowstate',['../classfranky_1_1_elbow_state.html#abc13ca8cf645d4bdd8b936ae8beab299',1,'franky::ElbowState::ElbowState(double joint_3_pos, std::optional&lt; FlipDirection &gt; joint_4_flip=std::nullopt)'],['../classfranky_1_1_elbow_state.html#a01b565b6678b46b95ef784d5a47b83b3',1,'franky::ElbowState::ElbowState(const std::array&lt; double, 2 &gt; &amp;elbow_state)'],['../classfranky_1_1_elbow_state.html#adba9c9a3810c45135ce0401ddd4c291a',1,'franky::ElbowState::ElbowState(const ElbowState &amp;)=default'],['../classfranky_1_1_elbow_state.html#acd2cbc41647013ac53c521f07e9aa8ba',1,'franky::ElbowState::ElbowState()=default']]],
+  ['end_5feffector_5fpose_3',['end_effector_pose',['../classfranky_1_1_robot_pose.html#abe83d0dc121a5e1312ac4f2acdbd9fbd',1,'franky::RobotPose']]],
+  ['end_5feffector_5ftwist_4',['end_effector_twist',['../classfranky_1_1_robot_velocity.html#addf40a07374fd18d74d84c7027291b2b',1,'franky::RobotVelocity']]],
+  ['ensurestd_5',['ensureStd',['../namespacefranky.html#acf0fc6eb90d96155c7700e17d783b101',1,'franky']]],
+  ['expand_6',['expand',['../namespacefranky.html#ae5cfa5596da548550897b01e9e1bd14b',1,'franky']]],
+  ['exponentialimpedancemotion_7',['exponentialimpedancemotion',['../classfranky_1_1_exponential_impedance_motion.html#a4c87760c474f602956c43519724a8e54',1,'franky::ExponentialImpedanceMotion::ExponentialImpedanceMotion(const Affine &amp;target)'],['../classfranky_1_1_exponential_impedance_motion.html#a4c8e1c7079e9992457b063f43131e979',1,'franky::ExponentialImpedanceMotion::ExponentialImpedanceMotion(const Affine &amp;target, const Params &amp;params)']]]
 ];

@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['scope_5fguard_0',['scope_guard',['../classfranky_1_1scope__guard.html',1,'franky']]],
-  ['stopmotion_1',['StopMotion',['../classfranky_1_1_stop_motion.html',1,'franky']]],
-  ['stopmotion_3c_20franka_3a_3acartesianpose_20_3e_2',['StopMotion&lt; franka::CartesianPose &gt;',['../classfranky_1_1_stop_motion_3_01franka_1_1_cartesian_pose_01_4.html',1,'franky']]],
-  ['stopmotion_3c_20franka_3a_3acartesianvelocities_20_3e_3',['StopMotion&lt; franka::CartesianVelocities &gt;',['../classfranky_1_1_stop_motion_3_01franka_1_1_cartesian_velocities_01_4.html',1,'franky']]],
-  ['stopmotion_3c_20franka_3a_3ajointpositions_20_3e_4',['StopMotion&lt; franka::JointPositions &gt;',['../classfranky_1_1_stop_motion_3_01franka_1_1_joint_positions_01_4.html',1,'franky']]],
-  ['stopmotion_3c_20franka_3a_3ajointvelocities_20_3e_5',['StopMotion&lt; franka::JointVelocities &gt;',['../classfranky_1_1_stop_motion_3_01franka_1_1_joint_velocities_01_4.html',1,'franky']]]
+  ['reaction_0',['Reaction',['../classfranky_1_1_reaction.html',1,'franky']]],
+  ['reactionrecursionexception_1',['ReactionRecursionException',['../structfranky_1_1_reaction_recursion_exception.html',1,'franky']]],
+  ['relativedynamicsfactor_2',['RelativeDynamicsFactor',['../classfranky_1_1_relative_dynamics_factor.html',1,'franky']]],
+  ['robot_3',['Robot',['../classfranky_1_1_robot.html',1,'franky']]],
+  ['robotpose_4',['RobotPose',['../classfranky_1_1_robot_pose.html',1,'franky']]],
+  ['robotvelocity_5',['RobotVelocity',['../classfranky_1_1_robot_velocity.html',1,'franky']]]
 ];

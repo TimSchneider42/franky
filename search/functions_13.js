@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['waypointmotion_0',['WaypointMotion',['../classfranky_1_1_waypoint_motion.html#a53c26db8057d1048efafe5a38a372f77',1,'franky::WaypointMotion']]],
-  ['width_1',['width',['../classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e',1,'franky::Gripper']]],
-  ['withelbowstate_2',['withElbowState',['../classfranky_1_1_robot_pose.html#a79b9d1d5960fe44eebda0d309c868e1a',1,'franky::RobotPose']]],
-  ['withelbowvelocity_3',['withElbowVelocity',['../classfranky_1_1_robot_velocity.html#aa53f2a9297f426cb327ee4172bd3ccd1',1,'franky::RobotVelocity']]]
+  ['vector_5frepr_0',['vector_repr',['../classfranky_1_1_robot_pose.html#a49bde12b0fbe8a2cc7e95c923b170c8d',1,'franky::RobotPose::vector_repr()'],['../classfranky_1_1_robot_velocity.html#ab5457d7739425402e41821a66d7ab32c',1,'franky::RobotVelocity::vector_repr()'],['../classfranky_1_1_twist.html#a31a3a4886d8ef4ee37b4d12acec1162e',1,'franky::Twist::vector_repr()']]],
+  ['velocity_1',['velocity',['../classfranky_1_1_cartesian_state.html#ac212d0fc0f7b8f05baa3da6389bcf52f',1,'franky::CartesianState::velocity()'],['../classfranky_1_1_joint_state.html#a5210d159dcb06ea28000f90060acf100',1,'franky::JointState::velocity()'],['../classfranky_1_1_relative_dynamics_factor.html#afd6505e3977f86efea0cae6bd3dca074',1,'franky::RelativeDynamicsFactor::velocity()']]],
+  ['velocitywaypointmotion_2',['VelocityWaypointMotion',['../classfranky_1_1_velocity_waypoint_motion.html#aa7cb87ffe6b03a25bf14efbb3e547405',1,'franky::VelocityWaypointMotion']]]
 ];

@@ -6,6 +6,7 @@ var searchData=
   ['addreactionfront_3',['addReactionFront',['../classfranky_1_1_motion.html#a8fdbf32e0808fb2f01514f83ee964347',1,'franky::Motion']]],
   ['affine_4',['Affine',['../namespacefranky.html#afab9faf133666ada543b15236a8c4b5f',1,'franky']]],
   ['angular_5fvelocity_5',['angular_velocity',['../classfranky_1_1_twist.html#af1199e9d3b8e06d11c519f99f5e2a4e4',1,'franky::Twist']]],
-  ['as_5ffranka_5fpose_6',['as_franka_pose',['../classfranky_1_1_robot_pose.html#a87b43342db37db66af0b1411af496dd2',1,'franky::RobotPose']]],
-  ['as_5ffranka_5fvelocity_7',['as_franka_velocity',['../classfranky_1_1_robot_velocity.html#a03b492d4eb5585514405f78a88a1b6e0',1,'franky::RobotVelocity']]]
+  ['array_6',['Array',['../namespacefranky.html#ae9a820b03821a3e69e1e2eb1db33ea66',1,'franky']]],
+  ['as_5ffranka_5fpose_7',['as_franka_pose',['../classfranky_1_1_robot_pose.html#a87b43342db37db66af0b1411af496dd2',1,'franky::RobotPose']]],
+  ['as_5ffranka_5fvelocity_8',['as_franka_velocity',['../classfranky_1_1_robot_velocity.html#a03b492d4eb5585514405f78a88a1b6e0',1,'franky::RobotVelocity']]]
 ];
