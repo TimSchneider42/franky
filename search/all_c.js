@@ -2,7 +2,7 @@ var searchData=
 [
   ['mass_0',['mass',['../classfranky_1_1_model.html#a43f69c5028ac5d3e418750ad50a8a918',1,'franky::Model::mass(const franka::RobotState &amp;state) const'],['../classfranky_1_1_model.html#a3f07f9c967ff893475a0f76f397cff14',1,'franky::Model::mass(const Vector7d &amp;q, const Eigen::Matrix3d &amp;I_total, double m_total, const Eigen::Vector3d &amp;F_x_Ctotal) const']]],
   ['max_1',['max',['../classfranky_1_1_dynamics_limit.html#a8ad7788915e12262221aa983c0588d62',1,'franky::DynamicsLimit']]],
-  ['max_5fdynamics_2',['max_dynamics',['../classfranky_1_1_relative_dynamics_factor.html#a7dbf4dc92014c7533ee0090581308b90',1,'franky::RelativeDynamicsFactor::max_dynamics() const'],['../classfranky_1_1_relative_dynamics_factor.html#aafb78c44330199e27db6b3f662307c14',1,'franky::RelativeDynamicsFactor::MAX_DYNAMICS()']]],
+  ['max_5fdynamics_2',['max_dynamics',['../classfranky_1_1_relative_dynamics_factor.html#aafb78c44330199e27db6b3f662307c14',1,'franky::RelativeDynamicsFactor::MAX_DYNAMICS()'],['../classfranky_1_1_relative_dynamics_factor.html#a7dbf4dc92014c7533ee0090581308b90',1,'franky::RelativeDynamicsFactor::max_dynamics() const']]],
   ['max_5fjoint_5facc_3',['MAX_JOINT_ACC',['../robot_8hpp.html#a103d582b94a7b925a5895727eb068419',1,'robot.hpp']]],
   ['max_5fjoint_5fjerk_4',['MAX_JOINT_JERK',['../robot_8hpp.html#a09d00629886bbb51cdf0dc76f4b58962',1,'robot.hpp']]],
   ['max_5fjoint_5fvel_5',['MAX_JOINT_VEL',['../robot_8hpp.html#a7fefc67ecba9779f456f15e8236d780a',1,'robot.hpp']]],
