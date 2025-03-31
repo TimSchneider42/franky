@@ -8,5 +8,5 @@ var searchData=
   ['dynamics_5flimit_2ehpp_5',['dynamics_limit.hpp',['../dynamics__limit_8hpp.html',1,'']]],
   ['dynamicslimit_6',['dynamicslimit',['../classfranky_1_1_dynamics_limit.html',1,'franky::DynamicsLimit&lt; LimitType &gt;'],['../classfranky_1_1_dynamics_limit.html#a84d77357f4d534b88839d292b25a82a0',1,'franky::DynamicsLimit::DynamicsLimit()']]],
   ['dynamicslimit_3c_20double_20_3e_7',['DynamicsLimit&lt; double &gt;',['../classfranky_1_1_dynamics_limit.html',1,'franky']]],
-  ['dynamicslimit_3c_20std_3a_3aarray_3c_20double_2c_207_20_3e_20_3e_8',['DynamicsLimit&lt; std::array&lt; double, 7 &gt; &gt;',['../classfranky_1_1_dynamics_limit.html',1,'franky']]]
+  ['dynamicslimit_3c_20vector7d_20_3e_8',['DynamicsLimit&lt; Vector7d &gt;',['../classfranky_1_1_dynamics_limit.html',1,'franky']]]
 ];

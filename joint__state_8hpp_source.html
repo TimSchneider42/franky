@@ -121,14 +121,24 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  }</div>
 </div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  <a class="code hl_typedef" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> position_;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  <a class="code hl_typedef" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> velocity_;</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>};</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  <span class="keyword">friend</span> std::ostream&amp; <a class="code hl_friend" href="classfranky_1_1_joint_state.html#a2b906651631f453efd46507ffbee9a5a">operator&lt;&lt;</a>(std::ostream&amp; os, <span class="keyword">const</span> <a class="code hl_class" href="classfranky_1_1_joint_state.html">JointState</a>&amp; joint_state);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  <a class="code hl_typedef" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> position_;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  <a class="code hl_typedef" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> velocity_;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>};</div>
 </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>}  <span class="comment">// namespace franky</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="foldopen" id="foldopen00060" data-start="{" data-end="};">
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="classfranky_1_1_joint_state.html#a2b906651631f453efd46507ffbee9a5a">   60</a></span><span class="keyword">inline</span> std::ostream&amp; <a class="code hl_function" href="namespacefranky.html#a054ba89edc6e3948f2dfb5721aaa8bb4">operator&lt;&lt;</a>(std::ostream&amp; os, <span class="keyword">const</span> <a class="code hl_class" href="classfranky_1_1_joint_state.html">JointState</a>&amp; joint_state) {</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  os &lt;&lt; <span class="stringliteral">&quot;JointState(position=&quot;</span> &lt;&lt; joint_state.position_ &lt;&lt; <span class="stringliteral">&quot;, velocity=&quot;</span> &lt;&lt; joint_state.velocity_ &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  <span class="keywordflow">return</span> os;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>}</div>
+</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>}  <span class="comment">// namespace franky</span></div>
 <div class="ttc" id="aclassfranky_1_1_joint_state_html"><div class="ttname"><a href="classfranky_1_1_joint_state.html">franky::JointState</a></div><div class="ttdoc">Joint state of a robot.</div><div class="ttdef"><b>Definition</b> joint_state.hpp:15</div></div>
+<div class="ttc" id="aclassfranky_1_1_joint_state_html_a2b906651631f453efd46507ffbee9a5a"><div class="ttname"><a href="classfranky_1_1_joint_state.html#a2b906651631f453efd46507ffbee9a5a">franky::JointState::operator&lt;&lt;</a></div><div class="ttdeci">friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, const JointState &amp;joint_state)</div><div class="ttdef"><b>Definition</b> joint_state.hpp:60</div></div>
 <div class="ttc" id="aclassfranky_1_1_joint_state_html_a330222fd0fea56aef1c1a7a6eb918e9b"><div class="ttname"><a href="classfranky_1_1_joint_state.html#a330222fd0fea56aef1c1a7a6eb918e9b">franky::JointState::JointState</a></div><div class="ttdeci">JointState()=default</div></div>
 <div class="ttc" id="aclassfranky_1_1_joint_state_html_a5210d159dcb06ea28000f90060acf100"><div class="ttname"><a href="classfranky_1_1_joint_state.html#a5210d159dcb06ea28000f90060acf100">franky::JointState::velocity</a></div><div class="ttdeci">Vector7d velocity() const</div><div class="ttdoc">The velocity component of the state.</div><div class="ttdef"><b>Definition</b> joint_state.hpp:49</div></div>
 <div class="ttc" id="aclassfranky_1_1_joint_state_html_a568e0e11672f5d9ad1f42b1d6cb9a576"><div class="ttname"><a href="classfranky_1_1_joint_state.html#a568e0e11672f5d9ad1f42b1d6cb9a576">franky::JointState::JointState</a></div><div class="ttdeci">JointState(const JointState &amp;)=default</div></div>
@@ -136,6 +146,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="aclassfranky_1_1_joint_state_html_ad4a1bcb1c1f08f59f160c64f05462c1b"><div class="ttname"><a href="classfranky_1_1_joint_state.html#ad4a1bcb1c1f08f59f160c64f05462c1b">franky::JointState::JointState</a></div><div class="ttdeci">JointState(Vector7d position, Vector7d velocity)</div><div class="ttdef"><b>Definition</b> joint_state.hpp:32</div></div>
 <div class="ttc" id="aclassfranky_1_1_joint_state_html_addd9bedce775d28cef880644b635ccf0"><div class="ttname"><a href="classfranky_1_1_joint_state.html#addd9bedce775d28cef880644b635ccf0">franky::JointState::position</a></div><div class="ttdeci">Vector7d position() const</div><div class="ttdoc">The position component of the state.</div><div class="ttdef"><b>Definition</b> joint_state.hpp:42</div></div>
 <div class="ttc" id="anamespacefranky_html"><div class="ttname"><a href="namespacefranky.html">franky</a></div><div class="ttdef"><b>Definition</b> dynamics_limit.cpp:8</div></div>
+<div class="ttc" id="anamespacefranky_html_a054ba89edc6e3948f2dfb5721aaa8bb4"><div class="ttname"><a href="namespacefranky.html#a054ba89edc6e3948f2dfb5721aaa8bb4">franky::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, const DynamicsLimit&lt; Vector7d &gt; &amp;limit)</div><div class="ttdef"><b>Definition</b> dynamics_limit.cpp:47</div></div>
 <div class="ttc" id="anamespacefranky_html_a4c36e6539a78f808bf759142dec935c4"><div class="ttname"><a href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">franky::Vector7d</a></div><div class="ttdeci">Eigen::Vector&lt; double, 7 &gt; Vector7d</div><div class="ttdef"><b>Definition</b> types.hpp:12</div></div>
 <div class="ttc" id="arobot__pose_8hpp_html"><div class="ttname"><a href="robot__pose_8hpp.html">robot_pose.hpp</a></div></div>
 <div class="ttc" id="arobot__velocity_8hpp_html"><div class="ttname"><a href="robot__velocity_8hpp.html">robot_velocity.hpp</a></div></div>
