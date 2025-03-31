@@ -1,30 +1,5 @@
 var searchData=
 [
-  ['max_0',['max',['../classfranky_1_1_dynamics_limit.html#a8ad7788915e12262221aa983c0588d62',1,'franky::DynamicsLimit']]],
-  ['max_5fdynamics_1',['max_dynamics',['../classfranky_1_1_relative_dynamics_factor.html#a7dbf4dc92014c7533ee0090581308b90',1,'franky::RelativeDynamicsFactor::max_dynamics() const'],['../classfranky_1_1_relative_dynamics_factor.html#aafb78c44330199e27db6b3f662307c14',1,'franky::RelativeDynamicsFactor::MAX_DYNAMICS()']]],
-  ['max_5fjoint_5facc_2',['MAX_JOINT_ACC',['../robot_8hpp.html#a103d582b94a7b925a5895727eb068419',1,'robot.hpp']]],
-  ['max_5fjoint_5fjerk_3',['MAX_JOINT_JERK',['../robot_8hpp.html#a09d00629886bbb51cdf0dc76f4b58962',1,'robot.hpp']]],
-  ['max_5fjoint_5fvel_4',['MAX_JOINT_VEL',['../robot_8hpp.html#a7fefc67ecba9779f456f15e8236d780a',1,'robot.hpp']]],
-  ['max_5fwidth_5',['max_width',['../classfranky_1_1_gripper.html#a5ae2659a6edf6e117fc461f60191c9db',1,'franky::Gripper']]],
-  ['measure_6',['measure',['../classfranky_1_1_measure.html',1,'franky::Measure'],['../classfranky_1_1_measure.html#aefc991686a8b710643f1aa55ffd69c6c',1,'franky::Measure::Measure(double constant)'],['../classfranky_1_1_measure.html#a8e0c418da6a3bea828dfd95e50d25d5f',1,'franky::Measure::Measure(MeasureFunc measure_func, std::string repr=&quot;NULL&quot;)']]],
-  ['measure_2ecpp_7',['measure.cpp',['../measure_8cpp.html',1,'']]],
-  ['measure_2ehpp_8',['measure.hpp',['../measure_8hpp.html',1,'']]],
-  ['measure_5fcmp_5fdef_9',['MEASURE_CMP_DEF',['../measure_8cpp.html#ab03e1c9d729a553b46b39e8058a88f7d',1,'measure.cpp']]],
-  ['measure_5fop_5fdef_10',['MEASURE_OP_DEF',['../measure_8cpp.html#af634d01b3a700d675d997bbaa2412d2a',1,'measure.cpp']]],
-  ['measure_5fpow_11',['measure_pow',['../namespacefranky.html#a0a18805109d5f09280f8830ce2970d3e',1,'franky']]],
-  ['minimum_5ftime_12',['minimum_time',['../structfranky_1_1_waypoint.html#ae0fed925318bbd85540a99b018efe0bf',1,'franky::Waypoint']]],
-  ['motion_13',['motion',['../classfranky_1_1_motion.html',1,'franky::Motion&lt; ControlSignalType &gt;'],['../classfranky_1_1_motion.html#ab18f33f97f86e9fb838fb6d6d79915b4',1,'franky::Motion::Motion()']]],
-  ['motion_2ecpp_14',['motion.cpp',['../motion_8cpp.html',1,'']]],
-  ['motion_2ehpp_15',['motion.hpp',['../motion_8hpp.html',1,'']]],
-  ['motion_3c_20franka_3a_3acartesianpose_20_3e_16',['Motion&lt; franka::CartesianPose &gt;',['../classfranky_1_1_motion.html',1,'franky']]],
-  ['motion_3c_20franka_3a_3acartesianvelocities_20_3e_17',['Motion&lt; franka::CartesianVelocities &gt;',['../classfranky_1_1_motion.html',1,'franky']]],
-  ['motion_3c_20franka_3a_3ajointpositions_20_3e_18',['Motion&lt; franka::JointPositions &gt;',['../classfranky_1_1_motion.html',1,'franky']]],
-  ['motion_3c_20franka_3a_3ajointvelocities_20_3e_19',['Motion&lt; franka::JointVelocities &gt;',['../classfranky_1_1_motion.html',1,'franky']]],
-  ['motion_3c_20franka_3a_3atorques_20_3e_20',['Motion&lt; franka::Torques &gt;',['../classfranky_1_1_motion.html',1,'franky']]],
-  ['motion_5fgenerator_2ecpp_21',['motion_generator.cpp',['../motion__generator_8cpp.html',1,'']]],
-  ['motion_5fgenerator_2ehpp_22',['motion_generator.hpp',['../motion__generator_8hpp.html',1,'']]],
-  ['motiongenerator_23',['motiongenerator',['../classfranky_1_1_motion_generator.html',1,'franky::MotionGenerator&lt; ControlSignalType &gt;'],['../classfranky_1_1_motion_generator.html#a629d006e1c4b920cd4e1240a5b4e435c',1,'franky::MotionGenerator::MotionGenerator()']]],
-  ['motionplannerexception_24',['MotionPlannerException',['../structfranky_1_1_motion_planner_exception.html',1,'franky']]],
-  ['move_25',['move',['../classfranky_1_1_robot.html#a4c1066ea03a41b71998d6560a97e7fb1',1,'franky::Robot::move(const std::shared_ptr&lt; Motion&lt; franka::Torques &gt; &gt; &amp;motion, bool async=false)'],['../classfranky_1_1_robot.html#aa031b868eacc474676306c3d581f43e7',1,'franky::Robot::move(const std::shared_ptr&lt; Motion&lt; franka::JointVelocities &gt; &gt; &amp;motion, bool async=false)'],['../classfranky_1_1_robot.html#a0e44e9689e22525b286633a43c7eb443',1,'franky::Robot::move(const std::shared_ptr&lt; Motion&lt; franka::JointPositions &gt; &gt; &amp;motion, bool async=false)'],['../classfranky_1_1_robot.html#ad014400edfd5bb1cf837fd09765ac5ce',1,'franky::Robot::move(const std::shared_ptr&lt; Motion&lt; franka::CartesianVelocities &gt; &gt; &amp;motion, bool async=false)'],['../classfranky_1_1_robot.html#a2142a3e3b425407d33d4c472f5094dba',1,'franky::Robot::move(const std::shared_ptr&lt; Motion&lt; franka::CartesianPose &gt; &gt; &amp;motion, bool async=false)']]],
-  ['moveasync_26',['moveAsync',['../classfranky_1_1_gripper.html#a9e8dbe460f5b1cf277ad281906fe8ed7',1,'franky::Gripper']]]
+  ['lefttransform_0',['leftTransform',['../classfranky_1_1_robot_pose.html#adc234649707e63232c54d9e392db25c6',1,'franky::RobotPose']]],
+  ['linear_5fvelocity_1',['linear_velocity',['../classfranky_1_1_twist.html#a5c704065f92d12266fb0e16e2b2dd61d',1,'franky::Twist']]]
 ];

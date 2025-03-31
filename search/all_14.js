@@ -1,15 +1,12 @@
 var searchData=
 [
-  ['waypoint_0',['Waypoint',['../structfranky_1_1_waypoint.html',1,'franky']]],
-  ['waypoint_5fmotion_2ehpp_1',['waypoint_motion.hpp',['../waypoint__motion_8hpp.html',1,'']]],
-  ['waypointmotion_2',['waypointmotion',['../classfranky_1_1_waypoint_motion.html',1,'franky::WaypointMotion&lt; ControlSignalType, WaypointType, TargetType &gt;'],['../classfranky_1_1_waypoint_motion.html#a53c26db8057d1048efafe5a38a372f77',1,'franky::WaypointMotion::WaypointMotion()']]],
-  ['waypointmotion_3c_20controlsignaltype_2c_20positionwaypoint_3c_20targettype_20_3e_2c_20targettype_20_3e_3',['WaypointMotion&lt; ControlSignalType, PositionWaypoint&lt; TargetType &gt;, TargetType &gt;',['../classfranky_1_1_waypoint_motion.html',1,'franky']]],
-  ['waypointmotion_3c_20controlsignaltype_2c_20velocitywaypoint_3c_20targettype_20_3e_2c_20targettype_20_3e_4',['WaypointMotion&lt; ControlSignalType, VelocityWaypoint&lt; TargetType &gt;, TargetType &gt;',['../classfranky_1_1_waypoint_motion.html',1,'franky']]],
-  ['waypointmotion_3c_20franka_3a_3acartesianpose_2c_20positionwaypoint_3c_20cartesianstate_20_3e_2c_20cartesianstate_20_3e_5',['WaypointMotion&lt; franka::CartesianPose, PositionWaypoint&lt; CartesianState &gt;, CartesianState &gt;',['../classfranky_1_1_waypoint_motion.html',1,'franky']]],
-  ['waypointmotion_3c_20franka_3a_3acartesianvelocities_2c_20velocitywaypoint_3c_20robotvelocity_20_3e_2c_20robotvelocity_20_3e_6',['WaypointMotion&lt; franka::CartesianVelocities, VelocityWaypoint&lt; RobotVelocity &gt;, RobotVelocity &gt;',['../classfranky_1_1_waypoint_motion.html',1,'franky']]],
-  ['waypointmotion_3c_20franka_3a_3ajointpositions_2c_20positionwaypoint_3c_20jointstate_20_3e_2c_20jointstate_20_3e_7',['WaypointMotion&lt; franka::JointPositions, PositionWaypoint&lt; JointState &gt;, JointState &gt;',['../classfranky_1_1_waypoint_motion.html',1,'franky']]],
-  ['waypointmotion_3c_20franka_3a_3ajointvelocities_2c_20velocitywaypoint_3c_20vector7d_20_3e_2c_20vector7d_20_3e_8',['WaypointMotion&lt; franka::JointVelocities, VelocityWaypoint&lt; Vector7d &gt;, Vector7d &gt;',['../classfranky_1_1_waypoint_motion.html',1,'franky']]],
-  ['width_9',['width',['../classfranky_1_1_gripper.html#a176c18c2ca98694075eea1085dc65a7e',1,'franky::Gripper']]],
-  ['withelbowstate_10',['withElbowState',['../classfranky_1_1_robot_pose.html#a79b9d1d5960fe44eebda0d309c868e1a',1,'franky::RobotPose']]],
-  ['withelbowvelocity_11',['withElbowVelocity',['../classfranky_1_1_robot_velocity.html#aa53f2a9297f426cb327ee4172bd3ccd1',1,'franky::RobotVelocity']]]
+  ['vector6d_0',['Vector6d',['../namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb',1,'franky']]],
+  ['vector7d_1',['Vector7d',['../namespacefranky.html#a4c36e6539a78f808bf759142dec935c4',1,'franky']]],
+  ['vector_5frepr_2',['vector_repr',['../classfranky_1_1_robot_pose.html#a49bde12b0fbe8a2cc7e95c923b170c8d',1,'franky::RobotPose::vector_repr()'],['../classfranky_1_1_robot_velocity.html#ab5457d7739425402e41821a66d7ab32c',1,'franky::RobotVelocity::vector_repr()'],['../classfranky_1_1_twist.html#a31a3a4886d8ef4ee37b4d12acec1162e',1,'franky::Twist::vector_repr()']]],
+  ['velocity_3',['velocity',['../classfranky_1_1_cartesian_state.html#ac212d0fc0f7b8f05baa3da6389bcf52f',1,'franky::CartesianState::velocity()'],['../classfranky_1_1_joint_state.html#a5210d159dcb06ea28000f90060acf100',1,'franky::JointState::velocity()'],['../classfranky_1_1_relative_dynamics_factor.html#afd6505e3977f86efea0cae6bd3dca074',1,'franky::RelativeDynamicsFactor::velocity()']]],
+  ['velocity_5fwaypoint_5fmotion_2ehpp_4',['velocity_waypoint_motion.hpp',['../velocity__waypoint__motion_8hpp.html',1,'']]],
+  ['velocitywaypoint_5',['VelocityWaypoint',['../namespacefranky.html#a7af3aea8bf2e7bc0f366814328c1fb32',1,'franky']]],
+  ['velocitywaypointmotion_6',['velocitywaypointmotion',['../classfranky_1_1_velocity_waypoint_motion.html',1,'franky::VelocityWaypointMotion&lt; ControlSignalType, TargetType &gt;'],['../classfranky_1_1_velocity_waypoint_motion.html#aa7cb87ffe6b03a25bf14efbb3e547405',1,'franky::VelocityWaypointMotion::VelocityWaypointMotion()']]],
+  ['velocitywaypointmotion_3c_20franka_3a_3acartesianvelocities_2c_20robotvelocity_20_3e_7',['VelocityWaypointMotion&lt; franka::CartesianVelocities, RobotVelocity &gt;',['../classfranky_1_1_velocity_waypoint_motion.html',1,'franky']]],
+  ['velocitywaypointmotion_3c_20franka_3a_3ajointvelocities_2c_20vector7d_20_3e_8',['VelocityWaypointMotion&lt; franka::JointVelocities, Vector7d &gt;',['../classfranky_1_1_velocity_waypoint_motion.html',1,'franky']]]
 ];

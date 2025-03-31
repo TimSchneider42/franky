@@ -77,7 +77,6 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classfranky_1_1_robot-members.html">List of all members</a>  </div>
@@ -160,6 +159,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a15b55042954d0bec0f2190abf2c8bb59" id="r_a15b55042954d0bec0f2190abf2c8bb59"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a15b55042954d0bec0f2190abf2c8bb59">current_control_signal_type</a> ()</td></tr>
 <tr class="memdesc:a15b55042954d0bec0f2190abf2c8bb59"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of the current control signal.  <br /></td></tr>
 <tr class="separator:a15b55042954d0bec0f2190abf2c8bb59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad22fb0483ab2b3402b28b6f35dccaf9f" id="r_ad22fb0483ab2b3402b28b6f35dccaf9f"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_model.html">Model</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#ad22fb0483ab2b3402b28b6f35dccaf9f">model</a> () <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a></td></tr>
+<tr class="memdesc:ad22fb0483ab2b3402b28b6f35dccaf9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The model of the robot.  <br /></td></tr>
+<tr class="separator:ad22fb0483ab2b3402b28b6f35dccaf9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f48445583c522dd798e312bdbacf864" id="r_a2f48445583c522dd798e312bdbacf864"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a2f48445583c522dd798e312bdbacf864">joinMotion</a> ()</td></tr>
 <tr class="memdesc:a2f48445583c522dd798e312bdbacf864"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for the current motion to finish. Throw any exceptions that occurred during the motion.  <br /></td></tr>
 <tr class="separator:a2f48445583c522dd798e312bdbacf864"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -186,17 +188,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a4c1066ea03a41b71998d6560a97e7fb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given motion.  <br /></td></tr>
 <tr class="separator:a4c1066ea03a41b71998d6560a97e7fb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a1be6bdcdcea8b3f1c81a9b607068ca03" id="r_a1be6bdcdcea8b3f1c81a9b607068ca03"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">static</a> <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a1be6bdcdcea8b3f1c81a9b607068ca03">forwardKinematics</a> (<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">q</a>)</td></tr>
-<tr class="memdesc:a1be6bdcdcea8b3f1c81a9b607068ca03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the inverse kinematics for the given target pose.  <br /></td></tr>
-<tr class="separator:a1be6bdcdcea8b3f1c81a9b607068ca03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a92cd026dc21f2228fee51626a11fecce" id="r_a92cd026dc21f2228fee51626a11fecce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_kinematic_chain.html">KinematicChain</a>&lt; 7 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a92cd026dc21f2228fee51626a11fecce">kinematics</a></td></tr>
-<tr class="memdesc:a92cd026dc21f2228fee51626a11fecce"><td class="mdescLeft">&#160;</td><td class="mdescRight">The kinematic chain of the robot.  <br /></td></tr>
-<tr class="separator:a92cd026dc21f2228fee51626a11fecce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7165eb847d474a244c6fba5b595cd84b" id="r_a7165eb847d474a244c6fba5b595cd84b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">double</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a7165eb847d474a244c6fba5b595cd84b">translation_velocity_limit</a></td></tr>
 <tr class="memdesc:a7165eb847d474a244c6fba5b595cd84b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translational velocity limit [m/s].  <br /></td></tr>
 <tr class="separator:a7165eb847d474a244c6fba5b595cd84b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -502,49 +495,6 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a1be6bdcdcea8b3f1c81a9b607068ca03" name="a1be6bdcdcea8b3f1c81a9b607068ca03"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1be6bdcdcea8b3f1c81a9b607068ca03">&#9670;&#160;</a></span>forwardKinematics()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> franky::Robot::forwardKinematics </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;&#160;</td>
-          <td class="paramname"><em>q</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Calculate the inverse kinematics for the given target pose. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">target</td><td>The target pose. </td></tr>
-    <tr><td class="paramname">q0</td><td>The initial guess for the joint positions. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A vector containing the joint positions.</dd></dl>
-<p>Calculate the forward kinematics for the given joint positions. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">q</td><td>The joint positions. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The forward kinematics. </dd></dl>
-
-</div>
-</div>
 <a id="ad3d89c3fd930ea6590d0abd10fbdb755" name="ad3d89c3fd930ea6590d0abd10fbdb755"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad3d89c3fd930ea6590d0abd10fbdb755">&#9670;&#160;</a></span>hasErrors()</h2>
 
@@ -645,6 +595,34 @@ template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether the motion finished before the timeout expired. </dd></dl>
+
+</div>
+</div>
+<a id="ad22fb0483ab2b3402b28b6f35dccaf9f" name="ad22fb0483ab2b3402b28b6f35dccaf9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad22fb0483ab2b3402b28b6f35dccaf9f">&#9670;&#160;</a></span>model()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_model.html">Model</a> &gt; franky::Robot::model </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The model of the robot. </p>
+<p>The model is loaded in the constructor, so calling this function does not incur any overhead. </p>
 
 </div>
 </div>
@@ -1270,7 +1248,7 @@ template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a
 <div class="line">    <span class="stringliteral">&quot;joint_acceleration&quot;</span>, <a class="code hl_define" href="robot_8hpp.html#a103d582b94a7b925a5895727eb068419">MAX_JOINT_ACC</a>, <a class="code hl_define" href="robot_8hpp.html#a103d582b94a7b925a5895727eb068419">MAX_JOINT_ACC</a> * 0.3, control_mutex_,</div>
 <div class="line">    std::bind(&amp;Robot::is_in_control_unsafe, <span class="keyword">this</span>)</div>
 <div class="line">  }</div>
-<div class="ttc" id="arobot_8hpp_html_a103d582b94a7b925a5895727eb068419"><div class="ttname"><a href="robot_8hpp.html#a103d582b94a7b925a5895727eb068419">MAX_JOINT_ACC</a></div><div class="ttdeci">#define MAX_JOINT_ACC</div><div class="ttdoc">Joint acceleration limit [rad/s²].</div><div class="ttdef"><b>Definition</b> robot.hpp:164</div></div>
+<div class="ttc" id="arobot_8hpp_html_a103d582b94a7b925a5895727eb068419"><div class="ttname"><a href="robot_8hpp.html#a103d582b94a7b925a5895727eb068419">MAX_JOINT_ACC</a></div><div class="ttdeci">#define MAX_JOINT_ACC</div><div class="ttdoc">Joint acceleration limit [rad/s²].</div><div class="ttdef"><b>Definition</b> robot.hpp:146</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1289,7 +1267,7 @@ template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a
 <div class="line">    <span class="stringliteral">&quot;joint_jerk&quot;</span>, <a class="code hl_define" href="robot_8hpp.html#a09d00629886bbb51cdf0dc76f4b58962">MAX_JOINT_JERK</a>, <a class="code hl_define" href="robot_8hpp.html#a09d00629886bbb51cdf0dc76f4b58962">MAX_JOINT_JERK</a> * 0.3, control_mutex_,</div>
 <div class="line">    std::bind(&amp;Robot::is_in_control_unsafe, <span class="keyword">this</span>)</div>
 <div class="line">  }</div>
-<div class="ttc" id="arobot_8hpp_html_a09d00629886bbb51cdf0dc76f4b58962"><div class="ttname"><a href="robot_8hpp.html#a09d00629886bbb51cdf0dc76f4b58962">MAX_JOINT_JERK</a></div><div class="ttdeci">#define MAX_JOINT_JERK</div><div class="ttdoc">Joint jerk limit [rad/s³].</div><div class="ttdef"><b>Definition</b> robot.hpp:173</div></div>
+<div class="ttc" id="arobot_8hpp_html_a09d00629886bbb51cdf0dc76f4b58962"><div class="ttname"><a href="robot_8hpp.html#a09d00629886bbb51cdf0dc76f4b58962">MAX_JOINT_JERK</a></div><div class="ttdeci">#define MAX_JOINT_JERK</div><div class="ttdoc">Joint jerk limit [rad/s³].</div><div class="ttdef"><b>Definition</b> robot.hpp:155</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1308,41 +1286,8 @@ template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a
 <div class="line">    <span class="stringliteral">&quot;joint_velocity&quot;</span>, <a class="code hl_define" href="robot_8hpp.html#a7fefc67ecba9779f456f15e8236d780a">MAX_JOINT_VEL</a>, <a class="code hl_define" href="robot_8hpp.html#a7fefc67ecba9779f456f15e8236d780a">MAX_JOINT_VEL</a>, control_mutex_,</div>
 <div class="line">    std::bind(&amp;Robot::is_in_control_unsafe, <span class="keyword">this</span>)</div>
 <div class="line">  }</div>
-<div class="ttc" id="arobot_8hpp_html_a7fefc67ecba9779f456f15e8236d780a"><div class="ttname"><a href="robot_8hpp.html#a7fefc67ecba9779f456f15e8236d780a">MAX_JOINT_VEL</a></div><div class="ttdeci">#define MAX_JOINT_VEL</div><div class="ttdoc">Joint velocity limit [rad/s].</div><div class="ttdef"><b>Definition</b> robot.hpp:155</div></div>
+<div class="ttc" id="arobot_8hpp_html_a7fefc67ecba9779f456f15e8236d780a"><div class="ttname"><a href="robot_8hpp.html#a7fefc67ecba9779f456f15e8236d780a">MAX_JOINT_VEL</a></div><div class="ttdeci">#define MAX_JOINT_VEL</div><div class="ttdoc">Joint velocity limit [rad/s].</div><div class="ttdef"><b>Definition</b> robot.hpp:137</div></div>
 </div><!-- fragment -->
-</div>
-</div>
-<a id="a92cd026dc21f2228fee51626a11fecce" name="a92cd026dc21f2228fee51626a11fecce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92cd026dc21f2228fee51626a11fecce">&#9670;&#160;</a></span>kinematics</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> <a class="el" href="classfranky_1_1_kinematic_chain.html">KinematicChain</a>&lt;7&gt; franky::Robot::kinematics</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= KinematicChain&lt;7&gt;(</div>
-<div class="line">      {{</div>
-<div class="line">           {0.0, 0.333, 0.0},</div>
-<div class="line">           {-<a class="code hl_function" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">M_PI</a> / 2, 0.0, 0.0},</div>
-<div class="line">           {<a class="code hl_function" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">M_PI</a> / 2, 0.316, 0.0},</div>
-<div class="line">           {<a class="code hl_function" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">M_PI</a> / 2, 0.0, 0.0825},</div>
-<div class="line">           {-<a class="code hl_function" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">M_PI</a> / 2, 0.384, -0.0825},</div>
-<div class="line">           {<a class="code hl_function" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">M_PI</a> / 2, 0.0, 0.0},</div>
-<div class="line">           {<a class="code hl_function" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">M_PI</a> / 2, 0.0, 0.088}}},</div>
-<div class="line">      <a class="code hl_typedef" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a>().fromPositionOrientationScale(</div>
-<div class="line">          Eigen::Vector3d(0, 0, 0.107),</div>
-<div class="line">          <a class="code hl_typedef" href="namespacefranky.html#aead71bda923ed8b1060241612b057e99">Euler</a>(<a class="code hl_function" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">M_PI</a> / 4, 0, <a class="code hl_function" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">M_PI</a>),</div>
-<div class="line">          Eigen::Matrix&lt;double, 3, 1&gt;::Ones())</div>
-<div class="line">  )</div>
-<div class="ttc" id="anamespacefranky_html_a766a517bf90c5e206533addb2a7153d6"><div class="ttname"><a href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">franky::toStd</a></div><div class="ttdeci">std::array&lt; double, dims &gt; toStd(const Eigen::Matrix&lt; double, dims, 1 &gt; &amp;vector)</div><div class="ttdef"><b>Definition</b> util.hpp:10</div></div>
-<div class="ttc" id="anamespacefranky_html_aead71bda923ed8b1060241612b057e99"><div class="ttname"><a href="namespacefranky.html#aead71bda923ed8b1060241612b057e99">franky::Euler</a></div><div class="ttdeci">Eigen::EulerAngles&lt; double, Eigen::EulerSystemXYZ &gt; Euler</div><div class="ttdef"><b>Definition</b> types.hpp:14</div></div>
-<div class="ttc" id="anamespacefranky_html_afab9faf133666ada543b15236a8c4b5f"><div class="ttname"><a href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">franky::Affine</a></div><div class="ttdeci">Eigen::Affine3d Affine</div><div class="ttdef"><b>Definition</b> types.hpp:16</div></div>
-</div><!-- fragment -->
-<p>The kinematic chain of the robot. </p>
-
 </div>
 </div>
 <a id="ae7725e4fffdc28b8db727068a105707a" name="ae7725e4fffdc28b8db727068a105707a"></a>
