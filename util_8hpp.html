@@ -80,9 +80,9 @@ $(function() {
   <div class="headertitle"><div class="title">util.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;array&gt;</code><br />
+<div class="textblock"><code>#include &lt;franka/duration.h&gt;</code><br />
 <code>#include &lt;Eigen/Core&gt;</code><br />
-<code>#include &lt;franka/duration.h&gt;</code><br />
+<code>#include &lt;array&gt;</code><br />
 </div>
 <p><a href="util_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -111,6 +111,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a44e848015229ff1e964fc5be35ee3d55" id="r_a44e848015229ff1e964fc5be35ee3d55"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">size_t</a> rows, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">size_t</a> cols&gt; </td></tr>
 <tr class="memitem:a44e848015229ff1e964fc5be35ee3d55"><td class="memTemplItemLeft" align="right" valign="top">Eigen::Matrix&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">rows</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">cols</a>, Eigen::ColMajor &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a44e848015229ff1e964fc5be35ee3d55">franky::toEigenMatD</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> std::array&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">rows</a> *<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">cols</a> &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">array</a>)</td></tr>
 <tr class="separator:a44e848015229ff1e964fc5be35ee3d55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aded23761176a51276cdf6c8795d7891c" id="r_aded23761176a51276cdf6c8795d7891c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#aded23761176a51276cdf6c8795d7891c">franky::stdToAffine</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> std::array&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>, 16 &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">array</a>)</td></tr>
+<tr class="separator:aded23761176a51276cdf6c8795d7891c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4af8de05472061175cee07678cddc6c3" id="r_a4af8de05472061175cee07678cddc6c3"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">size_t</a> dims&gt; </td></tr>
 <tr class="memitem:a4af8de05472061175cee07678cddc6c3"><td class="memTemplItemLeft" align="right" valign="top">Eigen::Vector&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">dims</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a4af8de05472061175cee07678cddc6c3">franky::ensureEigen</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#ae9a820b03821a3e69e1e2eb1db33ea66">Array</a>&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">dims</a> &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">input</a>)</td></tr>
 <tr class="separator:a4af8de05472061175cee07678cddc6c3"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['mass_0',['mass',['../classfranky_1_1_model.html#a3f07f9c967ff893475a0f76f397cff14',1,'franky::Model::mass(const Vector7d &amp;q, const Eigen::Matrix3d &amp;I_total, double m_total, const Eigen::Vector3d &amp;F_x_Ctotal) const'],['../classfranky_1_1_model.html#a43f69c5028ac5d3e418750ad50a8a918',1,'franky::Model::mass(const franka::RobotState &amp;state) const']]],
-  ['max_5fdynamics_1',['max_dynamics',['../classfranky_1_1_relative_dynamics_factor.html#aafb78c44330199e27db6b3f662307c14',1,'franky::RelativeDynamicsFactor::MAX_DYNAMICS()'],['../classfranky_1_1_relative_dynamics_factor.html#a7dbf4dc92014c7533ee0090581308b90',1,'franky::RelativeDynamicsFactor::max_dynamics() const']]],
+  ['mass_0',['mass',['../classfranky_1_1_model.html#a3f07f9c967ff893475a0f76f397cff14',1,'franky::Model::mass(const Vector7d &amp;q, const Eigen::Matrix3d &amp;I_total, double m_total, const Eigen::Vector3d &amp;F_x_Ctotal) const'],['../classfranky_1_1_model.html#a2b68eeac2f6990175097787f948d4f5b',1,'franky::Model::mass(const RobotState &amp;state) const']]],
+  ['max_5fdynamics_1',['max_dynamics',['../classfranky_1_1_relative_dynamics_factor.html#a7dbf4dc92014c7533ee0090581308b90',1,'franky::RelativeDynamicsFactor::max_dynamics() const'],['../classfranky_1_1_relative_dynamics_factor.html#aafb78c44330199e27db6b3f662307c14',1,'franky::RelativeDynamicsFactor::MAX_DYNAMICS()']]],
   ['max_5fwidth_2',['max_width',['../classfranky_1_1_gripper.html#a5ae2659a6edf6e117fc461f60191c9db',1,'franky::Gripper']]],
   ['measure_3',['measure',['../classfranky_1_1_measure.html#a8e0c418da6a3bea828dfd95e50d25d5f',1,'franky::Measure::Measure(MeasureFunc measure_func, std::string repr=&quot;NULL&quot;)'],['../classfranky_1_1_measure.html#aefc991686a8b710643f1aa55ffd69c6c',1,'franky::Measure::Measure(double constant)']]],
   ['measure_5fpow_4',['measure_pow',['../namespacefranky.html#a0a18805109d5f09280f8830ce2970d3e',1,'franky']]],

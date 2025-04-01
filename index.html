@@ -173,7 +173,7 @@ $(function() {
 <div class="ttc" id="aclassfranky_1_1_robot_pose_html"><div class="ttname"><a href="classfranky_1_1_robot_pose.html">franky::RobotPose</a></div><div class="ttdoc">Cartesian pose of a robot.</div><div class="ttdef"><b>Definition</b> robot_pose.hpp:17</div></div>
 <div class="ttc" id="afranky_8hpp_html"><div class="ttname"><a href="franky_8hpp.html">franky.hpp</a></div></div>
 <div class="ttc" id="anamespacefranky_html"><div class="ttname"><a href="namespacefranky.html">franky</a></div><div class="ttdef"><b>Definition</b> dynamics_limit.cpp:8</div></div>
-<div class="ttc" id="anamespacefranky_html_afab9faf133666ada543b15236a8c4b5f"><div class="ttname"><a href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">franky::Affine</a></div><div class="ttdeci">Eigen::Affine3d Affine</div><div class="ttdef"><b>Definition</b> types.hpp:15</div></div>
+<div class="ttc" id="anamespacefranky_html_afab9faf133666ada543b15236a8c4b5f"><div class="ttname"><a href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">franky::Affine</a></div><div class="ttdeci">Eigen::Affine3d Affine</div><div class="ttdef"><b>Definition</b> types.hpp:16</div></div>
 </div><!-- fragment --><p>The corresponding program in Python is </p><div class="fragment"><div class="line"><span class="keyword">from</span> franky <span class="keyword">import</span> Affine, CartesianMotion, Robot, ReferenceType</div>
 <div class="line"> </div>
 <div class="line">robot = Robot(<span class="stringliteral">&quot;172.16.0.2&quot;</span>)</div>
@@ -215,7 +215,7 @@ $(function() {
 </div><!-- fragment --><h3>Robot State</h3>
 <p>The robot state can be retrieved by calling the following methods:</p>
 <ul>
-<li><code>state</code>: Object of type <code><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">franky.RobotState</a></code>, which is a wrapper of the libfranka <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html">franka::RobotState</a> structure.</li>
+<li><code>state</code>: Object of type <code><a class="el" href="structfranky_1_1_robot_state.html" title="Full state of the robot.">franky.RobotState</a></code>, which extends the libfranka <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html">franka::RobotState</a> structure by additional state elements.</li>
 <li><code>current_cartesian_state</code>: Object of type <code><a class="el" href="classfranky_1_1_cartesian_state.html">franky.CartesianState</a></code>, which contains the end-effector pose and velocity obtained from <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#a193781d47722b32925e0ea7ac415f442">franka::RobotState::O_T_EE</a> and <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#a4be112bd1a9a7d777a67aea4a18a8dcc">franka::RobotState::O_dP_EE_c</a>.</li>
 <li><code>current_joint_position</code>: Object of type <code><a class="el" href="classfranky_1_1_joint_state.html" title="Joint state of a robot.">franky.JointState</a></code>, which contains the joint positions and velocities obtained from <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#ade3335d1ac2f6c44741a916d565f7091">franka::RobotState::q</a> and <a href="https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#a706045af1b176049e9e56df755325bd2">franka::RobotState::dq</a>.</li>
 </ul>
@@ -346,7 +346,7 @@ $(function() {
 <div class="line">  .addReaction(</div>
 <div class="line">    <a class="code hl_class" href="classfranky_1_1_reaction.html">Reaction</a>(</div>
 <div class="line">      <a class="code hl_class" href="classfranky_1_1_condition.html">Condition</a>(</div>
-<div class="line">        [](const franka::RobotState&amp; state, <span class="keywordtype">double</span> rel_time, <span class="keywordtype">double</span> abs_time) {</div>
+<div class="line">        [](const franka::<a class="code hl_struct" href="structfranky_1_1_robot_state.html">RobotState</a>&amp; state, <span class="keywordtype">double</span> rel_time, <span class="keywordtype">double</span> abs_time) {</div>
 <div class="line">          <span class="comment">// Lambda condition</span></div>
 <div class="line">          <span class="keywordflow">return</span> state.current_errors.self_collision_avoidance_violation;</div>
 <div class="line">        }),</div>
@@ -360,10 +360,11 @@ $(function() {
 <div class="line"> </div>
 <div class="line">robot.move(motion)</div>
 <div class="ttc" id="aclassfranky_1_1_cartesian_motion_html"><div class="ttname"><a href="classfranky_1_1_cartesian_motion.html">franky::CartesianMotion</a></div><div class="ttdoc">Cartesian motion with a single target.</div><div class="ttdef"><b>Definition</b> cartesian_motion.hpp:11</div></div>
-<div class="ttc" id="aclassfranky_1_1_condition_html"><div class="ttname"><a href="classfranky_1_1_condition.html">franky::Condition</a></div><div class="ttdoc">A condition on the robot state.</div><div class="ttdef"><b>Definition</b> condition.hpp:18</div></div>
+<div class="ttc" id="aclassfranky_1_1_condition_html"><div class="ttname"><a href="classfranky_1_1_condition.html">franky::Condition</a></div><div class="ttdoc">A condition on the robot state.</div><div class="ttdef"><b>Definition</b> condition.hpp:15</div></div>
 <div class="ttc" id="aclassfranky_1_1_measure_html"><div class="ttname"><a href="classfranky_1_1_measure.html">franky::Measure</a></div><div class="ttdoc">A measure on the robot state.</div><div class="ttdef"><b>Definition</b> measure.hpp:18</div></div>
 <div class="ttc" id="aclassfranky_1_1_reaction_html"><div class="ttname"><a href="classfranky_1_1_reaction.html">franky::Reaction</a></div><div class="ttdoc">A reaction that can be attached to a motion.</div><div class="ttdef"><b>Definition</b> reaction.hpp:25</div></div>
 <div class="ttc" id="aclassfranky_1_1_stop_motion_html"><div class="ttname"><a href="classfranky_1_1_stop_motion.html">franky::StopMotion</a></div><div class="ttdef"><b>Definition</b> stop_motion.hpp:12</div></div>
+<div class="ttc" id="astructfranky_1_1_robot_state_html"><div class="ttname"><a href="structfranky_1_1_robot_state.html">franky::RobotState</a></div><div class="ttdoc">Full state of the robot.</div><div class="ttdef"><b>Definition</b> robot_state.hpp:19</div></div>
 </div><!-- fragment --><h3>Real-Time Motion</h3>
 <p>By setting the <code>asynchronous</code> parameter of <code>Robot.move</code> to <code>True</code>, the function does not block until the motion finishes. Instead, it returns immediately and, thus, allows the main thread to set new motions asynchronously. </p><div class="fragment"><div class="line"><span class="keyword">import</span> time</div>
 <div class="line"><span class="keyword">from</span> franky <span class="keyword">import</span> Affine, CartesianMotion, Robot, ReferenceType</div>

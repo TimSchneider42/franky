@@ -1,0 +1,157 @@
+\documentclass{article}
+\usepackage{ifthen}
+\usepackage{epsfig}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{newunicodechar}
+  \makeatletter
+    \def\doxynewunicodechar#1#2{%
+    \@tempswafalse
+    \edef\nuc@tempa{\detokenize{#1}}%
+    \if\relax\nuc@tempa\relax
+      \nuc@emptyargerr
+    \else
+      \edef\@tempb{\expandafter\@car\nuc@tempa\@nil}%
+      \nuc@check
+      \if@tempswa
+        \@namedef{u8:\nuc@tempa}{#2}%
+      \fi
+    \fi
+  }
+  \makeatother
+  \doxynewunicodechar{⁻}{${}^{-}$}% Superscript minus
+  \doxynewunicodechar{²}{${}^{2}$}% Superscript two
+  \doxynewunicodechar{³}{${}^{3}$}% Superscript three
+
+\pagestyle{empty}
+\begin{document}
+$^{O}T_{EE}$
+\pagebreak
+
+${^OT_{EE}}_{d}$
+\pagebreak
+
+$^{F}T_{EE}$
+\pagebreak
+
+$^{EE}T_{K}$
+\pagebreak
+
+$m_{EE}$
+\pagebreak
+
+$I_{EE}$
+\pagebreak
+
+$^{F}x_{C_{EE}}$
+\pagebreak
+
+$m_{load}$
+\pagebreak
+
+$I_{load}$
+\pagebreak
+
+$^{F}x_{C_{load}}$
+\pagebreak
+
+$m_{total}$
+\pagebreak
+
+$I_{total}$
+\pagebreak
+
+$^{F}x_{C_{total}}$
+\pagebreak
+
+$\frac{rad}{s}$
+\pagebreak
+
+$\frac{rad}{s^2}$
+\pagebreak
+
+$\tau_{J}$
+\pagebreak
+
+$[Nm]$
+\pagebreak
+
+${\tau_J}_d$
+\pagebreak
+
+$\dot{\tau_{J}}$
+\pagebreak
+
+$[\frac{Nm}{s}]$
+\pagebreak
+
+$q$
+\pagebreak
+
+$[rad]$
+\pagebreak
+
+$q_d$
+\pagebreak
+
+$\dot{q}$
+\pagebreak
+
+$[\frac{rad}{s}]$
+\pagebreak
+
+$\dot{q}_d$
+\pagebreak
+
+$\ddot{q}_d$
+\pagebreak
+
+$[\frac{rad}{s^2}]$
+\pagebreak
+
+$(x,y,z,R,P,Y)$
+\pagebreak
+
+$\hat{\tau}_{\text{ext}}$
+\pagebreak
+
+$^OF_{K,\text{ext}}$
+\pagebreak
+
+$[0,0,0,0,0,0]$
+\pagebreak
+
+$[N,N,N,Nm,Nm,Nm]$
+\pagebreak
+
+$^{K}F_{K,\text{ext}}$
+\pagebreak
+
+${^OdP_{EE}}_{d}$
+\pagebreak
+
+$[\frac{m}{s},\frac{m}{s},\frac{m}{s},\frac{rad}{s},\frac{rad}{s},\frac{rad}{s}]$
+\pagebreak
+
+${^OT_{EE}}_{c}$
+\pagebreak
+
+${^OdP_{EE}}_{c}$
+\pagebreak
+
+${^OddP_{EE}}_{c}$
+\pagebreak
+
+$[\frac{m}{s^2},\frac{m}{s^2},\frac{m}{s^2},\frac{rad}{s^2},\frac{rad}{s^2},\frac{rad}{s^2}]$
+\pagebreak
+
+$\theta$
+\pagebreak
+
+$\dot{\theta}$
+\pagebreak
+
+$[0, 1]$
+\pagebreak
+
+\end{document}

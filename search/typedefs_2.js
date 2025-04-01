@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['jacobian_0',['Jacobian',['../namespacefranky.html#ab6d5b94e45f9e74b0a3195f76408bc8b',1,'franky']]]
+  ['intertiamatrix_0',['IntertiaMatrix',['../namespacefranky.html#a0e2202a008accb842c58a0ced1f2b585',1,'franky']]]
 ];

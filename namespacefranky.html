@@ -173,6 +173,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_pose.html">RobotPose</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cartesian pose of a robot.  <a href="classfranky_1_1_robot_pose.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_robot_state.html">RobotState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Full state of the robot.  <a href="structfranky_1_1_robot_state.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cartesian velocity of a robot.  <a href="classfranky_1_1_robot_velocity.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -218,6 +221,8 @@ Typedefs</h2></td></tr>
 <tr class="separator:a4c36e6539a78f808bf759142dec935c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6d5b94e45f9e74b0a3195f76408bc8b" id="r_ab6d5b94e45f9e74b0a3195f76408bc8b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#ab6d5b94e45f9e74b0a3195f76408bc8b">Jacobian</a> = Eigen::Matrix&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>, 6, 7 &gt;</td></tr>
 <tr class="separator:ab6d5b94e45f9e74b0a3195f76408bc8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e2202a008accb842c58a0ced1f2b585" id="r_a0e2202a008accb842c58a0ced1f2b585"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a0e2202a008accb842c58a0ced1f2b585">IntertiaMatrix</a> = Eigen::Matrix&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>, 3, 3 &gt;</td></tr>
+<tr class="separator:a0e2202a008accb842c58a0ced1f2b585"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afab9faf133666ada543b15236a8c4b5f" id="r_afab9faf133666ada543b15236a8c4b5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> = Eigen::Affine3d</td></tr>
 <tr class="separator:afab9faf133666ada543b15236a8c4b5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9a820b03821a3e69e1e2eb1db33ea66" id="r_ae9a820b03821a3e69e1e2eb1db33ea66"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">size_t</a> dims&gt; </td></tr>
@@ -341,6 +346,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a44e848015229ff1e964fc5be35ee3d55" id="r_a44e848015229ff1e964fc5be35ee3d55"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">size_t</a> rows, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">size_t</a> cols&gt; </td></tr>
 <tr class="memitem:a44e848015229ff1e964fc5be35ee3d55"><td class="memTemplItemLeft" align="right" valign="top">Eigen::Matrix&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">rows</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">cols</a>, Eigen::ColMajor &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a44e848015229ff1e964fc5be35ee3d55">toEigenMatD</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> std::array&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">rows</a> *<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">cols</a> &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">array</a>)</td></tr>
 <tr class="separator:a44e848015229ff1e964fc5be35ee3d55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aded23761176a51276cdf6c8795d7891c" id="r_aded23761176a51276cdf6c8795d7891c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#aded23761176a51276cdf6c8795d7891c">stdToAffine</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> std::array&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>, 16 &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">array</a>)</td></tr>
+<tr class="separator:aded23761176a51276cdf6c8795d7891c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4af8de05472061175cee07678cddc6c3" id="r_a4af8de05472061175cee07678cddc6c3"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">size_t</a> dims&gt; </td></tr>
 <tr class="memitem:a4af8de05472061175cee07678cddc6c3"><td class="memTemplItemLeft" align="right" valign="top">Eigen::Vector&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">dims</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a4af8de05472061175cee07678cddc6c3">ensureEigen</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#ae9a820b03821a3e69e1e2eb1db33ea66">Array</a>&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">dims</a> &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">input</a>)</td></tr>
 <tr class="separator:a4af8de05472061175cee07678cddc6c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -383,6 +390,20 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">using</a> <a class="el" href="namespacefranky.html#ae9a820b03821a3e69e1e2eb1db33ea66">franky::Array</a> = <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typedef</a> std::variant&lt;std::array&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">dims</a>&gt;, Eigen::Vector&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">dims</a>&gt; &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0e2202a008accb842c58a0ced1f2b585" name="a0e2202a008accb842c58a0ced1f2b585"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e2202a008accb842c58a0ced1f2b585">&#9670;&#160;</a></span>IntertiaMatrix</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">using</a> <a class="el" href="namespacefranky.html#a0e2202a008accb842c58a0ced1f2b585">franky::IntertiaMatrix</a> = <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typedef</a> Eigen::Matrix&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>, 3, 3&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -997,9 +1018,6 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
 <div class="memproto">
 <div class="memtemplate">
 template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">RotationMatrixType</a> &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classfranky_1_1_twist.html">Twist</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">franky::operator</a>* </td>
@@ -1019,11 +1037,6 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 </div>
@@ -1295,9 +1308,6 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
 <div class="memproto">
 <div class="memtemplate">
 template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">int</a> dims&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">std::ostream &amp; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">franky::operator</a>&lt;&lt; </td>
@@ -1317,11 +1327,6 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 </div>
@@ -1710,6 +1715,32 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
           <td></td><td></td>
         </tr>
       </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aded23761176a51276cdf6c8795d7891c" name="aded23761176a51276cdf6c8795d7891c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aded23761176a51276cdf6c8795d7891c">&#9670;&#160;</a></span>stdToAffine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> franky::stdToAffine </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> std::array&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>, 16 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>array</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['_7emotion_0',['~Motion',['../classfranky_1_1_motion.html#aa6d72b7a606055fc444bf2da0c463d16',1,'franky::Motion']]],
-  ['_7escope_5fguard_1',['~scope_guard',['../classfranky_1_1scope__guard.html#a9351b40db417bd66f6d8c0e40c664a4c',1,'franky::scope_guard']]]
+  ['zerojacobian_0',['zerojacobian',['../classfranky_1_1_model.html#ad5c6a7ac820f5e4df98525e3a9acda81',1,'franky::Model::zeroJacobian(franka::Frame frame, const RobotState &amp;state) const'],['../classfranky_1_1_model.html#af6e1970e18d0fed9695a879027ae8985',1,'franky::Model::zeroJacobian(franka::Frame frame, const Vector7d &amp;q, const Affine &amp;F_T_EE, const Affine &amp;EE_T_K) const']]]
 ];

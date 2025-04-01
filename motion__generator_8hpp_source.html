@@ -92,73 +92,76 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;ruckig/ruckig.hpp&quot;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="types_8hpp.html">franky/types.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacefranky.html">franky</a> {</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="foldopen" id="foldopen00017" data-start="{" data-end="};">
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="structfranky_1_1_reaction_recursion_exception.html">   17</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structfranky_1_1_reaction_recursion_exception.html">ReactionRecursionException</a> : <span class="keyword">public</span> std::runtime_error {</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <span class="keyword">using </span>std::runtime_error::runtime_error;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>};</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="robot__state_8hpp.html">franky/robot_state.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacefranky.html">franky</a> {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="foldopen" id="foldopen00018" data-start="{" data-end="};">
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="structfranky_1_1_reaction_recursion_exception.html">   18</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structfranky_1_1_reaction_recursion_exception.html">ReactionRecursionException</a> : <span class="keyword">public</span> std::runtime_error {</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  <span class="keyword">using </span>std::runtime_error::runtime_error;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>};</div>
 </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">class </span><a class="code hl_class" href="classfranky_1_1_robot.html">Robot</a>;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> ControlSignalType&gt;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">class </span><a class="code hl_class" href="classfranky_1_1_motion.html">Motion</a>;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> ControlSignalType&gt;</div>
-<div class="foldopen" id="foldopen00030" data-start="{" data-end="};">
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="classfranky_1_1_motion_generator.html">   30</a></span><span class="keyword">class </span><a class="code hl_class" href="classfranky_1_1_motion_generator.html">MotionGenerator</a> {</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classfranky_1_1_motion_generator.html#a2dceaaa3e924424fc57f68b5e1955712">   36</a></span>  <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> <a class="code hl_variable" href="classfranky_1_1_motion_generator.html#a2dceaaa3e924424fc57f68b5e1955712">REACTION_RECURSION_LIMIT</a> = 16;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classfranky_1_1_motion_generator.html">MotionGenerator</a>(<a class="code hl_class" href="classfranky_1_1_robot.html">Robot</a> *robot, std::shared_ptr&lt;<a class="code hl_class" href="classfranky_1_1_motion.html">Motion&lt;ControlSignalType&gt;</a>&gt; initial_motion);</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  <a class="code hl_enumeration" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> <a class="code hl_function" href="classfranky_1_1_motion_generator.html#a59afd2fd02e86eda578b757cdaafcafc">operator()</a>(<span class="keyword">const</span> franka::RobotState &amp;robot_state, franka::Duration period);</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  <span class="keyword">inline</span> <span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00058" data-start="{" data-end="}">
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="classfranky_1_1_motion_generator.html#a76f229f70e189180efdab90cc00651a1">   58</a></span>  <a class="code hl_function" href="classfranky_1_1_motion_generator.html#a76f229f70e189180efdab90cc00651a1">registerUpdateCallback</a>(</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>      <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>          <span class="keyword">const</span> franka::RobotState &amp;, franka::Duration, franka::Duration)&gt; &amp;callback) {</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    update_callbacks_.push_back(callback);</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  }</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">class </span><a class="code hl_class" href="classfranky_1_1_robot.html">Robot</a>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> ControlSignalType&gt;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">class </span><a class="code hl_class" href="classfranky_1_1_motion.html">Motion</a>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> ControlSignalType&gt;</div>
+<div class="foldopen" id="foldopen00031" data-start="{" data-end="};">
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="classfranky_1_1_motion_generator.html">   31</a></span><span class="keyword">class </span><a class="code hl_class" href="classfranky_1_1_motion_generator.html">MotionGenerator</a> {</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classfranky_1_1_motion_generator.html#a2dceaaa3e924424fc57f68b5e1955712">   37</a></span>  <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> <a class="code hl_variable" href="classfranky_1_1_motion_generator.html#a2dceaaa3e924424fc57f68b5e1955712">REACTION_RECURSION_LIMIT</a> = 16;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classfranky_1_1_motion_generator.html">MotionGenerator</a>(<a class="code hl_class" href="classfranky_1_1_robot.html">Robot</a> *robot, std::shared_ptr&lt;<a class="code hl_class" href="classfranky_1_1_motion.html">Motion&lt;ControlSignalType&gt;</a>&gt; initial_motion);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  <a class="code hl_enumeration" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> <a class="code hl_function" href="classfranky_1_1_motion_generator.html#a751c6f2d51740e613c6575b1f62e1dfa">operator()</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structfranky_1_1_robot_state.html">RobotState</a> &amp;robot_state, franka::Duration period);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  <span class="keyword">inline</span> <span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00059" data-start="{" data-end="}">
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="classfranky_1_1_motion_generator.html#a771a92b07e8c384ec56fd014841ed5f2">   59</a></span>  <a class="code hl_function" href="classfranky_1_1_motion_generator.html#a771a92b07e8c384ec56fd014841ed5f2">registerUpdateCallback</a>(</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>      <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>          <span class="keyword">const</span> <a class="code hl_struct" href="structfranky_1_1_robot_state.html">RobotState</a> &amp;, franka::Duration, franka::Duration)&gt; &amp;callback) {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    update_callbacks_.push_back(callback);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  }</div>
 </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classfranky_1_1_motion_generator.html#aecb5394cc1571687e1117e268f91e9c1">updateMotion</a>(std::shared_ptr&lt;<a class="code hl_class" href="classfranky_1_1_motion.html">Motion&lt;ControlSignalType&gt;</a>&gt; new_motion);</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classfranky_1_1_motion_generator.html#ad0abb8a6c37b8ab8208810bb58250bf8">has_new_motion</a>();</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classfranky_1_1_motion_generator.html#aaa6cf6fa7c6af2d7b081b19d569c2e0f">resetTimeUnsafe</a>();</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  std::shared_ptr&lt;Motion&lt;ControlSignalType&gt;&gt; initial_motion_;</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  std::shared_ptr&lt;Motion&lt;ControlSignalType&gt;&gt; current_motion_;</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  std::shared_ptr&lt;Motion&lt;ControlSignalType&gt;&gt; new_motion_;</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  std::vector&lt;std::function&lt;void(<span class="keyword">const</span> franka::RobotState &amp;, franka::Duration, franka::Duration)&gt;&gt;</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>      update_callbacks_;</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  std::mutex new_motion_mutex_;</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  std::optional&lt;ControlSignalType&gt; previous_command_;</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  franka::Duration abs_time_{0};</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  franka::Duration rel_time_offset_{0};</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  Robot *robot_;</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>};</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classfranky_1_1_motion_generator.html#aecb5394cc1571687e1117e268f91e9c1">updateMotion</a>(std::shared_ptr&lt;<a class="code hl_class" href="classfranky_1_1_motion.html">Motion&lt;ControlSignalType&gt;</a>&gt; new_motion);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classfranky_1_1_motion_generator.html#ad0abb8a6c37b8ab8208810bb58250bf8">has_new_motion</a>();</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classfranky_1_1_motion_generator.html#aaa6cf6fa7c6af2d7b081b19d569c2e0f">resetTimeUnsafe</a>();</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  std::shared_ptr&lt;Motion&lt;ControlSignalType&gt;&gt; initial_motion_;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  std::shared_ptr&lt;Motion&lt;ControlSignalType&gt;&gt; current_motion_;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  std::shared_ptr&lt;Motion&lt;ControlSignalType&gt;&gt; new_motion_;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  std::vector&lt;std::function&lt;void(<span class="keyword">const</span> <a class="code hl_struct" href="structfranky_1_1_robot_state.html">RobotState</a> &amp;, franka::Duration, franka::Duration)&gt;&gt;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>      update_callbacks_;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  std::mutex new_motion_mutex_;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  std::optional&lt;ControlSignalType&gt; previous_command_;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  franka::Duration abs_time_{0};</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  franka::Duration rel_time_offset_{0};</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  Robot *robot_;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>};</div>
 </div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>}  <span class="comment">// namespace franky</span></div>
-<div class="ttc" id="aclassfranky_1_1_motion_generator_html"><div class="ttname"><a href="classfranky_1_1_motion_generator.html">franky::MotionGenerator</a></div><div class="ttdoc">Helper class for handling motions and reactions.</div><div class="ttdef"><b>Definition</b> motion_generator.hpp:30</div></div>
-<div class="ttc" id="aclassfranky_1_1_motion_generator_html_a2dceaaa3e924424fc57f68b5e1955712"><div class="ttname"><a href="classfranky_1_1_motion_generator.html#a2dceaaa3e924424fc57f68b5e1955712">franky::MotionGenerator::REACTION_RECURSION_LIMIT</a></div><div class="ttdeci">static constexpr size_t REACTION_RECURSION_LIMIT</div><div class="ttdoc">Maximum recursion limit for reactions. After more than this number of reactions are fired in a single...</div><div class="ttdef"><b>Definition</b> motion_generator.hpp:36</div></div>
-<div class="ttc" id="aclassfranky_1_1_motion_generator_html_a59afd2fd02e86eda578b757cdaafcafc"><div class="ttname"><a href="classfranky_1_1_motion_generator.html#a59afd2fd02e86eda578b757cdaafcafc">franky::MotionGenerator::operator()</a></div><div class="ttdeci">ControlSignalType operator()(const franka::RobotState &amp;robot_state, franka::Duration period)</div><div class="ttdoc">Update the motion generator and get the next control signal.</div><div class="ttdef"><b>Definition</b> motion_generator.cpp:24</div></div>
-<div class="ttc" id="aclassfranky_1_1_motion_generator_html_a76f229f70e189180efdab90cc00651a1"><div class="ttname"><a href="classfranky_1_1_motion_generator.html#a76f229f70e189180efdab90cc00651a1">franky::MotionGenerator::registerUpdateCallback</a></div><div class="ttdeci">void registerUpdateCallback(const std::function&lt; void(const franka::RobotState &amp;, franka::Duration, franka::Duration)&gt; &amp;callback)</div><div class="ttdoc">Register a callback that is called in every step of the motion.</div><div class="ttdef"><b>Definition</b> motion_generator.hpp:58</div></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>}  <span class="comment">// namespace franky</span></div>
+<div class="ttc" id="aclassfranky_1_1_motion_generator_html"><div class="ttname"><a href="classfranky_1_1_motion_generator.html">franky::MotionGenerator</a></div><div class="ttdoc">Helper class for handling motions and reactions.</div><div class="ttdef"><b>Definition</b> motion_generator.hpp:31</div></div>
+<div class="ttc" id="aclassfranky_1_1_motion_generator_html_a2dceaaa3e924424fc57f68b5e1955712"><div class="ttname"><a href="classfranky_1_1_motion_generator.html#a2dceaaa3e924424fc57f68b5e1955712">franky::MotionGenerator::REACTION_RECURSION_LIMIT</a></div><div class="ttdeci">static constexpr size_t REACTION_RECURSION_LIMIT</div><div class="ttdoc">Maximum recursion limit for reactions. After more than this number of reactions are fired in a single...</div><div class="ttdef"><b>Definition</b> motion_generator.hpp:37</div></div>
+<div class="ttc" id="aclassfranky_1_1_motion_generator_html_a751c6f2d51740e613c6575b1f62e1dfa"><div class="ttname"><a href="classfranky_1_1_motion_generator.html#a751c6f2d51740e613c6575b1f62e1dfa">franky::MotionGenerator::operator()</a></div><div class="ttdeci">ControlSignalType operator()(const RobotState &amp;robot_state, franka::Duration period)</div><div class="ttdoc">Update the motion generator and get the next control signal.</div><div class="ttdef"><b>Definition</b> motion_generator.cpp:24</div></div>
+<div class="ttc" id="aclassfranky_1_1_motion_generator_html_a771a92b07e8c384ec56fd014841ed5f2"><div class="ttname"><a href="classfranky_1_1_motion_generator.html#a771a92b07e8c384ec56fd014841ed5f2">franky::MotionGenerator::registerUpdateCallback</a></div><div class="ttdeci">void registerUpdateCallback(const std::function&lt; void(const RobotState &amp;, franka::Duration, franka::Duration)&gt; &amp;callback)</div><div class="ttdoc">Register a callback that is called in every step of the motion.</div><div class="ttdef"><b>Definition</b> motion_generator.hpp:59</div></div>
 <div class="ttc" id="aclassfranky_1_1_motion_generator_html_aaa6cf6fa7c6af2d7b081b19d569c2e0f"><div class="ttname"><a href="classfranky_1_1_motion_generator.html#aaa6cf6fa7c6af2d7b081b19d569c2e0f">franky::MotionGenerator::resetTimeUnsafe</a></div><div class="ttdeci">void resetTimeUnsafe()</div><div class="ttdoc">Reset the time of the motion generator without locking the mutex.</div><div class="ttdef"><b>Definition</b> motion_generator.cpp:86</div></div>
 <div class="ttc" id="aclassfranky_1_1_motion_generator_html_ad0abb8a6c37b8ab8208810bb58250bf8"><div class="ttname"><a href="classfranky_1_1_motion_generator.html#ad0abb8a6c37b8ab8208810bb58250bf8">franky::MotionGenerator::has_new_motion</a></div><div class="ttdeci">bool has_new_motion()</div><div class="ttdoc">Whether a new motion is available.</div><div class="ttdef"><b>Definition</b> motion_generator.cpp:81</div></div>
 <div class="ttc" id="aclassfranky_1_1_motion_generator_html_aecb5394cc1571687e1117e268f91e9c1"><div class="ttname"><a href="classfranky_1_1_motion_generator.html#aecb5394cc1571687e1117e268f91e9c1">franky::MotionGenerator::updateMotion</a></div><div class="ttdeci">void updateMotion(std::shared_ptr&lt; Motion&lt; ControlSignalType &gt; &gt; new_motion)</div><div class="ttdoc">Update the current motion.</div><div class="ttdef"><b>Definition</b> motion_generator.cpp:75</div></div>
-<div class="ttc" id="aclassfranky_1_1_motion_html"><div class="ttname"><a href="classfranky_1_1_motion.html">franky::Motion</a></div><div class="ttdoc">Base class for motions.</div><div class="ttdef"><b>Definition</b> motion.hpp:22</div></div>
+<div class="ttc" id="aclassfranky_1_1_motion_html"><div class="ttname"><a href="classfranky_1_1_motion.html">franky::Motion</a></div><div class="ttdoc">Base class for motions.</div><div class="ttdef"><b>Definition</b> motion.hpp:23</div></div>
 <div class="ttc" id="aclassfranky_1_1_robot_html"><div class="ttname"><a href="classfranky_1_1_robot.html">franky::Robot</a></div><div class="ttdoc">A class representing a Franka robot.</div><div class="ttdef"><b>Definition</b> robot.hpp:46</div></div>
 <div class="ttc" id="anamespacefranky_html"><div class="ttname"><a href="namespacefranky.html">franky</a></div><div class="ttdef"><b>Definition</b> dynamics_limit.cpp:8</div></div>
 <div class="ttc" id="anamespacefranky_html_a9a12fea9c3341e3437af837efe8ebaac"><div class="ttname"><a href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">franky::ControlSignalType</a></div><div class="ttdeci">ControlSignalType</div><div class="ttdoc">Type of control signal.</div><div class="ttdef"><b>Definition</b> control_signal_type.hpp:8</div></div>
-<div class="ttc" id="astructfranky_1_1_reaction_recursion_exception_html"><div class="ttname"><a href="structfranky_1_1_reaction_recursion_exception.html">franky::ReactionRecursionException</a></div><div class="ttdoc">Exception thrown when the reaction recursion limit (8) is reached.</div><div class="ttdef"><b>Definition</b> motion_generator.hpp:17</div></div>
+<div class="ttc" id="arobot__state_8hpp_html"><div class="ttname"><a href="robot__state_8hpp.html">robot_state.hpp</a></div></div>
+<div class="ttc" id="astructfranky_1_1_reaction_recursion_exception_html"><div class="ttname"><a href="structfranky_1_1_reaction_recursion_exception.html">franky::ReactionRecursionException</a></div><div class="ttdoc">Exception thrown when the reaction recursion limit (8) is reached.</div><div class="ttdef"><b>Definition</b> motion_generator.hpp:18</div></div>
+<div class="ttc" id="astructfranky_1_1_robot_state_html"><div class="ttname"><a href="structfranky_1_1_robot_state.html">franky::RobotState</a></div><div class="ttdoc">Full state of the robot.</div><div class="ttdef"><b>Definition</b> robot_state.hpp:19</div></div>
 <div class="ttc" id="atypes_8hpp_html"><div class="ttname"><a href="types_8hpp.html">types.hpp</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

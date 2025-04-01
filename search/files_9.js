@@ -10,6 +10,8 @@ var searchData=
   ['robot_2ehpp_7',['robot.hpp',['../robot_8hpp.html',1,'']]],
   ['robot_5fpose_2ecpp_8',['robot_pose.cpp',['../robot__pose_8cpp.html',1,'']]],
   ['robot_5fpose_2ehpp_9',['robot_pose.hpp',['../robot__pose_8hpp.html',1,'']]],
-  ['robot_5fvelocity_2ecpp_10',['robot_velocity.cpp',['../robot__velocity_8cpp.html',1,'']]],
-  ['robot_5fvelocity_2ehpp_11',['robot_velocity.hpp',['../robot__velocity_8hpp.html',1,'']]]
+  ['robot_5fstate_2ecpp_10',['robot_state.cpp',['../robot__state_8cpp.html',1,'']]],
+  ['robot_5fstate_2ehpp_11',['robot_state.hpp',['../robot__state_8hpp.html',1,'']]],
+  ['robot_5fvelocity_2ecpp_12',['robot_velocity.cpp',['../robot__velocity_8cpp.html',1,'']]],
+  ['robot_5fvelocity_2ehpp_13',['robot_velocity.hpp',['../robot__velocity_8hpp.html',1,'']]]
 ];
