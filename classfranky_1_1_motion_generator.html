@@ -89,32 +89,32 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a629d006e1c4b920cd4e1240a5b4e435c" id="r_a629d006e1c4b920cd4e1240a5b4e435c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#a629d006e1c4b920cd4e1240a5b4e435c">MotionGenerator</a> (<a class="el" href="classfranky_1_1_robot.html">Robot</a> *robot, std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &gt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">initial_motion</a>)</td></tr>
+<tr class="memitem:a629d006e1c4b920cd4e1240a5b4e435c" id="r_a629d006e1c4b920cd4e1240a5b4e435c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#a629d006e1c4b920cd4e1240a5b4e435c">MotionGenerator</a> (<a class="el" href="classfranky_1_1_robot.html">Robot</a> *robot, std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &gt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">initial_motion</a>)</td></tr>
 <tr class="separator:a629d006e1c4b920cd4e1240a5b4e435c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59afd2fd02e86eda578b757cdaafcafc" id="r_a59afd2fd02e86eda578b757cdaafcafc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#a59afd2fd02e86eda578b757cdaafcafc">operator()</a> (<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> franka::RobotState &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">robot_state</a>, franka::Duration <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">period</a>)</td></tr>
+<tr class="memitem:a59afd2fd02e86eda578b757cdaafcafc" id="r_a59afd2fd02e86eda578b757cdaafcafc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#a59afd2fd02e86eda578b757cdaafcafc">operator()</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> franka::RobotState &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">robot_state</a>, franka::Duration <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">period</a>)</td></tr>
 <tr class="memdesc:a59afd2fd02e86eda578b757cdaafcafc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the motion generator and get the next control signal.  <br /></td></tr>
 <tr class="separator:a59afd2fd02e86eda578b757cdaafcafc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76f229f70e189180efdab90cc00651a1" id="r_a76f229f70e189180efdab90cc00651a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#a76f229f70e189180efdab90cc00651a1">registerUpdateCallback</a> (<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> std::function&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">void</a>(<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> franka::RobotState &amp;, franka::Duration, franka::Duration)&gt; &amp;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">callback</a>)</td></tr>
+<tr class="memitem:a76f229f70e189180efdab90cc00651a1" id="r_a76f229f70e189180efdab90cc00651a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#a76f229f70e189180efdab90cc00651a1">registerUpdateCallback</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> std::function&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>(<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> franka::RobotState &amp;, franka::Duration, franka::Duration)&gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">callback</a>)</td></tr>
 <tr class="memdesc:a76f229f70e189180efdab90cc00651a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a callback that is called in every step of the motion.  <br /></td></tr>
 <tr class="separator:a76f229f70e189180efdab90cc00651a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecb5394cc1571687e1117e268f91e9c1" id="r_aecb5394cc1571687e1117e268f91e9c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#aecb5394cc1571687e1117e268f91e9c1">updateMotion</a> (std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &gt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">new_motion</a>)</td></tr>
+<tr class="memitem:aecb5394cc1571687e1117e268f91e9c1" id="r_aecb5394cc1571687e1117e268f91e9c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#aecb5394cc1571687e1117e268f91e9c1">updateMotion</a> (std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &gt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">new_motion</a>)</td></tr>
 <tr class="memdesc:aecb5394cc1571687e1117e268f91e9c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the current motion.  <br /></td></tr>
 <tr class="separator:aecb5394cc1571687e1117e268f91e9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0abb8a6c37b8ab8208810bb58250bf8" id="r_ad0abb8a6c37b8ab8208810bb58250bf8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#ad0abb8a6c37b8ab8208810bb58250bf8">has_new_motion</a> ()</td></tr>
+<tr class="memitem:ad0abb8a6c37b8ab8208810bb58250bf8" id="r_ad0abb8a6c37b8ab8208810bb58250bf8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#ad0abb8a6c37b8ab8208810bb58250bf8">has_new_motion</a> ()</td></tr>
 <tr class="memdesc:ad0abb8a6c37b8ab8208810bb58250bf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether a new motion is available.  <br /></td></tr>
 <tr class="separator:ad0abb8a6c37b8ab8208810bb58250bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa6cf6fa7c6af2d7b081b19d569c2e0f" id="r_aaa6cf6fa7c6af2d7b081b19d569c2e0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#aaa6cf6fa7c6af2d7b081b19d569c2e0f">resetTimeUnsafe</a> ()</td></tr>
+<tr class="memitem:aaa6cf6fa7c6af2d7b081b19d569c2e0f" id="r_aaa6cf6fa7c6af2d7b081b19d569c2e0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#aaa6cf6fa7c6af2d7b081b19d569c2e0f">resetTimeUnsafe</a> ()</td></tr>
 <tr class="memdesc:aaa6cf6fa7c6af2d7b081b19d569c2e0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the time of the motion generator without locking the mutex.  <br /></td></tr>
 <tr class="separator:aaa6cf6fa7c6af2d7b081b19d569c2e0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a2dceaaa3e924424fc57f68b5e1955712" id="r_a2dceaaa3e924424fc57f68b5e1955712"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">static</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#a2dceaaa3e924424fc57f68b5e1955712">REACTION_RECURSION_LIMIT</a> = 16</td></tr>
+<tr class="memitem:a2dceaaa3e924424fc57f68b5e1955712" id="r_a2dceaaa3e924424fc57f68b5e1955712"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">static</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">constexpr</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion_generator.html#a2dceaaa3e924424fc57f68b5e1955712">REACTION_RECURSION_LIMIT</a> = 16</td></tr>
 <tr class="memdesc:a2dceaaa3e924424fc57f68b5e1955712"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum recursion limit for reactions. After more than this number of reactions are fired in a single step, the motion generator will throw a <a class="el" href="structfranky_1_1_reaction_recursion_exception.html" title="Exception thrown when the reaction recursion limit (8) is reached.">ReactionRecursionException</a>.  <br /></td></tr>
 <tr class="separator:a2dceaaa3e924424fc57f68b5e1955712"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>&gt;<br />
 class franky::MotionGenerator&lt; ControlSignalType &gt;</div><p>Helper class for handling motions and reactions. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a629d006e1c4b920cd4e1240a5b4e435c" name="a629d006e1c4b920cd4e1240a5b4e435c"></a>
@@ -123,7 +123,7 @@ class franky::MotionGenerator&lt; ControlSignalType &gt;</div><p>Helper class fo
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; </div>
+template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -169,10 +169,10 @@ template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; </div>
+template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">bool</a> <a class="el" href="classfranky_1_1_motion_generator.html">franky::MotionGenerator</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;::has_new_motion </td>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">bool</a> <a class="el" href="classfranky_1_1_motion_generator.html">franky::MotionGenerator</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;::has_new_motion </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -190,12 +190,12 @@ template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; </div>
+template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> <a class="el" href="classfranky_1_1_motion_generator.html">franky::MotionGenerator</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">::operator</a>() </td>
+          <td class="memname"><a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> <a class="el" href="classfranky_1_1_motion_generator.html">franky::MotionGenerator</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">::operator</a>() </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> franka::RobotState &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> franka::RobotState &amp;&#160;</td>
           <td class="paramname"><em>robot_state</em>, </td>
         </tr>
         <tr>
@@ -230,15 +230,15 @@ template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; </div>
+template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">void</a> <a class="el" href="classfranky_1_1_motion_generator.html">franky::MotionGenerator</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;::registerUpdateCallback </td>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a> <a class="el" href="classfranky_1_1_motion_generator.html">franky::MotionGenerator</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;::registerUpdateCallback </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> std::function&lt; <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">void</a>(<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">const</a> franka::RobotState &amp;, franka::Duration, franka::Duration)&gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> std::function&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>(<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> franka::RobotState &amp;, franka::Duration, franka::Duration)&gt; &amp;&#160;</td>
           <td class="paramname"><em>callback</em></td><td>)</td>
           <td></td>
         </tr>
@@ -266,10 +266,10 @@ template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; </div>
+template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">void</a> <a class="el" href="classfranky_1_1_motion_generator.html">franky::MotionGenerator</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;::resetTimeUnsafe </td>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a> <a class="el" href="classfranky_1_1_motion_generator.html">franky::MotionGenerator</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;::resetTimeUnsafe </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -287,10 +287,10 @@ template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; </div>
+template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">void</a> <a class="el" href="classfranky_1_1_motion_generator.html">franky::MotionGenerator</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;::updateMotion </td>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a> <a class="el" href="classfranky_1_1_motion_generator.html">franky::MotionGenerator</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;::updateMotion </td>
           <td>(</td>
           <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classfranky_1_1_motion.html">Motion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &gt;&#160;</td>
           <td class="paramname"><em>new_motion</em></td><td>)</td>
@@ -316,13 +316,13 @@ template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; </div>
+template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">constexpr</a> <a class="el" href="namespacefranky.html#a766a517bf90c5e206533addb2a7153d6">size_t</a> <a class="el" href="classfranky_1_1_motion_generator.html">franky::MotionGenerator</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;::REACTION_RECURSION_LIMIT = 16</td>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">constexpr</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">size_t</a> <a class="el" href="classfranky_1_1_motion_generator.html">franky::MotionGenerator</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;::REACTION_RECURSION_LIMIT = 16</td>
         </tr>
       </table>
   </td>
