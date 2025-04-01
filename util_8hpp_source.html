@@ -90,7 +90,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacefranky.html">franky</a> {</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">template</span>&lt;<span class="keywordtype">size_t</span> dims, <span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keywordtype">size_t</span> dims&gt;</div>
 <div class="foldopen" id="foldopen00010" data-start="{" data-end="}">
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="namespacefranky.html#a66970149b439291c4f95173b9e414161">   10</a></span>std::array&lt;T, dims&gt; <a class="code hl_function" href="namespacefranky.html#a66970149b439291c4f95173b9e414161">toStd</a>(<span class="keyword">const</span> Eigen::Matrix&lt;T, dims, 1&gt; &amp;<a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">vector</a>) {</div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>  std::array&lt;T, dims&gt; <a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">result</a>;</div>
@@ -106,7 +106,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>}</div>
 </div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">template</span>&lt;<span class="keywordtype">size_t</span> dims, <span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keywordtype">size_t</span> dims&gt;</div>
 <div class="foldopen" id="foldopen00022" data-start="{" data-end="}">
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="namespacefranky.html#a246b8f841f3b7b07838f181539a5e35f">   22</a></span>Eigen::Matrix&lt;T, dims, 1&gt; <a class="code hl_function" href="namespacefranky.html#a246b8f841f3b7b07838f181539a5e35f">toEigen</a>(<span class="keyword">const</span> std::array&lt;T, dims&gt; &amp;<a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">vector</a>) {</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  <span class="keywordflow">return</span> Eigen::Matrix&lt;T, dims, 1&gt;::Map(<a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">vector</a>.data());</div>
@@ -116,7 +116,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">template</span>&lt;<span class="keywordtype">size_t</span> dims&gt;</div>
 <div class="foldopen" id="foldopen00027" data-start="{" data-end="}">
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="namespacefranky.html#aea642ac2353991b394de429b7932dccf">   27</a></span>Eigen::Matrix&lt;double, dims, 1&gt; <a class="code hl_function" href="namespacefranky.html#aea642ac2353991b394de429b7932dccf">toEigenD</a>(<span class="keyword">const</span> std::array&lt;double, dims&gt; &amp;<a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">vector</a>) {</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <span class="keywordflow">return</span> Eigen::Matrix&lt;double, dims, 1&gt;::Map(<a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">vector</a>.data());</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <span class="keywordflow">return</span> <a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">toEigen&lt;double, dims&gt;</a>(<a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">vector</a>);</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
 </div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
