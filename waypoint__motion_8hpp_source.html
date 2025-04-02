@@ -165,7 +165,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        target_reached_time_ = <a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">rel_time</a>;</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>      }</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>      <span class="keyword">auto</span> hold_target_duration = waypoint_iterator_-&gt;hold_target_duration;</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>      <span class="keywordflow">if</span> (waypoint_iterator_ + 1 != waypoints_.end()) {</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>      <span class="keywordflow">if</span> (waypoint_iterator_ + 1 == waypoints_.end()) {</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        <span class="comment">// Allow cooldown of motion, so that the low-pass filter has time to adjust to target values</span></div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        hold_target_duration = std::max(hold_target_duration, franka::Duration(5));</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>      }</div>
