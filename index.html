@@ -169,7 +169,7 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="comment">// Finally move the robot</span></div>
 <div class="line">robot.move(motion);</div>
-<div class="ttc" id="aclassfranky_1_1_robot_html"><div class="ttname"><a href="classfranky_1_1_robot.html">franky::Robot</a></div><div class="ttdoc">A class representing a Franka robot.</div><div class="ttdef"><b>Definition</b> robot.hpp:46</div></div>
+<div class="ttc" id="aclassfranky_1_1_robot_html"><div class="ttname"><a href="classfranky_1_1_robot.html">franky::Robot</a></div><div class="ttdoc">A class representing a Franka robot.</div><div class="ttdef"><b>Definition</b> robot.hpp:47</div></div>
 <div class="ttc" id="aclassfranky_1_1_robot_pose_html"><div class="ttname"><a href="classfranky_1_1_robot_pose.html">franky::RobotPose</a></div><div class="ttdoc">Cartesian pose of a robot.</div><div class="ttdef"><b>Definition</b> robot_pose.hpp:17</div></div>
 <div class="ttc" id="afranky_8hpp_html"><div class="ttname"><a href="franky_8hpp.html">franky.hpp</a></div></div>
 <div class="ttc" id="anamespacefranky_html"><div class="ttname"><a href="namespacefranky.html">franky</a></div><div class="ttdef"><b>Definition</b> dynamics_limit.cpp:8</div></div>
@@ -364,7 +364,7 @@ $(function() {
 <div class="ttc" id="aclassfranky_1_1_measure_html"><div class="ttname"><a href="classfranky_1_1_measure.html">franky::Measure</a></div><div class="ttdoc">A measure on the robot state.</div><div class="ttdef"><b>Definition</b> measure.hpp:18</div></div>
 <div class="ttc" id="aclassfranky_1_1_reaction_html"><div class="ttname"><a href="classfranky_1_1_reaction.html">franky::Reaction</a></div><div class="ttdoc">A reaction that can be attached to a motion.</div><div class="ttdef"><b>Definition</b> reaction.hpp:25</div></div>
 <div class="ttc" id="aclassfranky_1_1_stop_motion_html"><div class="ttname"><a href="classfranky_1_1_stop_motion.html">franky::StopMotion</a></div><div class="ttdef"><b>Definition</b> stop_motion.hpp:12</div></div>
-<div class="ttc" id="astructfranky_1_1_robot_state_html"><div class="ttname"><a href="structfranky_1_1_robot_state.html">franky::RobotState</a></div><div class="ttdoc">Full state of the robot.</div><div class="ttdef"><b>Definition</b> robot_state.hpp:19</div></div>
+<div class="ttc" id="astructfranky_1_1_robot_state_html"><div class="ttname"><a href="structfranky_1_1_robot_state.html">franky::RobotState</a></div><div class="ttdoc">Full state of the robot.</div><div class="ttdef"><b>Definition</b> robot_state.hpp:20</div></div>
 </div><!-- fragment --><h3>Real-Time Motion</h3>
 <p>By setting the <code>asynchronous</code> parameter of <code>Robot.move</code> to <code>True</code>, the function does not block until the motion finishes. Instead, it returns immediately and, thus, allows the main thread to set new motions asynchronously. </p><div class="fragment"><div class="line"><span class="keyword">import</span> time</div>
 <div class="line"><span class="keyword">from</span> franky <span class="keyword">import</span> Affine, CartesianMotion, Robot, ReferenceType</div>

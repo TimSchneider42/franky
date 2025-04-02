@@ -14,6 +14,6 @@ var searchData=
   ['forcez_11',['ForceZ',['../classfranky_1_1_measure.html#a9f8c4110a4ee5a1b102efaa6a424b0f3',1,'franky::Measure']]],
   ['franky_12',['franky',['../index.html',1,'Franky'],['../namespacefranky.html',1,'franky']]],
   ['franky_2ehpp_13',['franky.hpp',['../franky_8hpp.html',1,'']]],
-  ['from_5ffranka_14',['from_franka',['../structfranky_1_1_robot_state.html#a4e87f530d388993415d408f07f2ee509',1,'franky::RobotState']]],
-  ['fromvectorrepr_15',['fromVectorRepr',['../classfranky_1_1_twist.html#a39a4f6fc1cca31a7431618657d551f17',1,'franky::Twist']]]
+  ['from_5ffranka_14',['from_franka',['../structfranky_1_1_robot_state.html#acaa3aa1af7b1124b61c784ec806839e6',1,'franky::RobotState::from_franka(const franka::RobotState &amp;robot_state, const Jacobian &amp;ee_jacobian, const Vector7d &amp;ddq_est)'],['../structfranky_1_1_robot_state.html#aa4f8d7bb569e23a5aa5b8a543049748f',1,'franky::RobotState::from_franka(const franka::RobotState &amp;robot_state, std::optional&lt; Vector7d &gt; ddq_est=std::nullopt, std::optional&lt; Twist &gt; O_dP_EE_est=std::nullopt, std::optional&lt; TwistAcceleration &gt; O_ddP_EE_est=std::nullopt, std::optional&lt; double &gt; delbow_est=std::nullopt, std::optional&lt; double &gt; ddelbow_est=std::nullopt)']]],
+  ['fromvectorrepr_15',['fromvectorrepr',['../classfranky_1_1_twist.html#a39a4f6fc1cca31a7431618657d551f17',1,'franky::Twist::fromVectorRepr()'],['../classfranky_1_1_twist_acceleration.html#a56735cb015ce872ba1857d7af6081d3a',1,'franky::TwistAcceleration::fromVectorRepr()']]]
 ];
