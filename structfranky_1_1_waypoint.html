@@ -107,6 +107,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a2c1e5c63e3a7447b4699a546e49ed009"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a1eae68a4e9d3b9c54a0ff1fd6c9bb2" id="r_a2a1eae68a4e9d3b9c54a0ff1fd6c9bb2"><td class="memItemLeft" align="right" valign="top">std::optional&lt; franka::Duration &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_waypoint.html#a2a1eae68a4e9d3b9c54a0ff1fd6c9bb2">max_total_duration</a> {std::nullopt}</td></tr>
 <tr class="separator:a2a1eae68a4e9d3b9c54a0ff1fd6c9bb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a785b6ab21eee163e94fd96c2b914edbb" id="r_a785b6ab21eee163e94fd96c2b914edbb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_waypoint.html#a785b6ab21eee163e94fd96c2b914edbb">state_estimate_weight</a> {0.0}</td></tr>
+<tr class="separator:a785b6ab21eee163e94fd96c2b914edbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">TargetType</a>&gt;<br />
@@ -125,6 +127,7 @@ struct franky::Waypoint&lt; TargetType &gt;</div><p>A waypoint with a target and
     <tr><td class="paramname">minimum_time</td><td>The minimum time to get to the next waypoint. </td></tr>
     <tr><td class="paramname">hold_target_duration</td><td>For how long to hold the target of this waypoint after it has been reached. </td></tr>
     <tr><td class="paramname">max_total_duration</td><td>The maximum time to try reaching this waypoint before moving on to the next waypoint. Default is infinite. </td></tr>
+    <tr><td class="paramname">state_estimate_weight</td><td>Weighting of the robot state estimate vs the target when computing the current state to continue planning from. A value of 0 means that the planner always assumes it reached its last target perfectly (open loop control), while a value of 1 means that the planner always uses the robot state estimate (closed loop control). A value between 0 and 1 means that the planner uses a weighted average of the two. </td></tr>
   </table>
   </dd>
 </dl>
@@ -187,6 +190,22 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classfranky_1_1_relative_dynamics_factor.html">RelativeDynamicsFactor</a> <a class="el" href="structfranky_1_1_waypoint.html">franky::Waypoint</a>&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">TargetType</a> &gt;::relative_dynamics_factor {1.0}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a785b6ab21eee163e94fd96c2b914edbb" name="a785b6ab21eee163e94fd96c2b914edbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a785b6ab21eee163e94fd96c2b914edbb">&#9670;&#160;</a></span>state_estimate_weight</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">TargetType</a> &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> <a class="el" href="structfranky_1_1_waypoint.html">franky::Waypoint</a>&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">TargetType</a> &gt;::state_estimate_weight {0.0}</td>
         </tr>
       </table>
 </div><div class="memdoc">

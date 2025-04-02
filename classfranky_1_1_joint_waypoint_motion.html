@@ -145,6 +145,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a861df703835e15f447a9f40affe3625a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25acf41fa306d902c797dafa973b9170" id="r_a25acf41fa306d902c797dafa973b9170"><td class="memItemLeft" align="right" valign="top">franka::JointPositions&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_joint_waypoint_motion.html#a25acf41fa306d902c797dafa973b9170">getControlSignal</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="structfranky_1_1_robot_state.html">RobotState</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">robot_state</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> franka::Duration &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">time_step</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> std::optional&lt; franka::JointPositions &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">previous_command</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> ruckig::InputParameter&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">input_parameter</a>) <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">override</a></td></tr>
 <tr class="separator:a25acf41fa306d902c797dafa973b9170"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac310aa719352f593d6f9d6f157bfa35" id="r_aac310aa719352f593d6f9d6f157bfa35"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">virtual</a> std::tuple&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_joint_waypoint_motion.html#aac310aa719352f593d6f9d6f157bfa35">getStateEstimate</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="structfranky_1_1_robot_state.html">RobotState</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">robot_state</a>) <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">override</a></td></tr>
+<tr class="separator:aac310aa719352f593d6f9d6f157bfa35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classfranky_1_1_position_waypoint_motion"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classfranky_1_1_position_waypoint_motion')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classfranky_1_1_position_waypoint_motion.html">franky::PositionWaypointMotion&lt; franka::JointPositions, JointState &gt;</a></td></tr>
 <tr class="memitem:a8ebb35ebb3363acfec93c9228418804a inherit pro_methods_classfranky_1_1_position_waypoint_motion" id="r_a8ebb35ebb3363acfec93c9228418804a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_position_waypoint_motion.html#a8ebb35ebb3363acfec93c9228418804a">setInputLimits</a> (const <a class="el" href="structfranky_1_1_position_waypoint.html">PositionWaypoint</a>&lt; <a class="el" href="classfranky_1_1_joint_state.html">JointState</a> &gt; &amp;waypoint, ruckig::InputParameter&lt; 7 &gt; &amp;input_parameter) const override</td></tr>
 <tr class="separator:a8ebb35ebb3363acfec93c9228418804a inherit pro_methods_classfranky_1_1_position_waypoint_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -303,6 +305,34 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="aac310aa719352f593d6f9d6f157bfa35" name="aac310aa719352f593d6f9d6f157bfa35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac310aa719352f593d6f9d6f157bfa35">&#9670;&#160;</a></span>getStateEstimate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::tuple&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt; franky::JointWaypointMotion::getStateEstimate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="structfranky_1_1_robot_state.html">RobotState</a> &amp;&#160;</td>
+          <td class="paramname"><em>robot_state</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="classfranky_1_1_waypoint_motion.html#a055b42c3e6eca1ddff0e156fd9471eaf">franky::WaypointMotion&lt; ControlSignalType, WaypointType, TargetType &gt;</a>.</p>
 
 </div>
 </div>
