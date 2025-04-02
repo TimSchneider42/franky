@@ -127,7 +127,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>      <a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">input_parameter</a>.synchronization = ruckig::Synchronization::Time;</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>      <span class="keywordflow">if</span> (<a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">waypoint</a>.minimum_time.has_value())</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">input_parameter</a>.minimum_duration = <a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">waypoint</a>.minimum_time.value();</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">input_parameter</a>.minimum_duration = <a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">waypoint</a>.minimum_time.value().toSec();</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    }</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  }</div>
 </div>
