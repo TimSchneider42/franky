@@ -286,6 +286,11 @@ Functions</h2></td></tr>
 <tr class="separator:a63c28cfe866ed0062e959919b1eaf82b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02a1e15d058c1164a8b359a8f4338589" id="r_a02a1e15d058c1164a8b359a8f4338589"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a02a1e15d058c1164a8b359a8f4338589">operator&lt;&lt;</a> (std::ostream &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">os</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="classfranky_1_1_robot_velocity.html">RobotVelocity</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">robot_velocity</a>)</td></tr>
 <tr class="separator:a02a1e15d058c1164a8b359a8f4338589"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecabcb2710424af3b44444a3eae07746" id="r_aecabcb2710424af3b44444a3eae07746"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#aecabcb2710424af3b44444a3eae07746">checkRes</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">int</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">res</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> std::string &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">msg</a>)</td></tr>
+<tr class="separator:aecabcb2710424af3b44444a3eae07746"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4212ea575f4b1248f5953a5d08c245e" id="r_ae4212ea575f4b1248f5953a5d08c245e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#ae4212ea575f4b1248f5953a5d08c245e">patchMutexRT</a> (std::mutex &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">mutex</a>)</td></tr>
+<tr class="memdesc:ae4212ea575f4b1248f5953a5d08c245e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Patch std::mutex to allow for priority inheritance.  <br /></td></tr>
+<tr class="separator:ae4212ea575f4b1248f5953a5d08c245e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c30c0e173a1886238ed773e005be361" id="r_a4c30c0e173a1886238ed773e005be361"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_cartesian_state.html">CartesianState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a4c30c0e173a1886238ed773e005be361">operator*</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;transform, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="classfranky_1_1_cartesian_state.html">CartesianState</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">cartesian_state</a>)</td></tr>
 <tr class="separator:a4c30c0e173a1886238ed773e005be361"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a419121bfb08776ea74efcb9b2a8b1b91" id="r_a419121bfb08776ea74efcb9b2a8b1b91"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a419121bfb08776ea74efcb9b2a8b1b91">operator&lt;&lt;</a> (std::ostream &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">os</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="classfranky_1_1_cartesian_state.html">CartesianState</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">cartesian_state</a>)</td></tr>
@@ -585,6 +590,42 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="aecabcb2710424af3b44444a3eae07746" name="aecabcb2710424af3b44444a3eae07746"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecabcb2710424af3b44444a3eae07746">&#9670;&#160;</a></span>checkRes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a> franky::checkRes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">int</a>&#160;</td>
+          <td class="paramname"><em>res</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> std::string &amp;&#160;</td>
+          <td class="paramname"><em>msg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Common helper function to handle error checking for system calls.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">res</td><td>Result of the call. </td></tr>
+    <tr><td class="paramname">msg</td><td>Message to print for error. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a4af8de05472061175cee07678cddc6c3" name="a4af8de05472061175cee07678cddc6c3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4af8de05472061175cee07678cddc6c3">&#9670;&#160;</a></span>ensureEigen()</h2>
 
@@ -1828,6 +1869,33 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae4212ea575f4b1248f5953a5d08c245e" name="ae4212ea575f4b1248f5953a5d08c245e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4212ea575f4b1248f5953a5d08c245e">&#9670;&#160;</a></span>patchMutexRT()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a> franky::patchMutexRT </td>
+          <td>(</td>
+          <td class="paramtype">std::mutex &amp;&#160;</td>
+          <td class="paramname"><em>mutex</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Patch std::mutex to allow for priority inheritance. </p>
+<p>Priority inheritance ensures that the thread currently holding this mutex receives the same priority as the highest priority thread waiting for it.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mutex</td><td>Mutex to patch. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
