@@ -6,5 +6,6 @@ var searchData=
   ['robot_3',['Robot',['../classfranky_1_1_robot.html',1,'franky']]],
   ['robotpose_4',['RobotPose',['../classfranky_1_1_robot_pose.html',1,'franky']]],
   ['robotstate_5',['RobotState',['../structfranky_1_1_robot_state.html',1,'franky']]],
-  ['robotvelocity_6',['RobotVelocity',['../classfranky_1_1_robot_velocity.html',1,'franky']]]
+  ['robotstateestimator_6',['RobotStateEstimator',['../classfranky_1_1_robot_state_estimator.html',1,'franky']]],
+  ['robotvelocity_7',['RobotVelocity',['../classfranky_1_1_robot_velocity.html',1,'franky']]]
 ];

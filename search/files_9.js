@@ -12,8 +12,10 @@ var searchData=
   ['robot_5fpose_2ehpp_9',['robot_pose.hpp',['../robot__pose_8hpp.html',1,'']]],
   ['robot_5fstate_2ecpp_10',['robot_state.cpp',['../robot__state_8cpp.html',1,'']]],
   ['robot_5fstate_2ehpp_11',['robot_state.hpp',['../robot__state_8hpp.html',1,'']]],
-  ['robot_5fvelocity_2ecpp_12',['robot_velocity.cpp',['../robot__velocity_8cpp.html',1,'']]],
-  ['robot_5fvelocity_2ehpp_13',['robot_velocity.hpp',['../robot__velocity_8hpp.html',1,'']]],
-  ['rt_5fmutex_2ecpp_14',['rt_mutex.cpp',['../rt__mutex_8cpp.html',1,'']]],
-  ['rt_5fmutex_2ehpp_15',['rt_mutex.hpp',['../rt__mutex_8hpp.html',1,'']]]
+  ['robot_5fstate_5festimator_2ecpp_12',['robot_state_estimator.cpp',['../robot__state__estimator_8cpp.html',1,'']]],
+  ['robot_5fstate_5festimator_2ehpp_13',['robot_state_estimator.hpp',['../robot__state__estimator_8hpp.html',1,'']]],
+  ['robot_5fvelocity_2ecpp_14',['robot_velocity.cpp',['../robot__velocity_8cpp.html',1,'']]],
+  ['robot_5fvelocity_2ehpp_15',['robot_velocity.hpp',['../robot__velocity_8hpp.html',1,'']]],
+  ['rt_5fmutex_2ecpp_16',['rt_mutex.cpp',['../rt__mutex_8cpp.html',1,'']]],
+  ['rt_5fmutex_2ehpp_17',['rt_mutex.hpp',['../rt__mutex_8hpp.html',1,'']]]
 ];
