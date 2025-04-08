@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Franky<span id="projectnumber">&#160;0.12.0</span>
+   <div id="projectname">Franky<span id="projectnumber">&#160;1.0.0</span>
    </div>
    <div id="projectbrief">A High-Level Motion API for Franka</div>
   </td>
@@ -87,8 +87,6 @@ $(function() {
 <li>ddelbow_est&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#ade3beb0d2a00728a316b43c1a6c15229">franky::RobotState</a></li>
 <li>ddq_d&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#aadf8644c962475b364279719d4d4109f">franky::RobotState</a></li>
 <li>ddq_est&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#aa3c4c83ad4b4a704665db984ebadd84c">franky::RobotState</a></li>
-<li>ddq_estimator_alpha&#160;:&#160;<a class="el" href="structfranky_1_1_robot_1_1_params.html#aef9ee5feabc4c7915ca8a870d758e400">franky::Robot::Params</a></li>
-<li>ddq_estimator_window_size&#160;:&#160;<a class="el" href="structfranky_1_1_robot_1_1_params.html#ad9423d01031f5ba200f1f6f0fb35d83d">franky::Robot::Params</a></li>
 <li>default_force_threshold&#160;:&#160;<a class="el" href="structfranky_1_1_robot_1_1_params.html#a2535f117ddde7fd4294eeb952d4746bd">franky::Robot::Params</a></li>
 <li>default_torque_threshold&#160;:&#160;<a class="el" href="structfranky_1_1_robot_1_1_params.html#ac52be6b32e29563c8bb6576679bcbfa5">franky::Robot::Params</a></li>
 <li>degrees_of_freedoms&#160;:&#160;<a class="el" href="classfranky_1_1_robot.html#aba9f9254a1af4fea2af758c450399c4c">franky::Robot</a></li>
@@ -98,8 +96,6 @@ $(function() {
 <li>dq&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#ae63f90261417b37a6c731076ce4d5cc6">franky::RobotState</a></li>
 <li>dq_d&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#a3712f4da986dac8f09fa2af356a81fb9">franky::RobotState</a></li>
 <li>dq_est&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#aaea1aa7f342609aa0d8b4e917bf2c47e">franky::RobotState</a></li>
-<li>dq_estimator_alpha&#160;:&#160;<a class="el" href="structfranky_1_1_robot_1_1_params.html#a2d1d272cd4f36d1e1b70476dc91583b6">franky::Robot::Params</a></li>
-<li>dq_estimator_window_size&#160;:&#160;<a class="el" href="structfranky_1_1_robot_1_1_params.html#a9b5a37705fa30eb94dd46eb252f036d4">franky::Robot::Params</a></li>
 <li>dtau_J&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#a7691ba4f68ee2c2c88138faa319156f5">franky::RobotState</a></li>
 <li>dtheta&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#a80fbf260b9bbb1d9df330522b2f76568">franky::RobotState</a></li>
 </ul>
@@ -151,6 +147,16 @@ $(function() {
 
 <h3><a id="index_k" name="index_k"></a>- k -</h3><ul>
 <li>K_F_ext_hat_K&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#a1d9419d22b2d3126f4c96b64740079e0">franky::RobotState</a></li>
+<li>kalman_control_adaptation_rate&#160;:&#160;<a class="el" href="structfranky_1_1_robot_1_1_params.html#a28da04d85b05bdc0483931fdb5ee9665">franky::Robot::Params</a></li>
+<li>kalman_control_process_var&#160;:&#160;<a class="el" href="structfranky_1_1_robot_1_1_params.html#a62b242c8c50ac828af9ac497b3cba801">franky::Robot::Params</a></li>
+<li>kalman_ddq_d_obs_var&#160;:&#160;<a class="el" href="structfranky_1_1_robot_1_1_params.html#abeaee212f2cac08ce47158dc44bb6b71">franky::Robot::Params</a></li>
+<li>kalman_ddq_process_var&#160;:&#160;<a class="el" href="structfranky_1_1_robot_1_1_params.html#acd2d77ccd361a615b18b0a89fa0b2dd0">franky::Robot::Params</a></li>
+<li>kalman_dq_d_obs_var&#160;:&#160;<a class="el" href="structfranky_1_1_robot_1_1_params.html#a51f8d9dbacca9c18de1b2429bea65dae">franky::Robot::Params</a></li>
+<li>kalman_dq_obs_var&#160;:&#160;<a class="el" href="structfranky_1_1_robot_1_1_params.html#a2bccca1dff1d1cd4c4d7d1f0cae03f7b">franky::Robot::Params</a></li>
+<li>kalman_dq_process_var&#160;:&#160;<a class="el" href="structfranky_1_1_robot_1_1_params.html#a1e9c37c50668090f408db94e12e54bc9">franky::Robot::Params</a></li>
+<li>kalman_q_d_obs_var&#160;:&#160;<a class="el" href="structfranky_1_1_robot_1_1_params.html#a78a7c309785935bab49cdb24b5a750a8">franky::Robot::Params</a></li>
+<li>kalman_q_obs_var&#160;:&#160;<a class="el" href="structfranky_1_1_robot_1_1_params.html#a304e57064f927eb2c00757a1d86d2e08">franky::Robot::Params</a></li>
+<li>kalman_q_process_var&#160;:&#160;<a class="el" href="structfranky_1_1_robot_1_1_params.html#ae6c5c63f100b88ae3fc1ae3dcd50c44e">franky::Robot::Params</a></li>
 </ul>
 
 
@@ -185,6 +191,7 @@ $(function() {
 <h3><a id="index_q" name="index_q"></a>- q -</h3><ul>
 <li>q&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#adcba9f6e06d0161ee6ec2bb904e2f1cd">franky::RobotState</a></li>
 <li>q_d&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#aae25b9bee828132b2db5a669855bf16a">franky::RobotState</a></li>
+<li>q_est&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#a34a1ba1681f87b6f35061f9595eba3f6">franky::RobotState</a></li>
 </ul>
 
 
@@ -199,11 +206,6 @@ $(function() {
 <li>rotation_jerk_limit&#160;:&#160;<a class="el" href="classfranky_1_1_robot.html#ace7d9414a2e80b4a6c760578ebd382d3">franky::Robot</a></li>
 <li>rotation_velocity_limit&#160;:&#160;<a class="el" href="classfranky_1_1_robot.html#a83a0166687db4309de4f9cd7b76eb723">franky::Robot</a></li>
 <li>rotational_stiffness&#160;:&#160;<a class="el" href="structfranky_1_1_impedance_motion_1_1_params.html#afddc6620238e8713fe4e9c3ad507a4cc">franky::ImpedanceMotion::Params</a></li>
-</ul>
-
-
-<h3><a id="index_s" name="index_s"></a>- s -</h3><ul>
-<li>state_estimate_weight&#160;:&#160;<a class="el" href="structfranky_1_1_waypoint.html#a785b6ab21eee163e94fd96c2b914edbb">franky::Waypoint&lt; TargetType &gt;</a></li>
 </ul>
 
 

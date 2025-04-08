@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Franky<span id="projectnumber">&#160;0.12.0</span>
+   <div id="projectname">Franky<span id="projectnumber">&#160;1.0.0</span>
    </div>
    <div id="projectbrief">A High-Level Motion API for Franka</div>
   </td>
@@ -151,16 +151,12 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a2af18e1bfe76ed4e88f87ba03fe04fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac84c2b66a185a3c21380a395cc49ae0" id="r_aac84c2b66a185a3c21380a395cc49ae0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">virtual</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_waypoint_motion.html#aac84c2b66a185a3c21380a395cc49ae0">setNewWaypoint</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="structfranky_1_1_robot_state.html">RobotState</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">robot_state</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> std::optional&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">previous_command</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">WaypointType</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">new_waypoint</a>, ruckig::InputParameter&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">input_parameter</a>)=0</td></tr>
 <tr class="separator:aac84c2b66a185a3c21380a395cc49ae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7fe3e5bca0be2b27827170ebadd24ae" id="r_ae7fe3e5bca0be2b27827170ebadd24ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">virtual</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_waypoint_motion.html#ae7fe3e5bca0be2b27827170ebadd24ae">extrapolateMotion</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> franka::Duration &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">time_step</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> ruckig::InputParameter&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">input_parameter</a>, ruckig::OutputParameter&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">output_parameter</a>) <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> =0</td></tr>
-<tr class="separator:ae7fe3e5bca0be2b27827170ebadd24ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24a6f06d1ca935764c37aa044d191750" id="r_a24a6f06d1ca935764c37aa044d191750"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">virtual</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_waypoint_motion.html#a24a6f06d1ca935764c37aa044d191750">extrapolateMotion</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="structfranky_1_1_robot_state.html">RobotState</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">robot_state</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> franka::Duration &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">time_step</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> ruckig::InputParameter&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">input_parameter</a>, ruckig::OutputParameter&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">output_parameter</a>) <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> =0</td></tr>
+<tr class="separator:a24a6f06d1ca935764c37aa044d191750"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d8d450f3d2748cc32eb6bd2afd6f46c" id="r_a9d8d450f3d2748cc32eb6bd2afd6f46c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">virtual</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_waypoint_motion.html#a9d8d450f3d2748cc32eb6bd2afd6f46c">checkWaypoint</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">WaypointType</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">waypoint</a>) <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a></td></tr>
 <tr class="separator:a9d8d450f3d2748cc32eb6bd2afd6f46c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a055b42c3e6eca1ddff0e156fd9471eaf" id="r_a055b42c3e6eca1ddff0e156fd9471eaf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">virtual</a> std::tuple&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_waypoint_motion.html#a055b42c3e6eca1ddff0e156fd9471eaf">getStateEstimate</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="structfranky_1_1_robot_state.html">RobotState</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">robot_state</a>) <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> =0</td></tr>
-<tr class="separator:a055b42c3e6eca1ddff0e156fd9471eaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3c92f31c20dcb7f48107c1991d8be33" id="r_ae3c92f31c20dcb7f48107c1991d8be33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">virtual</a> std::tuple&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_waypoint_motion.html#ae3c92f31c20dcb7f48107c1991d8be33">getAbsoluteInputLimits</a> () <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> =0</td></tr>
 <tr class="separator:ae3c92f31c20dcb7f48107c1991d8be33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef8740c9c867d5424d6fb57a6e837655" id="r_aef8740c9c867d5424d6fb57a6e837655"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">virtual</a> std::tuple&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_waypoint_motion.html#aef8740c9c867d5424d6fb57a6e837655">getGoalTolerance</a> () <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> =0</td></tr>
-<tr class="separator:aef8740c9c867d5424d6fb57a6e837655"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa019aeb70e7bc53a5a95a8ac2e2b62eb" id="r_aa019aeb70e7bc53a5a95a8ac2e2b62eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">virtual</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_waypoint_motion.html#aa019aeb70e7bc53a5a95a8ac2e2b62eb">getControlSignal</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="structfranky_1_1_robot_state.html">RobotState</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">robot_state</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> franka::Duration &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">time_step</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> std::optional&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">previous_command</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> ruckig::InputParameter&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">input_parameter</a>)=0</td></tr>
 <tr class="separator:aa019aeb70e7bc53a5a95a8ac2e2b62eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a54f0791590e317159518eb0353a199" id="r_a4a54f0791590e317159518eb0353a199"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">virtual</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_waypoint_motion.html#a4a54f0791590e317159518eb0353a199">setInputLimits</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">WaypointType</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">waypoint</a>, ruckig::InputParameter&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">input_parameter</a>) <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> =0</td></tr>
@@ -263,8 +259,8 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
 
 </div>
 </div>
-<a id="ae7fe3e5bca0be2b27827170ebadd24ae" name="ae7fe3e5bca0be2b27827170ebadd24ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae7fe3e5bca0be2b27827170ebadd24ae">&#9670;&#160;</a></span>extrapolateMotion()</h2>
+<a id="a24a6f06d1ca935764c37aa044d191750" name="a24a6f06d1ca935764c37aa044d191750"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24a6f06d1ca935764c37aa044d191750">&#9670;&#160;</a></span>extrapolateMotion()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -277,6 +273,12 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
         <tr>
           <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">virtual</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a> <a class="el" href="classfranky_1_1_waypoint_motion.html">franky::WaypointMotion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">WaypointType</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">TargetType</a> &gt;::extrapolateMotion </td>
           <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="structfranky_1_1_robot_state.html">RobotState</a> &amp;&#160;</td>
+          <td class="paramname"><em>robot_state</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> franka::Duration &amp;&#160;</td>
           <td class="paramname"><em>time_step</em>, </td>
         </tr>
@@ -305,7 +307,7 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="classfranky_1_1_position_waypoint_motion.html#a6b9241d5982f6011a4d9b8a8d1902ecc">franky::PositionWaypointMotion&lt; ControlSignalType, TargetType &gt;</a>, <a class="el" href="classfranky_1_1_position_waypoint_motion.html#a6b9241d5982f6011a4d9b8a8d1902ecc">franky::PositionWaypointMotion&lt; franka::CartesianPose, CartesianState &gt;</a>, <a class="el" href="classfranky_1_1_position_waypoint_motion.html#a6b9241d5982f6011a4d9b8a8d1902ecc">franky::PositionWaypointMotion&lt; franka::JointPositions, JointState &gt;</a>, <a class="el" href="classfranky_1_1_velocity_waypoint_motion.html#a53e7f9044d80272d4d7015f5c788bcb7">franky::VelocityWaypointMotion&lt; ControlSignalType, TargetType &gt;</a>, <a class="el" href="classfranky_1_1_velocity_waypoint_motion.html#a53e7f9044d80272d4d7015f5c788bcb7">franky::VelocityWaypointMotion&lt; franka::CartesianVelocities, RobotVelocity &gt;</a>, and <a class="el" href="classfranky_1_1_velocity_waypoint_motion.html#a53e7f9044d80272d4d7015f5c788bcb7">franky::VelocityWaypointMotion&lt; franka::JointVelocities, Vector7d &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classfranky_1_1_position_waypoint_motion.html#a345e479ffc4f38dba2a1128805108e19">franky::PositionWaypointMotion&lt; ControlSignalType, TargetType &gt;</a>, <a class="el" href="classfranky_1_1_position_waypoint_motion.html#a345e479ffc4f38dba2a1128805108e19">franky::PositionWaypointMotion&lt; franka::CartesianPose, CartesianState &gt;</a>, <a class="el" href="classfranky_1_1_position_waypoint_motion.html#a345e479ffc4f38dba2a1128805108e19">franky::PositionWaypointMotion&lt; franka::JointPositions, JointState &gt;</a>, <a class="el" href="classfranky_1_1_velocity_waypoint_motion.html#aca3cabe4405f7132c4001388d248cc67">franky::VelocityWaypointMotion&lt; ControlSignalType, TargetType &gt;</a>, <a class="el" href="classfranky_1_1_velocity_waypoint_motion.html#aca3cabe4405f7132c4001388d248cc67">franky::VelocityWaypointMotion&lt; franka::CartesianVelocities, RobotVelocity &gt;</a>, and <a class="el" href="classfranky_1_1_velocity_waypoint_motion.html#aca3cabe4405f7132c4001388d248cc67">franky::VelocityWaypointMotion&lt; franka::JointVelocities, Vector7d &gt;</a>.</p>
 
 </div>
 </div>
@@ -385,65 +387,6 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
   </tr>
 </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="aef8740c9c867d5424d6fb57a6e837655" name="aef8740c9c867d5424d6fb57a6e837655"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef8740c9c867d5424d6fb57a6e837655">&#9670;&#160;</a></span>getGoalTolerance()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> , <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">WaypointType</a> , <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">TargetType</a> &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">virtual</a> std::tuple&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt; <a class="el" href="classfranky_1_1_waypoint_motion.html">franky::WaypointMotion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">WaypointType</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">TargetType</a> &gt;::getGoalTolerance </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Implemented in <a class="el" href="classfranky_1_1_cartesian_velocity_waypoint_motion.html#ad92f481d40c328442b0d5b9940c3d430">franky::CartesianVelocityWaypointMotion</a>, <a class="el" href="classfranky_1_1_cartesian_waypoint_motion.html#ae5d7f5d9b69ac6dd23c4a750fd2cf90f">franky::CartesianWaypointMotion</a>, <a class="el" href="classfranky_1_1_joint_velocity_waypoint_motion.html#a41ea4d2314e384a6db259a3fa2e20529">franky::JointVelocityWaypointMotion</a>, and <a class="el" href="classfranky_1_1_joint_waypoint_motion.html#ac7eb4dd14cd9252eef7fe5bffb51b10f">franky::JointWaypointMotion</a>.</p>
-
-</div>
-</div>
-<a id="a055b42c3e6eca1ddff0e156fd9471eaf" name="a055b42c3e6eca1ddff0e156fd9471eaf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a055b42c3e6eca1ddff0e156fd9471eaf">&#9670;&#160;</a></span>getStateEstimate()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> , <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">WaypointType</a> , <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">TargetType</a> &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">virtual</a> std::tuple&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>, <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt; <a class="el" href="classfranky_1_1_waypoint_motion.html">franky::WaypointMotion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">WaypointType</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">TargetType</a> &gt;::getStateEstimate </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="structfranky_1_1_robot_state.html">RobotState</a> &amp;&#160;</td>
-          <td class="paramname"><em>robot_state</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Implemented in <a class="el" href="classfranky_1_1_cartesian_velocity_waypoint_motion.html#a647bfe11cdf2a175181f9f0eba0ad1b7">franky::CartesianVelocityWaypointMotion</a>, <a class="el" href="classfranky_1_1_cartesian_waypoint_motion.html#a128975130d3a02487ecf6c72fe5bdc92">franky::CartesianWaypointMotion</a>, <a class="el" href="classfranky_1_1_joint_velocity_waypoint_motion.html#abd84d818c2728502d8d1b6870d0dfba2">franky::JointVelocityWaypointMotion</a>, and <a class="el" href="classfranky_1_1_joint_waypoint_motion.html#aac310aa719352f593d6f9d6f157bfa35">franky::JointWaypointMotion</a>.</p>
 
 </div>
 </div>

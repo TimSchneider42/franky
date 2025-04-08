@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Franky<span id="projectnumber">&#160;0.12.0</span>
+   <div id="projectname">Franky<span id="projectnumber">&#160;1.0.0</span>
    </div>
    <div id="projectbrief">A High-Level Motion API for Franka</div>
   </td>
@@ -103,18 +103,36 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a7c8199f22e083645746aa47020c97d56" id="r_a7c8199f22e083645746aa47020c97d56"><td class="memItemLeft" align="right" valign="top">franka::RealtimeConfig&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_robot_1_1_params.html#a7c8199f22e083645746aa47020c97d56">realtime_config</a> {franka::RealtimeConfig::kEnforce}</td></tr>
 <tr class="memdesc:a7c8199f22e083645746aa47020c97d56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default realtime configuration for the robot.  <br /></td></tr>
 <tr class="separator:a7c8199f22e083645746aa47020c97d56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b5a37705fa30eb94dd46eb252f036d4" id="r_a9b5a37705fa30eb94dd46eb252f036d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_robot_1_1_params.html#a9b5a37705fa30eb94dd46eb252f036d4">dq_estimator_window_size</a> {9}</td></tr>
-<tr class="memdesc:a9b5a37705fa30eb94dd46eb252f036d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Window size of the median filter of the joint velocity estimator.  <br /></td></tr>
-<tr class="separator:a9b5a37705fa30eb94dd46eb252f036d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d1d272cd4f36d1e1b70476dc91583b6" id="r_a2d1d272cd4f36d1e1b70476dc91583b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_robot_1_1_params.html#a2d1d272cd4f36d1e1b70476dc91583b6">dq_estimator_alpha</a> {0.9}</td></tr>
-<tr class="memdesc:a2d1d272cd4f36d1e1b70476dc91583b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Joint velocity estimator exponential decay.  <br /></td></tr>
-<tr class="separator:a2d1d272cd4f36d1e1b70476dc91583b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9423d01031f5ba200f1f6f0fb35d83d" id="r_ad9423d01031f5ba200f1f6f0fb35d83d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_robot_1_1_params.html#ad9423d01031f5ba200f1f6f0fb35d83d">ddq_estimator_window_size</a> {9}</td></tr>
-<tr class="memdesc:ad9423d01031f5ba200f1f6f0fb35d83d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Window size of the median filter of the joint acceleration estimator.  <br /></td></tr>
-<tr class="separator:ad9423d01031f5ba200f1f6f0fb35d83d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef9ee5feabc4c7915ca8a870d758e400" id="r_aef9ee5feabc4c7915ca8a870d758e400"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_robot_1_1_params.html#aef9ee5feabc4c7915ca8a870d758e400">ddq_estimator_alpha</a> {0.99}</td></tr>
-<tr class="memdesc:aef9ee5feabc4c7915ca8a870d758e400"><td class="mdescLeft">&#160;</td><td class="mdescRight">Joint acceleration estimator exponential decay.  <br /></td></tr>
-<tr class="separator:aef9ee5feabc4c7915ca8a870d758e400"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6c5c63f100b88ae3fc1ae3dcd50c44e" id="r_ae6c5c63f100b88ae3fc1ae3dcd50c44e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_robot_1_1_params.html#ae6c5c63f100b88ae3fc1ae3dcd50c44e">kalman_q_process_var</a> = 0.0001</td></tr>
+<tr class="memdesc:ae6c5c63f100b88ae3fc1ae3dcd50c44e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kalman parameter: process noise variance of the position.  <br /></td></tr>
+<tr class="separator:ae6c5c63f100b88ae3fc1ae3dcd50c44e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e9c37c50668090f408db94e12e54bc9" id="r_a1e9c37c50668090f408db94e12e54bc9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_robot_1_1_params.html#a1e9c37c50668090f408db94e12e54bc9">kalman_dq_process_var</a> = 0.001</td></tr>
+<tr class="memdesc:a1e9c37c50668090f408db94e12e54bc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kalman parameter: process noise variance of the velocity.  <br /></td></tr>
+<tr class="separator:a1e9c37c50668090f408db94e12e54bc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd2d77ccd361a615b18b0a89fa0b2dd0" id="r_acd2d77ccd361a615b18b0a89fa0b2dd0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_robot_1_1_params.html#acd2d77ccd361a615b18b0a89fa0b2dd0">kalman_ddq_process_var</a> = 0.1</td></tr>
+<tr class="memdesc:acd2d77ccd361a615b18b0a89fa0b2dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kalman parameter: process noise variance of the acceleration.  <br /></td></tr>
+<tr class="separator:acd2d77ccd361a615b18b0a89fa0b2dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62b242c8c50ac828af9ac497b3cba801" id="r_a62b242c8c50ac828af9ac497b3cba801"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_robot_1_1_params.html#a62b242c8c50ac828af9ac497b3cba801">kalman_control_process_var</a> = 1</td></tr>
+<tr class="memdesc:a62b242c8c50ac828af9ac497b3cba801"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kalman parameter: process noise variance of the control signal.  <br /></td></tr>
+<tr class="separator:a62b242c8c50ac828af9ac497b3cba801"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a304e57064f927eb2c00757a1d86d2e08" id="r_a304e57064f927eb2c00757a1d86d2e08"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_robot_1_1_params.html#a304e57064f927eb2c00757a1d86d2e08">kalman_q_obs_var</a> = 0.01</td></tr>
+<tr class="memdesc:a304e57064f927eb2c00757a1d86d2e08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kalman parameter: observation noise variance of measured joint positions.  <br /></td></tr>
+<tr class="separator:a304e57064f927eb2c00757a1d86d2e08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bccca1dff1d1cd4c4d7d1f0cae03f7b" id="r_a2bccca1dff1d1cd4c4d7d1f0cae03f7b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_robot_1_1_params.html#a2bccca1dff1d1cd4c4d7d1f0cae03f7b">kalman_dq_obs_var</a> = 0.1</td></tr>
+<tr class="memdesc:a2bccca1dff1d1cd4c4d7d1f0cae03f7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kalman parameter: observation noise variance of measured joint velocities.  <br /></td></tr>
+<tr class="separator:a2bccca1dff1d1cd4c4d7d1f0cae03f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78a7c309785935bab49cdb24b5a750a8" id="r_a78a7c309785935bab49cdb24b5a750a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_robot_1_1_params.html#a78a7c309785935bab49cdb24b5a750a8">kalman_q_d_obs_var</a> = 0.0001</td></tr>
+<tr class="memdesc:a78a7c309785935bab49cdb24b5a750a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kalman parameter: observation noise variance of desired joint positions.  <br /></td></tr>
+<tr class="separator:a78a7c309785935bab49cdb24b5a750a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51f8d9dbacca9c18de1b2429bea65dae" id="r_a51f8d9dbacca9c18de1b2429bea65dae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_robot_1_1_params.html#a51f8d9dbacca9c18de1b2429bea65dae">kalman_dq_d_obs_var</a> = 0.0001</td></tr>
+<tr class="memdesc:a51f8d9dbacca9c18de1b2429bea65dae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kalman parameter: observation noise variance of desired joint velocities.  <br /></td></tr>
+<tr class="separator:a51f8d9dbacca9c18de1b2429bea65dae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abeaee212f2cac08ce47158dc44bb6b71" id="r_abeaee212f2cac08ce47158dc44bb6b71"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_robot_1_1_params.html#abeaee212f2cac08ce47158dc44bb6b71">kalman_ddq_d_obs_var</a> = 0.0001</td></tr>
+<tr class="memdesc:abeaee212f2cac08ce47158dc44bb6b71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kalman parameter: observation noise variance of desired joint accelerations.  <br /></td></tr>
+<tr class="separator:abeaee212f2cac08ce47158dc44bb6b71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28da04d85b05bdc0483931fdb5ee9665" id="r_a28da04d85b05bdc0483931fdb5ee9665"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_robot_1_1_params.html#a28da04d85b05bdc0483931fdb5ee9665">kalman_control_adaptation_rate</a> = 0.1</td></tr>
+<tr class="memdesc:a28da04d85b05bdc0483931fdb5ee9665"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kalman parameter: rate of adaptation of the robot state to the desired robot state.  <br /></td></tr>
+<tr class="separator:a28da04d85b05bdc0483931fdb5ee9665"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Global parameters for the robot. </p>
@@ -133,41 +151,6 @@ Public Attributes</h2></td></tr>
 
 <p>Default controller mode for the robot. </p>
 <p>See libfranka documentation for details. </p>
-
-</div>
-</div>
-<a id="aef9ee5feabc4c7915ca8a870d758e400" name="aef9ee5feabc4c7915ca8a870d758e400"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef9ee5feabc4c7915ca8a870d758e400">&#9670;&#160;</a></span>ddq_estimator_alpha</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> franky::Robot::Params::ddq_estimator_alpha {0.99}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Joint acceleration estimator exponential decay. </p>
-<p>This parameter is used to smooth the joint acceleration estimates. After the median filter, the acceleration estimates are computed as  <picture><source srcset="form_1_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ \ddot{q}_{t + \Delta t} = \alpha \ddot{q}_{t}
-+ ( 1 - \alpha)\left(\frac{\dot{q}_{t + \Delta t} - \dot{q}_{t}}{\Delta t}\right) $" src="form_1.png"/></picture> </p>
-
-</div>
-</div>
-<a id="ad9423d01031f5ba200f1f6f0fb35d83d" name="ad9423d01031f5ba200f1f6f0fb35d83d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9423d01031f5ba200f1f6f0fb35d83d">&#9670;&#160;</a></span>ddq_estimator_window_size</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">size_t</a> franky::Robot::Params::ddq_estimator_window_size {9}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Window size of the median filter of the joint acceleration estimator. </p>
-<p>This filter is applied before exponential smoothing. </p>
 
 </div>
 </div>
@@ -203,38 +186,163 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a2d1d272cd4f36d1e1b70476dc91583b6" name="a2d1d272cd4f36d1e1b70476dc91583b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d1d272cd4f36d1e1b70476dc91583b6">&#9670;&#160;</a></span>dq_estimator_alpha</h2>
+<a id="a28da04d85b05bdc0483931fdb5ee9665" name="a28da04d85b05bdc0483931fdb5ee9665"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28da04d85b05bdc0483931fdb5ee9665">&#9670;&#160;</a></span>kalman_control_adaptation_rate</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> franky::Robot::Params::dq_estimator_alpha {0.9}</td>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> franky::Robot::Params::kalman_control_adaptation_rate = 0.1</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Joint velocity estimator exponential decay. </p>
-<p>This parameter is used to smooth the joint velocity estimates. After the median filter, the velocity estimates are computed as  <picture><source srcset="form_0_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ \dot{q}_{t + \Delta t} = \alpha \dot{q}_{t}
-+ ( 1 - \alpha)\left(\frac{\dot{q}_{t + \Delta t} - \dot{q}_{t}}{\Delta t}\right) $" src="form_0.png"/></picture> </p>
+<p>Kalman parameter: rate of adaptation of the robot state to the desired robot state. </p>
 
 </div>
 </div>
-<a id="a9b5a37705fa30eb94dd46eb252f036d4" name="a9b5a37705fa30eb94dd46eb252f036d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b5a37705fa30eb94dd46eb252f036d4">&#9670;&#160;</a></span>dq_estimator_window_size</h2>
+<a id="a62b242c8c50ac828af9ac497b3cba801" name="a62b242c8c50ac828af9ac497b3cba801"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62b242c8c50ac828af9ac497b3cba801">&#9670;&#160;</a></span>kalman_control_process_var</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">size_t</a> franky::Robot::Params::dq_estimator_window_size {9}</td>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> franky::Robot::Params::kalman_control_process_var = 1</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Window size of the median filter of the joint velocity estimator. </p>
-<p>This filter is applied before exponential smoothing. </p>
+<p>Kalman parameter: process noise variance of the control signal. </p>
+
+</div>
+</div>
+<a id="abeaee212f2cac08ce47158dc44bb6b71" name="abeaee212f2cac08ce47158dc44bb6b71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abeaee212f2cac08ce47158dc44bb6b71">&#9670;&#160;</a></span>kalman_ddq_d_obs_var</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> franky::Robot::Params::kalman_ddq_d_obs_var = 0.0001</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Kalman parameter: observation noise variance of desired joint accelerations. </p>
+
+</div>
+</div>
+<a id="acd2d77ccd361a615b18b0a89fa0b2dd0" name="acd2d77ccd361a615b18b0a89fa0b2dd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd2d77ccd361a615b18b0a89fa0b2dd0">&#9670;&#160;</a></span>kalman_ddq_process_var</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> franky::Robot::Params::kalman_ddq_process_var = 0.1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Kalman parameter: process noise variance of the acceleration. </p>
+
+</div>
+</div>
+<a id="a51f8d9dbacca9c18de1b2429bea65dae" name="a51f8d9dbacca9c18de1b2429bea65dae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51f8d9dbacca9c18de1b2429bea65dae">&#9670;&#160;</a></span>kalman_dq_d_obs_var</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> franky::Robot::Params::kalman_dq_d_obs_var = 0.0001</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Kalman parameter: observation noise variance of desired joint velocities. </p>
+
+</div>
+</div>
+<a id="a2bccca1dff1d1cd4c4d7d1f0cae03f7b" name="a2bccca1dff1d1cd4c4d7d1f0cae03f7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bccca1dff1d1cd4c4d7d1f0cae03f7b">&#9670;&#160;</a></span>kalman_dq_obs_var</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> franky::Robot::Params::kalman_dq_obs_var = 0.1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Kalman parameter: observation noise variance of measured joint velocities. </p>
+
+</div>
+</div>
+<a id="a1e9c37c50668090f408db94e12e54bc9" name="a1e9c37c50668090f408db94e12e54bc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e9c37c50668090f408db94e12e54bc9">&#9670;&#160;</a></span>kalman_dq_process_var</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> franky::Robot::Params::kalman_dq_process_var = 0.001</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Kalman parameter: process noise variance of the velocity. </p>
+
+</div>
+</div>
+<a id="a78a7c309785935bab49cdb24b5a750a8" name="a78a7c309785935bab49cdb24b5a750a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78a7c309785935bab49cdb24b5a750a8">&#9670;&#160;</a></span>kalman_q_d_obs_var</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> franky::Robot::Params::kalman_q_d_obs_var = 0.0001</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Kalman parameter: observation noise variance of desired joint positions. </p>
+
+</div>
+</div>
+<a id="a304e57064f927eb2c00757a1d86d2e08" name="a304e57064f927eb2c00757a1d86d2e08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a304e57064f927eb2c00757a1d86d2e08">&#9670;&#160;</a></span>kalman_q_obs_var</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> franky::Robot::Params::kalman_q_obs_var = 0.01</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Kalman parameter: observation noise variance of measured joint positions. </p>
+
+</div>
+</div>
+<a id="ae6c5c63f100b88ae3fc1ae3dcd50c44e" name="ae6c5c63f100b88ae3fc1ae3dcd50c44e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6c5c63f100b88ae3fc1ae3dcd50c44e">&#9670;&#160;</a></span>kalman_q_process_var</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> franky::Robot::Params::kalman_q_process_var = 0.0001</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Kalman parameter: process noise variance of the position. </p>
 
 </div>
 </div>

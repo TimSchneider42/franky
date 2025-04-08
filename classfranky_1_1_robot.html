@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Franky<span id="projectnumber">&#160;0.12.0</span>
+   <div id="projectname">Franky<span id="projectnumber">&#160;1.0.0</span>
    </div>
    <div id="projectbrief">A High-Level Motion API for Franka</div>
   </td>
@@ -218,10 +218,13 @@ Public Attributes</h2></td></tr>
 <tr class="memdesc:a87e2193710fe1cc287a21729bba88106"><td class="mdescLeft">&#160;</td><td class="mdescRight">Elbow jerk limit [rad/s³].  <br /></td></tr>
 <tr class="separator:a87e2193710fe1cc287a21729bba88106"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d5a68c15c97aba59872e6795ed1500f" id="r_a4d5a68c15c97aba59872e6795ed1500f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a4d5a68c15c97aba59872e6795ed1500f">joint_velocity_limit</a></td></tr>
+<tr class="memdesc:a4d5a68c15c97aba59872e6795ed1500f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Joint velocity limit [rad/s].  <br /></td></tr>
 <tr class="separator:a4d5a68c15c97aba59872e6795ed1500f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0348db847ba5ddaae49c0dcb48f4a710" id="r_a0348db847ba5ddaae49c0dcb48f4a710"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a0348db847ba5ddaae49c0dcb48f4a710">joint_acceleration_limit</a></td></tr>
+<tr class="memdesc:a0348db847ba5ddaae49c0dcb48f4a710"><td class="mdescLeft">&#160;</td><td class="mdescRight">Joint acceleration limit [rad/s²].  <br /></td></tr>
 <tr class="separator:a0348db847ba5ddaae49c0dcb48f4a710"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3bd3f0843a7c2c4aeae3d5c21d506b9" id="r_aa3bd3f0843a7c2c4aeae3d5c21d506b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfranky_1_1_dynamics_limit.html">DynamicsLimit</a>&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#aa3bd3f0843a7c2c4aeae3d5c21d506b9">joint_jerk_limit</a></td></tr>
+<tr class="memdesc:aa3bd3f0843a7c2c4aeae3d5c21d506b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Joint jerk limit [rad/s³].  <br /></td></tr>
 <tr class="separator:aa3bd3f0843a7c2c4aeae3d5c21d506b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
@@ -1215,7 +1218,7 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    <span class="stringliteral">&quot;elbow acceleration&quot;</span>, 10.0, 10.0, control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
+<div class="line">    <span class="stringliteral">&quot;elbow acceleration&quot;</span>, 10.0, control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
 </div><!-- fragment -->
 <p>Elbow acceleration limit [rad/s²]. </p>
 
@@ -1233,7 +1236,7 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    <span class="stringliteral">&quot;elbow jerk&quot;</span>, 5000.0, 5000.0, control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
+<div class="line">    <span class="stringliteral">&quot;elbow jerk&quot;</span>, 5000.0, control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
 </div><!-- fragment -->
 <p>Elbow jerk limit [rad/s³]. </p>
 
@@ -1251,7 +1254,7 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    <span class="stringliteral">&quot;elbow velocity&quot;</span>, 2.175, 2.175, control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
+<div class="line">    <span class="stringliteral">&quot;elbow velocity&quot;</span>, 2.62,  control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
 </div><!-- fragment -->
 <p>Elbow velocity limit [rad/s]. </p>
 
@@ -1269,11 +1272,13 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    <span class="stringliteral">&quot;joint_acceleration&quot;</span>, <a class="code hl_define" href="robot_8hpp.html#a103d582b94a7b925a5895727eb068419">MAX_JOINT_ACC</a>, <a class="code hl_define" href="robot_8hpp.html#a103d582b94a7b925a5895727eb068419">MAX_JOINT_ACC</a>, control_mutex_,</div>
+<div class="line">    <span class="stringliteral">&quot;joint_acceleration&quot;</span>, <a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">toEigenD&lt;7&gt;</a>({10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0}), control_mutex_,</div>
 <div class="line">    [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }</div>
 <div class="line">  }</div>
-<div class="ttc" id="arobot_8hpp_html_a103d582b94a7b925a5895727eb068419"><div class="ttname"><a href="robot_8hpp.html#a103d582b94a7b925a5895727eb068419">MAX_JOINT_ACC</a></div><div class="ttdeci">#define MAX_JOINT_ACC</div><div class="ttdoc">Joint acceleration limit [rad/s²].</div><div class="ttdef"><b>Definition</b> robot.hpp:470</div></div>
+<div class="ttc" id="anamespacefranky_html_a0b6bfc825c262ae89d9b0adcccd97ab0"><div class="ttname"><a href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">franky::toStdD</a></div><div class="ttdeci">std::array&lt; double, dims &gt; toStdD(const Eigen::Matrix&lt; double, dims, 1 &gt; &amp;vector)</div><div class="ttdef"><b>Definition</b> util.hpp:18</div></div>
 </div><!-- fragment -->
+<p>Joint acceleration limit [rad/s²]. </p>
+
 </div>
 </div>
 <a id="aa3bd3f0843a7c2c4aeae3d5c21d506b9" name="aa3bd3f0843a7c2c4aeae3d5c21d506b9"></a>
@@ -1288,11 +1293,12 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    <span class="stringliteral">&quot;joint_jerk&quot;</span>, <a class="code hl_define" href="robot_8hpp.html#a09d00629886bbb51cdf0dc76f4b58962">MAX_JOINT_JERK</a>, <a class="code hl_define" href="robot_8hpp.html#a09d00629886bbb51cdf0dc76f4b58962">MAX_JOINT_JERK</a>, control_mutex_,</div>
+<div class="line">    <span class="stringliteral">&quot;joint_jerk&quot;</span>, <a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">toEigenD&lt;7&gt;</a>({5000.0, 5000.0, 5000.0, 5000.0, 5000.0, 5000.0, 5000.0}), control_mutex_,</div>
 <div class="line">    [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }</div>
 <div class="line">  }</div>
-<div class="ttc" id="arobot_8hpp_html_a09d00629886bbb51cdf0dc76f4b58962"><div class="ttname"><a href="robot_8hpp.html#a09d00629886bbb51cdf0dc76f4b58962">MAX_JOINT_JERK</a></div><div class="ttdeci">#define MAX_JOINT_JERK</div><div class="ttdoc">Joint jerk limit [rad/s³].</div><div class="ttdef"><b>Definition</b> robot.hpp:479</div></div>
 </div><!-- fragment -->
+<p>Joint jerk limit [rad/s³]. </p>
+
 </div>
 </div>
 <a id="a4d5a68c15c97aba59872e6795ed1500f" name="a4d5a68c15c97aba59872e6795ed1500f"></a>
@@ -1307,11 +1313,12 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    <span class="stringliteral">&quot;joint_velocity&quot;</span>, <a class="code hl_define" href="robot_8hpp.html#a7fefc67ecba9779f456f15e8236d780a">MAX_JOINT_VEL</a>, <a class="code hl_define" href="robot_8hpp.html#a7fefc67ecba9779f456f15e8236d780a">MAX_JOINT_VEL</a>, control_mutex_,</div>
+<div class="line">    <span class="stringliteral">&quot;joint_velocity&quot;</span>, <a class="code hl_function" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">toEigenD&lt;7&gt;</a>({2.62, 2.62, 2.62, 2.62, 5.26, 4.18, 5.26}), control_mutex_,</div>
 <div class="line">    [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }</div>
 <div class="line">  }</div>
-<div class="ttc" id="arobot_8hpp_html_a7fefc67ecba9779f456f15e8236d780a"><div class="ttname"><a href="robot_8hpp.html#a7fefc67ecba9779f456f15e8236d780a">MAX_JOINT_VEL</a></div><div class="ttdeci">#define MAX_JOINT_VEL</div><div class="ttdoc">Joint velocity limit [rad/s].</div><div class="ttdef"><b>Definition</b> robot.hpp:461</div></div>
 </div><!-- fragment -->
+<p>Joint velocity limit [rad/s]. </p>
+
 </div>
 </div>
 <a id="ae7725e4fffdc28b8db727068a105707a" name="ae7725e4fffdc28b8db727068a105707a"></a>
@@ -1326,7 +1333,7 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    <span class="stringliteral">&quot;rotational acceleration&quot;</span>, 25.0, 25.0, control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
+<div class="line">    <span class="stringliteral">&quot;rotational acceleration&quot;</span>, 17.0, control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
 </div><!-- fragment -->
 <p>Rotational acceleration limit [rad/s²]. </p>
 
@@ -1344,7 +1351,7 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    <span class="stringliteral">&quot;rotational jerk&quot;</span>, 12500.0, 12500.0, control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
+<div class="line">    <span class="stringliteral">&quot;rotational jerk&quot;</span>, 8500.0, control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
 </div><!-- fragment -->
 <p>Rotational jerk limit [rad/s³]. </p>
 
@@ -1362,7 +1369,7 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    <span class="stringliteral">&quot;rotational velocity&quot;</span>, 2.5, 2.5, control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
+<div class="line">    <span class="stringliteral">&quot;rotational velocity&quot;</span>, 2.5, control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
 </div><!-- fragment -->
 <p>Rotational velocity limit [rad/s]. </p>
 
@@ -1380,7 +1387,7 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    <span class="stringliteral">&quot;translational acceleration&quot;</span>, 13.0, 13.0, control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
+<div class="line">    <span class="stringliteral">&quot;translational acceleration&quot;</span>, 9.0, control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
 </div><!-- fragment -->
 <p>Translational acceleration limit [m/s²]. </p>
 
@@ -1398,7 +1405,7 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    <span class="stringliteral">&quot;translational jerk&quot;</span>, 6500.0, 6500.0, control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
+<div class="line">    <span class="stringliteral">&quot;translational jerk&quot;</span>, 4500.0, control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
 </div><!-- fragment -->
 <p>Translational jerk limit [m/s³]. </p>
 
@@ -1416,7 +1423,7 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    <span class="stringliteral">&quot;translational velocity&quot;</span>, 1.7, 1.7, control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
+<div class="line">    <span class="stringliteral">&quot;translational velocity&quot;</span>, 3.0, control_mutex_, [<span class="keyword">this</span>] { <span class="keywordflow">return</span> is_in_control_unsafe(); }}</div>
 </div><!-- fragment -->
 <p>Translational velocity limit [m/s]. </p>
 

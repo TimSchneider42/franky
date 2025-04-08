@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Franky<span id="projectnumber">&#160;0.12.0</span>
+   <div id="projectname">Franky<span id="projectnumber">&#160;1.0.0</span>
    </div>
    <div id="projectbrief">A High-Level Motion API for Franka</div>
   </td>
@@ -76,8 +76,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle"><div class="title">robot.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -124,68 +123,7 @@ Classes</h2></td></tr>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacefranky" id="r_namespacefranky"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html">franky</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a7fefc67ecba9779f456f15e8236d780a" id="r_a7fefc67ecba9779f456f15e8236d780a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="robot_8hpp.html#a7fefc67ecba9779f456f15e8236d780a">MAX_JOINT_VEL</a>&#160;&#160;&#160;toEigenD&lt;7&gt;({2.175, 2.175, 2.175, 2.175, 2.610, 2.610, 2.610})</td></tr>
-<tr class="memdesc:a7fefc67ecba9779f456f15e8236d780a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Joint velocity limit [rad/s].  <br /></td></tr>
-<tr class="separator:a7fefc67ecba9779f456f15e8236d780a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a103d582b94a7b925a5895727eb068419" id="r_a103d582b94a7b925a5895727eb068419"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="robot_8hpp.html#a103d582b94a7b925a5895727eb068419">MAX_JOINT_ACC</a>&#160;&#160;&#160;toEigenD&lt;7&gt;({15.0, 7.5, 10.0, 12.5, 15.0, 20.0, 20.0})</td></tr>
-<tr class="memdesc:a103d582b94a7b925a5895727eb068419"><td class="mdescLeft">&#160;</td><td class="mdescRight">Joint acceleration limit [rad/s²].  <br /></td></tr>
-<tr class="separator:a103d582b94a7b925a5895727eb068419"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09d00629886bbb51cdf0dc76f4b58962" id="r_a09d00629886bbb51cdf0dc76f4b58962"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="robot_8hpp.html#a09d00629886bbb51cdf0dc76f4b58962">MAX_JOINT_JERK</a>&#160;&#160;&#160;toEigenD&lt;7&gt;({7500.0, 3750.0, 5000.0, 6250.0, 7500.0, 10000.0, 10000.0})</td></tr>
-<tr class="memdesc:a09d00629886bbb51cdf0dc76f4b58962"><td class="mdescLeft">&#160;</td><td class="mdescRight">Joint jerk limit [rad/s³].  <br /></td></tr>
-<tr class="separator:a09d00629886bbb51cdf0dc76f4b58962"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a103d582b94a7b925a5895727eb068419" name="a103d582b94a7b925a5895727eb068419"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a103d582b94a7b925a5895727eb068419">&#9670;&#160;</a></span>MAX_JOINT_ACC</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MAX_JOINT_ACC&#160;&#160;&#160;toEigenD&lt;7&gt;({15.0, 7.5, 10.0, 12.5, 15.0, 20.0, 20.0})</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Joint acceleration limit [rad/s²]. </p>
-
-</div>
-</div>
-<a id="a09d00629886bbb51cdf0dc76f4b58962" name="a09d00629886bbb51cdf0dc76f4b58962"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09d00629886bbb51cdf0dc76f4b58962">&#9670;&#160;</a></span>MAX_JOINT_JERK</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MAX_JOINT_JERK&#160;&#160;&#160;toEigenD&lt;7&gt;({7500.0, 3750.0, 5000.0, 6250.0, 7500.0, 10000.0, 10000.0})</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Joint jerk limit [rad/s³]. </p>
-
-</div>
-</div>
-<a id="a7fefc67ecba9779f456f15e8236d780a" name="a7fefc67ecba9779f456f15e8236d780a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7fefc67ecba9779f456f15e8236d780a">&#9670;&#160;</a></span>MAX_JOINT_VEL</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MAX_JOINT_VEL&#160;&#160;&#160;toEigenD&lt;7&gt;({2.175, 2.175, 2.175, 2.175, 2.610, 2.610, 2.610})</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Joint velocity limit [rad/s]. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

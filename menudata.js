@@ -121,7 +121,6 @@ var menudata={children:[
 {text:"o",url:"functions_vars.html#index_o"},
 {text:"q",url:"functions_vars.html#index_q"},
 {text:"r",url:"functions_vars.html#index_r"},
-{text:"s",url:"functions_vars.html#index_s"},
 {text:"t",url:"functions_vars.html#index_t"}]},
 {text:"Typedefs",url:"functions_type.html"},
 {text:"Related Symbols",url:"functions_rela.html"}]}]},
