@@ -275,7 +275,7 @@ $(function() {
 <div class="line">cartesian_state = robot.current_cartesian_state</div>
 <div class="line">robot_pose = cartesian_state.pose  <span class="comment"># Contains end-effector pose and elbow position</span></div>
 <div class="line">ee_pose = robot_pose.end_effector_pose</div>
-<div class="line">elbow_pos = robot_pose.elbow_position</div>
+<div class="line">elbow_pos = robot_pose.elbow_state</div>
 <div class="line">robot_velocity = cartesian_state.velocity  <span class="comment"># Contains end-effector twist and elbow velocity</span></div>
 <div class="line">ee_twist = robot_velocity.end_effector_twist</div>
 <div class="line">elbow_vel = robot_velocity.elbow_velocity</div>
