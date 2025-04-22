@@ -168,7 +168,7 @@ $(function() {
 </div><!-- fragment --><p>Make sure that the built library <code>_franky.cpython-3**-****-linux-gnu.so</code> is in the Python path, e.g. by adjusting <code>PYTHONPATH</code> accordingly.</p>
 <h4>Using Docker</h4>
 <p>To use Franky within Docker we provide a <a href="docker/run/Dockerfile">Dockerfile</a> and accompanying <a href="docker-compose.yml">docker-compose</a> file.</p>
-<div class="fragment"><div class="line">git clone https://github.com/timschneider42/franky.git</div>
+<div class="fragment"><div class="line">git clone --recurse-submodules https://github.com/timschneider42/franky.git</div>
 <div class="line">cd franky/</div>
 <div class="line">docker compose build franky-run</div>
 </div><!-- fragment --><p>To use another version of libfranka than the default (0.15.0) add a build argument:</p>
