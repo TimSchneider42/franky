@@ -102,7 +102,7 @@ class RobotWebSession:
             raise RuntimeError("Client does not have control. Call take_control() first.")
 
     def take_control(self, wait_timeout: float = 10.0, force: bool = False):
-        if self.__control_token is None:
+        if self.__control_token is None or force:
             res = self.send_api_request(
                 f"/admin/api/control-token/request{'?force' if force else ''}",
                 headers={"content-type": "application/json"},
