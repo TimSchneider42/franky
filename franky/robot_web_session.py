@@ -71,10 +71,10 @@ class RobotWebSession:
         _headers.update(headers)
         return self.send_api_request(target, headers=_headers, method=method, body=body)
 
-    def open(self):
+    def open(self, timeout: float = 30.0):
         if self.is_open:
             raise RuntimeError("Session is already open.")
-        self.__client = HTTPSConnection(self.__hostname, timeout=12, context=ssl._create_unverified_context())
+        self.__client = HTTPSConnection(self.__hostname, timeout=timeout, context=ssl._create_unverified_context())
         self.__client.connect()
         payload = json.dumps(
             {"login": self.__username, "password": self.__encode_password(self.__username, self.__password)})
@@ -101,11 +101,17 @@ class RobotWebSession:
         if self.__control_token is None:
             raise RuntimeError("Client does not have control. Call take_control() first.")
 
-    def take_control(self, wait_timeout: float = 10.0):
+    def take_control(self, wait_timeout: float = 10.0, force: bool = False):
         if self.__control_token is None:
             res = self.send_api_request(
-                "/admin/api/control-token/request", headers={"content-type": "application/json"},
+                f"/admin/api/control-token/request{'?force' if force else ''}",
+                headers={"content-type": "application/json"},
                 body=json.dumps({"requestedBy": self.__username}))
+            if force:
+                print(
+                    "The user requested forcibly taking control. "
+                    f"Please physically take control by clicking the top button on the FR3 within {wait_timeout}s!"
+                )
             response_dict = json.loads(res)
             self.__control_token = response_dict["token"]
             self.__control_token_id = response_dict["id"]
