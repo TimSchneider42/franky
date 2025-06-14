@@ -211,7 +211,8 @@ $(function() {
 <div class="line"> </div>
 <div class="line">motion = CartesianMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
 <div class="line">robot.move(motion)</div>
-</div><!-- fragment --><p>Furthermore, we will introduce methods for geometric calculations, for moving the robot according to different motion types, how to implement real-time reactions and changing waypoints in real time as well as controlling the gripper.</p>
+</div><!-- fragment --><p>Before executing any code, make sure that you have enabled the Franka Control Interface (FCI) in the Franka UI web interface.</p>
+<p>Furthermore, we will introduce methods for geometric calculations, for moving the robot according to different motion types, how to implement real-time reactions and changing waypoints in real time as well as controlling the gripper.</p>
 <h3>🧮 Geometry</h3>
 <p><code><a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">franky.Affine</a></code> is a python wrapper for <a href="https://eigen.tuxfamily.org/dox/group__TutorialGeometry.html">Eigen::Affine3d</a>. It is used for Cartesian poses, frames and transformation. franky adds its own constructor, which takes a position and a quaternion as inputs:</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> math</div>
@@ -530,7 +531,7 @@ $(function() {
 </div><!-- fragment --><p>By calling <code>Robot.join_motion</code> the main thread can be synchronized with the motion thread, as it will block until the robot finishes its motion.</p>
 <div class="fragment"><div class="line">robot.join_motion()</div>
 </div><!-- fragment --><p>Note that when exceptions occur during the asynchronous execution of a motion, they will not be thrown immediately. Instead, the control thread stores the exception and terminates. The next time <code>Robot.join_motion</code> or <code>Robot.move</code> are called, they will throw the stored exception in the main thread. Hence, after an asynchronous motion has finished, make sure to call <code>Robot.join_motion</code> to ensure being notified of any exceptions that occurred during the motion.</p>
-<h3>Gripper</h3>
+<h3><a class="anchor" id="gripper"></a> 👌 Gripper</h3>
 <p>In the <code><a class="el" href="classfranky_1_1_gripper.html" title="A wrapper around the franka::Gripper class that adds asynchronous functionality.">franky::Gripper</a></code> class, the default gripper force and gripper speed can be set. Then, additionally to the libfranka commands, the following helper methods can be used:</p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="franky_8hpp.html">franky.hpp</a>&gt;</span></div>
@@ -597,7 +598,52 @@ $(function() {
 <div class="line">    gripper.stop()</div>
 <div class="line">    success_future.wait()</div>
 <div class="line">    print(<span class="stringliteral">&quot;Gripper motion timed out.&quot;</span>)</div>
-</div><!-- fragment --><h2>🛠️ Development</h2>
+</div><!-- fragment --><h3>Accessing the Web Interface API</h3>
+<p>For Franka robots, control happens via the Franka Control Interface (FCI), which has to be enabled through the Franka UI in the robot's web interface. The Franka UI also provides methods for locking and unlocking the brakes, setting the execution mode, and executing the safety self-test. However, sometimes you may want to access these methods programmatically, e.g. for automatically unlocking the brakes before starting a motion, or automatically executing the self-test after 24h of continuous execution.</p>
+<p>For that reason, Franky provides a <code>RobotWebSession</code> class that allows you to access the web interface API of the robot. Note that directly accessing the web interface API is not officially supported and documented by Franka. Hence, use this feature at your own risk.</p>
+<p>A typical automated workflow could look like this:</p>
+<div class="fragment"><div class="line"><span class="keyword">import</span> franky</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">with</span> franky.RobotWebSession(<span class="stringliteral">&quot;172.16.0.2&quot;</span>, <span class="stringliteral">&quot;username&quot;</span>, <span class="stringliteral">&quot;password&quot;</span>) <span class="keyword">as</span> robot_web_session:</div>
+<div class="line">    <span class="comment"># First take control, in case some other web session is currently running</span></div>
+<div class="line">    <span class="keyword">assert</span> robot_web_session.take_control(), <span class="stringliteral">&quot;Control not granted&quot;</span></div>
+<div class="line">    </div>
+<div class="line">    <span class="comment"># Unlock the brakes</span></div>
+<div class="line">    robot_web_session.unlock_brakes()</div>
+<div class="line">    </div>
+<div class="line">    <span class="comment"># Enable the FCI</span></div>
+<div class="line">    robot_web_session.enable_fci()</div>
+<div class="line">    </div>
+<div class="line">    <span class="comment"># Create a franky.Robot instance and do whatever you want</span></div>
+<div class="line">    ...</div>
+<div class="line">    </div>
+<div class="line">    <span class="comment"># Disable the FCI</span></div>
+<div class="line">    robot_web_session.disable_fci()</div>
+<div class="line">    </div>
+<div class="line">    <span class="comment"># Lock brakes</span></div>
+<div class="line">    robot_web_session.lock_brakes()</div>
+</div><!-- fragment --><p>In case you are running the robot for longer than 24h you will have noticed that you have to do a safety self-test every 24h. <code>RobotWebSession</code> allows to automate this task as well:</p>
+<div class="fragment"><div class="line"><span class="keyword">import</span> time</div>
+<div class="line"><span class="keyword">import</span> franky</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">with</span> franky.RobotWebSession(<span class="stringliteral">&quot;172.16.0.2&quot;</span>, <span class="stringliteral">&quot;username&quot;</span>, <span class="stringliteral">&quot;password&quot;</span>) <span class="keyword">as</span> robot_web_session:</div>
+<div class="line">    <span class="comment"># Execute self-test if the time until self-test is less than 5 minutes.</span></div>
+<div class="line">    <span class="keywordflow">if</span> robot_web_session.get_system_status()[<span class="stringliteral">&quot;safety&quot;</span>][<span class="stringliteral">&quot;timeToTd2&quot;</span>] &lt; 300:</div>
+<div class="line">        robot_web_session.disable_fci()</div>
+<div class="line">        robot_web_session.lock_brakes()</div>
+<div class="line">        time.sleep(1.0)</div>
+<div class="line">        </div>
+<div class="line">        robot_web_session.execute_self_test()</div>
+<div class="line">        </div>
+<div class="line">        robot_web_session.unlock_brakes()</div>
+<div class="line">        robot_web_session.enable_fci()</div>
+<div class="line">        time.sleep(1.0)</div>
+<div class="line">        </div>
+<div class="line">        <span class="comment"># Recreate your franky.Robot instance as the FCI has been disabled and re-enabled</span></div>
+<div class="line">        ...</div>
+</div><!-- fragment --><p><code>robot_web_session.get_system_status()</code> contains more information than just the time until self-test, such as the current execution mode, whether the brakes are locked, whether the FCI is enabled, and more.</p>
+<p>If you want to call other API functions, you can use the <code>RobotWebSession.send_api_request</code> and <code>RobotWebSession.send_control_api_request</code> methods. See <a href="franky/robot_web_session.py">robot_web_session.py</a> for an example of how to use these methods.</p>
+<h2>🛠️ Development</h2>
 <p>Franky is currently tested against following versions</p>
 <ul>
 <li>libfranka 0.7.1, 0.8.0, 0.9.2, 0.10.0, 0.11.0, 0.12.1, 0.13.3, 0.14.2, 0.15.0</li>
