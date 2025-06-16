@@ -94,7 +94,7 @@ Namespaces</h2></td></tr>
 Macros</h2></td></tr>
 <tr class="memitem:ace1a9a9dbd1706fff57d574d21683387" id="r_ace1a9a9dbd1706fff57d574d21683387"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="robot_8cpp.html#ace1a9a9dbd1706fff57d574d21683387">SEL_VAL</a>(value_panda,  value_fer)&#160;&#160;&#160;value_panda</td></tr>
 <tr class="separator:ace1a9a9dbd1706fff57d574d21683387"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee739e2c92614155ac88f1edd1d65411" id="r_aee739e2c92614155ac88f1edd1d65411"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="robot_8cpp.html#aee739e2c92614155ac88f1edd1d65411">LIMIT_INIT</a>(name,  value_panda,  value_fer)&#160;&#160;&#160;  name, <a class="el" href="robot_8cpp.html#ace1a9a9dbd1706fff57d574d21683387">SEL_VAL</a>(value_panda, value_fer), control_mutex_, [this] { return is_in_control_unsafe(); }</td></tr>
+<tr class="memitem:aee739e2c92614155ac88f1edd1d65411" id="r_aee739e2c92614155ac88f1edd1d65411"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="robot_8cpp.html#aee739e2c92614155ac88f1edd1d65411">LIMIT_INIT</a>(name,  value_panda,  value_fer)&#160;&#160;&#160;  name, <a class="el" href="robot_8cpp.html#ace1a9a9dbd1706fff57d574d21683387">SEL_VAL</a>(value_panda, value_fer), control_mutex_, [this] { return !is_in_control_unsafe(); }</td></tr>
 <tr class="separator:aee739e2c92614155ac88f1edd1d65411"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -125,7 +125,7 @@ Macros</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;  name, <a class="el" href="robot_8cpp.html#ace1a9a9dbd1706fff57d574d21683387">SEL_VAL</a>(value_panda, value_fer), control_mutex_, [this] { return is_in_control_unsafe(); }</td>
+          <td></td><td>&#160;&#160;&#160;  name, <a class="el" href="robot_8cpp.html#ace1a9a9dbd1706fff57d574d21683387">SEL_VAL</a>(value_panda, value_fer), control_mutex_, [this] { return !is_in_control_unsafe(); }</td>
         </tr>
       </table>
 </div><div class="memdoc">
