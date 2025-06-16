@@ -82,9 +82,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="measure_8hpp_source.html">franky/motion/measure.hpp</a>&quot;</code><br />
+<code>#include &lt;franka/robot_state.h&gt;</code><br />
 <code>#include &lt;sstream&gt;</code><br />
 <code>#include &lt;utility&gt;</code><br />
-<code>#include &lt;franka/robot_state.h&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -121,13 +121,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">Condition <span class="keyword">operator</span> OP(<span class="keyword">const</span> Measure &amp;m1, <span class="keyword">const</span> Measure &amp;m2) { \</div>
-<div class="line">  std::stringstream ss;     \</div>
-<div class="line">  ss &lt;&lt; m1.repr() &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; #OP &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; m2.repr(); \</div>
-<div class="line">  <span class="keywordflow">return</span> Condition([m1, m2](<span class="keyword">const</span> RobotState &amp;robot_state, franka::Duration rel_time, franka::Duration abs_time) { \</div>
-<div class="line">    <span class="keywordflow">return</span> m1(robot_state, rel_time, abs_time) OP m2(robot_state, rel_time, abs_time); \</div>
-<div class="line">  }, ss.str()); \</div>
-<div class="line">}</div>
+<b>Value:</b><div class="fragment"><div class="line">  Condition <span class="keyword">operator</span> OP(<span class="keyword">const</span> Measure &amp;m1, <span class="keyword">const</span> Measure &amp;m2) {                                         \</div>
+<div class="line">    std::stringstream ss;                                                                               \</div>
+<div class="line">    ss &lt;&lt; m1.repr() &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; #OP &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; m2.repr();                                                  \</div>
+<div class="line">    <span class="keywordflow">return</span> Condition(                                                                                   \</div>
+<div class="line">        [m1, m2](<span class="keyword">const</span> RobotState &amp;robot_state, franka::Duration rel_time, franka::Duration abs_time) { \</div>
+<div class="line">          <span class="keywordflow">return</span> m1(robot_state, rel_time, abs_time) OP m2(robot_state, rel_time, abs_time);            \</div>
+<div class="line">        },                                                                                              \</div>
+<div class="line">        ss.str());                                                                                      \</div>
+<div class="line">  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -146,13 +148,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">Measure <span class="keyword">operator</span> OP(<span class="keyword">const</span> Measure &amp;m1, <span class="keyword">const</span> Measure &amp;m2) { \</div>
-<div class="line">  std::stringstream ss;     \</div>
-<div class="line">  ss &lt;&lt; <span class="stringliteral">&quot;(&quot;</span> &lt;&lt; m1.repr() &lt;&lt; <span class="stringliteral">&quot;) &quot;</span> &lt;&lt; #OP &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; m2.repr() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>; \</div>
-<div class="line">  <span class="keywordflow">return</span> Measure([m1, m2](<span class="keyword">const</span> RobotState &amp;robot_state, franka::Duration rel_time, franka::Duration abs_time) { \</div>
-<div class="line">    <span class="keywordflow">return</span> m1(robot_state, rel_time, abs_time) OP m2(robot_state, rel_time, abs_time); \</div>
-<div class="line">  }, ss.str()); \</div>
-<div class="line">}</div>
+<b>Value:</b><div class="fragment"><div class="line">  Measure <span class="keyword">operator</span> OP(<span class="keyword">const</span> Measure &amp;m1, <span class="keyword">const</span> Measure &amp;m2) {                                           \</div>
+<div class="line">    std::stringstream ss;                                                                               \</div>
+<div class="line">    ss &lt;&lt; <span class="stringliteral">&quot;(&quot;</span> &lt;&lt; m1.repr() &lt;&lt; <span class="stringliteral">&quot;) &quot;</span> &lt;&lt; #OP &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; m2.repr() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;                                  \</div>
+<div class="line">    <span class="keywordflow">return</span> Measure(                                                                                     \</div>
+<div class="line">        [m1, m2](<span class="keyword">const</span> RobotState &amp;robot_state, franka::Duration rel_time, franka::Duration abs_time) { \</div>
+<div class="line">          <span class="keywordflow">return</span> m1(robot_state, rel_time, abs_time) OP m2(robot_state, rel_time, abs_time);            \</div>
+<div class="line">        },                                                                                              \</div>
+<div class="line">        ss.str());                                                                                      \</div>
+<div class="line">  }</div>
 </div><!-- fragment -->
 </div>
 </div>
