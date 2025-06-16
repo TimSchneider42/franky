@@ -149,7 +149,12 @@ class RobotWebSession:
                 "Client does not have control. Call take_control() first."
             )
 
-    def take_control(self, wait_timeout: float = 30.0, force: bool = False, retry_with_force: bool = True):
+    def take_control(
+        self,
+        wait_timeout: float = 30.0,
+        force: bool = False,
+        retry_with_force: bool = True,
+    ):
         if not self.has_control() or force:
             res = self.send_api_request(
                 f"/admin/api/control-token/request{'?force' if force else ''}",
@@ -173,7 +178,9 @@ class RobotWebSession:
             if not has_control:
                 if retry_with_force and not force:
                     # use much longer timeout to allow user to physically press button
-                    return self.take_control(wait_timeout=30.0, force=True, retry_with_force=False)
+                    return self.take_control(
+                        wait_timeout=30.0, force=True, retry_with_force=False
+                    )
                 raise TakeControlTimeoutError(
                     f"Timed out waiting for control to be granted after {wait_timeout}s."
                 )
