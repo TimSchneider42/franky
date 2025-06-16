@@ -112,7 +112,9 @@ class RobotWebSession:
     def open(self, timeout: float = 30.0):
         if self.is_open:
             raise RuntimeError("Session is already open.")
-        self.__client = HTTPSConnection(self.__hostname, timeout=timeout, context=ssl._create_unverified_context())
+        self.__client = HTTPSConnection(
+            self.__hostname, timeout=timeout, context=ssl._create_unverified_context()
+        )
         self.__client.connect()
         payload = json.dumps(
             {
@@ -171,7 +173,9 @@ class RobotWebSession:
                 if retry_with_force and not force:
                     # use much longer timeout to allow user to physically press button
                     return self.take_control(wait_timeout=30.0, force=True, retry_with_force=False)
-                raise TakeControlTimeoutError(f"Timed out waiting for control to be granted after {wait_timeout}s.")
+                raise TakeControlTimeoutError(
+                    f"Timed out waiting for control to be granted after {wait_timeout}s."
+                )
         return self.has_control()
 
     def release_control(self):
