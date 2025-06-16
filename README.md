@@ -46,25 +46,25 @@ at [https://timschneider42.github.io/franky/](https://timschneider42.github.io/f
 
 ## 🚀 Features
 
-- **Control your Franka robot directly from Python in just a few lines!**  
+- **Control your Franka robot directly from Python in just a few lines!**
   No more endless hours setting up ROS, juggling packages, or untangling dependencies. Just `pip install` — no ROS at all.
 
-- **[Four control modes](#motion-types)**: [Cartesian position](#cartesian-position-control), [Cartesian velocity](#cartesian-velocity-control), [Joint position](#joint-position-control), [Joint velocity](#joint-velocity-control)  
+- **[Four control modes](#motion-types)**: [Cartesian position](#cartesian-position-control), [Cartesian velocity](#cartesian-velocity-control), [Joint position](#joint-position-control), [Joint velocity](#joint-velocity-control)
   Franky uses [Ruckig](https://github.com/pantor/ruckig) to generate smooth, time-optimal trajectories while respecting velocity, acceleration, and jerk limits.
 
 - **[Real-time control from Python and C++](#real-time-motions)**
   Need to change the target while the robot’s moving? No problem. Franky re-plans trajectories on the fly so that you can preempt motions anytime.
 
-- **[Reactive behavior](#-real-time-reactions)**  
+- **[Reactive behavior](#-real-time-reactions)**
   Robots don’t always go according to plan. Franky lets you define reactions to unexpected events—like contact with the environment — so you can change course in real-time.
 
-- **[Motion and reaction callbacks](#motion-callbacks)**  
+- **[Motion and reaction callbacks](#motion-callbacks)**
   Want to monitor what’s happening under the hood? Add callbacks to your motions and reactions. They won’t block the control thread and are super handy for debugging or logging.
 
-- **Things are moving too fast? [Tune the robot's dynamics to your needs](#-robot)**  
+- **Things are moving too fast? [Tune the robot's dynamics to your needs](#-robot)**
   Adjust max velocity, acceleration, and jerk to match your setup or task. Fine control for smooth, safe operation.
 
-- **Full Python access to the libfranka API**  
+- **Full Python access to the libfranka API**
   Want to tweak impedance, read the robot state, set force thresholds, or mess with the Jacobian? Go for it. If libfranka supports it, chances are Franky does, too.
 
 ## 📖 Python Quickstart Guide
@@ -244,6 +244,32 @@ docker compose run --rm franky-build run-tests  # To run the tests
 docker compose run --rm franky-build build-wheels  # To build wheels for all supported python versions
 ```
 
+### Can I use CUDA jointly with Franky?
+
+Yes. However, you need to set `IGNORE_PREEMPT_RT_PRESENCE=1` during the installation and all subsequent updates of the CUDA drivers on the real-time kernel.
+
+First, make sure that you have rebooted your system after installing the real-time kernel.
+Then, add `IGNORE_PREEMPT_RT_PRESENCE=1` to `/etc/environment`, call `export IGNORE_PREEMPT_RT_PRESENCE=1` to also set it in the current session and follow the instructions of Nvidia to install CUDA on your system.
+
+If you are on Ubuntu, you can also use [this](tools/install_cuda_realtime.bash) script to install CUDA on your real-time system:
+```bash
+# Download the script
+wget https://raw.githubusercontent.com/timschneider42/franky/master/tools/install_cuda_realtime.bash
+
+# Inspect the script to ensure it does what you expect
+
+# Make it executable
+chmod +x install_cuda_realtime.bash
+
+# Execute the script
+./install_cuda_realtime.bash
+```
+
+Alternatively, if you are a cowboy and do not care about security, you can also use this one-liner to directly call the script without checking it:
+```bash
+bash <(wget -qO- https://raw.githubusercontent.com/timschneider42/franky/master/tools/install_cuda_realtime.bash)
+```
+
 ## 📚 Tutorial
 
 Franky comes with both a C++ and Python API that differ only regarding real-time capability.
@@ -280,6 +306,8 @@ robot.relative_dynamics_factor = 0.05
 motion = CartesianMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)
 robot.move(motion)
 ```
+
+Before executing any code, make sure that you have enabled the Franka Control Interface (FCI) in the Franka UI web interface.
 
 Furthermore, we will introduce methods for geometric calculations, for moving the robot according to different motion
 types, how to implement real-time reactions and changing waypoints in real time as well as controlling the gripper.
@@ -436,9 +464,9 @@ m_jp3 = JointWaypointMotion([
     JointWaypoint([0.1, 0.4, 0.3, -1.4, -0.3, 1.7, 0.9])
 ])
 
-# Stop the robot in joint position control mode. The difference of JointStopMotion to other stop motions such as 
-# CartesianStopMotion is that # JointStopMotion # stops the robot in joint position control mode while 
-# CartesianStopMotion stops it in cartesian pose control mode. The difference becomes relevant when asynchronous move 
+# Stop the robot in joint position control mode. The difference of JointStopMotion to other stop motions such as
+# CartesianStopMotion is that # JointStopMotion # stops the robot in joint position control mode while
+# CartesianStopMotion stops it in cartesian pose control mode. The difference becomes relevant when asynchronous move
 # commands are being sent or reactions are being used(see below).
 m_jp4 = JointStopMotion()
 ```
@@ -518,7 +546,7 @@ m_cv1 = CartesianVelocityMotion(Twist([0.2, -0.1, 0.1], [0.1, -0.1, 0.2]))
 m_cv2 = CartesianVelocityMotion(RobotVelocity(Twist([0.2, -0.1, 0.1], [0.1, -0.1, 0.2]), elbow_velocity=-0.2))
 
 # Cartesian velocity motions also support multiple waypoints. Unlike in cartesian position control, a cartesian velocity
-# waypoint is a target velocity to be reached. This particular example first accelerates the end-effector, holds the 
+# waypoint is a target velocity to be reached. This particular example first accelerates the end-effector, holds the
 # velocity for 1s, then # reverses direction for 2s, reverses direction again for 1s, and finally stops. It is important
 # not to forget to stop # the robot at the end of such a sequence, as it will otherwise throw an error.
 m_cv4 = CartesianVelocityWaypointMotion([
@@ -561,7 +589,7 @@ robot.relative_dynamics_factor = RelativeDynamicsFactor(0.05, 0.1, 0.15)
 
 robot.move(m_jp1)
 
-# We can also set a relative dynamics factor in the move command. It will be multiplied with the other relative 
+# We can also set a relative dynamics factor in the move command. It will be multiplied with the other relative
 # dynamics factors (robot and motion if present).
 robot.move(m_jp2, relative_dynamics_factor=0.8)
 ```
@@ -686,7 +714,7 @@ motion
         }),
       [](const franka::RobotState& state, double rel_time, double abs_time) {
         // Lambda reaction motion generator
-        // (we are just returning a stop motion, but there could be arbitrary 
+        // (we are just returning a stop motion, but there could be arbitrary
         // logic here for generating reaction motions)
         return StopMotion<franka::CartesianPose>();
       })
@@ -731,7 +759,7 @@ The next time `Robot.join_motion` or `Robot.move` are called, they will throw th
 Hence, after an asynchronous motion has finished, make sure to call `Robot.join_motion` to ensure being notified of any
 exceptions that occurred during the motion.
 
-### Gripper
+### <a id="gripper" /> 👌  Gripper
 
 In the `franky::Gripper` class, the default gripper force and gripper speed can be set.
 Then, additionally to the libfranka commands, the following helper methods can be used:
@@ -806,6 +834,70 @@ else:
     print("Gripper motion timed out.")
 ```
 
+### Accessing the Web Interface API
+
+For Franka robots, control happens via the Franka Control Interface (FCI), which has to be enabled through the Franka UI in the robot's web interface.
+The Franka UI also provides methods for locking and unlocking the brakes, setting the execution mode, and executing the safety self-test.
+However, sometimes you may want to access these methods programmatically, e.g. for automatically unlocking the brakes before starting a motion, or automatically executing the self-test after 24h of continuous execution.
+
+For that reason, Franky provides a `RobotWebSession` class that allows you to access the web interface API of the robot.
+Note that directly accessing the web interface API is not officially supported and documented by Franka.
+Hence, use this feature at your own risk.
+
+A typical automated workflow could look like this:
+
+```python
+import franky
+
+with franky.RobotWebSession("172.16.0.2", "username", "password") as robot_web_session:
+    # First take control, in case some other web session is currently running
+    assert robot_web_session.take_control(), "Control not granted"
+
+    # Unlock the brakes
+    robot_web_session.unlock_brakes()
+
+    # Enable the FCI
+    robot_web_session.enable_fci()
+
+    # Create a franky.Robot instance and do whatever you want
+    ...
+
+    # Disable the FCI
+    robot_web_session.disable_fci()
+
+    # Lock brakes
+    robot_web_session.lock_brakes()
+```
+
+In case you are running the robot for longer than 24h you will have noticed that you have to do a safety self-test every 24h.
+`RobotWebSession` allows to automate this task as well:
+
+```python
+import time
+import franky
+
+with franky.RobotWebSession("172.16.0.2", "username", "password") as robot_web_session:
+    # Execute self-test if the time until self-test is less than 5 minutes.
+    if robot_web_session.get_system_status()["safety"]["timeToTd2"] < 300:
+        robot_web_session.disable_fci()
+        robot_web_session.lock_brakes()
+        time.sleep(1.0)
+
+        robot_web_session.execute_self_test()
+
+        robot_web_session.unlock_brakes()
+        robot_web_session.enable_fci()
+        time.sleep(1.0)
+
+        # Recreate your franky.Robot instance as the FCI has been disabled and re-enabled
+        ...
+```
+
+`robot_web_session.get_system_status()` contains more information than just the time until self-test, such as the current execution mode, whether the brakes are locked, whether the FCI is enabled, and more.
+
+If you want to call other API functions, you can use the `RobotWebSession.send_api_request` and `RobotWebSession.send_control_api_request` methods.
+See [robot_web_session.py](franky/robot_web_session.py) for an example of how to use these methods.
+
 ## 🛠️ Development
 
 Franky is currently tested against following versions
@@ -848,3 +940,12 @@ Aside of bug fixes and general performance improvements, Franky provides the fol
 * Franky supports [joint velocity control](#joint-velocity-control)
   and [cartesian velocity control](#cartesian-velocity-control)
 * The dynamics limits are not hard-coded anymore but can be [set for each robot instance](#-robot).
+
+## Contributing
+
+If you wish to contribute to this project, you are welcome to create a pull request.
+Please run the [pre-commit](https://pre-commit.com/) hooks before submitting your pull request.
+To install the pre-commit hooks, run:
+
+1. [Install pre-commit](https://pre-commit.com/#install)
+2. Install the Git hooks by running `pre-commit install` or, alternatively, run `pre-commit run --all-files manually.

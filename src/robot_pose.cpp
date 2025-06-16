@@ -1,9 +1,10 @@
 #include "franky/robot_pose.hpp"
 
-#include <optional>
-#include <Eigen/Core>
-#include <utility>
 #include <franka/control_types.h>
+
+#include <Eigen/Core>
+#include <optional>
+#include <utility>
 
 #include "franky/types.hpp"
 #include "franky/util.hpp"
@@ -17,15 +18,15 @@ RobotPose::RobotPose(Eigen::Affine3d end_effector_pose, std::optional<ElbowState
 
 RobotPose::RobotPose(const Vector7d &vector_repr, bool ignore_elbow, FlipDirection flip_direction)
     : RobotPose(
-    vector_repr.head<6>(),
-    ignore_elbow ? std::optional<ElbowState>(std::nullopt) : ElbowState(vector_repr[6], flip_direction)) {}
+          vector_repr.head<6>(),
+          ignore_elbow ? std::optional<ElbowState>(std::nullopt) : ElbowState(vector_repr[6], flip_direction)) {}
 
 RobotPose::RobotPose(const Vector6d &vector_repr, std::optional<ElbowState> elbow_state)
     : elbow_state_(elbow_state),
-      end_effector_pose_(Affine().fromPositionOrientationScale(
-          vector_repr.head<3>(),
-          Eigen::AngleAxis(vector_repr.tail<3>().norm(), vector_repr.tail<3>().normalized()),
-          Eigen::Vector3d::Ones())) {}
+      end_effector_pose_(
+          Affine().fromPositionOrientationScale(
+              vector_repr.head<3>(), Eigen::AngleAxis(vector_repr.tail<3>().norm(), vector_repr.tail<3>().normalized()),
+              Eigen::Vector3d::Ones())) {}
 
 RobotPose::RobotPose(const franka::CartesianPose &franka_pose)
     : RobotPose(Affine(Eigen::Matrix4d::Map(franka_pose.O_T_EE.data())), ElbowState(franka_pose.elbow)) {}
@@ -49,10 +50,9 @@ franka::CartesianPose RobotPose::as_franka_pose(FlipDirection default_flip_direc
 
 RobotPose::RobotPose() : end_effector_pose_(Eigen::Affine3d::Identity()), elbow_state_(std::nullopt) {}
 
-std::ostream &operator<<(std::ostream &os, const RobotPose& robot_pose) {
+std::ostream &operator<<(std::ostream &os, const RobotPose &robot_pose) {
   os << "RobotPose(ee_pose=" << robot_pose.end_effector_pose_;
-  if (robot_pose.elbow_state_.has_value())
-    os << ", elbow=" << robot_pose.elbow_state_.value();
+  if (robot_pose.elbow_state_.has_value()) os << ", elbow=" << robot_pose.elbow_state_.value();
   os << ")";
   return os;
 }

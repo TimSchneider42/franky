@@ -3,7 +3,7 @@
 #include "franky.hpp"
 
 namespace py = pybind11;
-using namespace pybind11::literals; // to bring in the '_a' literal
+using namespace pybind11::literals;  // to bring in the '_a' literal
 using namespace franky;
 
 void bind_enums(py::module &m) {

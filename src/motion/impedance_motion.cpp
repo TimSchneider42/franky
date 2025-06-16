@@ -1,13 +1,12 @@
 #include "franky/motion/impedance_motion.hpp"
 
-#include <map>
-
 #include <Eigen/Core>
 #include <Eigen/Geometry>
+#include <map>
 #include <utility>
 
-#include "franky/robot_pose.hpp"
 #include "franky/motion/motion.hpp"
+#include "franky/robot_pose.hpp"
 
 namespace franky {
 
@@ -21,9 +20,7 @@ ImpedanceMotion::ImpedanceMotion(Affine target, const ImpedanceMotion::Params &p
   damping.bottomRightCorner(3, 3) << 2.0 * sqrt(params.rotational_stiffness) * Eigen::MatrixXd::Identity(3, 3);
 }
 
-void ImpedanceMotion::initImpl(
-    const RobotState &robot_state,
-    const std::optional<franka::Torques> &previous_command) {
+void ImpedanceMotion::initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) {
   auto robot_pose = Affine(Eigen::Matrix4d::Map(robot_state.O_T_EE.data()));
   intermediate_target_ = robot_pose;
   if (params_.target_type == ReferenceType::kRelative)
@@ -32,12 +29,8 @@ void ImpedanceMotion::initImpl(
     absolute_target_ = target_;
 }
 
-franka::Torques
-ImpedanceMotion::nextCommandImpl(
-    const RobotState &robot_state,
-    franka::Duration time_step,
-    franka::Duration rel_time,
-    franka::Duration abs_time,
+franka::Torques ImpedanceMotion::nextCommandImpl(
+    const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time,
     const std::optional<franka::Torques> &previous_command) {
   auto model = robot()->model();
   Vector7d coriolis = model->coriolis(robot_state);
@@ -59,8 +52,7 @@ ImpedanceMotion::nextCommandImpl(
   error.tail(3) << -transform.linear() * error.tail(3);
 
   auto wrench_cartesian_default = -stiffness * error - damping * (jacobian * robot_state.dq);
-  auto wrench_cartesian = params_.force_constraints_active.select(
-      params_.force_constraints, wrench_cartesian_default);
+  auto wrench_cartesian = params_.force_constraints_active.select(params_.force_constraints, wrench_cartesian_default);
 
   auto tau_task = jacobian.transpose() * wrench_cartesian;
   auto tau_d = tau_task + coriolis;
@@ -73,8 +65,7 @@ ImpedanceMotion::nextCommandImpl(
   intermediate_target_ = intermediate_target;
 
   auto output = franka::Torques(tau_d_array);
-  if (finish)
-    output = franka::MotionFinished(output);
+  if (finish) output = franka::MotionFinished(output);
 
   return output;
 }

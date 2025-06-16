@@ -44,7 +44,10 @@ void bind_state_repr(py::module &m) {
               }));
 
   py::class_<ElbowState>(m, "ElbowState")
-      .def(py::init<double, std::optional<FlipDirection>>(), "joint_3_pos"_a, "joint_4_flip"_a = std::nullopt)
+      .def(
+          py::init<double, std::optional<FlipDirection>>(),
+          "joint_3_pos"_a,
+          "joint_4_flip"_a = std::nullopt)
       .def(py::init<const ElbowState &>())  // Copy constructor
       .def_property_readonly("joint_3_pos", &ElbowState::joint_3_pos)
       .def_property_readonly("joint_4_flip", &ElbowState::joint_4_flip)
@@ -104,7 +107,8 @@ void bind_state_repr(py::module &m) {
           py::init([](const std::optional<Eigen::Vector3d> &linear_acceleration,
                       const std::optional<Eigen::Vector3d> &angular_acceleration) {
             return TwistAcceleration(
-                linear_acceleration.value_or(Eigen::Vector3d::Zero()), angular_acceleration.value_or(Eigen::Vector3d::Zero()));
+                linear_acceleration.value_or(Eigen::Vector3d::Zero()),
+                angular_acceleration.value_or(Eigen::Vector3d::Zero()));
           }),
           "linear_acceleration"_a = std::nullopt,
           "angular_acceleration"_a = std::nullopt)
@@ -178,7 +182,10 @@ void bind_state_repr(py::module &m) {
   py::implicitly_convertible<Affine, RobotPose>();
 
   py::class_<RobotVelocity>(m, "RobotVelocity")
-      .def(py::init<Twist, std::optional<double>>(), "end_effector_twist"_a, "elbow_velocity"_a = std::nullopt)
+      .def(
+          py::init<Twist, std::optional<double>>(),
+          "end_effector_twist"_a,
+          "elbow_velocity"_a = std::nullopt)
       .def(py::init<const RobotVelocity &>())  // Copy constructor
       .def("change_end_effector_frame", &RobotVelocity::changeEndEffectorFrame, "offset_world_frame"_a)
       .def("with_elbow_velocity", &RobotVelocity::withElbowVelocity, "elbow_velocity"_a)
@@ -208,7 +215,10 @@ void bind_state_repr(py::module &m) {
 
   py::class_<CartesianState>(m, "CartesianState")
       .def(py::init<const RobotPose &>(), "pose"_a)
-      .def(py::init<const RobotPose &, const RobotVelocity &>(), "pose"_a, "velocity"_a)
+      .def(
+          py::init<const RobotPose &, const RobotVelocity &>(),
+          "pose"_a,
+          "velocity"_a)
       .def(py::init<const CartesianState &>())  // Copy constructor
       .def("transform_with", &CartesianState::transformWith, "transform"_a)
       .def("change_end_effector_frame", &CartesianState::changeEndEffectorFrame, "transform"_a)
@@ -233,7 +243,10 @@ void bind_state_repr(py::module &m) {
 
   py::class_<JointState>(m, "JointState")
       .def(py::init<const Vector7d &>(), "position"_a)
-      .def(py::init<const Vector7d &, const Vector7d &>(), "position"_a, "velocity"_a)
+      .def(
+          py::init<const Vector7d &, const Vector7d &>(),
+          "position"_a,
+          "velocity"_a)
       .def(py::init<const JointState &>())  // Copy constructor
       .def_property_readonly("position", &JointState::position)
       .def_property_readonly("velocity", &JointState::velocity)

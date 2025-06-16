@@ -3,9 +3,10 @@ set -e
 
 echo "Installing Pinocchio version ${PINOCCHIO_VERSION}..."
 TMP_DIR="$(mktemp -d /var/tmp/tmp.XXXXXXXXXX)"
-git clone --recursive https://github.com/stack-of-tasks/pinocchio "${TMP_DIR}"
+git clone https://github.com/stack-of-tasks/pinocchio "${TMP_DIR}"
 cd "${TMP_DIR}"
 git checkout "${PINOCCHIO_VERSION}"
+git submodule update --init --recursive
 mkdir build
 cd build
 # CMP0167 has to be set to OLD to be compatible with outdated boost versions

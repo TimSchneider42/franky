@@ -20,9 +20,9 @@ class JointVelocityWaypointMotion : public VelocityWaypointMotion<franka::JointV
  public:
   /**
    * @param waypoints Joint waypoints to follow.
-   * @param relative_dynamics_factor The relative dynamics factor for this motion. The factor will get multiplied with
-   *                                 the robot's global dynamics factor to get the actual dynamics factor for this
-   *                                 motion.
+   * @param relative_dynamics_factor The relative dynamics factor for this
+   * motion. The factor will get multiplied with the robot's global dynamics
+   * factor to get the actual dynamics factor for this motion.
    */
   explicit JointVelocityWaypointMotion(
       const std::vector<VelocityWaypoint<Vector7d>> &waypoints,

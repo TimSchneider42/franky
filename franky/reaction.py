@@ -1,10 +1,16 @@
-from ._franky import Condition, BaseCartesianPoseMotion, BaseCartesianVelocityMotion, BaseJointPositionMotion, \
-    BaseJointVelocityMotion, BaseTorqueMotion, \
-    CartesianPoseReaction as _CartesianPoseReaction, \
-    CartesianVelocityReaction as _CartesianVelocityReaction, \
-    JointPositionReaction as _JointPositionReaction, \
-    JointVelocityReaction as _JointVelocityReaction, \
-    TorqueReaction as _TorqueReaction
+from ._franky import (
+    Condition,
+    BaseCartesianPoseMotion,
+    BaseCartesianVelocityMotion,
+    BaseJointPositionMotion,
+    BaseJointVelocityMotion,
+    BaseTorqueMotion,
+    CartesianPoseReaction as _CartesianPoseReaction,
+    CartesianVelocityReaction as _CartesianVelocityReaction,
+    JointPositionReaction as _JointPositionReaction,
+    JointVelocityReaction as _JointVelocityReaction,
+    TorqueReaction as _TorqueReaction,
+)
 
 from .motion import Motion
 
@@ -40,4 +46,9 @@ class TorqueReaction(_TorqueReaction, Reaction):
 
 
 _REACTION_TYPES = [
-    CartesianPoseReaction, CartesianVelocityReaction, JointPositionReaction, JointVelocityReaction, TorqueReaction]
+    CartesianPoseReaction,
+    CartesianVelocityReaction,
+    JointPositionReaction,
+    JointVelocityReaction,
+    TorqueReaction,
+]

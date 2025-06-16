@@ -21,13 +21,16 @@ struct MotionPlannerException : std::runtime_error {
  *
  * @param target                    The target of this waypoint.
  * @param reference_type            The reference type (absolute or relative).
- * @param relative_dynamics_factor  The relative dynamics factor for this waypoint. This factor will get multiplied with
- *                                  the robot's global dynamics factor and the motion dynamics factor to get the actual
- *                                  dynamics factor for this waypoint.
- * @param minimum_time              The minimum time to get to the next waypoint.
- * @param hold_target_duration      For how long to hold the target of this waypoint after it has been reached.
- * @param max_total_duration        The maximum time to try reaching this waypoint before moving on to the next
- *                                  waypoint. Default is infinite.
+ * @param relative_dynamics_factor  The relative dynamics factor for this
+ * waypoint. This factor will get multiplied with the robot's global dynamics
+ * factor and the motion dynamics factor to get the actual dynamics factor for
+ * this waypoint.
+ * @param minimum_time              The minimum time to get to the next
+ * waypoint.
+ * @param hold_target_duration      For how long to hold the target of this
+ * waypoint after it has been reached.
+ * @param max_total_duration        The maximum time to try reaching this
+ * waypoint before moving on to the next waypoint. Default is infinite.
  */
 template <typename TargetType>
 struct Waypoint {
@@ -43,10 +46,13 @@ struct Waypoint {
 };
 
 /**
- * @brief A motion following multiple waypoints in a time-optimal way. Works with arbitrary initial conditions.
- * @tparam ControlSignalType    The type of the control signal. Either franka::Torques, franka::JointVelocities,
- *                              franka::CartesianVelocities, franka::JointPositions or franka::CartesianPose.
- * @tparam WaypointType         The type of the waypoints. Must subclass Waypoint<TargetType>.
+ * @brief A motion following multiple waypoints in a time-optimal way. Works
+ * with arbitrary initial conditions.
+ * @tparam ControlSignalType    The type of the control signal. Either
+ * franka::Torques, franka::JointVelocities, franka::CartesianVelocities,
+ * franka::JointPositions or franka::CartesianPose.
+ * @tparam WaypointType         The type of the waypoints. Must subclass
+ * Waypoint<TargetType>.
  * @tparam TargetType           The type of the target of the waypoints.
  */
 template <typename ControlSignalType, typename WaypointType, typename TargetType>
@@ -57,8 +63,8 @@ class WaypointMotion : public Motion<ControlSignalType> {
  public:
   /**
    * @param waypoints                The waypoints to follow.
-   * @param return_when_finished     Whether to end the motion when the last waypoint is reached or keep holding the
-   *                                 last target.
+   * @param return_when_finished     Whether to end the motion when the last
+   * waypoint is reached or keep holding the last target.
    */
   explicit WaypointMotion(std::vector<WaypointType> waypoints, bool return_when_finished = true)
       : waypoints_(std::move(waypoints)), return_when_finished_(return_when_finished), prev_result_() {}
@@ -85,9 +91,10 @@ class WaypointMotion : public Motion<ControlSignalType> {
       const std::optional<ControlSignalType> &previous_command) override {
     const auto expected_time_step = franka::Duration(1);
     if (time_step > expected_time_step) {
-      // In this case, we missed a couple of steps for some reason. Hence, extrapolate the way the robot does if it
-      // does not receive data (constant acceleration model).
-      // See https://frankaemika.github.io/docs/libfranka.html#under-the-hood
+      // In this case, we missed a couple of steps for some reason. Hence,
+      // extrapolate the way the robot does if it does not receive data
+      // (constant acceleration model). See
+      // https://frankaemika.github.io/docs/libfranka.html#under-the-hood
       extrapolateMotion(robot_state, time_step - expected_time_step, input_parameter_, output_parameter_);
       output_parameter_.pass_to_input(input_parameter_);
     }
@@ -104,7 +111,8 @@ class WaypointMotion : public Motion<ControlSignalType> {
       if (waypoint_iterator_ != waypoints_.end()) {
         auto hold_target_duration = waypoint_iterator_->hold_target_duration;
         if (waypoint_iterator_ + 1 == waypoints_.end()) {
-          // Allow cooldown of motion, so that the low-pass filter has time to adjust to target values
+          // Allow cooldown of motion, so that the low-pass filter has time to
+          // adjust to target values
           hold_target_duration = std::max(hold_target_duration, franka::Duration(10));
         }
         if (rel_time - target_reached_time_.value() >= hold_target_duration || max_time_reached) {
@@ -129,7 +137,8 @@ class WaypointMotion : public Motion<ControlSignalType> {
 
     prev_result_ = trajectory_generator_.update(input_parameter_, output_parameter_);
     if (prev_result_ == ruckig::Result::Working || prev_result_ == ruckig::Result::Finished) {
-      // This is a workaround to prevent NaNs from popping up. Must be some bug in ruckig.
+      // This is a workaround to prevent NaNs from popping up. Must be some bug
+      // in ruckig.
       for (int i = 0; i < 7; i++) {
         if (!input_parameter_.enabled[i]) {
           output_parameter_.new_position[i] = 0.0;

@@ -17,18 +17,19 @@ namespace franky {
 /**
  * @brief Cartesian velocity waypoint motion.
  *
- * This motion follows multiple consecutive cartesian velocity targets in a time-optimal way.
+ * This motion follows multiple consecutive cartesian velocity targets in a
+ * time-optimal way.
  */
 class CartesianVelocityWaypointMotion : public VelocityWaypointMotion<franka::CartesianVelocities, RobotVelocity> {
  public:
   /**
    * @param waypoints                Waypoints to follow.
-   * @param relative_dynamics_factor The relative dynamics factor for this motion. This factor will get multiplied with
-   *                                 the robot's global dynamics factor to get the actual dynamics factor for this
-   *                                 motion.
-   * @param ee_frame                 The end-effector frame for which the target is defined. This is a transformation
-   *                                 from the configured end-effector frame to the end-effector frame the target is
-   *                                 defined for.
+   * @param relative_dynamics_factor The relative dynamics factor for this
+   * motion. This factor will get multiplied with the robot's global dynamics
+   * factor to get the actual dynamics factor for this motion.
+   * @param ee_frame                 The end-effector frame for which the target
+   * is defined. This is a transformation from the configured end-effector frame
+   * to the end-effector frame the target is defined for.
    */
   explicit CartesianVelocityWaypointMotion(
       const std::vector<VelocityWaypoint<RobotVelocity>> &waypoints,

@@ -48,7 +48,8 @@ std::tuple<Vector7d, Vector7d, Vector7d> JointVelocityWaypointMotion::getAbsolut
   return {r->joint_velocity_limit.get(), r->joint_acceleration_limit.get(), r->joint_jerk_limit.get()};
 }
 
-std::tuple<Vector7d, Vector7d, Vector7d> JointVelocityWaypointMotion::getDesiredState( const RobotState &robot_state) const {
+std::tuple<Vector7d, Vector7d, Vector7d> JointVelocityWaypointMotion::getDesiredState(
+    const RobotState &robot_state) const {
   return {robot_state.dq_d, robot_state.ddq_d, Vector7d::Zero()};
 }
 }  // namespace franky

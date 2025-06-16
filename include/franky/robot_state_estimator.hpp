@@ -11,11 +11,11 @@ class RobotStateEstimator {
       double q_process_var, double dq_process_var, double ddq_process_var, double control_process_var, double q_obs_var,
       double dq_obs_var, double q_d_obs_var, double dq_d_obs_var, double ddq_d_obs_var, double control_adaptation_rate);
 
-  RobotStateEstimator(const RobotStateEstimator&) = default;
+  RobotStateEstimator(const RobotStateEstimator &) = default;
 
-  RobotState update(const franka::RobotState& franka_robot_state, const Model& model);
+  RobotState update(const franka::RobotState &franka_robot_state, const Model &model);
 
-  RobotState operator()(const franka::RobotState& franka_robot_state, const Model& model) {
+  RobotState operator()(const franka::RobotState &franka_robot_state, const Model &model) {
     return update(franka_robot_state, model);
   }
 

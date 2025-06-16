@@ -39,7 +39,7 @@ jobs:
         run: |
           # find unique versions
           versions=$(
-            cd artifacts && 
+            cd artifacts &&
             ls -1d wheels___*___* 2>/dev/null \
               | sed -E 's/wheels___([^_]+)___.*/\1/' \
               | sort -u
@@ -49,12 +49,12 @@ jobs:
             echo "No wheel archives found, skipping."
             exit 0
           fi
-          
+
           for version in $versions; do
             out="libfranka_${version//\./-}_wheels.zip"
             out_full=$(realpath "output/$out")
             echo "Creating $out from all wheels___${version}___*.zip"
-          
+
             tmp=$(mktemp -d)
             mkdir "$tmp/dist"
             # unpack each matching zip into the temp dir
@@ -65,13 +65,13 @@ jobs:
               mv $tmp2/dist/* "$tmp/dist/"
               rm -rf "$tmp2"
             done
-            
+
             # re-combine into a single zip
             (
               cd "$tmp"
               zip -qr "$out_full" .
             )
-            
+
             # clean up
             rm -rf "$tmp"
             echo "$out done."

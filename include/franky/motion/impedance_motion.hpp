@@ -1,23 +1,22 @@
 #pragma once
 
+#include <Eigen/Core>
+#include <Eigen/Geometry>
 #include <map>
 #include <optional>
 
-#include <Eigen/Core>
-#include <Eigen/Geometry>
-
-#include "franky/robot_pose.hpp"
 #include "franky/motion/motion.hpp"
 #include "franky/motion/reference_type.hpp"
+#include "franky/robot_pose.hpp"
 
 namespace franky {
 
 /**
  * @brief Base class for client-side cartesian impedance motions.
  *
- * This motion is a implements a cartesian impedance controller on the client side and does not use
- * Franka's internal impedance controller. Instead, it uses Franka's internal torque controller and calculates the
- * torques itself.
+ * This motion is a implements a cartesian impedance controller on the client
+ * side and does not use Franka's internal impedance controller. Instead, it
+ * uses Franka's internal torque controller and calculates the torques itself.
  */
 class ImpedanceMotion : public Motion<franka::Torques> {
  public:
@@ -50,24 +49,16 @@ class ImpedanceMotion : public Motion<franka::Torques> {
  protected:
   void initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) override;
 
-  franka::Torques
-  nextCommandImpl(
-      const RobotState &robot_state,
-      franka::Duration time_step,
-      franka::Duration rel_time,
-      franka::Duration abs_time,
+  franka::Torques nextCommandImpl(
+      const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time,
       const std::optional<franka::Torques> &previous_command) override;
 
-  [[nodiscard]] inline Affine intermediate_target() const {
-    return intermediate_target_;
-  }
+  [[nodiscard]] inline Affine intermediate_target() const { return intermediate_target_; }
 
-  [[nodiscard]] inline Affine target() const {
-    return absolute_target_;
-  }
+  [[nodiscard]] inline Affine target() const { return absolute_target_; }
 
-  virtual std::tuple<Affine, bool>
-  update(const RobotState &robot_state, franka::Duration time_step, franka::Duration time) = 0;
+  virtual std::tuple<Affine, bool> update(
+      const RobotState &robot_state, franka::Duration time_step, franka::Duration time) = 0;
 
  private:
   Affine absolute_target_;

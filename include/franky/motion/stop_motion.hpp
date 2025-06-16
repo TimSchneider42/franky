@@ -19,7 +19,8 @@ class StopMotion<franka::JointPositions> : public JointMotion {
  public:
   /**
    *
-   * @param relative_dynamics_factor Relative dynamics factor for this stop motion.
+   * @param relative_dynamics_factor Relative dynamics factor for this stop
+   * motion.
    */
   explicit StopMotion(const RelativeDynamicsFactor &relative_dynamics_factor = 1.0)
       : JointMotion(JointState(Vector7d::Zero()), ReferenceType::kRelative, relative_dynamics_factor) {}
@@ -33,7 +34,8 @@ class StopMotion<franka::JointVelocities> : public JointVelocityMotion {
  public:
   /**
    *
-   * @param relative_dynamics_factor Relative dynamics factor for this stop motion.
+   * @param relative_dynamics_factor Relative dynamics factor for this stop
+   * motion.
    */
   explicit StopMotion(const RelativeDynamicsFactor &relative_dynamics_factor = 1.0)
       : JointVelocityMotion(Vector7d::Zero(), franka::Duration(0), relative_dynamics_factor) {}
@@ -47,10 +49,10 @@ class StopMotion<franka::CartesianPose> : public CartesianWaypointMotion {
  public:
   /**
    *
-   * @param relative_dynamics_factor Relative dynamics factor for this stop motion.
+   * @param relative_dynamics_factor Relative dynamics factor for this stop
+   * motion.
    */
-  explicit StopMotion(
-      const RelativeDynamicsFactor &relative_dynamics_factor = 1.0)
+  explicit StopMotion(const RelativeDynamicsFactor &relative_dynamics_factor = 1.0)
       : CartesianWaypointMotion(
             {PositionWaypoint<CartesianState>{
                 {
@@ -69,12 +71,11 @@ class StopMotion<franka::CartesianVelocities> : public CartesianVelocityMotion {
  public:
   /**
    *
-   * @param relative_dynamics_factor Relative dynamics factor for this stop motion.
+   * @param relative_dynamics_factor Relative dynamics factor for this stop
+   * motion.
    */
-  explicit StopMotion(
-      const RelativeDynamicsFactor &relative_dynamics_factor = 1.0)
-      : CartesianVelocityMotion(RobotVelocity(), franka::Duration(0), relative_dynamics_factor) {
-  }
+  explicit StopMotion(const RelativeDynamicsFactor &relative_dynamics_factor = 1.0)
+      : CartesianVelocityMotion(RobotVelocity(), franka::Duration(0), relative_dynamics_factor) {}
 };
 
 }  // namespace franky

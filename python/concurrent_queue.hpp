@@ -9,11 +9,9 @@
 template <typename T>
 class ConcurrentQueue {
  public:
-  ConcurrentQueue() {
-    franky::patchMutexRT(mutex_);
-  }
+  ConcurrentQueue() { franky::patchMutexRT(mutex_); }
 
-  void push(const T& item) {
+  void push(const T &item) {
     std::lock_guard lock(mutex_);
     queue_.push(item);
     condition_.notify_one();
@@ -28,7 +26,7 @@ class ConcurrentQueue {
   }
 
   template <class Rep, class Period>
-  std::optional<T> pop(const std::chrono::duration<Rep, Period>& timeout) {
+  std::optional<T> pop(const std::chrono::duration<Rep, Period> &timeout) {
     std::unique_lock lock(mutex_);
     if (condition_.wait_for(lock, timeout, [this]() { return !queue_.empty(); })) {
       T item = queue_.front();

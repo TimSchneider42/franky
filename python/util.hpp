@@ -4,7 +4,7 @@
 
 using namespace franky;
 
-template<typename T>
+template <typename T>
 std::string strFromStream(const T &obj) {
   std::stringstream ss;
   ss << obj;

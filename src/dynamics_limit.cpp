@@ -7,7 +7,7 @@
 
 namespace franky {
 
-template<>
+template <>
 void DynamicsLimit<double>::check(const double &value) const {
   if (value < 0) {
     std::stringstream ss;
@@ -21,13 +21,13 @@ void DynamicsLimit<double>::check(const double &value) const {
   }
 }
 
-template<>
-template<>
+template <>
+template <>
 void DynamicsLimit<Vector7d>::setFrom<Array<7>>(const Array<7> &value) {
   set(ensureEigen<7>(value));
 }
 
-template<>
+template <>
 void DynamicsLimit<Vector7d>::check(const Vector7d &value) const {
   for (int i = 0; i < value.size(); i++) {
     if (value[i] < 0) {

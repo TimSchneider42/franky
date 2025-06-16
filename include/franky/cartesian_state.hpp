@@ -1,7 +1,7 @@
 #pragma once
 
-#include <optional>
 #include <Eigen/Core>
+#include <optional>
 
 #include "franky/robot_pose.hpp"
 #include "franky/robot_velocity.hpp"
@@ -11,8 +11,8 @@ namespace franky {
 /*
  * @brief Cartesian state of a robot.
  *
- * This class encapsulates the cartesian state of a robot, which comprises the end effector pose and the end effector
- * velocity.
+ * This class encapsulates the cartesian state of a robot, which comprises the
+ * end effector pose and the end effector velocity.
  */
 class CartesianState {
  public:
@@ -26,15 +26,15 @@ class CartesianState {
    * @param pose The pose of the end effector.
    * @param velocity The velocity of the end effector.
    */
-  CartesianState(const RobotPose &pose, const RobotVelocity &velocity)
-      : pose_(pose), velocity_(velocity) {}
+  CartesianState(const RobotPose &pose, const RobotVelocity &velocity) : pose_(pose), velocity_(velocity) {}
 
   CartesianState(const CartesianState &) = default;
 
   CartesianState() = default;
 
   /**
-   * @brief Transform the frame of the state by applying the given affine transform.
+   * @brief Transform the frame of the state by applying the given affine
+   * transform.
    *
    * @param transform The transformation to apply.
    * @return The state after the transformation.
@@ -44,9 +44,11 @@ class CartesianState {
   }
 
   /**
-   * @brief Change the end effector frame of the state by the given affine transform.
+   * @brief Change the end effector frame of the state by the given affine
+   * transform.
    *
-   * @param transform The pose of the new end-effector in the frame of the old end-effector.
+   * @param transform The pose of the new end-effector in the frame of the old
+   * end-effector.
    * @return The state with a new end-effector frame.
    */
   [[nodiscard]] CartesianState changeEndEffectorFrame(const Affine &transform) const {
@@ -57,16 +59,12 @@ class CartesianState {
   /*
    * @brief Pose component of the state.
    */
-  [[nodiscard]] RobotPose pose() const {
-    return pose_;
-  }
+  [[nodiscard]] RobotPose pose() const { return pose_; }
 
   /*
    * @brief Velocity component of the state.
    */
-  [[nodiscard]] RobotVelocity velocity() const {
-    return velocity_;
-  }
+  [[nodiscard]] RobotVelocity velocity() const { return velocity_; }
 
   friend inline std::ostream &operator<<(std::ostream &os, const CartesianState &cartesian_state);
 

@@ -1,8 +1,8 @@
 #include "franky/gripper.hpp"
 
 namespace franky {
-std::shared_future<bool> Gripper::graspAsync(double width, double speed, double force, double epsilon_inner,
-                                             double epsilon_outer) {
+std::shared_future<bool> Gripper::graspAsync(
+    double width, double speed, double force, double epsilon_inner, double epsilon_outer) {
   return setCurrentFuture(
       std::async(std::launch::async, &Gripper::grasp, this, width, speed, force, epsilon_inner, epsilon_outer));
 }

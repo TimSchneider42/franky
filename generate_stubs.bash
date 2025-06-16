@@ -24,4 +24,3 @@ pip install -r "${STUBS_GEN_DIR}/franky_control.egg-info/requires.txt" --no-cach
 pip install pybind11-stubgen==2.2.2  --no-cache-dir > /dev/null
 
 PYTHONPATH="${LIB_DIR}" "${SCRIPT_DIR}/custom_stubgen.py" -o "${LIB_DIR}" _franky
-

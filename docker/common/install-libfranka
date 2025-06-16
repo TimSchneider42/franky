@@ -23,10 +23,11 @@ fi
 
 echo "Installing libfranka version ${LIBFRANKA_VERSION}..."
 TMP_DIR="$(mktemp -d /var/tmp/tmp.XXXXXXXXXX)"
-git clone --recursive https://github.com/frankaemika/libfranka.git "${TMP_DIR}"
+git clone https://github.com/frankaemika/libfranka.git "${TMP_DIR}"
 cd "${TMP_DIR}"
 
 git checkout "${LIBFRANKA_VERSION}"
+git submodule update --init --recursive
 
 # Cherry-pick missing imports commit
 git config user.email "john.doe@example.com"

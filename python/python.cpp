@@ -1,10 +1,9 @@
-#include <pybind11/pybind11.h>
 #include <Python.h>
-
 #include <franka/robot_state.h>
+#include <pybind11/pybind11.h>
 
 namespace py = pybind11;
-using namespace pybind11::literals; // to bring in the '_a' literal
+using namespace pybind11::literals;  // to bring in the '_a' literal
 
 void bind_enums(py::module &);
 void bind_errors(py::module &);

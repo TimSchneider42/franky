@@ -77,8 +77,7 @@ RobotState RobotState::from_franka(
   auto O_dp_EE_est = Twist::fromVectorRepr(O_dp_EE_est_vec);
   auto O_ddp_EE_est_vec = ee_jacobian * ddq_est;
   auto O_ddp_EE_est = TwistAcceleration::fromVectorRepr(O_ddp_EE_est_vec);
-  return from_franka(
-      franka_robot_state, q_est, dq_est, ddq_est, O_dp_EE_est, O_ddp_EE_est, dq_est[2], ddq_est[2]);
+  return from_franka(franka_robot_state, q_est, dq_est, ddq_est, O_dp_EE_est, O_ddp_EE_est, dq_est[2], ddq_est[2]);
 }
 
 }  // namespace franky

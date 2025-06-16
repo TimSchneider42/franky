@@ -44,8 +44,7 @@ std::tuple<Vector7d, Vector7d, Vector7d> JointWaypointMotion::getAbsoluteInputLi
   return {r->joint_velocity_limit.get(), r->joint_acceleration_limit.get(), r->joint_jerk_limit.get()};
 }
 
-std::tuple<Vector7d, Vector7d, Vector7d> JointWaypointMotion::getDesiredState(
-    const RobotState &robot_state) const {
+std::tuple<Vector7d, Vector7d, Vector7d> JointWaypointMotion::getDesiredState(const RobotState &robot_state) const {
   return {robot_state.q_d, robot_state.dq_d, robot_state.ddq_d};
 }
 

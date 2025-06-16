@@ -2,9 +2,7 @@
 
 #include "util.cpp"
 
-
 using namespace franky;
-
 
 int main(int argc, char *argv[]) {
   if (argc != 2) {

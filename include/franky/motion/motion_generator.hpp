@@ -1,14 +1,14 @@
 #pragma once
 
+#include <franka/duration.h>
+#include <franka/robot_state.h>
+
 #include <memory>
 #include <mutex>
 
-#include <franka/duration.h>
-#include <franka/robot_state.h>
-#include "ruckig/ruckig.hpp"
-
-#include "franky/types.hpp"
 #include "franky/robot_state.hpp"
+#include "franky/types.hpp"
+#include "ruckig/ruckig.hpp"
 
 namespace franky {
 
@@ -21,18 +21,19 @@ struct ReactionRecursionException : public std::runtime_error {
 
 class Robot;
 
-template<typename ControlSignalType>
+template <typename ControlSignalType>
 class Motion;
 
 /**
  * @brief Helper class for handling motions and reactions.
  */
-template<typename ControlSignalType>
+template <typename ControlSignalType>
 class MotionGenerator {
  public:
   /**
-   * @brief Maximum recursion limit for reactions. After more than this number of reactions are fired in a single step,
-   * the motion generator will throw a ReactionRecursionException.
+   * @brief Maximum recursion limit for reactions. After more than this number
+   * of reactions are fired in a single step, the motion generator will throw a
+   * ReactionRecursionException.
    */
   static constexpr size_t REACTION_RECURSION_LIMIT = 16;
 
@@ -52,13 +53,12 @@ class MotionGenerator {
 
   /**
    * @brief Register a callback that is called in every step of the motion.
-   * @param callback The callback to register. Callbacks are called with the robot state, the time step [s], the
-   * relative time [s] and the control signal computed in this step.
+   * @param callback The callback to register. Callbacks are called with the
+   * robot state, the time step [s], the relative time [s] and the control
+   * signal computed in this step.
    */
-  inline void
-  registerUpdateCallback(
-      const std::function<void(
-          const RobotState &, franka::Duration, franka::Duration)> &callback) {
+  inline void registerUpdateCallback(
+      const std::function<void(const RobotState &, franka::Duration, franka::Duration)> &callback) {
     update_callbacks_.push_back(callback);
   }
 
@@ -82,8 +82,7 @@ class MotionGenerator {
   std::shared_ptr<Motion<ControlSignalType>> initial_motion_;
   std::shared_ptr<Motion<ControlSignalType>> current_motion_;
   std::shared_ptr<Motion<ControlSignalType>> new_motion_;
-  std::vector<std::function<void(const RobotState &, franka::Duration, franka::Duration)>>
-      update_callbacks_;
+  std::vector<std::function<void(const RobotState &, franka::Duration, franka::Duration)>> update_callbacks_;
   std::mutex new_motion_mutex_;
   std::optional<ControlSignalType> previous_command_;
 

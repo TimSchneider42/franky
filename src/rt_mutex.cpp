@@ -15,7 +15,7 @@
 namespace franky {
 
 // Common helper function to handle error checking for system calls
-void checkRes(int res, const std::string& msg) {
+void checkRes(int res, const std::string &msg) {
   if (res != 0) {
     std::stringstream ss;
     ss << msg << ": " << std::strerror(res);
@@ -26,18 +26,19 @@ void checkRes(int res, const std::string& msg) {
 /**
  * @brief Patch std::mutex to allow for priority inheritance.
  *
- * Priority inheritance ensures that the thread currently holding this mutex receives the same priority as the highest
- * priority thread waiting for it.
+ * Priority inheritance ensures that the thread currently holding this mutex
+ * receives the same priority as the highest priority thread waiting for it.
  *
  * @param mutex Mutex to patch.
  */
-void patchMutexRT(std::mutex& mutex) {
+void patchMutexRT(std::mutex &mutex) {
 #if defined(_WIN32) || defined(_WIN64)
   // Static variable to ensure warning is printed only once
   static bool warningPrinted = false;
 
   if (!warningPrinted) {
-    std::cerr << "Warning: Priority inheritance is not implemented on Windows. Falling back on regular mutexes."
+    std::cerr << "Warning: Priority inheritance is not implemented on Windows. "
+                 "Falling back on regular mutexes."
               << std::endl;
     warningPrinted = true;
   }

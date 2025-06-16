@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.11)
 
 file(READ "VERSION" version)
-project(franky VERSION ${version} LANGUAGES CXX)
+string(STRIP "${version}" version)
+project(franky VERSION "${version}" LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 

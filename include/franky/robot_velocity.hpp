@@ -1,20 +1,21 @@
 #pragma once
 
-#include <optional>
-#include <Eigen/Core>
 #include <franka/control_types.h>
 
-#include "franky/types.hpp"
-#include "franky/twist.hpp"
+#include <Eigen/Core>
+#include <optional>
+
 #include "franky/elbow_state.hpp"
+#include "franky/twist.hpp"
+#include "franky/types.hpp"
 
 namespace franky {
 
 /**
  * @brief Cartesian velocity of a robot.
  *
- * This class encapsulates the cartesian velocity of a robot, which comproses the end effector twist and the elbow
- * velocity.
+ * This class encapsulates the cartesian velocity of a robot, which comproses
+ * the end effector twist and the elbow velocity.
  */
 class RobotVelocity {
  public:
@@ -39,9 +40,9 @@ class RobotVelocity {
   explicit RobotVelocity(const Vector7d &vector_repr, bool ignore_elbow = false);
 
   /**
- * @param vector_repr The vector representation of the velocity.
- * @param elbow_velocity The velocity of the elbow (optional).
- */
+   * @param vector_repr The vector representation of the velocity.
+   * @param elbow_velocity The velocity of the elbow (optional).
+   */
   explicit RobotVelocity(const Vector6d &vector_repr, std::optional<double> elbow_velocity = std::nullopt);
 
   /**
@@ -50,8 +51,9 @@ class RobotVelocity {
   explicit RobotVelocity(franka::CartesianVelocities franka_velocity);
 
   /**
-   * @brief Get the vector representation of the velocity. It consists of the linear and angular velocity of the end
-   * effector and the joint velocity of the elbow.
+   * @brief Get the vector representation of the velocity. It consists of the
+   * linear and angular velocity of the end effector and the joint velocity of
+   * the elbow.
    *
    * @return The vector representation of the velocity.
    */
@@ -60,9 +62,11 @@ class RobotVelocity {
   /**
    * @brief Get the franka velocity.
    *
-   * @param elbow_state                  The elbow state to use. Note, that franka::CartesianVelocities contains the
-   *                                     elbow state and not the elbow velocity, contrary to RobotVelocity.
-   * @param default_elbow_flip_direction The default flip direction of the elbow if it is not set.
+   * @param elbow_state                  The elbow state to use. Note, that
+   * franka::CartesianVelocities contains the elbow state and not the elbow
+   * velocity, contrary to RobotVelocity.
+   * @param default_elbow_flip_direction The default flip direction of the elbow
+   * if it is not set.
    * @return The franka velocity.
    */
   [[nodiscard]] franka::CartesianVelocities as_franka_velocity(
@@ -70,14 +74,13 @@ class RobotVelocity {
       FlipDirection default_elbow_flip_direction = FlipDirection::kNegative) const;
 
   /**
-   * @brief Transform the frame of the velocity by applying the given affine transform.
+   * @brief Transform the frame of the velocity by applying the given affine
+   * transform.
    *
    * @param affine The affine to apply.
    * @return The velocity after the transformation.
    */
-  [[nodiscard]] inline RobotVelocity transform(const Affine &affine) const {
-    return transform(affine.rotation());
-  }
+  [[nodiscard]] inline RobotVelocity transform(const Affine &affine) const { return transform(affine.rotation()); }
 
   /**
    * @brief Transform the frame of the velocity by applying the given rotation.
@@ -85,16 +88,18 @@ class RobotVelocity {
    * @param rotation The rotation to apply.
    * @return The velocity after the transformation.
    */
-  template<typename RotationMatrixType>
+  template <typename RotationMatrixType>
   [[nodiscard]] inline RobotVelocity transform(const RotationMatrixType &rotation) const {
     return {rotation * end_effector_twist_, elbow_velocity_};
   }
 
   /**
-   * @brief Change the end-effector frame by adding the given offset to the current end-effector frame. Note that the
-   * offset must be given in world coordinates.
+   * @brief Change the end-effector frame by adding the given offset to the
+   * current end-effector frame. Note that the offset must be given in world
+   * coordinates.
    *
-   * @param offset_world_frame The offset to add to the current end-effector frame.
+   * @param offset_world_frame The offset to add to the current end-effector
+   * frame.
    * @return The velocity of the new end-effector frame.
    */
   [[nodiscard]] inline RobotVelocity changeEndEffectorFrame(const Eigen::Vector3d &offset_world_frame) const {
@@ -116,20 +121,16 @@ class RobotVelocity {
    *
    * @return The end effector twist.
    */
-  [[nodiscard]] inline Twist end_effector_twist() const {
-    return end_effector_twist_;
-  }
+  [[nodiscard]] inline Twist end_effector_twist() const { return end_effector_twist_; }
 
   /**
    * @brief Get the elbow velocity.
    *
    * @return The elbow velocity.
    */
-  [[nodiscard]] inline std::optional<double> elbow_velocity() const {
-    return elbow_velocity_;
-  }
+  [[nodiscard]] inline std::optional<double> elbow_velocity() const { return elbow_velocity_; }
 
-  friend std::ostream& operator<<(std::ostream& os, const RobotVelocity& robot_velocity);
+  friend std::ostream &operator<<(std::ostream &os, const RobotVelocity &robot_velocity);
 
  private:
   Twist end_effector_twist_;
@@ -140,7 +141,7 @@ inline RobotVelocity operator*(const Affine &affine, const RobotVelocity &robot_
   return robot_velocity.transform(affine);
 }
 
-template<typename RotationMatrixType>
+template <typename RotationMatrixType>
 inline RobotVelocity operator*(const RotationMatrixType &rotation, const RobotVelocity &robot_velocity) {
   return robot_velocity.transform(rotation);
 }

@@ -22,10 +22,11 @@ struct PositionWaypoint : public Waypoint<TargetType> {
 };
 
 /**
- * @brief A motion following multiple positional waypoints in a time-optimal way. Works with arbitrary initial
- * conditions.
- * @tparam ControlSignalType The type of the control signal. Either franka::Torques, franka::JointVelocities,
- * franka::CartesianVelocities, franka::JointPositions or franka::CartesianPose.
+ * @brief A motion following multiple positional waypoints in a time-optimal
+ * way. Works with arbitrary initial conditions.
+ * @tparam ControlSignalType The type of the control signal. Either
+ * franka::Torques, franka::JointVelocities, franka::CartesianVelocities,
+ * franka::JointPositions or franka::CartesianPose.
  * @tparam TargetType The type of the target of the waypoints.
  */
 template <typename ControlSignalType, typename TargetType>
@@ -33,11 +34,11 @@ class PositionWaypointMotion : public WaypointMotion<ControlSignalType, Position
  public:
   /**
    * @param waypoints                The waypoints to follow.
-   * @param relative_dynamics_factor The relative dynamics factor for this motion. This factor will get multiplied with
-   *                                 the robot's global dynamics factor to get the actual dynamics factor for this
-   *                                 motion.
-   * @param return_when_finished     Whether to end the motion when the last waypoint is reached or keep holding the
-   *                                 last target.
+   * @param relative_dynamics_factor The relative dynamics factor for this
+   * motion. This factor will get multiplied with the robot's global dynamics
+   * factor to get the actual dynamics factor for this motion.
+   * @param return_when_finished     Whether to end the motion when the last
+   * waypoint is reached or keep holding the last target.
    */
   explicit PositionWaypointMotion(
       std::vector<PositionWaypoint<TargetType>> waypoints, const RelativeDynamicsFactor &relative_dynamics_factor = 1.0,
@@ -70,7 +71,8 @@ class PositionWaypointMotion : public WaypointMotion<ControlSignalType, Position
       const ruckig::InputParameter<7> &input_parameter, ruckig::OutputParameter<7> &output_parameter) const override {
     auto [vel_lim, acc_lim, jerk_lim] = getAbsoluteInputLimits();
 
-    // We use the desired state here as this is likely what the robot uses internally as well
+    // We use the desired state here as this is likely what the robot uses
+    // internally as well
     auto [pos_d, vel_d, acc_d] = getDesiredState(robot_state);
 
     auto vel = toEigenD<7>(input_parameter.current_velocity);

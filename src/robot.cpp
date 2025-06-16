@@ -14,7 +14,7 @@ namespace franky {
 #endif
 
 #define LIMIT_INIT(name, value_panda, value_fer) \
-  name, SEL_VAL(value_panda, value_fer), control_mutex_, [this] { return is_in_control_unsafe(); }
+  name, SEL_VAL(value_panda, value_fer), control_mutex_, [this] { return !is_in_control_unsafe(); }
 
 //! Connects to a robot at the given FCI IP address.
 Robot::Robot(const std::string &fci_hostname) : Robot(fci_hostname, Params()) {}
@@ -74,10 +74,8 @@ void Robot::setCollisionBehavior(const ScalarOrArray<7> &torque_threshold, const
 }
 
 void Robot::setCollisionBehavior(
-    const ScalarOrArray<7> &lower_torque_threshold,
-    const ScalarOrArray<7> &upper_torque_threshold,
-    const ScalarOrArray<6> &lower_force_threshold,
-    const ScalarOrArray<6> &upper_force_threshold) {
+    const ScalarOrArray<7> &lower_torque_threshold, const ScalarOrArray<7> &upper_torque_threshold,
+    const ScalarOrArray<6> &lower_force_threshold, const ScalarOrArray<6> &upper_force_threshold) {
   franka::Robot::setCollisionBehavior(
       expand<7>(lower_torque_threshold),
       expand<7>(upper_torque_threshold),
@@ -87,12 +85,9 @@ void Robot::setCollisionBehavior(
 
 void Robot::setCollisionBehavior(
     const ScalarOrArray<7> &lower_torque_threshold_acceleration,
-    const ScalarOrArray<7> &upper_torque_threshold_acceleration,
-    const ScalarOrArray<7> &lower_torque_threshold_nominal,
-    const ScalarOrArray<7> &upper_torque_threshold_nominal,
-    const ScalarOrArray<6> &lower_force_threshold_acceleration,
-    const ScalarOrArray<6> &upper_force_threshold_acceleration,
-    const ScalarOrArray<6> &lower_force_threshold_nominal,
+    const ScalarOrArray<7> &upper_torque_threshold_acceleration, const ScalarOrArray<7> &lower_torque_threshold_nominal,
+    const ScalarOrArray<7> &upper_torque_threshold_nominal, const ScalarOrArray<6> &lower_force_threshold_acceleration,
+    const ScalarOrArray<6> &upper_force_threshold_acceleration, const ScalarOrArray<6> &lower_force_threshold_nominal,
     const ScalarOrArray<6> &upper_force_threshold_nominal) {
   franka::Robot::setCollisionBehavior(
       expand<7>(lower_torque_threshold_acceleration),

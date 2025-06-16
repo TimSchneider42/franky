@@ -29,7 +29,7 @@ RobotStateEstimator::RobotStateEstimator(
   r_mat_ = Eigen::DiagonalMatrix<double, 5>(r_diag);
 }
 
-RobotState RobotStateEstimator::update(const franka::RobotState& franka_robot_state, const Model& model) {
+RobotState RobotStateEstimator::update(const franka::RobotState &franka_robot_state, const Model &model) {
   const auto q = toEigenD(franka_robot_state.q);
   const auto dq = toEigenD(franka_robot_state.dq);
   const auto q_d = toEigenD(franka_robot_state.q_d);

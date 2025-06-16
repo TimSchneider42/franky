@@ -1,7 +1,7 @@
 #pragma once
 
-#include <thread>
 #include <functional>
+#include <thread>
 
 #include "concurrent_queue.hpp"
 
@@ -11,7 +11,7 @@ class SequentialExecutor {
 
   ~SequentialExecutor();
 
-  void add(const std::function<void()>& function);
+  void add(const std::function<void()> &function);
 
  private:
   ConcurrentQueue<std::function<void()>> queue_;
@@ -20,4 +20,3 @@ class SequentialExecutor {
 
   void execute();
 };
-

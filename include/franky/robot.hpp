@@ -32,8 +32,8 @@ namespace franky {
 /**
  * @brief Exception thrown when an invalid motion type is used.
  *
- * This exception is thrown when a motion is asynchronously executed and a new motion of a different type is set before
- * the previous one finished.
+ * This exception is thrown when a motion is asynchronously executed and a new
+ * motion of a different type is set before the previous one finished.
  */
 struct InvalidMotionTypeException : std::runtime_error {
   using std::runtime_error::runtime_error;
@@ -42,7 +42,8 @@ struct InvalidMotionTypeException : std::runtime_error {
 /**
  * @brief A class representing a Franka robot.
  *
- * This class extends the franka::Robot class and adds additional functionality to it.
+ * This class extends the franka::Robot class and adds additional functionality
+ * to it.
  */
 class Robot : public franka::Robot {
  public:
@@ -53,7 +54,8 @@ class Robot : public franka::Robot {
     /**
      * @brief Relative dynamics factor for the robot.
      *
-     * The maximum velocity, acceleration and jerk of the robot are scaled by the factors specified here.
+     * The maximum velocity, acceleration and jerk of the robot are scaled by
+     * the factors specified here.
      */
     RelativeDynamicsFactor relative_dynamics_factor{1.0};
 
@@ -102,32 +104,38 @@ class Robot : public franka::Robot {
     double kalman_control_process_var = 1;
 
     /**
-     * @brief Kalman parameter: observation noise variance of measured joint positions.
+     * @brief Kalman parameter: observation noise variance of measured joint
+     * positions.
      */
     double kalman_q_obs_var = 0.01;
 
     /**
-     * @brief Kalman parameter: observation noise variance of measured joint velocities.
+     * @brief Kalman parameter: observation noise variance of measured joint
+     * velocities.
      */
     double kalman_dq_obs_var = 0.1;
 
     /**
-     * @brief Kalman parameter: observation noise variance of desired joint positions.
+     * @brief Kalman parameter: observation noise variance of desired joint
+     * positions.
      */
     double kalman_q_d_obs_var = 0.0001;
 
     /**
-     * @brief Kalman parameter: observation noise variance of desired joint velocities.
+     * @brief Kalman parameter: observation noise variance of desired joint
+     * velocities.
      */
     double kalman_dq_d_obs_var = 0.0001;
 
     /**
-     * @brief Kalman parameter: observation noise variance of desired joint accelerations.
+     * @brief Kalman parameter: observation noise variance of desired joint
+     * accelerations.
      */
     double kalman_ddq_d_obs_var = 0.0001;
 
     /**
-     * @brief Kalman parameter: rate of adaptation of the robot state to the desired robot state.
+     * @brief Kalman parameter: rate of adaptation of the robot state to the
+     * desired robot state.
      */
     double kalman_control_adaptation_rate = 0.1;
   };
@@ -154,7 +162,8 @@ class Robot : public franka::Robot {
   /**
    * @brief Set the collision behavior of the robot.
    *
-   * @param torque_threshold The torque threshold for the collision behavior in Nm.
+   * @param torque_threshold The torque threshold for the collision behavior in
+   * Nm.
    * @param force_threshold The force threshold for the collision behavior in N.
    */
   void setCollisionBehavior(const ScalarOrArray<7> &torque_threshold, const ScalarOrArray<6> &force_threshold);
@@ -162,10 +171,14 @@ class Robot : public franka::Robot {
   /**
    * @brief Set the collision behavior of the robot.
    *
-   * @param lower_torque_threshold The lower torque threshold for the collision behavior in Nm.
-   * @param upper_torque_threshold The upper torque threshold for the collision behavior in Nm.
-   * @param lower_force_threshold The lower force threshold for the collision behavior in N.
-   * @param upper_force_threshold The upper force threshold for the collision behavior in N.
+   * @param lower_torque_threshold The lower torque threshold for the collision
+   * behavior in Nm.
+   * @param upper_torque_threshold The upper torque threshold for the collision
+   * behavior in Nm.
+   * @param lower_force_threshold The lower force threshold for the collision
+   * behavior in N.
+   * @param upper_force_threshold The upper force threshold for the collision
+   * behavior in N.
    */
   void setCollisionBehavior(
       const ScalarOrArray<7> &lower_torque_threshold, const ScalarOrArray<7> &upper_torque_threshold,
@@ -174,22 +187,22 @@ class Robot : public franka::Robot {
   /**
    * @brief Set the collision behavior of the robot.
    *
-   * @param lower_torque_threshold_acceleration The lower torque threshold for the collision behavior in Nm during
-   * acceleration.
-   * @param upper_torque_threshold_acceleration The upper torque threshold for the collision behavior in Nm during
-   * acceleration.
-   * @param lower_torque_threshold_nominal The lower torque threshold for the collision behavior in Nm during nominal
-   * operation.
-   * @param upper_torque_threshold_nominal The upper torque threshold for the collision behavior in Nm during nominal
-   * operation.
-   * @param lower_force_threshold_acceleration The lower force threshold for the collision behavior in N during
-   * acceleration.
-   * @param upper_force_threshold_acceleration The upper force threshold for the collision behavior in N during
-   * acceleration.
-   * @param lower_force_threshold_nominal The lower force threshold for the collision behavior in N during nominal
-   * operation.
-   * @param upper_force_threshold_nominal The upper force threshold for the collision behavior in N during nominal
-   * operation.
+   * @param lower_torque_threshold_acceleration The lower torque threshold for
+   * the collision behavior in Nm during acceleration.
+   * @param upper_torque_threshold_acceleration The upper torque threshold for
+   * the collision behavior in Nm during acceleration.
+   * @param lower_torque_threshold_nominal The lower torque threshold for the
+   * collision behavior in Nm during nominal operation.
+   * @param upper_torque_threshold_nominal The upper torque threshold for the
+   * collision behavior in Nm during nominal operation.
+   * @param lower_force_threshold_acceleration The lower force threshold for the
+   * collision behavior in N during acceleration.
+   * @param upper_force_threshold_acceleration The upper force threshold for the
+   * collision behavior in N during acceleration.
+   * @param lower_force_threshold_nominal The lower force threshold for the
+   * collision behavior in N during nominal operation.
+   * @param upper_force_threshold_nominal The upper force threshold for the
+   * collision behavior in N during nominal operation.
    */
   void setCollisionBehavior(
       const ScalarOrArray<7> &lower_torque_threshold_acceleration,
@@ -200,7 +213,8 @@ class Robot : public franka::Robot {
       const ScalarOrArray<6> &upper_force_threshold_nominal);
 
   /**
-   * @brief Calls the automatic error recovery of the robot and returns whether the recovery was successful.
+   * @brief Calls the automatic error recovery of the robot and returns whether
+   * the recovery was successful.
    * @return Whether the recovery was successful.
    */
   bool recoverFromErrors();
@@ -273,7 +287,8 @@ class Robot : public franka::Robot {
   void setRelativeDynamicsFactor(const RelativeDynamicsFactor &relative_dynamics_factor);
 
   /**
-   * @brief Whether the robot is currently in control, i.e. a motion is being executed.
+   * @brief Whether the robot is currently in control, i.e. a motion is being
+   * executed.
    */
   [[nodiscard]] bool is_in_control();
 
@@ -290,7 +305,8 @@ class Robot : public franka::Robot {
   /**
    * @brief The model of the robot.
    *
-   * The model is loaded in the constructor, so calling this function does not incur any overhead.
+   * The model is loaded in the constructor, so calling this function does not
+   * incur any overhead.
    */
   [[nodiscard]] std::shared_ptr<const Model> model() const { return model_; }
 
@@ -303,7 +319,8 @@ class Robot : public franka::Robot {
 #endif
 
   /**
-   * @brief Wait for the current motion to finish. Throw any exceptions that occurred during the motion.
+   * @brief Wait for the current motion to finish. Throw any exceptions that
+   * occurred during the motion.
    */
   bool joinMotion() {
     std::unique_lock lock(*control_mutex_);
@@ -311,7 +328,8 @@ class Robot : public franka::Robot {
   }
 
   /**
-   * @brief Wait for the current motion to finish with a timeout. Throw any exceptions that occurred during the motion.
+   * @brief Wait for the current motion to finish with a timeout. Throw any
+   * exceptions that occurred during the motion.
    *
    * After the timeout has expired, the function will return false.
    * @param timeout The timeout to wait for the motion to finish.
@@ -324,8 +342,9 @@ class Robot : public franka::Robot {
   }
 
   /**
-   * @brief Check whether the robot is still in motion. This function is non-blocking and returns immediately. Throw any
-   * exceptions that occurred during the motion.
+   * @brief Check whether the robot is still in motion. This function is
+   * non-blocking and returns immediately. Throw any exceptions that occurred
+   * during the motion.
    * @return Whether the robot is still in motion.
    */
   [[nodiscard]]
@@ -333,7 +352,8 @@ class Robot : public franka::Robot {
     return joinMotion(std::chrono::milliseconds(0));
   }
 
-  // These helper functions are needed as the implicit template deduction does not work on subclasses of Motion
+  // These helper functions are needed as the implicit template deduction does
+  // not work on subclasses of Motion
 
   /**
    * @brief Execute the given motion
@@ -414,9 +434,10 @@ class Robot : public franka::Robot {
   [[nodiscard]] bool is_in_control_unsafe() const;
 
  public:
-  // IMPORTANT: this has to come after control_mutex_ as otherwise control_mutex_ will be uninitialized when passed to
-  // the constructor of the DynamicsLimit class
-  // Limits provided by Franka for the FR3: https://frankaemika.github.io/docs/control_parameters.html
+  // IMPORTANT: this has to come after control_mutex_ as otherwise
+  // control_mutex_ will be uninitialized when passed to the constructor of the
+  // DynamicsLimit class Limits provided by Franka for the FR3:
+  // https://frankaemika.github.io/docs/control_parameters.html
   // clang-format off
   /**
    * @brief Translational velocity limit [m/s].
@@ -515,7 +536,8 @@ class Robot : public franka::Robot {
       if (is_in_control_unsafe() && motion_generator_running_) {
         if (!std::holds_alternative<MotionGenerator<ControlSignalType>>(motion_generator_)) {
           throw InvalidMotionTypeException(
-              "The type of motion cannot change during runtime. Please ensure that the "
+              "The type of motion cannot change during runtime. Please ensure "
+              "that the "
               "previous motion finished before using a new type of motion.");
         }
         std::get<MotionGenerator<ControlSignalType>>(motion_generator_).updateMotion(motion);
@@ -551,8 +573,9 @@ class Robot : public franka::Robot {
                   });
               std::unique_lock lock(*control_mutex_);
 
-              // This code is just for the case that a new motion is set just after the old one terminates. If this
-              // happens, we need to continue with this motion, unless an exception occurs.
+              // This code is just for the case that a new motion is set just
+              // after the old one terminates. If this happens, we need to
+              // continue with this motion, unless an exception occurs.
               done = !motion_generator->has_new_motion();
               if (motion_generator->has_new_motion()) {
                 motion_generator->resetTimeUnsafe();

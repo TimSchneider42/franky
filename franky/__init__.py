@@ -6,7 +6,7 @@ from .reaction import (
     JointVelocityReaction,
     JointPositionReaction,
     CartesianVelocityReaction,
-    CartesianPoseReaction
+    CartesianPoseReaction,
 )
 from .motion import Motion
 from ._franky import *

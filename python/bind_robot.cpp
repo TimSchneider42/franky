@@ -5,7 +5,6 @@
 #include <pybind11/stl.h>
 
 #include "franky.hpp"
-
 #include "util.hpp"
 
 namespace py = pybind11;
@@ -16,7 +15,7 @@ template <typename ControlSignalType>
 void robotMove(Robot &robot, const std::shared_ptr<Motion<ControlSignalType>> &motion, bool async) {
   robot.move(motion, true);
   if (!async) {
-    auto future = std::async(std::launch::async, (bool(Robot::*)()) & Robot::joinMotion, &robot);
+    auto future = std::async(std::launch::async, (bool (Robot::*)())&Robot::joinMotion, &robot);
     // Check if python wants to terminate every 100 ms
     bool python_terminating = false;
     while (future.wait_for(std::chrono::milliseconds(100)) == std::future_status::timeout) {

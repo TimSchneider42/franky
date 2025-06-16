@@ -24,5 +24,7 @@ if __name__ == "__main__":
     robot.move(motion_forward)
 
     # And move backwards using the inverse motion
-    motion_backward = CartesianMotion(target.inverse, reference_type=ReferenceType.Relative)
+    motion_backward = CartesianMotion(
+        target.inverse, reference_type=ReferenceType.Relative
+    )
     robot.move(motion_backward)

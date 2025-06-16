@@ -19,11 +19,13 @@ class CMakeBuild(build_ext):
             out = subprocess.check_output(["cmake", "--version"])
         except OSError:
             raise RuntimeError(
-                "CMake must be installed to build the following extensions: " +
-                ", ".join(e.name for e in self.extensions)
+                "CMake must be installed to build the following extensions: "
+                + ", ".join(e.name for e in self.extensions)
             )
 
-        cmake_version = LooseVersion(re.search(r"version\s*([\d.]+)", out.decode()).group(1))
+        cmake_version = LooseVersion(
+            re.search(r"version\s*([\d.]+)", out.decode()).group(1)
+        )
         if cmake_version < LooseVersion("3.10.0"):
             raise RuntimeError("CMake >= 3.10.0 is required")
 
@@ -51,10 +53,16 @@ class CMakeBuild(build_ext):
 
         Path(self.build_temp).mkdir(exist_ok=True, parents=True)
 
-        subprocess.check_call(["cmake", str(Path(".").resolve())] + cmake_args, cwd=self.build_temp)
         subprocess.check_call(
-            ["cmake", "--build", ".", "--target", "_franky"] + build_args +
-            ["--", "-j", str(multiprocessing.cpu_count())], cwd=self.build_temp)
+            ["cmake", str(Path(".").resolve())] + cmake_args, cwd=self.build_temp
+        )
+        subprocess.check_call(
+            ["cmake", "--build", ".", "--target", "_franky"]
+            + build_args
+            + ["--", "-j", str(multiprocessing.cpu_count())],
+            cwd=self.build_temp,
+        )
+
 
 with (Path(__file__).resolve().parent / "VERSION").open() as f:
     version = f.read()

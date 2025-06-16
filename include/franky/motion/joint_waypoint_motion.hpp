@@ -20,11 +20,11 @@ class JointWaypointMotion : public PositionWaypointMotion<franka::JointPositions
  public:
   /**
    * @param waypoints                Joint waypoints to follow.
-   * @param relative_dynamics_factor The relative dynamics factor for this motion. The factor will get multiplied with
-   *                                 the robot's global dynamics factor to get the actual dynamics factor for this
-   *                                 motion.
-   * @param return_when_finished     Whether to end the motion when the last waypoint is reached or keep holding the
-   *                                 last target.
+   * @param relative_dynamics_factor The relative dynamics factor for this
+   * motion. The factor will get multiplied with the robot's global dynamics
+   * factor to get the actual dynamics factor for this motion.
+   * @param return_when_finished     Whether to end the motion when the last
+   * waypoint is reached or keep holding the last target.
    */
   explicit JointWaypointMotion(
       const std::vector<PositionWaypoint<JointState>> &waypoints,

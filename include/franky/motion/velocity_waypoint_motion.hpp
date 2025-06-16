@@ -18,10 +18,11 @@ template <typename TargetType>
 using VelocityWaypoint = Waypoint<TargetType>;
 
 /**
- * @brief A motion following multiple positional waypoints in a time-optimal way. Works with arbitrary initial
- * conditions.
- * @tparam ControlSignalType The type of the control signal. Either franka::Torques, franka::JointVelocities,
- * franka::CartesianVelocities, franka::JointPositions or franka::CartesianPose.
+ * @brief A motion following multiple positional waypoints in a time-optimal
+ * way. Works with arbitrary initial conditions.
+ * @tparam ControlSignalType The type of the control signal. Either
+ * franka::Torques, franka::JointVelocities, franka::CartesianVelocities,
+ * franka::JointPositions or franka::CartesianPose.
  * @tparam TargetType The type of the target of the waypoints.
  */
 template <typename ControlSignalType, typename TargetType>
@@ -29,9 +30,9 @@ class VelocityWaypointMotion : public WaypointMotion<ControlSignalType, Velocity
  public:
   /**
    * @param waypoints                The waypoints to follow.
-   * @param relative_dynamics_factor The relative dynamics factor for this motion. This factor will get multiplied with
-   *                                 the robot's global dynamics factor to get the actual dynamics factor for this
-   *                                 motion.
+   * @param relative_dynamics_factor The relative dynamics factor for this
+   * motion. This factor will get multiplied with the robot's global dynamics
+   * factor to get the actual dynamics factor for this motion.
    */
   explicit VelocityWaypointMotion(
       std::vector<VelocityWaypoint<TargetType>> waypoints, const RelativeDynamicsFactor &relative_dynamics_factor = 1.0)
@@ -63,7 +64,8 @@ class VelocityWaypointMotion : public WaypointMotion<ControlSignalType, Velocity
       const ruckig::InputParameter<7> &input_parameter, ruckig::OutputParameter<7> &output_parameter) const override {
     auto [vel_lim, acc_lim, jerk_lim] = getAbsoluteInputLimits();
 
-    // We use the desired state here as this is likely what the robot uses internally as well
+    // We use the desired state here as this is likely what the robot uses
+    // internally as well
     auto [vel_d, acc_d, _] = getDesiredState(robot_state);
 
     auto vel = toEigenD<7>(input_parameter.current_velocity);
@@ -82,7 +84,8 @@ class VelocityWaypointMotion : public WaypointMotion<ControlSignalType, Velocity
 
   [[nodiscard]] std::tuple<Vector7d, Vector7d, Vector7d> getAbsoluteInputLimits() const override = 0;
 
-  [[nodiscard]] virtual std::tuple<Vector7d, Vector7d, Vector7d> getDesiredState(const RobotState &robot_state) const = 0;
+  [[nodiscard]] virtual std::tuple<Vector7d, Vector7d, Vector7d> getDesiredState(
+      const RobotState &robot_state) const = 0;
 
  private:
   RelativeDynamicsFactor relative_dynamics_factor_;

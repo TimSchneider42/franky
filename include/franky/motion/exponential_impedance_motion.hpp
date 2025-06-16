@@ -1,21 +1,21 @@
 #pragma once
 
+#include <Eigen/Core>
+#include <Eigen/Geometry>
 #include <map>
 #include <optional>
 
-#include <Eigen/Core>
-#include <Eigen/Geometry>
-
-#include "franky/robot_pose.hpp"
 #include "franky/motion/impedance_motion.hpp"
+#include "franky/robot_pose.hpp"
 
 namespace franky {
 
 /**
  * @brief Exponential cartesian impedance motion.
  *
- * This motion is a implements a exponential cartesian impedance controller on the client side and does not use
- * Franka's internal impedance controller. Instead, it uses Franka's internal torque controller and calculates the
+ * This motion is a implements a exponential cartesian impedance controller on
+ * the client side and does not use Franka's internal impedance controller.
+ * Instead, it uses Franka's internal torque controller and calculates the
  * torques itself.
  */
 class ExponentialImpedanceMotion : public ImpedanceMotion {
