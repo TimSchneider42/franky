@@ -154,7 +154,8 @@ class RobotWebSession:
             res = self.send_api_request(
                 f"/admin/api/control-token/request{'?force' if force else ''}",
                 headers={"content-type": "application/json"},
-                body=json.dumps({"requestedBy": self.__username}))
+                body=json.dumps({"requestedBy": self.__username}),
+            )
             if force:
                 print(
                     "Forcibly taking control: "
