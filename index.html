@@ -613,8 +613,18 @@ $(function() {
 <div class="fragment"><div class="line"><span class="keyword">import</span> franky</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">with</span> franky.RobotWebSession(<span class="stringliteral">&quot;172.16.0.2&quot;</span>, <span class="stringliteral">&quot;username&quot;</span>, <span class="stringliteral">&quot;password&quot;</span>) <span class="keyword">as</span> robot_web_session:</div>
-<div class="line">    <span class="comment"># First take control, in case some other web session is currently running</span></div>
-<div class="line">    <span class="keyword">assert</span> robot_web_session.take_control(), <span class="stringliteral">&quot;Control not granted&quot;</span></div>
+<div class="line">    <span class="comment"># First take control</span></div>
+<div class="line">    <span class="keywordflow">try</span>:</div>
+<div class="line">        <span class="comment"># Try taking control. The session currently holding control has to release it in order for this session to gain</span></div>
+<div class="line">        <span class="comment"># control. In the web interface, a notification will show prompting the user to release control. If the other</span></div>
+<div class="line">        <span class="comment"># session is another franky.RobotWebSession, then the `release_control` method can be called on the other</span></div>
+<div class="line">        <span class="comment"># session to release control.</span></div>
+<div class="line">        robot_web_session.take_control(wait_timeout=10.0)</div>
+<div class="line">    <span class="keywordflow">except</span> franky.TakeControlTimeoutError:</div>
+<div class="line">        <span class="comment"># If nothing happens for 10s, we try to take control forcefully. This is particularly useful if the session</span></div>
+<div class="line">        <span class="comment"># holding control is dead. Taking control by force requires the user to manually push the blue button close to</span></div>
+<div class="line">        <span class="comment"># the robot&#39;s wrist.</span></div>
+<div class="line">        robot_web_session.take_control(wait_timeout=30.0, force=<span class="keyword">True</span>)</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment"># Unlock the brakes</span></div>
 <div class="line">    robot_web_session.unlock_brakes()</div>
