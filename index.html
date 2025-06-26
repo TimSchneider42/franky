@@ -147,20 +147,7 @@ $(function() {
 <div class="line">unzip libfranka_${VERSION}_wheels.zip</div>
 <div class="line">pip install numpy</div>
 <div class="line">pip install --no-index --find-links=./dist franky-control</div>
-</div><!-- fragment --><p>Franky is based on <a href="https://github.com/frankaemika/libfranka">libfranka</a>, <a href="https://eigen.tuxfamily.org">Eigen</a> for transformation calculations and <a href="https://github.com/pybind/pybind11">pybind11</a> for the Python bindings. As the Franka is sensitive to acceleration discontinuities, it requires jerk-constrained motion generation, for which Franky uses the <a href="https://ruckig.com">Ruckig</a> community version for Online Trajectory Generation (OTG).</p>
-<p>After installing the dependencies (the exact versions can be found here), you can build and install Franky via</p>
-<div class="fragment"><div class="line">git clone --recurse-submodules git@github.com:timschneider42/franky.git</div>
-<div class="line">cd franky</div>
-<div class="line">mkdir -p build</div>
-<div class="line">cd build</div>
-<div class="line">cmake -DCMAKE_BUILD_TYPE=Release ..</div>
-<div class="line">make</div>
-<div class="line">make install</div>
-</div><!-- fragment --><p>To use Franky, you can also include it as a subproject in your parent CMake via <code>add_subdirectory(franky)</code> and then <code>target_link_libraries(&lt;target&gt; franky)</code>.</p>
-<p>If you need only the Python module, you can install Franky via</p>
-<div class="fragment"><div class="line">pip install .</div>
-</div><!-- fragment --><p>Make sure that the built library <code>_franky.cpython-3**-****-linux-gnu.so</code> is in the Python path, e.g. by adjusting <code>PYTHONPATH</code> accordingly.</p>
-<h4>Using Docker</h4>
+</div><!-- fragment --><h3>Using Docker</h3>
 <p>To use Franky within Docker we provide a <a href="docker/run/Dockerfile">Dockerfile</a> and accompanying <a href="docker-compose.yml">docker-compose</a> file.</p>
 <div class="fragment"><div class="line">git clone --recurse-submodules https://github.com/timschneider42/franky.git</div>
 <div class="line">cd franky/</div>
@@ -170,12 +157,7 @@ $(function() {
 </div><!-- fragment --><p>To run the container:</p>
 <div class="fragment"><div class="line">docker compose run franky-run bash</div>
 </div><!-- fragment --><p>The container requires access to the host machines network <em>and</em> elevated user rights to allow the docker user to set RT capabilities of the processes run from within it.</p>
-<h4>Building Franky with Docker</h4>
-<p>For building Franky and its wheels, we provide another Docker container that can also be launched using docker-compose:</p>
-<div class="fragment"><div class="line">docker compose build franky-build</div>
-<div class="line">docker compose run --rm franky-build run-tests  # To run the tests</div>
-<div class="line">docker compose run --rm franky-build build-wheels  # To build wheels for all supported python versions</div>
-</div><!-- fragment --><h3>Can I use CUDA jointly with Franky?</h3>
+<h3>Can I use CUDA jointly with Franky?</h3>
 <p>Yes. However, you need to set <code>IGNORE_PREEMPT_RT_PRESENCE=1</code> during the installation and all subsequent updates of the CUDA drivers on the real-time kernel.</p>
 <p>First, make sure that you have rebooted your system after installing the real-time kernel. Then, add <code>IGNORE_PREEMPT_RT_PRESENCE=1</code> to <code>/etc/environment</code>, call <code>export IGNORE_PREEMPT_RT_PRESENCE=1</code> to also set it in the current session and follow the instructions of Nvidia to install CUDA on your system.</p>
 <p>If you are on Ubuntu, you can also use <a href="tools/install_cuda_realtime.bash">this</a> script to install CUDA on your real-time system: </p><div class="fragment"><div class="line"># Download the script</div>
@@ -189,6 +171,25 @@ $(function() {
 <div class="line"># Execute the script</div>
 <div class="line">./install_cuda_realtime.bash</div>
 </div><!-- fragment --><p>Alternatively, if you are a cowboy and do not care about security, you can also use this one-liner to directly call the script without checking it: </p><div class="fragment"><div class="line">bash &lt;(wget -qO- https://raw.githubusercontent.com/timschneider42/franky/master/tools/install_cuda_realtime.bash)</div>
+</div><!-- fragment --><h3>Building Franky</h3>
+<p>Franky is based on <a href="https://github.com/frankaemika/libfranka">libfranka</a>, <a href="https://eigen.tuxfamily.org">Eigen</a> for transformation calculations and <a href="https://github.com/pybind/pybind11">pybind11</a> for the Python bindings. As the Franka is sensitive to acceleration discontinuities, it requires jerk-constrained motion generation, for which Franky uses the <a href="https://ruckig.com">Ruckig</a> community version for Online Trajectory Generation (OTG).</p>
+<p>After installing the dependencies (the exact versions can be found here), you can build and install Franky via</p>
+<div class="fragment"><div class="line">git clone --recurse-submodules git@github.com:timschneider42/franky.git</div>
+<div class="line">cd franky</div>
+<div class="line">mkdir -p build</div>
+<div class="line">cd build</div>
+<div class="line">cmake -DCMAKE_BUILD_TYPE=Release ..</div>
+<div class="line">make</div>
+<div class="line">make install</div>
+</div><!-- fragment --><p>To use Franky, you can also include it as a subproject in your parent CMake via <code>add_subdirectory(franky)</code> and then <code>target_link_libraries(&lt;target&gt; franky)</code>.</p>
+<p>If you need only the Python module, you can install Franky via</p>
+<div class="fragment"><div class="line">pip install .</div>
+</div><!-- fragment --><p>Make sure that the built library <code>_franky.cpython-3**-****-linux-gnu.so</code> is in the Python path, e.g. by adjusting <code>PYTHONPATH</code> accordingly.</p>
+<h4>Building Franky with Docker</h4>
+<p>For building Franky and its wheels, we provide another Docker container that can also be launched using docker-compose:</p>
+<div class="fragment"><div class="line">docker compose build franky-build</div>
+<div class="line">docker compose run --rm franky-build run-tests  # To run the tests</div>
+<div class="line">docker compose run --rm franky-build build-wheels  # To build wheels for all supported python versions</div>
 </div><!-- fragment --><h2>📚 Tutorial</h2>
 <p>Franky comes with both a C++ and Python API that differ only regarding real-time capability. We will introduce both languages next to each other. In your C++ project, just include <code>include &lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">franky.hpp</a>&gt;</code> and link the library. For Python, just <code>import franky</code>. As a first example, only four lines of code are needed for simple robotic motions.</p>
 <div class="fragment"><div class="line"> ++</div>
