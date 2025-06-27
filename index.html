@@ -435,12 +435,7 @@ $(function() {
 <div class="line">robot.move(m_jp2, relative_dynamics_factor=0.8)</div>
 </div><!-- fragment --><h4>Motion Callbacks</h4>
 <p>All motions support callbacks, which will be invoked in every control step at 1kHz. Callbacks can be attached as follows:</p>
-<div class="fragment"><div class="line"><span class="keyword">def </span>cb(</div>
-<div class="line">        robot_state: RobotState,</div>
-<div class="line">        time_step: Duration,</div>
-<div class="line">        rel_time: Duration,</div>
-<div class="line">        abs_time: Duration,</div>
-<div class="line">        control_signal: JointPositions):</div>
+<div class="fragment"><div class="line"><span class="keyword">def </span>cb(robot_state: RobotState, time_step: Duration, rel_time: Duration, abs_time: Duration, control_signal: JointPositions):</div>
 <div class="line">    print(f<span class="stringliteral">&quot;At time {abs_time}, the target joint positions were {control_signal.q}&quot;</span>)</div>
 <div class="line"> </div>
 <div class="line"> </div>
