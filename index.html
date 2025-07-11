@@ -321,7 +321,9 @@ $(function() {
 <div class="line"><span class="comment"># A point-to-point motion in the joint space</span></div>
 <div class="line">m_jp1 = JointMotion([-0.3, 0.1, 0.3, -1.4, 0.1, 1.8, 0.7])</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># A motion in joint space with multiple waypoints</span></div>
+<div class="line"><span class="comment"># A motion in joint space with multiple waypoints. The robot will stop at each of these</span></div>
+<div class="line"><span class="comment"># waypoints. If you want the robot to move continuously, you have to specify a target velocity</span></div>
+<div class="line"><span class="comment"># at every waypoint as shown in the example following this one.</span></div>
 <div class="line">m_jp2 = JointWaypointMotion(</div>
 <div class="line">    [</div>
 <div class="line">        JointWaypoint([-0.3, 0.1, 0.3, -1.4, 0.1, 1.8, 0.7]),</div>
@@ -401,7 +403,9 @@ $(function() {
 <div class="line"><span class="comment"># end-effector is oriented differently, it will move in a different direction)</span></div>
 <div class="line">m_cp3 = CartesianMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Generalization of CartesianMotion that allows for multiple waypoints</span></div>
+<div class="line"><span class="comment"># Generalization of CartesianMotion that allows for multiple waypoints. The robot will stop at</span></div>
+<div class="line"><span class="comment"># each of these waypoints. If you want the robot to move continuously, you have to specify a</span></div>
+<div class="line"><span class="comment"># target velocity at every waypoint as shown in the example following this one.</span></div>
 <div class="line">m_cp4 = CartesianWaypointMotion(</div>
 <div class="line">    [</div>
 <div class="line">        CartesianWaypoint(</div>
@@ -416,7 +420,7 @@ $(function() {
 <div class="line">    ]</div>
 <div class="line">)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Cartesian waypoints also permit to specify target velocities</span></div>
+<div class="line"><span class="comment"># Cartesian waypoints permit to specify target velocities</span></div>
 <div class="line">m_cp5 = CartesianWaypointMotion(</div>
 <div class="line">    [</div>
 <div class="line">        CartesianWaypoint(Affine([0.5, -0.2, 0.3], quat)),</div>
