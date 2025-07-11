@@ -96,7 +96,8 @@ $(function() {
 <p>Real-time kernel already installed and real-time permissions granted? Just install Franky via</p>
 <div class="fragment"><div class="line">pip install franky-control</div>
 </div><!-- fragment --><p>otherwise, follow the <a class="el" href="index.html#setup">setup instructions</a> first.</p>
-<p>Now we are already ready to go! Unlock the brakes in the web interface, activate FCI, and start coding: </p><div class="fragment"><div class="line"><span class="keyword">from</span> franky <span class="keyword">import</span> *</div>
+<p>Now we are already ready to go! Unlock the brakes in the web interface, activate FCI, and start coding:</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> franky <span class="keyword">import</span> *</div>
 <div class="line"> </div>
 <div class="line">robot = Robot(<span class="stringliteral">&quot;172.16.0.2&quot;</span>)  <span class="comment"># Replace this with your robot&#39;s IP</span></div>
 <div class="line"> </div>
@@ -248,7 +249,9 @@ $(function() {
 <div class="line">robot.relative_dynamics_factor = 0.05</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Alternatively, you can define each constraint individually</span></div>
-<div class="line">robot.relative_dynamics_factor = RelativeDynamicsFactor(velocity=0.1, acceleration=0.05, jerk=0.1)</div>
+<div class="line">robot.relative_dynamics_factor = RelativeDynamicsFactor(</div>
+<div class="line">    velocity=0.1, acceleration=0.05, jerk=0.1</div>
+<div class="line">)</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Or, for more finegrained access, set individual limits</span></div>
 <div class="line">robot.translation_velocity_limit.set(3.0)</div>
@@ -304,7 +307,8 @@ $(function() {
 <div class="line"><span class="comment"># Get the jacobian of the current robot state</span></div>
 <div class="line">jacobian = robot.model.body_jacobian(Frame.EndEffector, state)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Alternatively, just get the URDF as string and do the kinematics computation yourself (only for libfranka &gt;= 0.15.0)</span></div>
+<div class="line"><span class="comment"># Alternatively, just get the URDF as string and do the kinematics computation yourself (only</span></div>
+<div class="line"><span class="comment"># for libfranka &gt;= 0.15.0)</span></div>
 <div class="line">urdf_model = robot.model_urdf</div>
 </div><!-- fragment --><p>For a full list of state-related features, check the <a href="https://timschneider42.github.io/franky/classfranky_1_1_robot.html">Robot</a> and <a href="https://timschneider42.github.io/franky/classfranky_1_1_model.html">Model</a> sections of the documentation.</p>
 <h3><a class="anchor" id="motion-types"></a> 🏃‍♂️ Motion Types</h3>
@@ -318,44 +322,63 @@ $(function() {
 <div class="line">m_jp1 = JointMotion([-0.3, 0.1, 0.3, -1.4, 0.1, 1.8, 0.7])</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># A motion in joint space with multiple waypoints</span></div>
-<div class="line">m_jp2 = JointWaypointMotion([</div>
-<div class="line">    JointWaypoint([-0.3, 0.1, 0.3, -1.4, 0.1, 1.8, 0.7]),</div>
-<div class="line">    JointWaypoint([0.0, 0.3, 0.3, -1.5, -0.2, 1.5, 0.8]),</div>
-<div class="line">    JointWaypoint([0.1, 0.4, 0.3, -1.4, -0.3, 1.7, 0.9])</div>
-<div class="line">])</div>
+<div class="line">m_jp2 = JointWaypointMotion(</div>
+<div class="line">    [</div>
+<div class="line">        JointWaypoint([-0.3, 0.1, 0.3, -1.4, 0.1, 1.8, 0.7]),</div>
+<div class="line">        JointWaypoint([0.0, 0.3, 0.3, -1.5, -0.2, 1.5, 0.8]),</div>
+<div class="line">        JointWaypoint([0.1, 0.4, 0.3, -1.4, -0.3, 1.7, 0.9]),</div>
+<div class="line">    ]</div>
+<div class="line">)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Intermediate waypoints also permit to specify target velocities. The default target velocity is 0, meaning that the</span></div>
-<div class="line"><span class="comment"># robot will stop at every waypoint.</span></div>
-<div class="line">m_jp3 = JointWaypointMotion([</div>
-<div class="line">    JointWaypoint([-0.3, 0.1, 0.3, -1.4, 0.1, 1.8, 0.7]),</div>
-<div class="line">    JointWaypoint(</div>
-<div class="line">        JointState(</div>
-<div class="line">            position=[0.0, 0.3, 0.3, -1.5, -0.2, 1.5, 0.8],</div>
-<div class="line">            velocity=[0.1, 0.0, 0.0, 0.0, -0.0, 0.0, 0.0])),</div>
-<div class="line">    JointWaypoint([0.1, 0.4, 0.3, -1.4, -0.3, 1.7, 0.9])</div>
-<div class="line">])</div>
+<div class="line"><span class="comment"># Intermediate waypoints also permit to specify target velocities. The default target velocity</span></div>
+<div class="line"><span class="comment"># is 0, meaning that the # robot will stop at every waypoint.</span></div>
+<div class="line">m_jp3 = JointWaypointMotion(</div>
+<div class="line">    [</div>
+<div class="line">        JointWaypoint([-0.3, 0.1, 0.3, -1.4, 0.1, 1.8, 0.7]),</div>
+<div class="line">        JointWaypoint(</div>
+<div class="line">            JointState(</div>
+<div class="line">                position=[0.0, 0.3, 0.3, -1.5, -0.2, 1.5, 0.8],</div>
+<div class="line">                velocity=[0.1, 0.0, 0.0, 0.0, -0.0, 0.0, 0.0],</div>
+<div class="line">            )</div>
+<div class="line">        ),</div>
+<div class="line">        JointWaypoint([0.1, 0.4, 0.3, -1.4, -0.3, 1.7, 0.9]),</div>
+<div class="line">    ]</div>
+<div class="line">)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Stop the robot in joint position control mode. The difference of JointStopMotion to other stop motions such as</span></div>
-<div class="line"><span class="comment"># CartesianStopMotion is that # JointStopMotion # stops the robot in joint position control mode while</span></div>
-<div class="line"><span class="comment"># CartesianStopMotion stops it in cartesian pose control mode. The difference becomes relevant when asynchronous move</span></div>
-<div class="line"><span class="comment"># commands are being sent or reactions are being used(see below).</span></div>
+<div class="line"><span class="comment"># Stop the robot in joint position control mode. The difference of JointStopMotion to other</span></div>
+<div class="line"><span class="comment"># stop-motions such as CartesianStopMotion is that # JointStopMotion # stops the robot in</span></div>
+<div class="line"><span class="comment"># joint position control mode while # CartesianStopMotion stops it in cartesian pose control</span></div>
+<div class="line"><span class="comment"># mode. The difference becomes relevant when asynchronous move # commands are being sent or</span></div>
+<div class="line"><span class="comment"># reactions are being used(see below).</span></div>
 <div class="line">m_jp4 = JointStopMotion()</div>
 </div><!-- fragment --><h4>Joint Velocity Control</h4>
 <div class="fragment"><div class="line"><span class="keyword">from</span> franky <span class="keyword">import</span> *</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Accelerate to the given joint velocity and hold it. After 1000ms stop the robot again.</span></div>
-<div class="line">m_jv1 = JointVelocityMotion([0.1, 0.3, -0.1, 0.0, 0.1, -0.2, 0.4], duration=Duration(1000))</div>
+<div class="line">m_jv1 = JointVelocityMotion(</div>
+<div class="line">    [0.1, 0.3, -0.1, 0.0, 0.1, -0.2, 0.4], duration=Duration(1000)</div>
+<div class="line">)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Joint velocity motions also support waypoints. Unlike in joint position control, a joint velocity waypoint is a</span></div>
-<div class="line"><span class="comment"># target velocity to be reached. This particular example first accelerates the joints, holds the velocity for 1s, then</span></div>
-<div class="line"><span class="comment"># reverses direction for 2s, reverses direction again for 1s, and finally stops. It is important not to forget to stop</span></div>
-<div class="line"><span class="comment"># the robot at the end of such a sequence, as it will otherwise throw an error.</span></div>
-<div class="line">m_jv2 = JointVelocityWaypointMotion([</div>
-<div class="line">    JointVelocityWaypoint([0.1, 0.3, -0.1, 0.0, 0.1, -0.2, 0.4], hold_target_duration=Duration(1000)),</div>
-<div class="line">    JointVelocityWaypoint([-0.1, -0.3, 0.1, -0.0, -0.1, 0.2, -0.4], hold_target_duration=Duration(2000)),</div>
-<div class="line">    JointVelocityWaypoint([0.1, 0.3, -0.1, 0.0, 0.1, -0.2, 0.4], hold_target_duration=Duration(1000)),</div>
-<div class="line">    JointVelocityWaypoint([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]),</div>
-<div class="line">])</div>
+<div class="line"><span class="comment"># Joint velocity motions also support waypoints. Unlike in joint position control, a joint</span></div>
+<div class="line"><span class="comment"># velocity waypoint is a target velocity to be reached. This particular example first</span></div>
+<div class="line"><span class="comment"># accelerates the joints, holds the velocity for 1s, then reverses direction for 2s, reverses</span></div>
+<div class="line"><span class="comment"># direction again for 1s, and finally stops. It is important not to forget to stop the robot</span></div>
+<div class="line"><span class="comment"># at the end of such a sequence, as it will otherwise throw an error.</span></div>
+<div class="line">m_jv2 = JointVelocityWaypointMotion(</div>
+<div class="line">    [</div>
+<div class="line">        JointVelocityWaypoint(</div>
+<div class="line">            [0.1, 0.3, -0.1, 0.0, 0.1, -0.2, 0.4], hold_target_duration=Duration(1000)</div>
+<div class="line">        ),</div>
+<div class="line">        JointVelocityWaypoint(</div>
+<div class="line">            [-0.1, -0.3, 0.1, -0.0, -0.1, 0.2, -0.4],</div>
+<div class="line">            hold_target_duration=Duration(2000),</div>
+<div class="line">        ),</div>
+<div class="line">        JointVelocityWaypoint(</div>
+<div class="line">            [0.1, 0.3, -0.1, 0.0, 0.1, -0.2, 0.4], hold_target_duration=Duration(1000)</div>
+<div class="line">        ),</div>
+<div class="line">        JointVelocityWaypoint([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]),</div>
+<div class="line">    ]</div>
+<div class="line">)</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Stop the robot in joint velocity control mode.</span></div>
 <div class="line">m_jv3 = JointVelocityStopMotion()</div>
@@ -369,51 +392,79 @@ $(function() {
 <div class="line">m_cp1 = CartesianMotion(Affine([0.4, -0.2, 0.3], quat))</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># With target elbow angle (otherwise, the Franka firmware will choose by itself)</span></div>
-<div class="line">m_cp2 = CartesianMotion(RobotPose(Affine([0.4, -0.2, 0.3], quat), elbow_state=ElbowState(0.3)))</div>
+<div class="line">m_cp2 = CartesianMotion(</div>
+<div class="line">    RobotPose(Affine([0.4, -0.2, 0.3], quat), elbow_state=ElbowState(0.3))</div>
+<div class="line">)</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># A linear motion in cartesian space relative to the initial position</span></div>
-<div class="line"><span class="comment"># (Note that this motion is relative both in position and orientation. Hence, when the robot&#39;s end-effector is oriented</span></div>
-<div class="line"><span class="comment"># differently, it will move in a different direction)</span></div>
+<div class="line"><span class="comment"># (Note that this motion is relative both in position and orientation. Hence, when the robot&#39;s</span></div>
+<div class="line"><span class="comment"># end-effector is oriented differently, it will move in a different direction)</span></div>
 <div class="line">m_cp3 = CartesianMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Generalization of CartesianMotion that allows for multiple waypoints</span></div>
-<div class="line">m_cp4 = CartesianWaypointMotion([</div>
-<div class="line">    CartesianWaypoint(RobotPose(Affine([0.4, -0.2, 0.3], quat), elbow_state=ElbowState(0.3))),</div>
-<div class="line">    <span class="comment"># The following waypoint is relative to the prior one and 50% slower</span></div>
-<div class="line">    CartesianWaypoint(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative, RelativeDynamicsFactor(0.5, 1.0, 1.0))</div>
-<div class="line">])</div>
+<div class="line">m_cp4 = CartesianWaypointMotion(</div>
+<div class="line">    [</div>
+<div class="line">        CartesianWaypoint(</div>
+<div class="line">            RobotPose(Affine([0.4, -0.2, 0.3], quat), elbow_state=ElbowState(0.3))</div>
+<div class="line">        ),</div>
+<div class="line">        <span class="comment"># The following waypoint is relative to the prior one and 50% slower</span></div>
+<div class="line">        CartesianWaypoint(</div>
+<div class="line">            Affine([0.2, 0.0, 0.0]),</div>
+<div class="line">            ReferenceType.Relative,</div>
+<div class="line">            RelativeDynamicsFactor(0.5, 1.0, 1.0),</div>
+<div class="line">        ),</div>
+<div class="line">    ]</div>
+<div class="line">)</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Cartesian waypoints also permit to specify target velocities</span></div>
-<div class="line">m_cp5 = CartesianWaypointMotion([</div>
-<div class="line">    CartesianWaypoint(Affine([0.5, -0.2, 0.3], quat)),</div>
-<div class="line">    CartesianWaypoint(</div>
-<div class="line">        CartesianState(</div>
-<div class="line">            pose=Affine([0.4, -0.1, 0.3], quat),</div>
-<div class="line">            velocity=Twist([-0.01, 0.01, 0.0]))),</div>
-<div class="line">    CartesianWaypoint(Affine([0.3, 0.0, 0.3], quat))</div>
-<div class="line">])</div>
+<div class="line">m_cp5 = CartesianWaypointMotion(</div>
+<div class="line">    [</div>
+<div class="line">        CartesianWaypoint(Affine([0.5, -0.2, 0.3], quat)),</div>
+<div class="line">        CartesianWaypoint(</div>
+<div class="line">            CartesianState(</div>
+<div class="line">                pose=Affine([0.4, -0.1, 0.3], quat), velocity=Twist([-0.01, 0.01, 0.0])</div>
+<div class="line">            )</div>
+<div class="line">        ),</div>
+<div class="line">        CartesianWaypoint(Affine([0.3, 0.0, 0.3], quat)),</div>
+<div class="line">    ]</div>
+<div class="line">)</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Stop the robot in cartesian position control mode.</span></div>
 <div class="line">m_cp6 = CartesianStopMotion()</div>
 </div><!-- fragment --><h4>Cartesian Velocity Control</h4>
 <div class="fragment"><div class="line"><span class="keyword">from</span> franky <span class="keyword">import</span> *</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># A cartesian velocity motion with linear (first argument) and angular (second argument) components</span></div>
+<div class="line"><span class="comment"># A cartesian velocity motion with linear (first argument) and angular (second argument)</span></div>
+<div class="line"><span class="comment"># components</span></div>
 <div class="line">m_cv1 = CartesianVelocityMotion(Twist([0.2, -0.1, 0.1], [0.1, -0.1, 0.2]))</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># With target elbow velocity</span></div>
-<div class="line">m_cv2 = CartesianVelocityMotion(RobotVelocity(Twist([0.2, -0.1, 0.1], [0.1, -0.1, 0.2]), elbow_velocity=-0.2))</div>
+<div class="line">m_cv2 = CartesianVelocityMotion(</div>
+<div class="line">    RobotVelocity(Twist([0.2, -0.1, 0.1], [0.1, -0.1, 0.2]), elbow_velocity=-0.2)</div>
+<div class="line">)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Cartesian velocity motions also support multiple waypoints. Unlike in cartesian position control, a cartesian velocity</span></div>
-<div class="line"><span class="comment"># waypoint is a target velocity to be reached. This particular example first accelerates the end-effector, holds the</span></div>
-<div class="line"><span class="comment"># velocity for 1s, then # reverses direction for 2s, reverses direction again for 1s, and finally stops. It is important</span></div>
-<div class="line"><span class="comment"># not to forget to stop # the robot at the end of such a sequence, as it will otherwise throw an error.</span></div>
-<div class="line">m_cv4 = CartesianVelocityWaypointMotion([</div>
-<div class="line">    CartesianVelocityWaypoint(Twist([0.2, -0.1, 0.1], [0.1, -0.1, 0.2]), hold_target_duration=Duration(1000)),</div>
-<div class="line">    CartesianVelocityWaypoint(Twist([-0.2, 0.1, -0.1], [-0.1, 0.1, -0.2]), hold_target_duration=Duration(2000)),</div>
-<div class="line">    CartesianVelocityWaypoint(Twist([0.2, -0.1, 0.1], [0.1, -0.1, 0.2]), hold_target_duration=Duration(1000)),</div>
-<div class="line">    CartesianVelocityWaypoint(Twist()),</div>
-<div class="line">])</div>
+<div class="line"><span class="comment"># Cartesian velocity motions also support multiple waypoints. Unlike in cartesian position</span></div>
+<div class="line"><span class="comment"># control, a cartesian velocity waypoint is a target velocity to be reached. This particular</span></div>
+<div class="line"><span class="comment"># example first accelerates the end-effector, holds the velocity for 1s, then reverses</span></div>
+<div class="line"><span class="comment"># direction for 2s, reverses direction again for 1s, and finally stops. It is important not to</span></div>
+<div class="line"><span class="comment"># forget to stop the robot at the end of such a sequence, as it will otherwise throw an error.</span></div>
+<div class="line">m_cv4 = CartesianVelocityWaypointMotion(</div>
+<div class="line">    [</div>
+<div class="line">        CartesianVelocityWaypoint(</div>
+<div class="line">            Twist([0.2, -0.1, 0.1], [0.1, -0.1, 0.2]),</div>
+<div class="line">            hold_target_duration=Duration(1000),</div>
+<div class="line">        ),</div>
+<div class="line">        CartesianVelocityWaypoint(</div>
+<div class="line">            Twist([-0.2, 0.1, -0.1], [-0.1, 0.1, -0.2]),</div>
+<div class="line">            hold_target_duration=Duration(2000),</div>
+<div class="line">        ),</div>
+<div class="line">        CartesianVelocityWaypoint(</div>
+<div class="line">            Twist([0.2, -0.1, 0.1], [0.1, -0.1, 0.2]),</div>
+<div class="line">            hold_target_duration=Duration(1000),</div>
+<div class="line">        ),</div>
+<div class="line">        CartesianVelocityWaypoint(Twist()),</div>
+<div class="line">    ]</div>
+<div class="line">)</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Stop the robot in cartesian velocity control mode.</span></div>
 <div class="line">m_cv6 = CartesianVelocityStopMotion()</div>
@@ -424,18 +475,25 @@ $(function() {
 <p>The real robot can be moved by applying a motion to the robot using <code>move</code>:</p>
 <div class="fragment"><div class="line"><span class="comment"># Before moving the robot, set an appropriate dynamics factor. We start small:</span></div>
 <div class="line">robot.relative_dynamics_factor = 0.05</div>
-<div class="line"><span class="comment"># or alternatively, to control the scaling of velocity, acceleration, and jerk limits separately:</span></div>
+<div class="line"><span class="comment"># or alternatively, to control the scaling of velocity, acceleration, and jerk limits</span></div>
+<div class="line"><span class="comment"># separately:</span></div>
 <div class="line">robot.relative_dynamics_factor = RelativeDynamicsFactor(0.05, 0.1, 0.15)</div>
 <div class="line"><span class="comment"># If these values are set too high, you will see discontinuity errors</span></div>
 <div class="line"> </div>
 <div class="line">robot.move(m_jp1)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># We can also set a relative dynamics factor in the move command. It will be multiplied with the other relative</span></div>
-<div class="line"><span class="comment"># dynamics factors (robot and motion if present).</span></div>
+<div class="line"><span class="comment"># We can also set a relative dynamics factor in the move command. It will be multiplied with</span></div>
+<div class="line"><span class="comment"># the other relative dynamics factors (robot and motion if present).</span></div>
 <div class="line">robot.move(m_jp2, relative_dynamics_factor=0.8)</div>
 </div><!-- fragment --><h4>Motion Callbacks</h4>
 <p>All motions support callbacks, which will be invoked in every control step at 1kHz. Callbacks can be attached as follows:</p>
-<div class="fragment"><div class="line"><span class="keyword">def </span>cb(robot_state: RobotState, time_step: Duration, rel_time: Duration, abs_time: Duration, control_signal: JointPositions):</div>
+<div class="fragment"><div class="line"><span class="keyword">def </span>cb(</div>
+<div class="line">        robot_state: RobotState,</div>
+<div class="line">        time_step: Duration,</div>
+<div class="line">        rel_time: Duration,</div>
+<div class="line">        abs_time: Duration,</div>
+<div class="line">        control_signal: JointPositions,</div>
+<div class="line">):</div>
 <div class="line">    print(f<span class="stringliteral">&quot;At time {abs_time}, the target joint positions were {control_signal.q}&quot;</span>)</div>
 <div class="line"> </div>
 <div class="line"> </div>
@@ -446,11 +504,14 @@ $(function() {
 <p>By adding reactions to the motion data, the robot can react to unforeseen events. In the Python API, you can define conditions by using a comparison between a robot's value and a given threshold. If the threshold is exceeded, the reaction fires.</p>
 <div class="fragment"><div class="line"><span class="keyword">from</span> franky <span class="keyword">import</span> CartesianMotion, Affine, ReferenceType, Measure, Reaction</div>
 <div class="line"> </div>
-<div class="line">motion = CartesianMotion(Affine([0.0, 0.0, 0.1]), ReferenceType.Relative)  <span class="comment"># Move down 10cm</span></div>
+<div class="line">motion = CartesianMotion(</div>
+<div class="line">    Affine([0.0, 0.0, 0.1]), ReferenceType.Relative</div>
+<div class="line">)  <span class="comment"># Move down 10cm</span></div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># It is important that the reaction motion uses the same control mode as the original motion. Hence, we cannot register</span></div>
-<div class="line"><span class="comment"># a JointMotion as a reaction motion to a CartesianMotion.</span></div>
-<div class="line">reaction_motion = CartesianMotion(Affine([0.0, 0.0, 0.01]), ReferenceType.Relative)  <span class="comment"># Move up for 1cm</span></div>
+<div class="line"><span class="comment"># It is important that the reaction motion uses the same control mode as the original motion.</span></div>
+<div class="line"><span class="comment"># Hence, we cannot register # a JointMotion as a reaction motion to a CartesianMotion.</span></div>
+<div class="line"><span class="comment"># Move up for 1cm</span></div>
+<div class="line">reaction_motion = CartesianMotion(Affine([0.0, 0.0, 0.01]), ReferenceType.Relative)</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Trigger reaction if the Z force is greater than 30N</span></div>
 <div class="line">reaction = Reaction(Measure.FORCE_Z &gt; 30.0, reaction_motion)</div>
@@ -484,7 +545,8 @@ $(function() {
 </div><!-- fragment --><p>Similar to the motion callbacks, in Python, reaction callbacks are not executed in real-time but in a regular thread with lower priority to ensure that the control thread does not get blocked. Thus, the callbacks might fire substantially after the reaction has fired, depending on the time it takes to execute them.</p>
 <p>In C++ you can additionally use lambdas to define more complex behaviours:</p>
 <div class="fragment"><div class="line"> ++</div>
-<div class="line"><span class="keyword">auto</span> motion = <a class="code hl_class" href="classfranky_1_1_cartesian_motion.html">CartesianMotion</a>(<a class="code hl_class" href="classfranky_1_1_robot_pose.html">RobotPose</a>(<a class="code hl_typedef" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a>({0.0, 0.0, 0.2}), 0.0), ReferenceType::Relative);</div>
+<div class="line"><span class="keyword">auto</span> motion = <a class="code hl_class" href="classfranky_1_1_cartesian_motion.html">CartesianMotion</a>(</div>
+<div class="line">  <a class="code hl_class" href="classfranky_1_1_robot_pose.html">RobotPose</a>(<a class="code hl_typedef" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a>({0.0, 0.0, 0.2}), 0.0), ReferenceType::Relative);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Stop motion if force is over 10N</span></div>
 <div class="line"><span class="keyword">auto</span> stop_motion = <a class="code hl_class" href="classfranky_1_1_stop_motion.html">StopMotion&lt;franka::CartesianPose&gt;</a>()</div>
@@ -528,8 +590,8 @@ $(function() {
 <div class="line">robot.move(motion1, asynchronous=<span class="keyword">True</span>)</div>
 <div class="line"> </div>
 <div class="line">time.sleep(0.5)</div>
-<div class="line"><span class="comment"># Note that similar to reactions, when preempting active motions with new motions, the control mode cannot change.</span></div>
-<div class="line"><span class="comment"># Hence, we cannot use, e.g., a JointMotion here.</span></div>
+<div class="line"><span class="comment"># Note that similar to reactions, when preempting active motions with new motions, the</span></div>
+<div class="line"><span class="comment"># control mode cannot change. Hence, we cannot use, e.g., a JointMotion here.</span></div>
 <div class="line">motion2 = CartesianMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
 <div class="line">robot.move(motion2, asynchronous=<span class="keyword">True</span>)</div>
 </div><!-- fragment --><p>By calling <code>Robot.join_motion</code> the main thread can be synchronized with the motion thread, as it will block until the robot finishes its motion.</p>
@@ -611,15 +673,16 @@ $(function() {
 <div class="line"><span class="keyword">with</span> franky.RobotWebSession(<span class="stringliteral">&quot;172.16.0.2&quot;</span>, <span class="stringliteral">&quot;username&quot;</span>, <span class="stringliteral">&quot;password&quot;</span>) <span class="keyword">as</span> robot_web_session:</div>
 <div class="line">    <span class="comment"># First take control</span></div>
 <div class="line">    <span class="keywordflow">try</span>:</div>
-<div class="line">        <span class="comment"># Try taking control. The session currently holding control has to release it in order for this session to gain</span></div>
-<div class="line">        <span class="comment"># control. In the web interface, a notification will show prompting the user to release control. If the other</span></div>
-<div class="line">        <span class="comment"># session is another franky.RobotWebSession, then the `release_control` method can be called on the other</span></div>
+<div class="line">        <span class="comment"># Try taking control. The session currently holding control has to release it in order</span></div>
+<div class="line">        <span class="comment"># for this session to gain control. In the web interface, a notification will show</span></div>
+<div class="line">        <span class="comment"># prompting the user to release control. If the other session is another</span></div>
+<div class="line">        <span class="comment"># franky.RobotWebSession, then the `release_control` method can be called on the other</span></div>
 <div class="line">        <span class="comment"># session to release control.</span></div>
 <div class="line">        robot_web_session.take_control(wait_timeout=10.0)</div>
 <div class="line">    <span class="keywordflow">except</span> franky.TakeControlTimeoutError:</div>
-<div class="line">        <span class="comment"># If nothing happens for 10s, we try to take control forcefully. This is particularly useful if the session</span></div>
-<div class="line">        <span class="comment"># holding control is dead. Taking control by force requires the user to manually push the blue button close to</span></div>
-<div class="line">        <span class="comment"># the robot&#39;s wrist.</span></div>
+<div class="line">        <span class="comment"># If nothing happens for 10s, we try to take control forcefully. This is particularly</span></div>
+<div class="line">        <span class="comment"># useful if the session holding control is dead. Taking control by force requires the</span></div>
+<div class="line">        <span class="comment"># user to manually push the blue button close to the robot&#39;s wrist.</span></div>
 <div class="line">        robot_web_session.take_control(wait_timeout=30.0, force=<span class="keyword">True</span>)</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment"># Unlock the brakes</span></div>
