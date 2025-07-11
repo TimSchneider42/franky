@@ -331,7 +331,7 @@ $(function() {
 <div class="line">)</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Intermediate waypoints also permit to specify target velocities. The default target velocity</span></div>
-<div class="line"><span class="comment"># is 0, meaning that the # robot will stop at every waypoint.</span></div>
+<div class="line"><span class="comment"># is 0, meaning that the robot will stop at every waypoint.</span></div>
 <div class="line">m_jp3 = JointWaypointMotion(</div>
 <div class="line">    [</div>
 <div class="line">        JointWaypoint([-0.3, 0.1, 0.3, -1.4, 0.1, 1.8, 0.7]),</div>
@@ -346,10 +346,10 @@ $(function() {
 <div class="line">)</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Stop the robot in joint position control mode. The difference of JointStopMotion to other</span></div>
-<div class="line"><span class="comment"># stop-motions such as CartesianStopMotion is that # JointStopMotion # stops the robot in</span></div>
-<div class="line"><span class="comment"># joint position control mode while # CartesianStopMotion stops it in cartesian pose control</span></div>
-<div class="line"><span class="comment"># mode. The difference becomes relevant when asynchronous move # commands are being sent or</span></div>
-<div class="line"><span class="comment"># reactions are being used(see below).</span></div>
+<div class="line"><span class="comment"># stop-motions such as CartesianStopMotion is that JointStopMotion stops the robot in joint</span></div>
+<div class="line"><span class="comment"># position control mode while CartesianStopMotion stops it in cartesian pose control mode. The</span></div>
+<div class="line"><span class="comment"># difference becomes relevant when asynchronous move commands are being sent or reactions are</span></div>
+<div class="line"><span class="comment"># being used(see below).</span></div>
 <div class="line">m_jp4 = JointStopMotion()</div>
 </div><!-- fragment --><h4>Joint Velocity Control</h4>
 <div class="fragment"><div class="line"><span class="keyword">from</span> franky <span class="keyword">import</span> *</div>
@@ -504,12 +504,10 @@ $(function() {
 <p>By adding reactions to the motion data, the robot can react to unforeseen events. In the Python API, you can define conditions by using a comparison between a robot's value and a given threshold. If the threshold is exceeded, the reaction fires.</p>
 <div class="fragment"><div class="line"><span class="keyword">from</span> franky <span class="keyword">import</span> CartesianMotion, Affine, ReferenceType, Measure, Reaction</div>
 <div class="line"> </div>
-<div class="line">motion = CartesianMotion(</div>
-<div class="line">    Affine([0.0, 0.0, 0.1]), ReferenceType.Relative</div>
-<div class="line">)  <span class="comment"># Move down 10cm</span></div>
+<div class="line">motion = CartesianMotion(Affine([0.0, 0.0, 0.1]), ReferenceType.Relative)  <span class="comment"># Move down 10cm</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># It is important that the reaction motion uses the same control mode as the original motion.</span></div>
-<div class="line"><span class="comment"># Hence, we cannot register # a JointMotion as a reaction motion to a CartesianMotion.</span></div>
+<div class="line"><span class="comment"># Hence, we cannot register a JointMotion as a reaction motion to a CartesianMotion.</span></div>
 <div class="line"><span class="comment"># Move up for 1cm</span></div>
 <div class="line">reaction_motion = CartesianMotion(Affine([0.0, 0.0, 0.01]), ReferenceType.Relative)</div>
 <div class="line"> </div>
