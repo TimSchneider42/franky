@@ -513,7 +513,7 @@ $(function() {
 <div class="line"><span class="comment"># It is important that the reaction motion uses the same control mode as the original motion.</span></div>
 <div class="line"><span class="comment"># Hence, we cannot register a JointMotion as a reaction motion to a CartesianMotion.</span></div>
 <div class="line"><span class="comment"># Move up for 1cm</span></div>
-<div class="line">reaction_motion = CartesianMotion(Affine([0.0, 0.0, 0.01]), ReferenceType.Relative)</div>
+<div class="line">reaction_motion = CartesianMotion(Affine([0.0, 0.0, -0.01]), ReferenceType.Relative)</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Trigger reaction if the Z force is greater than 30N</span></div>
 <div class="line">reaction = Reaction(Measure.FORCE_Z &gt; 30.0, reaction_motion)</div>
