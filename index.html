@@ -516,7 +516,7 @@ $(function() {
 <div class="line">reaction_motion = CartesianMotion(Affine([0.0, 0.0, -0.01]), ReferenceType.Relative)</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Trigger reaction if the Z force is greater than 30N</span></div>
-<div class="line">reaction = Reaction(Measure.FORCE_Z &gt; 30.0, reaction_motion)</div>
+<div class="line">reaction = Reaction(Measure.FORCE_Z &gt; 5.0, reaction_motion)</div>
 <div class="line">motion.add_reaction(reaction)</div>
 <div class="line"> </div>
 <div class="line">robot.move(motion)</div>
