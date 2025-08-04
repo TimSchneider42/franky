@@ -79,14 +79,14 @@ $(function() {
 <p><a href="https://github.com/timschneider42/franky/issues"><img src="https://img.shields.io/github/issues/timschneider42/franky.svg" alt="Issues" style="pointer-events: none;" class="inline"/> </a></p>
 <p><a href="https://github.com/timschneider42/franky/releases"><img src="https://img.shields.io/github/v/release/timschneider42/franky.svg?include_prereleases&amp;sort=semver" alt="Releases" style="pointer-events: none;" class="inline"/> </a></p>
 <p><a href="https://github.com/timschneider42/franky/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-LGPL-green.svg" alt="LGPL" style="pointer-events: none;" class="inline"/> </a> </p>
-<p>franky is a high-level control library for Franka robots offering Python and C++ support. By providing a high-level control interface, franky eliminates the need for strict real-time programming at 1 kHz, making control from non-real-time environments, such as Python programs, feasible. Instead of relying on low-level control commands, franky expects high-level position or velocity targets and uses <a href="https://github.com/pantor/ruckig">Ruckig</a> to plan time-optimal trajectories in real-time.</p>
-<p>Although Python does not provide real-time guarantees, franky strives to maintain as much real-time control as possible. Motions can be preempted at any moment, prompting franky to re-plan trajectories on the fly. To handle unforeseen situations—such as unexpected contact with the environment — franky includes a reaction system that allows to update motion commands dynamically. Furthermore, most non-real-time functionality of <a href="https://frankaemika.github.io/docs/libfranka.html">libfranka</a>, such as Gripper control is made directly available in Python.</p>
+<p>franky is a high-level control library for Franka robots, offering Python and C++ support. By providing a high-level control interface, franky eliminates the need for strict real-time programming at 1 kHz, making control from non-real-time environments, such as Python programs, feasible. Instead of relying on low-level control commands, franky expects high-level position or velocity targets and uses <a href="https://github.com/pantor/ruckig">Ruckig</a> to plan time-optimal trajectories in real-time.</p>
+<p>Although Python does not provide real-time guarantees, franky strives to maintain as much real-time control as possible. Motions can be preempted at any moment, prompting franky to re-plan trajectories on the fly. To handle unforeseen situations—such as unexpected contact with the environment — franky includes a reaction system that allows for updating motion commands dynamically. Furthermore, most non-real-time functionality of <a href="https://frankaemika.github.io/docs/libfranka.html">libfranka</a>, such as Gripper control is made directly available in Python.</p>
 <p>Check out the tutorial and the <a href="https://github.com/TimSchneider42/franky/tree/master/examples">examples</a> for an introduction. The full documentation can be found at <a href="https://timschneider42.github.io/franky/">https://timschneider42.github.io/franky/</a>.</p>
 <h2>🚀 Features</h2>
 <ul>
 <li><b>Control your Franka robot directly from Python in just a few lines!</b> No more endless hours setting up ROS, juggling packages, or untangling dependencies. Just <code>pip install</code> — no ROS at all.</li>
 <li><b><a class="el" href="index.html#motion-types">Four control modes</a></b>: Cartesian position, Cartesian velocity, Joint position, Joint velocity franky uses <a href="https://github.com/pantor/ruckig">Ruckig</a> to generate smooth, time-optimal trajectories while respecting velocity, acceleration, and jerk limits.</li>
-<li><b><a class="el" href="index.html#real-time-motions">Real-time control from Python and C++</a></b> Need to change the target while the robot’s moving? No problem. franky re-plans trajectories on the fly so that you can preempt motions anytime.</li>
+<li><b><a class="el" href="index.html#real-time-motions">Real-time control from Python and C++</a></b> Need to change the target while the robot’s moving? No problem. franky replans trajectories on the fly so that you can preempt motions anytime.</li>
 <li><b>Reactive behavior</b> Robots don’t always go according to plan. franky lets you define reactions to unexpected events—like contact with the environment — so you can change course in real-time.</li>
 <li><b>Motion and reaction callbacks</b> Want to monitor what’s happening under the hood? Add callbacks to your motions and reactions. They won’t block the control thread and are super handy for debugging or logging.</li>
 <li><b>Things are moving too fast? Tune the robot's dynamics to your needs</b> Adjust max velocity, acceleration, and jerk to match your setup or task. Fine control for smooth, safe operation.</li>
@@ -95,7 +95,7 @@ $(function() {
 <h2>📖 Python Quickstart Guide</h2>
 <p>Real-time kernel already installed and real-time permissions granted? Just install franky via</p>
 <div class="fragment"><div class="line">pip install franky-control</div>
-</div><!-- fragment --><p>otherwise, follow the <a class="el" href="index.html#setup">setup instructions</a> first.</p>
+</div><!-- fragment --><p>Otherwise, follow the <a class="el" href="index.html#setup">setup instructions</a> first.</p>
 <p>Now we are already ready to go! Unlock the brakes in the web interface, activate FCI, and start coding:</p>
 <div class="fragment"><div class="line"><span class="keyword">from</span> franky <span class="keyword">import</span> *</div>
 <div class="line"> </div>
@@ -108,16 +108,16 @@ $(function() {
 <div class="line">motion = CartesianMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
 <div class="line">robot.move(motion)</div>
 </div><!-- fragment --><p>If you are seeing server version mismatch errors, such as </p><div class="fragment"><div class="line">franky.IncompatibleVersionException: libfranka: Incompatible library version (server version: 5, library version: 9)</div>
-</div><!-- fragment --><p> then your Franka robot is either not on the most recent firmware version or you are using the older Franka Panda model. In any case, it's no big deal; just check <a href="https://frankaemika.github.io/docs/compatibility.html">here</a> which libfranka version you need and follow our [instructions](installing-frankly) to install the appropriate franky wheels.</p>
+</div><!-- fragment --><p> then your Franka robot is either not on the most recent firmware version, or you are using the older Franka Panda model. In any case, it's no big deal; just check <a href="https://frankaemika.github.io/docs/compatibility.html">here</a> which libfranka version you need and follow our [instructions](installing-frankly) to install the appropriate franky wheels.</p>
 <h2><a class="anchor" id="setup"></a> ⚙️ Setup</h2>
 <p>To install franky, you have to follow three steps:</p>
 <ol type="1">
-<li>Ensure that you are using a realtime kernel</li>
+<li>Ensure that you are using a real-time kernel</li>
 <li>Ensure that the executing user has permission to run real-time applications</li>
 <li>Install franky via pip or build it from source</li>
 </ol>
 <h3>Installing a real-time kernel</h3>
-<p>In order for franky to function properly, it requires the underlying OS to use a realtime kernel. Otherwise, you might see <code>communication_constrains_violation</code> errors.</p>
+<p>In order for Franky to function properly, it requires the underlying OS to use a real-time kernel. Otherwise, you might see <code>communication_constrains_violation</code> errors.</p>
 <p>To check whether your system is currently using a real-time kernel, type <code>uname -a</code>. You should see something like this:</p>
 <div class="fragment"><div class="line">$ uname -a</div>
 <div class="line">Linux [PCNAME] 5.15.0-1056-realtime #63-Ubuntu SMP PREEMPT_RT ...</div>
@@ -138,7 +138,7 @@ $(function() {
 <p>To verify that the changes were applied, check if your user is in the <code>realtime</code> group:</p>
 <div class="fragment"><div class="line">$ groups</div>
 <div class="line">... realtime</div>
-</div><!-- fragment --><p>If realtime is not listed in your groups, try rebooting.</p>
+</div><!-- fragment --><p>If real-time is not listed in your groups, try rebooting.</p>
 <h3>Installing franky</h3>
 <p>To start using franky with Python and libfranka <em>0.15.0</em>, just install it via</p>
 <div class="fragment"><div class="line">pip install franky-control</div>
@@ -153,14 +153,14 @@ $(function() {
 <div class="fragment"><div class="line">git clone --recurse-submodules https://github.com/timschneider42/franky.git</div>
 <div class="line">cd franky/</div>
 <div class="line">docker compose build franky-run</div>
-</div><!-- fragment --><p>To use another version of libfranka than the default (0.15.0) add a build argument:</p>
+</div><!-- fragment --><p>To use another version of libfranka than the default (0.15.0), add a build argument:</p>
 <div class="fragment"><div class="line">docker compose build franky-run --build-arg LIBFRANKA_VERSION=0.9.2</div>
 </div><!-- fragment --><p>To run the container:</p>
 <div class="fragment"><div class="line">docker compose run franky-run bash</div>
-</div><!-- fragment --><p>The container requires access to the host machines network <em>and</em> elevated user rights to allow the docker user to set RT capabilities of the processes run from within it.</p>
+</div><!-- fragment --><p>The container requires access to the host machine's network <em>and</em> elevated user rights to allow the Docker user to set RT capabilities of the processes run from within it.</p>
 <h3>Can I use CUDA jointly with franky?</h3>
 <p>Yes. However, you need to set <code>IGNORE_PREEMPT_RT_PRESENCE=1</code> during the installation and all subsequent updates of the CUDA drivers on the real-time kernel.</p>
-<p>First, make sure that you have rebooted your system after installing the real-time kernel. Then, add <code>IGNORE_PREEMPT_RT_PRESENCE=1</code> to <code>/etc/environment</code>, call <code>export IGNORE_PREEMPT_RT_PRESENCE=1</code> to also set it in the current session and follow the instructions of Nvidia to install CUDA on your system.</p>
+<p>First, make sure that you have rebooted your system after installing the real-time kernel. Then, add <code>IGNORE_PREEMPT_RT_PRESENCE=1</code> to <code>/etc/environment</code>, call <code>export IGNORE_PREEMPT_RT_PRESENCE=1</code> to also set it in the current session, and follow the instructions of Nvidia to install CUDA on your system.</p>
 <p>If you are on Ubuntu, you can also use <a href="tools/install_cuda_realtime.bash">this</a> script to install CUDA on your real-time system: </p><div class="fragment"><div class="line"># Download the script</div>
 <div class="line">wget https://raw.githubusercontent.com/timschneider42/franky/master/tools/install_cuda_realtime.bash</div>
 <div class="line"> </div>
@@ -222,7 +222,7 @@ $(function() {
 <div class="line">motion = CartesianMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
 <div class="line">robot.move(motion)</div>
 </div><!-- fragment --><p>Before executing any code, make sure that you have enabled the Franka Control Interface (FCI) in the Franka UI web interface.</p>
-<p>Furthermore, we will introduce methods for geometric calculations, for moving the robot according to different motion types, how to implement real-time reactions and changing waypoints in real time as well as controlling the gripper.</p>
+<p>Furthermore, we will introduce methods for geometric calculations, for moving the robot according to different motion types, how to implement real-time reactions and changing waypoints in real time, as well as controlling the gripper.</p>
 <h3>🧮 Geometry</h3>
 <p><code><a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">franky.Affine</a></code> is a python wrapper for <a href="https://eigen.tuxfamily.org/dox/group__TutorialGeometry.html">Eigen::Affine3d</a>. It is used for Cartesian poses, frames and transformation. franky adds its own constructor, which takes a position and a quaternion as inputs:</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> math</div>
@@ -237,7 +237,7 @@ $(function() {
 <div class="line">combined_transformation = z_translation * z_rotation</div>
 </div><!-- fragment --><p>In all cases, distances are in [m] and rotations in [rad].</p>
 <h3>🤖 Robot</h3>
-<p>franky exposes most of the libfanka API for Python. Moreover, we added methods to adapt the dynamics limits of the robot for all motions.</p>
+<p>franky exposes most of the libfanka API for Python. Moreover, we added methods to adapt the dynamic limits of the robot for all motions.</p>
 <div class="fragment"><div class="line"><span class="keyword">from</span> franky <span class="keyword">import</span> *</div>
 <div class="line"> </div>
 <div class="line">robot = Robot(<span class="stringliteral">&quot;10.90.90.1&quot;</span>)</div>
@@ -245,7 +245,7 @@ $(function() {
 <div class="line"><span class="comment"># Recover from errors</span></div>
 <div class="line">robot.recover_from_errors()</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Set velocity, acceleration and jerk to 5% of the maximum</span></div>
+<div class="line"><span class="comment"># Set velocity, acceleration, and jerk to 5% of the maximum</span></div>
 <div class="line">robot.relative_dynamics_factor = 0.05</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Alternatively, you can define each constraint individually</span></div>
@@ -253,7 +253,7 @@ $(function() {
 <div class="line">    velocity=0.1, acceleration=0.05, jerk=0.1</div>
 <div class="line">)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Or, for more finegrained access, set individual limits</span></div>
+<div class="line"><span class="comment"># Or, for more fine-grained access, set individual limits</span></div>
 <div class="line">robot.translation_velocity_limit.set(3.0)</div>
 <div class="line">robot.rotation_velocity_limit.set(2.5)</div>
 <div class="line">robot.elbow_velocity_limit.set(2.62)</div>
@@ -304,10 +304,10 @@ $(function() {
 <div class="line">ee_t_k = Affine()</div>
 <div class="line">ee_pose_kin = robot.model.pose(Frame.EndEffector, q, f_t_ee, ee_t_k)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Get the jacobian of the current robot state</span></div>
+<div class="line"><span class="comment"># Get the Jacobian of the current robot state</span></div>
 <div class="line">jacobian = robot.model.body_jacobian(Frame.EndEffector, state)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Alternatively, just get the URDF as string and do the kinematics computation yourself (only</span></div>
+<div class="line"><span class="comment"># Alternatively, just get the URDF as a string and do the kinematics computation yourself (only</span></div>
 <div class="line"><span class="comment"># for libfranka &gt;= 0.15.0)</span></div>
 <div class="line">urdf_model = robot.model_urdf</div>
 </div><!-- fragment --><p>For a full list of state-related features, check the <a href="https://timschneider42.github.io/franky/classfranky_1_1_robot.html">Robot</a> and <a href="https://timschneider42.github.io/franky/classfranky_1_1_model.html">Model</a> sections of the documentation.</p>
@@ -332,7 +332,7 @@ $(function() {
 <div class="line">    ]</div>
 <div class="line">)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Intermediate waypoints also permit to specify target velocities. The default target velocity</span></div>
+<div class="line"><span class="comment"># Intermediate waypoints also permit specifying target velocities. The default target velocity</span></div>
 <div class="line"><span class="comment"># is 0, meaning that the robot will stop at every waypoint.</span></div>
 <div class="line">m_jp3 = JointWaypointMotion(</div>
 <div class="line">    [</div>
@@ -347,8 +347,8 @@ $(function() {
 <div class="line">    ]</div>
 <div class="line">)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Stop the robot in joint position control mode. The difference of JointStopMotion to other</span></div>
-<div class="line"><span class="comment"># stop-motions such as CartesianStopMotion is that JointStopMotion stops the robot in joint</span></div>
+<div class="line"><span class="comment"># Stop the robot in joint position control mode. The difference between JointStopMotion to other</span></div>
+<div class="line"><span class="comment"># stop-motions, such as CartesianStopMotion, is that JointStopMotion stops the robot in joint</span></div>
 <div class="line"><span class="comment"># position control mode while CartesianStopMotion stops it in cartesian pose control mode. The</span></div>
 <div class="line"><span class="comment"># difference becomes relevant when asynchronous move commands are being sent or reactions are</span></div>
 <div class="line"><span class="comment"># being used(see below).</span></div>
@@ -356,7 +356,7 @@ $(function() {
 </div><!-- fragment --><h4>Joint Velocity Control</h4>
 <div class="fragment"><div class="line"><span class="keyword">from</span> franky <span class="keyword">import</span> *</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Accelerate to the given joint velocity and hold it. After 1000ms stop the robot again.</span></div>
+<div class="line"><span class="comment"># Accelerate to the given joint velocity and hold it. After 1000ms, stop the robot again.</span></div>
 <div class="line">m_jv1 = JointVelocityMotion(</div>
 <div class="line">    [0.1, 0.3, -0.1, 0.0, 0.1, -0.2, 0.4], duration=Duration(1000)</div>
 <div class="line">)</div>
@@ -398,7 +398,7 @@ $(function() {
 <div class="line">    RobotPose(Affine([0.4, -0.2, 0.3], quat), elbow_state=ElbowState(0.3))</div>
 <div class="line">)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># A linear motion in cartesian space relative to the initial position</span></div>
+<div class="line"><span class="comment"># A linear motion in Cartesian space relative to the initial position</span></div>
 <div class="line"><span class="comment"># (Note that this motion is relative both in position and orientation. Hence, when the robot&#39;s</span></div>
 <div class="line"><span class="comment"># end-effector is oriented differently, it will move in a different direction)</span></div>
 <div class="line">m_cp3 = CartesianMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
@@ -420,7 +420,7 @@ $(function() {
 <div class="line">    ]</div>
 <div class="line">)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Cartesian waypoints permit to specify target velocities</span></div>
+<div class="line"><span class="comment"># Cartesian waypoints permit specifying target velocities</span></div>
 <div class="line">m_cp5 = CartesianWaypointMotion(</div>
 <div class="line">    [</div>
 <div class="line">        CartesianWaypoint(Affine([0.5, -0.2, 0.3], quat)),</div>
@@ -433,12 +433,12 @@ $(function() {
 <div class="line">    ]</div>
 <div class="line">)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Stop the robot in cartesian position control mode.</span></div>
+<div class="line"><span class="comment"># Stop the robot in Cartesian position control mode.</span></div>
 <div class="line">m_cp6 = CartesianStopMotion()</div>
 </div><!-- fragment --><h4>Cartesian Velocity Control</h4>
 <div class="fragment"><div class="line"><span class="keyword">from</span> franky <span class="keyword">import</span> *</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># A cartesian velocity motion with linear (first argument) and angular (second argument)</span></div>
+<div class="line"><span class="comment"># A Cartesian velocity motion with linear (first argument) and angular (second argument)</span></div>
 <div class="line"><span class="comment"># components</span></div>
 <div class="line">m_cv1 = CartesianVelocityMotion(Twist([0.2, -0.1, 0.1], [0.1, -0.1, 0.2]))</div>
 <div class="line"> </div>
@@ -447,8 +447,8 @@ $(function() {
 <div class="line">    RobotVelocity(Twist([0.2, -0.1, 0.1], [0.1, -0.1, 0.2]), elbow_velocity=-0.2)</div>
 <div class="line">)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Cartesian velocity motions also support multiple waypoints. Unlike in cartesian position</span></div>
-<div class="line"><span class="comment"># control, a cartesian velocity waypoint is a target velocity to be reached. This particular</span></div>
+<div class="line"><span class="comment"># Cartesian velocity motions also support multiple waypoints. Unlike in Cartesian position</span></div>
+<div class="line"><span class="comment"># control, a Cartesian velocity waypoint is a target velocity to be reached. This particular</span></div>
 <div class="line"><span class="comment"># example first accelerates the end-effector, holds the velocity for 1s, then reverses</span></div>
 <div class="line"><span class="comment"># direction for 2s, reverses direction again for 1s, and finally stops. It is important not to</span></div>
 <div class="line"><span class="comment"># forget to stop the robot at the end of such a sequence, as it will otherwise throw an error.</span></div>
@@ -470,11 +470,11 @@ $(function() {
 <div class="line">    ]</div>
 <div class="line">)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># Stop the robot in cartesian velocity control mode.</span></div>
+<div class="line"><span class="comment"># Stop the robot in Cartesian velocity control mode.</span></div>
 <div class="line">m_cv6 = CartesianVelocityStopMotion()</div>
 </div><!-- fragment --><h4>Relative Dynamics Factors</h4>
-<p>Every motion and waypoint type allows to adapt the dynamics (velocity, acceleration and jerk) by setting the respective <code>relative_dynamics_factor</code> parameter. This parameter can also be set for the robot globally as shown below or in the <code>robot.move</code> command. Crucially, relative dynamics factors on different layers (robot, move command, and motion) do not override each other but rather get multiplied. Hence, a relative dynamics factor on a motion can only reduce the dynamics of the robot and never increase them.</p>
-<p>There is one exception to this rule and that is if any layer sets the relative dynamics factor to <code>RelativeDynamicsFactor.MAX_DYNAMICS</code>. This will cause the motion to be executed with maximum velocity, acceleration, and jerk limits, independently of the relative dynamics factors of the other layers. This feature should only be used to abruptly stop the robot in case of an unexpected environment contact as executing other motions with it is likely to lead to a discontinuity error and might be dangerous.</p>
+<p>Every motion and waypoint type allows for adapting the dynamics (velocity, acceleration, and jerk) by setting the respective <code>relative_dynamics_factor</code> parameter. This parameter can also be set for the robot globally, as shown below, or in the <code>robot.move</code> command. Crucially, relative dynamics factors on different layers (robot, move command, and motion) do not override each other but rather get multiplied. Hence, a relative dynamics factor on a motion can only reduce the dynamics of the robot and never increase them.</p>
+<p>There is one exception to this rule, and that is if any layer sets the relative dynamics factor to <code>RelativeDynamicsFactor.MAX_DYNAMICS</code>. This will cause the motion to be executed with maximum velocity, acceleration, and jerk limits, independently of the relative dynamics factors of the other layers. This feature should only be used to abruptly stop the robot in case of an unexpected environment contact, as executing Other motions with it are likely to lead to a discontinuity error and might be dangerous.</p>
 <h4>Executing Motions</h4>
 <p>The real robot can be moved by applying a motion to the robot using <code>move</code>:</p>
 <div class="fragment"><div class="line"><span class="comment"># Before moving the robot, set an appropriate dynamics factor. We start small:</span></div>
@@ -486,7 +486,7 @@ $(function() {
 <div class="line"> </div>
 <div class="line">robot.move(m_jp1)</div>
 <div class="line"> </div>
-<div class="line"><span class="comment"># We can also set a relative dynamics factor in the move command. It will be multiplied with</span></div>
+<div class="line"><span class="comment"># We can also set a relative dynamics factor in the move command. It will be multiplied by</span></div>
 <div class="line"><span class="comment"># the other relative dynamics factors (robot and motion if present).</span></div>
 <div class="line">robot.move(m_jp2, relative_dynamics_factor=0.8)</div>
 </div><!-- fragment --><h4>Motion Callbacks</h4>
@@ -503,7 +503,7 @@ $(function() {
 <div class="line"> </div>
 <div class="line">m_jp1.register_callback(cb)</div>
 <div class="line">robot.move(m_jp1)</div>
-</div><!-- fragment --><p>Note that in Python, these callbacks are not executed in the control thread since they would otherwise block it. Instead, they are put in a queue and executed by another thread. While this scheme ensures that the control thread can always run, it cannot prevent that the queue grows indefinitely when the callbacks take more time to execute than it takes for new callbacks to be queued. Hence, callbacks might be executed significantly after they were queued if they take a long time to execute.</p>
+</div><!-- fragment --><p>Note that in Python, these callbacks are not executed in the control thread since they would otherwise block it. Instead, they are put in a queue and executed by another thread. While this scheme ensures that the control thread can always run, it cannot prevent the queue from growing indefinitely when the callbacks take more time to execute than it takes for new callbacks to be queued. Hence, callbacks might be executed significantly after they were queued if they take a long time to execute.</p>
 <h3>⚡ Real-Time Reactions</h3>
 <p>By adding reactions to the motion data, the robot can react to unforeseen events. In the Python API, you can define conditions by using a comparison between a robot's value and a given threshold. If the threshold is exceeded, the reaction fires.</p>
 <div class="fragment"><div class="line"><span class="keyword">from</span> franky <span class="keyword">import</span> CartesianMotion, Affine, ReferenceType, Measure, Reaction</div>
@@ -512,7 +512,7 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="comment"># It is important that the reaction motion uses the same control mode as the original motion.</span></div>
 <div class="line"><span class="comment"># Hence, we cannot register a JointMotion as a reaction motion to a CartesianMotion.</span></div>
-<div class="line"><span class="comment"># Move up for 1cm</span></div>
+<div class="line"><span class="comment"># Move up by 1cm</span></div>
 <div class="line">reaction_motion = CartesianMotion(Affine([0.0, 0.0, -0.01]), ReferenceType.Relative)</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Trigger reaction if the Z force is greater than 30N</span></div>
@@ -545,7 +545,7 @@ $(function() {
 <div class="line"> </div>
 <div class="line">reaction.register_callback(reaction_callback)</div>
 </div><!-- fragment --><p>Similar to the motion callbacks, in Python, reaction callbacks are not executed in real-time but in a regular thread with lower priority to ensure that the control thread does not get blocked. Thus, the callbacks might fire substantially after the reaction has fired, depending on the time it takes to execute them.</p>
-<p>In C++ you can additionally use lambdas to define more complex behaviours:</p>
+<p>In C++, you can additionally use lambdas to define more complex behaviours:</p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keyword">auto</span> motion = <a class="code hl_class" href="classfranky_1_1_cartesian_motion.html">CartesianMotion</a>(</div>
 <div class="line">  <a class="code hl_class" href="classfranky_1_1_robot_pose.html">RobotPose</a>(<a class="code hl_typedef" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a>({0.0, 0.0, 0.2}), 0.0), ReferenceType::Relative);</div>
@@ -592,15 +592,15 @@ $(function() {
 <div class="line">robot.move(motion1, asynchronous=<span class="keyword">True</span>)</div>
 <div class="line"> </div>
 <div class="line">time.sleep(0.5)</div>
-<div class="line"><span class="comment"># Note that similar to reactions, when preempting active motions with new motions, the</span></div>
+<div class="line"><span class="comment"># Note that, similar to reactions, when preempting active motions with new motions, the</span></div>
 <div class="line"><span class="comment"># control mode cannot change. Hence, we cannot use, e.g., a JointMotion here.</span></div>
 <div class="line">motion2 = CartesianMotion(Affine([0.2, 0.0, 0.0]), ReferenceType.Relative)</div>
 <div class="line">robot.move(motion2, asynchronous=<span class="keyword">True</span>)</div>
-</div><!-- fragment --><p>By calling <code>Robot.join_motion</code> the main thread can be synchronized with the motion thread, as it will block until the robot finishes its motion.</p>
+</div><!-- fragment --><p>By calling <code>Robot.join_motion</code>, the main thread can be synchronized with the motion thread, as it will block until the robot finishes its motion.</p>
 <div class="fragment"><div class="line">robot.join_motion()</div>
-</div><!-- fragment --><p>Note that when exceptions occur during the asynchronous execution of a motion, they will not be thrown immediately. Instead, the control thread stores the exception and terminates. The next time <code>Robot.join_motion</code> or <code>Robot.move</code> are called, they will throw the stored exception in the main thread. Hence, after an asynchronous motion has finished, make sure to call <code>Robot.join_motion</code> to ensure being notified of any exceptions that occurred during the motion.</p>
+</div><!-- fragment --><p>Note that when exceptions occur during the asynchronous execution of a motion, they will not be thrown immediately. Instead, the control thread stores the exception and terminates. The next time <code>Robot.join_motion</code> or <code>Robot.move</code> is called, they will throw the stored exception in the main thread. Hence, after an asynchronous motion has finished, make sure to call <code>Robot.join_motion</code> to ensure being notified of any exceptions that occurred during the motion.</p>
 <h3><a class="anchor" id="gripper"></a> 👌 Gripper</h3>
-<p>In the <code><a class="el" href="classfranky_1_1_gripper.html" title="A wrapper around the franka::Gripper class that adds asynchronous functionality.">franky::Gripper</a></code> class, the default gripper force and gripper speed can be set. Then, additionally to the libfranka commands, the following helper methods can be used:</p>
+<p>In the <code><a class="el" href="classfranky_1_1_gripper.html" title="A wrapper around the franka::Gripper class that adds asynchronous functionality.">franky::Gripper</a></code> class, the default gripper force and gripper speed can be set. Then, in addition to the libfranka commands, the following helper methods can be used:</p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="franky_8hpp.html">franky.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;chrono&gt;</span></div>
@@ -636,7 +636,7 @@ $(function() {
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Gripper motion timed out.&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">}</div>
 <div class="ttc" id="aclassfranky_1_1_gripper_html"><div class="ttname"><a href="classfranky_1_1_gripper.html">franky::Gripper</a></div><div class="ttdoc">A wrapper around the franka::Gripper class that adds asynchronous functionality.</div><div class="ttdef"><b>Definition</b> gripper.hpp:21</div></div>
-</div><!-- fragment --><p>The Python API follows the c++ API closely:</p>
+</div><!-- fragment --><p>The Python API follows the C++ API closely:</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> franky</div>
 <div class="line"> </div>
 <div class="line">gripper = <a class="code hl_class" href="classfranky_1_1_gripper.html">franky.Gripper</a>(<span class="stringliteral">&quot;10.90.90.1&quot;</span>)</div>
@@ -667,7 +667,7 @@ $(function() {
 <div class="line">    success_future.wait()</div>
 <div class="line">    print(<span class="stringliteral">&quot;Gripper motion timed out.&quot;</span>)</div>
 </div><!-- fragment --><h3>Accessing the Web Interface API</h3>
-<p>For Franka robots, control happens via the Franka Control Interface (FCI), which has to be enabled through the Franka UI in the robot's web interface. The Franka UI also provides methods for locking and unlocking the brakes, setting the execution mode, and executing the safety self-test. However, sometimes you may want to access these methods programmatically, e.g. for automatically unlocking the brakes before starting a motion, or automatically executing the self-test after 24h of continuous execution.</p>
+<p>For Franka robots, control happens via the Franka Control Interface (FCI), which has to be enabled through the Franka UI in the robot's web interface. The Franka UI also provides methods for locking and unlocking the brakes, setting the execution mode, and executing the safety self-test. However, sometimes you may want to access these methods programmatically, e.g., for automatically unlocking the brakes before starting a motion, or automatically executing the self-test after 24h of continuous execution.</p>
 <p>For that reason, franky provides a <code>RobotWebSession</code> class that allows you to access the web interface API of the robot. Note that directly accessing the web interface API is not officially supported and documented by Franka. Hence, use this feature at your own risk.</p>
 <p>A typical automated workflow could look like this:</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> franky</div>
@@ -723,7 +723,7 @@ $(function() {
 </div><!-- fragment --><p><code>robot_web_session.get_system_status()</code> contains more information than just the time until self-test, such as the current execution mode, whether the brakes are locked, whether the FCI is enabled, and more.</p>
 <p>If you want to call other API functions, you can use the <code>RobotWebSession.send_api_request</code> and <code>RobotWebSession.send_control_api_request</code> methods. See <a href="franky/robot_web_session.py">robot_web_session.py</a> for an example of how to use these methods.</p>
 <h2>🛠️ Development</h2>
-<p>franky is currently tested against following versions</p>
+<p>franky is currently tested against the following versions</p>
 <ul>
 <li>libfranka 0.7.1, 0.8.0, 0.9.2, 0.10.0, 0.11.0, 0.12.1, 0.13.3, 0.14.2, 0.15.0</li>
 <li>Eigen 3.4.0</li>
@@ -736,13 +736,13 @@ $(function() {
 <h2>📜 License</h2>
 <p>For non-commercial applications, this software is licensed under the LGPL v3.0. If you want to use franky within commercial applications or under a different license, please contact us for individual agreements.</p>
 <h2>🔍 Differences to frankx</h2>
-<p>franky started originally as a fork of <a href="https://github.com/pantor/frankx">frankx</a>, though both codebase and functionality differ substantially from frankx by now. Aside of bug fixes and general performance improvements, franky provides the following new features/improvements:</p>
+<p>franky started originally as a fork of <a href="https://github.com/pantor/frankx">frankx</a>, though both codebase and functionality differ substantially from frankx by now. Aside from bug fixes and general performance improvements, franky provides the following new features/improvements:</p>
 <ul>
 <li>Motions can be updated asynchronously.</li>
 <li>Reactions allow for the registration of callbacks instead of just printing to stdout when fired.</li>
 <li>Motions allow for the registration of callbacks for profiling.</li>
 <li>The robot state is also available during control.</li>
-<li>A larger part of the libfranka API is exposed to python (e.g.,<code>setCollisionBehavior</code>, <code>setJoinImpedance</code>, and <code>setCartesianImpedance</code>).</li>
+<li>A larger part of the libfranka API is exposed to python (e.g., <code>setCollisionBehavior</code>, <code>setJoinImpedance</code>, and <code>setCartesianImpedance</code>).</li>
 <li>Cartesian motion generation handles boundaries in Euler angles properly.</li>
 <li>There is a new joint motion type that supports waypoints.</li>
 <li>The signature of `Affine` changed. <code>Affine</code> does not handle elbow positions anymore. Instead, a new class <code>RobotPose</code> stores both the end-effector pose and optionally the elbow position.</li>
