@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the following metadata."
+title: "franky: High-Level Control Library for Franka Robots"
+authors:
+  - family-names: "Schneider"
+    given-names: "Tim"
+    orcid: "0000-0001-6605-9257"
+    affiliation: "Technical University of Darmstadt"
+repository-code: "https://github.com/TimSchneider42/franky"
+license: "LGPL-3.0"
+abstract: |
+  franky is a high-level control library for Franka robots, offering Python and C++ support.
+  It eliminates the need for strict real-time programming by allowing high-level position
+  or velocity commands and planning time-optimal trajectories using Ruckig. Supports reactive
+  control and full access to libfranka APIs. franky is originally derived from the frankx
+  project by Pantor, with significant extensions and modifications.
+keywords:
+  - robotics
+  - control
+  - franka
+  - python
+  - c++
+  - real-time
+
+references:
+  - type: software
+    title: "frankx: Motion generation for Franka Emika robots"
+    url: "https://github.com/pantor/frankx"
+    authors:
+      - family-names: "Pantor"
