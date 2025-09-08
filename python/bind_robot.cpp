@@ -78,11 +78,11 @@ void bind_robot(py::module &m) {
       .def("homing_async", &Gripper::homingAsync, py::call_guard<py::gil_scoped_release>())
       .def("stop", &Gripper::stop, py::call_guard<py::gil_scoped_release>())
       .def("stop_async", &Gripper::stopAsync, py::call_guard<py::gil_scoped_release>())
-      .def_property_readonly("state", &Gripper::state)
+      .def_property_readonly("state", &Gripper::state, py::call_guard<py::gil_scoped_release>())
       .def_property_readonly("server_version", reinterpret_cast<uint16_t (Gripper::*)()>(&Gripper::serverVersion))
-      .def_property_readonly("width", &Gripper::width)
-      .def_property_readonly("is_grasped", &Gripper::is_grasped)
-      .def_property_readonly("max_width", &Gripper::max_width);
+      .def_property_readonly("width", &Gripper::width, py::call_guard<py::gil_scoped_release>())
+      .def_property_readonly("is_grasped", &Gripper::is_grasped, py::call_guard<py::gil_scoped_release>())
+      .def_property_readonly("max_width", &Gripper::max_width, py::call_guard<py::gil_scoped_release>());
 
   py::class_<Robot>(m, "_RobotInternal")
       .def(
@@ -223,14 +223,18 @@ void bind_robot(py::module &m) {
       .def("set_load", &Robot::setLoad, "load_mass"_a, "F_x_Cload"_a, "load_inertia"_a)
       .def("stop", &Robot::stop)
       .def_property("relative_dynamics_factor", &Robot::relative_dynamics_factor, &Robot::setRelativeDynamicsFactor)
-      .def_property_readonly("has_errors", &Robot::hasErrors)
-      .def_property_readonly("current_pose", &Robot::currentPose)
-      .def_property_readonly("current_cartesian_velocity", &Robot::currentCartesianVelocity)
-      .def_property_readonly("current_cartesian_state", &Robot::currentCartesianState)
-      .def_property_readonly("current_joint_state", &Robot::currentJointState)
-      .def_property_readonly("current_joint_velocities", &Robot::currentJointVelocities)
-      .def_property_readonly("current_joint_positions", &Robot::currentJointPositions)
-      .def_property_readonly("state", &Robot::state)
+      .def_property_readonly("has_errors", &Robot::hasErrors, py::call_guard<py::gil_scoped_release>())
+      .def_property_readonly("current_pose", &Robot::currentPose, py::call_guard<py::gil_scoped_release>())
+      .def_property_readonly(
+          "current_cartesian_velocity", &Robot::currentCartesianVelocity, py::call_guard<py::gil_scoped_release>())
+      .def_property_readonly(
+          "current_cartesian_state", &Robot::currentCartesianState, py::call_guard<py::gil_scoped_release>())
+      .def_property_readonly("current_joint_state", &Robot::currentJointState, py::call_guard<py::gil_scoped_release>())
+      .def_property_readonly(
+          "current_joint_velocities", &Robot::currentJointVelocities, py::call_guard<py::gil_scoped_release>())
+      .def_property_readonly(
+          "current_joint_positions", &Robot::currentJointPositions, py::call_guard<py::gil_scoped_release>())
+      .def_property_readonly("state", &Robot::state, py::call_guard<py::gil_scoped_release>())
       .def_property_readonly("is_in_control", &Robot::is_in_control)
       .def_property_readonly("fci_hostname", &Robot::fci_hostname)
       .def_property_readonly("current_control_signal_type", &Robot::current_control_signal_type)
