@@ -140,9 +140,9 @@ $(function() {
 <div class="line">... realtime</div>
 </div><!-- fragment --><p>If real-time is not listed in your groups, try rebooting.</p>
 <h3>Installing franky</h3>
-<p>To start using franky with Python and libfranka <em>0.15.0</em>, just install it via</p>
+<p>To start using franky with Python and libfranka <em>0.15.3</em>, just install it via</p>
 <div class="fragment"><div class="line">pip install franky-control</div>
-</div><!-- fragment --><p>We also provide wheels for libfranka versions <em>0.7.1</em>, <em>0.8.0</em>, <em>0.9.2</em>, <em>0.10.0</em>, <em>0.11.0</em>, <em>0.12.1</em>, <em>0.13.3</em>, <em>0.14.2</em>, and <em>0.15.0</em>. They can be installed via</p>
+</div><!-- fragment --><p>We also provide wheels for libfranka versions <em>0.7.1</em>, <em>0.8.0</em>, <em>0.9.2</em>, <em>0.10.0</em>, <em>0.11.0</em>, <em>0.12.1</em>, <em>0.13.3</em>, <em>0.14.2</em>, and <em>0.15.3</em>. They can be installed via</p>
 <div class="fragment"><div class="line">VERSION=0-9-2</div>
 <div class="line">wget https://github.com/TimSchneider42/franky/releases/latest/download/libfranka_${VERSION}_wheels.zip</div>
 <div class="line">unzip libfranka_${VERSION}_wheels.zip</div>
@@ -153,7 +153,7 @@ $(function() {
 <div class="fragment"><div class="line">git clone --recurse-submodules https://github.com/timschneider42/franky.git</div>
 <div class="line">cd franky/</div>
 <div class="line">docker compose build franky-run</div>
-</div><!-- fragment --><p>To use another version of libfranka than the default (0.15.0), add a build argument:</p>
+</div><!-- fragment --><p>To use another version of libfranka than the default (0.15.3), add a build argument:</p>
 <div class="fragment"><div class="line">docker compose build franky-run --build-arg LIBFRANKA_VERSION=0.9.2</div>
 </div><!-- fragment --><p>To run the container:</p>
 <div class="fragment"><div class="line">docker compose run franky-run bash</div>
@@ -308,7 +308,7 @@ $(function() {
 <div class="line">jacobian = robot.model.body_jacobian(Frame.EndEffector, state)</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Alternatively, just get the URDF as a string and do the kinematics computation yourself (only</span></div>
-<div class="line"><span class="comment"># for libfranka &gt;= 0.15.0)</span></div>
+<div class="line"><span class="comment"># for libfranka &gt;= 0.15.3)</span></div>
 <div class="line">urdf_model = robot.model_urdf</div>
 </div><!-- fragment --><p>For a full list of state-related features, check the <a href="https://timschneider42.github.io/franky/classfranky_1_1_robot.html">Robot</a> and <a href="https://timschneider42.github.io/franky/classfranky_1_1_model.html">Model</a> sections of the documentation.</p>
 <h3><a class="anchor" id="motion-types"></a> 🏃‍♂️ Motion Types</h3>
@@ -725,7 +725,7 @@ $(function() {
 <h2>🛠️ Development</h2>
 <p>franky is currently tested against the following versions</p>
 <ul>
-<li>libfranka 0.7.1, 0.8.0, 0.9.2, 0.10.0, 0.11.0, 0.12.1, 0.13.3, 0.14.2, 0.15.0</li>
+<li>libfranka 0.7.1, 0.8.0, 0.9.2, 0.10.0, 0.11.0, 0.12.1, 0.13.3, 0.14.2, 0.15.3</li>
 <li>Eigen 3.4.0</li>
 <li>Pybind11 2.13.6</li>
 <li>POCO 1.12.5p2</li>
