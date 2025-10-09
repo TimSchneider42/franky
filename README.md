@@ -161,14 +161,14 @@ If real-time is not listed in your groups, try rebooting.
 
 ### Installing franky
 
-To start using franky with Python and libfranka *0.15.0*, just install it via
+To start using franky with Python and libfranka *0.15.3*, just install it via
 
 ```bash
 pip install franky-control
 ```
 
 We also provide wheels for libfranka versions *0.7.1*, *0.8.0*, *0.9.2*, *0.10.0*, *0.11.0*, *0.12.1*, *0.13.3*,
-*0.14.2*, and *0.15.0*.
+*0.14.2*, and *0.15.3*.
 They can be installed via
 
 ```bash
@@ -190,7 +190,7 @@ cd franky/
 docker compose build franky-run
 ```
 
-To use another version of libfranka than the default (0.15.0), add a build argument:
+To use another version of libfranka than the default (0.15.3), add a build argument:
 
 ```bash
 docker compose build franky-run --build-arg LIBFRANKA_VERSION=0.9.2
@@ -424,7 +424,7 @@ ee_pose_kin = robot.model.pose(Frame.EndEffector, q, f_t_ee, ee_t_k)
 jacobian = robot.model.body_jacobian(Frame.EndEffector, state)
 
 # Alternatively, just get the URDF as a string and do the kinematics computation yourself (only
-# for libfranka >= 0.15.0)
+# for libfranka >= 0.15.3)
 urdf_model = robot.model_urdf
 ```
 
@@ -974,7 +974,7 @@ See [robot_web_session.py](franky/robot_web_session.py) for an example of how to
 
 franky is currently tested against the following versions
 
-- libfranka 0.7.1, 0.8.0, 0.9.2, 0.10.0, 0.11.0, 0.12.1, 0.13.3, 0.14.2, 0.15.0
+- libfranka 0.7.1, 0.8.0, 0.9.2, 0.10.0, 0.11.0, 0.12.1, 0.13.3, 0.14.2, 0.15.3
 - Eigen 3.4.0
 - Pybind11 2.13.6
 - POCO 1.12.5p2
