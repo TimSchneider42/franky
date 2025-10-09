@@ -80,7 +80,7 @@ setup(
     license="LGPL-3.0-or-later",
     ext_modules=[Extension("franky/_franky", [])],
     cmdclass=dict(build_ext=CMakeBuild),
-    keywords=["robot", "robotics", "trajectory-generation", "motion-control"],
+    keywords=["control", "robotics", "franka", "franka-panda", "franka-research-3"],
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Science/Research",
