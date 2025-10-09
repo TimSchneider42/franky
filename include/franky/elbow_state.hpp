@@ -19,7 +19,7 @@ std::ostream &operator<<(std::ostream &os, const FlipDirection &flip_direction);
  * This class encapsulates the elbow state of a robot, which comprises the
  * position of the 3rd joint and the flip direction of the 4th joint. For
  * details see
- * https://frankaemika.github.io/libfranka/0.15.0/structfranka_1_1RobotState.html#a43485841c427d70e7f36a912cc3116d1
+ * https://frankarobotics.github.io/libfranka/0.15.3/structfranka_1_1RobotState.html#a43485841c427d70e7f36a912cc3116d1
  */
 class ElbowState {
  public:

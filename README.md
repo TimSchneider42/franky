@@ -36,7 +36,7 @@ Although Python does not provide real-time guarantees, franky strives to maintai
 Motions can be preempted at any moment, prompting franky to re-plan trajectories on the fly.
 To handle unforeseen situations—such as unexpected contact with the environment — franky includes a reaction system that
 allows for updating motion commands dynamically.
-Furthermore, most non-real-time functionality of [libfranka](https://frankaemika.github.io/docs/libfranka.html), such as
+Furthermore, most non-real-time functionality of [libfranka](https://frankarobotics.github.io/docs/libfranka.html), such as
 Gripper control is made directly available in Python.
 
 Check out the [tutorial](#-tutorial) and the [examples](https://github.com/TimSchneider42/franky/tree/master/examples)
@@ -98,7 +98,7 @@ If you are seeing server version mismatch errors, such as
 franky.IncompatibleVersionException: libfranka: Incompatible library version (server version: 5, library version: 9)
 ```
 then your Franka robot is either not on the most recent firmware version, or you are using the older Franka Panda model.
-In any case, it's no big deal; just check [here](https://frankaemika.github.io/docs/compatibility.html) which libfranka version you need and follow our [instructions](installing-frankly) to install the appropriate franky wheels.
+In any case, it's no big deal; just check [here](https://frankarobotics.github.io/docs/compatibility.html) which libfranka version you need and follow our [instructions](installing-franky) to install the appropriate franky wheels.
 
 ## <a id="setup" /> ⚙️ Setup
 
@@ -125,7 +125,7 @@ If it does not say PREEMPT_RT, you are not currently running a real-time kernel.
 
 There are multiple ways of installing a real-time kernel.
 You
-can [build it from source](https://frankaemika.github.io/docs/installation_linux.html#setting-up-the-real-time-kernel)
+can [build it from source](https://frankarobotics.github.io/docs/installation_linux.html#setting-up-the-real-time-kernel)
 or, if you are using Ubuntu, it can be [enabled through Ubuntu Pro](https://ubuntu.com/real-time).
 
 ### Allowing the executing user to run real-time applications
@@ -233,7 +233,7 @@ bash <(wget -qO- https://raw.githubusercontent.com/timschneider42/franky/master/
 
 ### Building franky
 
-franky is based on [libfranka](https://github.com/frankaemika/libfranka), [Eigen](https://eigen.tuxfamily.org) for
+franky is based on [libfranka](https://github.com/frankarobotics/libfranka), [Eigen](https://eigen.tuxfamily.org) for
 transformation calculations and [pybind11](https://github.com/pybind/pybind11) for the Python bindings.
 As the Franka is sensitive to acceleration discontinuities, it requires jerk-constrained motion generation, for which
 franky uses the [Ruckig](https://ruckig.com) community version for Online Trajectory Generation (OTG).
@@ -381,16 +381,16 @@ print(robot.joint_jerk_limit.max)
 The robot state can be retrieved by accessing the following properties:
 
 * `state`: Object of type `franky.RobotState`, which extends the
-  libfranka [franka::RobotState](https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html) structure by
+  libfranka [franka::RobotState](https://frankarobotics.github.io/libfranka/0.15.3/structfranka_1_1RobotState.html) structure by
   additional state elements.
 * `current_cartesian_state`: Object of type `franky.CartesianState`, which contains the end-effector pose and velocity
   obtained
-  from [franka::RobotState::O_T_EE](https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#a193781d47722b32925e0ea7ac415f442)
-  and [franka::RobotState::O_dP_EE_c](https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#a4be112bd1a9a7d777a67aea4a18a8dcc).
+  from [franka::RobotState::O_T_EE](https://frankarobotics.github.io/libfranka/0.15.3/structfranka_1_1RobotState.html#a193781d47722b32925e0ea7ac415f442)
+  and [franka::RobotState::O_dP_EE_c](https://frankarobotics.github.io/libfranka/0.15.3/structfranka_1_1RobotState.html#a4be112bd1a9a7d777a67aea4a18a8dcc).
 * `current_joint_state`: Object of type `franky.JointState`, which contains the joint positions and velocities
   obtained
-  from [franka::RobotState::q](https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#ade3335d1ac2f6c44741a916d565f7091)
-  and [franka::RobotState::dq](https://frankaemika.github.io/libfranka/structfranka_1_1RobotState.html#a706045af1b176049e9e56df755325bd2).
+  from [franka::RobotState::q](https://frankarobotics.github.io/libfranka/0.15.3/structfranka_1_1RobotState.html#ade3335d1ac2f6c44741a916d565f7091)
+  and [franka::RobotState::dq](https://frankarobotics.github.io/libfranka/0.15.3/structfranka_1_1RobotState.html#a706045af1b176049e9e56df755325bd2).
 
 ```python
 from franky import *
