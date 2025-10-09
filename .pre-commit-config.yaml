@@ -1,16 +1,20 @@
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
-    -   id: check-yaml
-    -   id: end-of-file-fixer
-    -   id: trailing-whitespace
--   repo: https://github.com/psf/black
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/psf/black
     rev: 25.1.0
     hooks:
-    -   id: black
-- repo: https://github.com/pre-commit/mirrors-clang-format
-  rev: v20.1.6
-  hooks:
-    - id: clang-format
-      args: ['--style=file']
+      - id: black
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: v20.1.6
+    hooks:
+      - id: clang-format
+        args: [ '--style=file' ]
+  - repo: https://github.com/proinsias/linkchecker-markdown.git
+    rev: 6763f1f
+    hooks:
+      - id: linkcheckmd
