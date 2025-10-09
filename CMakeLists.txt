@@ -28,7 +28,7 @@ if (${Franka_VERSION} VERSION_GREATER_EQUAL "0.10.0")
     add_compile_definitions(FRANKA_0_10)
 endif ()
 
-if (${Franka_VERSION} VERSION_GREATER_EQUAL "0.15.3")
+if (${Franka_VERSION} VERSION_GREATER_EQUAL "0.15.0")
     add_compile_definitions(FRANKA_0_15)
 endif ()
 

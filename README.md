@@ -424,7 +424,7 @@ ee_pose_kin = robot.model.pose(Frame.EndEffector, q, f_t_ee, ee_t_k)
 jacobian = robot.model.body_jacobian(Frame.EndEffector, state)
 
 # Alternatively, just get the URDF as a string and do the kinematics computation yourself (only
-# for libfranka >= 0.15.3)
+# for libfranka >= 0.15.0)
 urdf_model = robot.model_urdf
 ```
 
