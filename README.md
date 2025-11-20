@@ -98,7 +98,7 @@ If you are seeing server version mismatch errors, such as
 franky.IncompatibleVersionException: libfranka: Incompatible library version (server version: 5, library version: 9)
 ```
 then your Franka robot is either not on the most recent firmware version, or you are using the older Franka Panda model.
-In any case, it's no big deal; just check [here](https://frankarobotics.github.io/docs/compatibility.html) which libfranka version you need and follow our [instructions](installing-franky) to install the appropriate franky wheels.
+In any case, it's no big deal; just check [here](https://frankarobotics.github.io/docs/compatibility.html) which libfranka version you need and follow our [instructions](#installing-franky) to install the appropriate franky wheels.
 
 ## <a id="setup" /> ⚙️ Setup
 
