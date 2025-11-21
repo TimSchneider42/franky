@@ -36,7 +36,7 @@ Although Python does not provide real-time guarantees, franky strives to maintai
 Motions can be preempted at any moment, prompting franky to re-plan trajectories on the fly.
 To handle unforeseen situations—such as unexpected contact with the environment — franky includes a reaction system that
 allows for updating motion commands dynamically.
-Furthermore, most non-real-time functionality of [libfranka](https://frankarobotics.github.io/docs/libfranka.html), such as
+Furthermore, most non-real-time functionality of [libfranka](https://frankarobotics.github.io/docs/libfranka/docs/index.html), such as
 Gripper control is made directly available in Python.
 
 Check out the [tutorial](#-tutorial) and the [examples](https://github.com/TimSchneider42/franky/tree/master/examples)
