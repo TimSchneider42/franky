@@ -7,6 +7,8 @@ git clone https://github.com/stack-of-tasks/pinocchio "${TMP_DIR}"
 cd "${TMP_DIR}"
 git checkout "${PINOCCHIO_VERSION}"
 git submodule update --init --recursive
+# Workaround to prevent them from overriding CMP0167=OLD again
+sed -i 's/^[[:space:]]*cmake_policy(SET CMP0167 NEW)/# &/' CMakeLists.txt
 mkdir build
 cd build
 # CMP0167 has to be set to OLD to be compatible with outdated boost versions
