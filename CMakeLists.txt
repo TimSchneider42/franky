@@ -32,6 +32,10 @@ if (${Franka_VERSION} VERSION_GREATER_EQUAL "0.15.0")
     add_compile_definitions(FRANKA_0_15)
 endif ()
 
+if (${Franka_VERSION} VERSION_GREATER_EQUAL "0.18.0")
+    add_compile_definitions(FRANKA_0_18)
+endif ()
+
 message("Found Eigen Version: ${Eigen3_VERSION}")
 message("Found Franka Version: ${Franka_VERSION}")
 

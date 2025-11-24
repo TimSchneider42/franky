@@ -165,8 +165,8 @@ To start using franky with Python and libfranka *0.16.0*, just install it via
 pip install franky-control
 ```
 
-We also provide wheels for libfranka versions *0.7.1*, *0.8.0*, *0.9.2*, *0.10.0*, *0.11.0*, *0.12.1*, *0.13.3*,
-*0.14.2*, *0.15.3*, and *0.16.0*.
+We also provide wheels for libfranka versions *0.7.1*, *0.8.0*, *0.9.2*, *0.12.1*, *0.13.3*,
+*0.14.2*, *0.17.0*, and *0.18.0*.
 They can be installed via
 
 ```bash
@@ -980,7 +980,7 @@ See [robot_web_session.py](franky/robot_web_session.py) for an example of how to
 
 franky is currently tested against the following versions
 
-- libfranka 0.7.1, 0.8.0, 0.9.2, 0.10.0, 0.11.0, 0.12.1, 0.13.3, 0.14.2, 0.15.3, 0.16.0
+- libfranka 0.7.1, 0.8.0, 0.9.2, 0.10.0, 0.11.0, 0.12.1, 0.13.3, 0.14.2, 0.15.3, 0.16.1, 0.17.0, 0.18.0
 - Eigen 3.4.0
 - Pybind11 2.13.6
 - POCO 1.12.5p2

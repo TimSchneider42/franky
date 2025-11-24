@@ -2,13 +2,13 @@ FROM quay.io/pypa/manylinux_2_34_x86_64:latest
 
 LABEL maintainer="Tim Schneider <tim@robot-learning.de>"
 
-RUN yum -y install zip boost-devel urdfdom-devel fmt-devel gcc-c++ openssl-devel mysql-devel postgresql-devel
+RUN yum -y install zip boost-devel urdfdom-devel fmt-devel gcc-c++ openssl-devel mysql-devel postgresql-devel tinyxml2-devel
 
 ADD docker/common/ /tmp/common/
 ARG LIBFRANKA_VERSION
 RUN /tmp/common/install-dependencies
 
-ARG PYBIN_SUPPORTED_VERSIONS="cp3(7m|8|9|10|11|12|13)"
+ARG PYBIN_SUPPORTED_VERSIONS="cp3(7m|8|9|10|11|12|13|14)"
 RUN /tmp/common/manylinux-setup-pip
 
 # Set working directory

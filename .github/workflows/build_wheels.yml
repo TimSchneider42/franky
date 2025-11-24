@@ -11,7 +11,7 @@ on:
         type: string
 
 env:
-  PYBIN_SUPPORTED_VERSIONS: "cp3(7m|8|9|10|11|12|13)"
+  PYBIN_SUPPORTED_VERSIONS: "cp3(7m|8|9|10|11|12|13|14)"
 
 jobs:
   build_wheels:
