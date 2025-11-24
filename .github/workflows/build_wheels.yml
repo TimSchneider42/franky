@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          yum -y install zip boost-devel urdfdom-devel fmt-devel gcc-c++ openssl-devel mysql-devel postgresql-devel
+          yum -y install zip boost-devel urdfdom-devel fmt-devel gcc-c++ openssl-devel mysql-devel postgresql-devel tinyxml2-devel
           LIBFRANKA_VERSION=${{ inputs.libfranka-version }} ./docker/common/install-dependencies
 
       - name: Setting up pip
