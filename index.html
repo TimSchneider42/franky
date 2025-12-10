@@ -172,9 +172,9 @@ $(function() {
 <div class="line"># Execute the script</div>
 <div class="line">./install_cuda_realtime.bash</div>
 </div><!-- fragment --><p>Alternatively, if you are a cowboy and do not care about security, you can also use this one-liner to directly call the script without checking it: </p><div class="fragment"><div class="line">bash &lt;(wget -qO- https://raw.githubusercontent.com/timschneider42/franky/master/tools/install_cuda_realtime.bash)</div>
-</div><!-- fragment --><h3>Robot is connected to a different machine?</h3>
-<p>Check out <a href="https://github.com/kvasios/franky-remote">franky-remote</a>! It lets you run franky remotely via RPC with minimal effort.</p>
-<p>Please note that I’m not involved in the development of franky-remote, so I cannot take any liability for its use. If you decide to use it, please ensure that you credit the developers of the repository for their work.</p>
+</div><!-- fragment --><h3>Is your robot connected to a different machine?</h3>
+<p>No problem! There are two projects which let you run franky remotely via RPC with minimal effort: <a href="https://github.com/kvasios/franky-remote">franky-remote</a> and <a href="https://github.com/yblei/net_franky">net_franky</a>.</p>
+<p>Please note that I’m not involved in the development of these projects, so I cannot take any liability for its use. If you decide to use it, please ensure that you credit the developers of these projects for their work.</p>
 <h3>Building franky</h3>
 <p>franky is based on <a href="https://github.com/frankarobotics/libfranka">libfranka</a>, <a href="https://eigen.tuxfamily.org">Eigen</a> for transformation calculations and <a href="https://github.com/pybind/pybind11">pybind11</a> for the Python bindings. As the Franka is sensitive to acceleration discontinuities, it requires jerk-constrained motion generation, for which franky uses the <a href="https://ruckig.com">Ruckig</a> community version for Online Trajectory Generation (OTG).</p>
 <p>After installing the dependencies (the exact versions can be found here), you can build and install franky via</p>
