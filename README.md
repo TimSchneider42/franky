@@ -229,13 +229,13 @@ Alternatively, if you are a cowboy and do not care about security, you can also 
 bash <(wget -qO- https://raw.githubusercontent.com/timschneider42/franky/master/tools/install_cuda_realtime.bash)
 ```
 
-### Robot is connected to a different machine?
+### Is your robot connected to a different machine?
 
-Check out [franky-remote](https://github.com/kvasios/franky-remote)!
-It lets you run franky remotely via RPC with minimal effort.
+No problem!
+There are two projects which let you run franky remotely via RPC with minimal effort: [franky-remote](https://github.com/kvasios/franky-remote) and [net_franky](https://github.com/yblei/net_franky).
 
-Please note that I’m not involved in the development of franky-remote, so I cannot take any liability for its use.
-If you decide to use it, please ensure that you credit the developers of the repository for their work.
+Please note that I’m not involved in the development of these projects, so I cannot take any liability for its use.
+If you decide to use it, please ensure that you credit the developers of these projects for their work.
 
 ### Building franky
 
