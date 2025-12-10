@@ -124,7 +124,7 @@ Linux [PCNAME] 5.15.0-1056-realtime #63-Ubuntu SMP PREEMPT_RT ...
 If it does not say PREEMPT_RT, you are not currently running a real-time kernel.
 
 There are multiple ways of installing a real-time kernel.
-You can [build it from source](https://frankarobotics.github.io/docs/libfranka/docs/installation_linux.html#setting-up-the-real-time-kernel) or, if you are using Ubuntu, it can be [enabled through Ubuntu Pro](https://ubuntu.com/real-time).
+You can [build it from source](https://frankarobotics.github.io/docs/libfranka/docs/real_time_kernel.html) or, if you are using Ubuntu, it can be [enabled through Ubuntu Pro](https://ubuntu.com/real-time).
 
 ### Allowing the executing user to run real-time applications
 
