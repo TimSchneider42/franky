@@ -11,6 +11,59 @@ using namespace franky;
 void bind_motion_torque(py::module &m) {
   py::class_<ImpedanceMotion, Motion<franka::Torques>, std::shared_ptr<ImpedanceMotion>>(m, "ImpedanceMotion");
 
+  py::class_<JointImpedanceMotion, Motion<franka::Torques>, std::shared_ptr<JointImpedanceMotion>>(
+      m, "JointImpedanceMotion")
+      .def(
+          py::init<>([](const Vector7d &target,
+                        std::optional<Vector7d> target_velocity,
+                        std::optional<Vector7d> stiffness,
+                        std::optional<Vector7d> damping,
+                        std::optional<Vector7d> torque_feedforward,
+                        std::optional<Vector7d> lower_joint_limits,
+                        std::optional<Vector7d> upper_joint_limits,
+                        bool compensate_coriolis,
+                        double max_delta_tau,
+                        double joint_limit_activation_distance,
+                        double joint_limit_stiffness,
+                        double joint_limit_damping,
+                        double joint_limit_max_torque) {
+            auto params = JointImpedanceMotion::Params{};
+            if (stiffness.has_value()) params.stiffness = stiffness.value();
+            if (damping.has_value()) params.damping = damping.value();
+            if (torque_feedforward.has_value()) params.torque_feedforward = torque_feedforward.value();
+            if (lower_joint_limits.has_value() && upper_joint_limits.has_value()) {
+              params.joint_limit_repulsion_active = true;
+              params.lower_joint_limits = lower_joint_limits.value();
+              params.upper_joint_limits = upper_joint_limits.value();
+            }
+            params.compensate_coriolis = compensate_coriolis;
+            params.max_delta_tau = max_delta_tau;
+            params.joint_limit_activation_distance = joint_limit_activation_distance;
+            params.joint_limit_stiffness = joint_limit_stiffness;
+            params.joint_limit_damping = joint_limit_damping;
+            params.joint_limit_max_torque = joint_limit_max_torque;
+
+            if (target_velocity.has_value()) {
+              return std::make_shared<JointImpedanceMotion>(target, target_velocity.value(), params);
+            }
+            return std::make_shared<JointImpedanceMotion>(target, params);
+          }),
+          "target"_a,
+          "target_velocity"_a = std::nullopt,
+          "stiffness"_a = std::nullopt,
+          "damping"_a = std::nullopt,
+          "torque_feedforward"_a = std::nullopt,
+          "lower_joint_limits"_a = std::nullopt,
+          "upper_joint_limits"_a = std::nullopt,
+          "compensate_coriolis"_a = true,
+          "max_delta_tau"_a = 1.0,
+          "joint_limit_activation_distance"_a = 0.1,
+          "joint_limit_stiffness"_a = 4.0,
+          "joint_limit_damping"_a = 1.0,
+          "joint_limit_max_torque"_a = 5.0)
+      .def_property_readonly("target", &JointImpedanceMotion::target)
+      .def_property_readonly("target_velocity", &JointImpedanceMotion::target_velocity);
+
   py::class_<ExponentialImpedanceMotion, ImpedanceMotion, std::shared_ptr<ExponentialImpedanceMotion>>(
       m, "ExponentialImpedanceMotion")
       .def(
