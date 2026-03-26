@@ -2,11 +2,22 @@ import base64
 import hashlib
 import http.client
 import json
+import logging
 import ssl
+import threading
 import time
 import urllib.parse
+from dataclasses import dataclass
+from enum import Enum
 from http.client import HTTPSConnection, HTTPResponse
-from typing import Dict, Optional, Any, Literal
+from typing import Dict, Optional, Any, Literal, Callable
+
+try:
+    import websockets.sync.client as ws_sync
+except ImportError:
+    ws_sync = None
+
+logger = logging.getLogger(__name__)
 
 
 class RobotWebSessionError(Exception):
@@ -35,7 +46,33 @@ class TakeControlTimeoutError(RobotWebSessionError):
     pass
 
 
+class PilotButton(Enum):
+    """Buttons on the Franka Desk Pilot interface."""
+
+    CIRCLE = "circle"
+    CROSS = "cross"
+    CHECK = "check"
+    UP = "up"
+    DOWN = "down"
+    LEFT = "left"
+    RIGHT = "right"
+
+
+@dataclass(frozen=True)
+class PilotButtonEvent:
+    """A single Pilot button state change."""
+
+    button: PilotButton
+    pressed: bool
+
+    def __repr__(self) -> str:
+        action = "pressed" if self.pressed else "released"
+        return f"PilotButtonEvent({self.button.value} {action})"
+
+
 class RobotWebSession:
+    _NAVIGATION_EVENTS_PATH = "/desk/api/navigation/events"
+
     def __init__(self, hostname: str, username: str, password: str):
         self.__hostname = hostname
         self.__username = username
@@ -45,6 +82,15 @@ class RobotWebSession:
         self.__token = None
         self.__control_token = None
         self.__control_token_id = None
+        self.__listener_thread: Optional[threading.Thread] = None
+        self.__stop_event = threading.Event()
+
+    @classmethod
+    def from_session(cls, session: "RobotWebSession") -> "RobotWebSession":
+        """Return an already-open session for API compatibility with Desk."""
+        if not session.is_open:
+            raise RuntimeError("The provided RobotWebSession is not open.")
+        return session
 
     @staticmethod
     def __encode_password(user: str, password: str) -> str:
@@ -132,6 +178,7 @@ class RobotWebSession:
     def close(self):
         if not self.is_open:
             raise RuntimeError("Session is not open.")
+        self.stop_listen()
         if self.__control_token is not None:
             self.release_control()
         self.__token = None
@@ -259,6 +306,98 @@ class RobotWebSession:
         ):
             time.sleep(0.5)
 
+    def listen(self, callback: Callable[[PilotButtonEvent], None]) -> None:
+        """Start listening for Pilot button events in a background thread."""
+        if ws_sync is None:
+            raise RuntimeError(
+                "The 'websockets' package is required for Pilot button listening. "
+                "Install it with: pip install websockets"
+            )
+        if self.__listener_thread is not None and self.__listener_thread.is_alive():
+            raise RuntimeError(
+                "Already listening. Call stop_listen() before starting a new listener."
+            )
+        if not self.is_open:
+            raise RuntimeError(
+                "Session is not open. Call open() or use a context manager first."
+            )
+
+        self.__stop_event.clear()
+        self.__listener_thread = threading.Thread(
+            target=self._listen_loop,
+            args=(callback,),
+            daemon=True,
+            name="franky-pilot-listener",
+        )
+        self.__listener_thread.start()
+
+    def stop_listen(self) -> None:
+        """Stop the background Pilot button listener, if running."""
+        if self.__listener_thread is not None and self.__listener_thread.is_alive():
+            self.__stop_event.set()
+            self.__listener_thread.join(timeout=5.0)
+            if self.__listener_thread.is_alive():
+                logger.warning("Pilot listener thread did not shut down cleanly.")
+        self.__listener_thread = None
+
+    @property
+    def is_listening(self) -> bool:
+        """Whether the Pilot button listener is currently active."""
+        return self.__listener_thread is not None and self.__listener_thread.is_alive()
+
+    def _listen_loop(self, callback: Callable[[PilotButtonEvent], None]) -> None:
+        """Websocket receive loop executed in the listener thread."""
+        uri = f"wss://{self.__hostname}{self._NAVIGATION_EVENTS_PATH}"
+        ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+        ssl_context.check_hostname = False
+        ssl_context.verify_mode = ssl.CERT_NONE
+
+        try:
+            with ws_sync.connect(
+                uri,
+                ssl=ssl_context,
+                additional_headers={"authorization": self.__token},
+                open_timeout=2.0,
+            ) as websocket:
+                while not self.__stop_event.is_set():
+                    try:
+                        message = websocket.recv(timeout=1.0)
+                    except TimeoutError:
+                        continue
+                    self._emit_payload(message, callback)
+        except Exception:
+            if not self.__stop_event.is_set():
+                logger.exception("Pilot button listener encountered an error.")
+
+    def _emit_payload(
+        self, payload: str, callback: Callable[[PilotButtonEvent], None]
+    ) -> None:
+        try:
+            data = json.loads(payload)
+        except json.JSONDecodeError:
+            logger.warning("Received non-JSON event payload: %s", payload)
+            return
+
+        if not isinstance(data, dict):
+            logger.debug(
+                "Ignoring non-object event payload of type %s: %r",
+                type(data).__name__,
+                data,
+            )
+            return
+
+        for key, value in data.items():
+            try:
+                button = PilotButton(key)
+            except ValueError:
+                logger.debug("Unknown button key in event: %s", key)
+                continue
+            event = PilotButtonEvent(button=button, pressed=bool(value))
+            try:
+                callback(event)
+            except Exception:
+                logger.exception("Exception in Pilot button callback for event %s", event)
+
     @property
     def client(self) -> HTTPSConnection:
         return self.__client
@@ -270,3 +409,6 @@ class RobotWebSession:
     @property
     def is_open(self) -> bool:
         return self.__token is not None
+
+
+Desk = RobotWebSession
