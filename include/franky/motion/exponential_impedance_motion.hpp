@@ -6,6 +6,7 @@
 #include <optional>
 
 #include "franky/motion/cartesian_impedance_base.hpp"
+#include "franky/motion/reference_type.hpp"
 #include "franky/robot_pose.hpp"
 
 namespace franky {
@@ -25,6 +26,9 @@ class ExponentialImpedanceMotion : public CartesianImpedanceBase {
    * @see CartesianImpedanceBase::Params
    */
   struct Params : public CartesianImpedanceBase::Params {
+    /** The type of the target reference (relative or absolute). */
+    ReferenceType target_type{ReferenceType::kAbsolute};
+
     /** The exponential decay factor for the impedance controller. */
     double exponential_decay{0.005};
   };
@@ -41,6 +45,8 @@ class ExponentialImpedanceMotion : public CartesianImpedanceBase {
   explicit ExponentialImpedanceMotion(const Affine &target, const Params &params);
 
  protected:
+  void initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) override;
+
   std::tuple<CartesianReference, bool> update(
       const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time) override;
 

@@ -6,7 +6,6 @@
 #include <optional>
 
 #include "franky/motion/motion.hpp"
-#include "franky/motion/reference_type.hpp"
 #include "franky/robot_pose.hpp"
 #include "franky/twist.hpp"
 
@@ -41,9 +40,6 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
    * @brief Parameters for the impedance motion.
    */
   struct Params {
-    /** The type of the target reference (relative or absolute). */
-    ReferenceType target_type{ReferenceType::kAbsolute};
-
     /** The translational stiffness in [10, 3000] N/m. */
     double translational_stiffness{2000};
 
@@ -73,6 +69,11 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
   [[nodiscard]] inline Affine intermediate_target() const { return intermediate_target_; }
 
   [[nodiscard]] inline Affine target() const { return absolute_target_; }
+
+  inline void setAbsoluteTarget(const Affine &target) {
+    target_ = target;
+    absolute_target_ = target;
+  }
 
   virtual std::tuple<CartesianReference, bool> update(
       const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time) = 0;

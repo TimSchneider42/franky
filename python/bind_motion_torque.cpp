@@ -58,7 +58,6 @@ JointImpedanceParams makeJointImpedanceParams(
 }
 
 CartesianImpedanceBase::Params makeCartesianImpedanceParams(
-    ReferenceType target_type,
     double translational_stiffness,
     double rotational_stiffness,
     const std::optional<std::array<std::optional<double>, 6>> &force_constraints) {
@@ -71,7 +70,6 @@ CartesianImpedanceBase::Params makeCartesianImpedanceParams(
     }
   }
   return CartesianImpedanceBase::Params{
-      target_type,
       translational_stiffness,
       rotational_stiffness,
       force_constraints_value,
@@ -228,15 +226,15 @@ Any constant_torque_offset configured here is added to the per-cycle torque_feed
                             force_constraints,
                         double exponential_decay = 0.005) {
             auto base_params = makeCartesianImpedanceParams(
-                target_type, translational_stiffness, rotational_stiffness, force_constraints);
+                translational_stiffness, rotational_stiffness, force_constraints);
             return std::make_shared<ExponentialImpedanceMotion>(
                 target,
                 ExponentialImpedanceMotion::Params{
-                    base_params.target_type,
                     base_params.translational_stiffness,
                     base_params.rotational_stiffness,
                     base_params.force_constraints,
                     base_params.force_constraints_active,
+                    target_type,
                     exponential_decay});
           }),
           "target"_a,
@@ -259,16 +257,16 @@ Any constant_torque_offset configured here is added to the per-cycle torque_feed
                         bool return_when_finished,
                         double finish_wait_factor) {
             auto base_params = makeCartesianImpedanceParams(
-                target_type, translational_stiffness, rotational_stiffness, force_constraints);
+                translational_stiffness, rotational_stiffness, force_constraints);
             return std::make_shared<CartesianImpedanceMotion>(
                 target,
                 duration,
                 CartesianImpedanceMotion::Params{
-                    base_params.target_type,
                     base_params.translational_stiffness,
                     base_params.rotational_stiffness,
                     base_params.force_constraints,
                     base_params.force_constraints_active,
+                    target_type,
                     return_when_finished,
                     finish_wait_factor});
           }),
@@ -290,7 +288,7 @@ Any constant_torque_offset configured here is added to the per-cycle torque_feed
                         double rotational_stiffness,
                         std::optional<std::array<std::optional<double>, 6>> force_constraints) {
             auto base_params = makeCartesianImpedanceParams(
-                ReferenceType::kAbsolute, translational_stiffness, rotational_stiffness, force_constraints);
+                translational_stiffness, rotational_stiffness, force_constraints);
             return std::make_shared<CartesianImpedanceTrackingMotion>(
                 reference_handle,
                 base_params);
