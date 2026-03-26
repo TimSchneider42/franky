@@ -52,7 +52,7 @@ class CartesianImpedanceMotion : public CartesianImpedanceBase {
  protected:
   void initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) override;
 
-  std::tuple<Affine, bool> update(
+  std::tuple<CartesianReference, bool> update(
       const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time) override;
 
  private:

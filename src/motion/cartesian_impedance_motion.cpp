@@ -21,7 +21,7 @@ void CartesianImpedanceMotion::initImpl(
   initial_pose_ = Affine(Eigen::Matrix4d::Map(robot_state.O_T_EE_c.data()));
 }
 
-std::tuple<Affine, bool> CartesianImpedanceMotion::update(
+std::tuple<CartesianReference, bool> CartesianImpedanceMotion::update(
     const RobotState &robot_state, franka::Duration time_step, franka::Duration time, franka::Duration /*abs_time*/) {
   double transition_parameter = time / duration_;
   Affine intermediate_goal;
@@ -38,7 +38,7 @@ std::tuple<Affine, bool> CartesianImpedanceMotion::update(
     done = true;
     intermediate_goal = target();
   }
-  return {intermediate_goal, done};
+  return {CartesianReference{intermediate_goal, std::nullopt}, done};
 }
 
 }  // namespace franky

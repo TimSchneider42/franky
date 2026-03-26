@@ -3,20 +3,11 @@
 #include <array>
 #include <atomic>
 #include <functional>
+#include <memory>
 
-#include "franky/motion/cartesian_impedance_motion.hpp"
+#include "franky/motion/cartesian_impedance_base.hpp"
 
 namespace franky {
-
-/**
- * @brief Dynamic Cartesian reference for CartesianImpedanceTrackingMotion.
- *
- * The impedance controller tracks the end-effector pose stored in this
- * reference while keeping the same motion object alive.
- */
-struct CartesianReference {
-  Affine target{Affine::Identity()};
-};
 
 /**
  * @brief Double-buffered handle for updating a CartesianReference online.
@@ -60,13 +51,14 @@ class CartesianImpedanceTrackingMotion : public CartesianImpedanceBase {
 
  protected:
   void initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) override;
-  std::tuple<Affine, bool> update(
+  std::tuple<CartesianReference, bool> update(
       const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time) override;
 
  private:
   std::shared_ptr<CartesianReferenceHandle> reference_handle_;
   ReferenceCallback reference_callback_;
   Affine target_;
+  std::optional<Twist> target_twist_;
 };
 
 }  // namespace franky

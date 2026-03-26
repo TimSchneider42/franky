@@ -8,10 +8,25 @@
 #include "franky/motion/motion.hpp"
 #include "franky/motion/reference_type.hpp"
 #include "franky/robot_pose.hpp"
+#include "franky/twist.hpp"
 
 namespace franky {
 
-struct CartesianReference;
+/**
+ * @brief Cartesian impedance reference expressed in the base frame.
+ */
+struct CartesianReference {
+  /** Desired end-effector pose. */
+  Affine target{Affine::Identity()};
+
+  /**
+   * Desired end-effector twist in the base frame.
+   *
+   * When present, the damping term acts on twist error rather than resisting
+   * all motion toward zero.
+   */
+  std::optional<Twist> target_twist{};
+};
 
 /**
  * @brief Base class for client-side cartesian impedance motions.
@@ -59,7 +74,7 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
 
   [[nodiscard]] inline Affine target() const { return absolute_target_; }
 
-  virtual std::tuple<Affine, bool> update(
+  virtual std::tuple<CartesianReference, bool> update(
       const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time) = 0;
 
  private:

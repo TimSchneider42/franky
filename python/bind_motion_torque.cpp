@@ -9,9 +9,10 @@ using namespace pybind11::literals;  // to bring in the '_a' literal
 using namespace franky;
 
 namespace {
-CartesianReference toCartesianReference(const Affine &target) {
+CartesianReference toCartesianReference(const Affine &target, const std::optional<Twist> &target_twist) {
   CartesianReference reference;
   reference.target = target;
+  reference.target_twist = target_twist;
   return reference;
 }
 
@@ -106,9 +107,14 @@ The provided torque_feedforward is added on top of any constant_torque_offset co
       .def(py::init<>())
       .def(
           "set",
-          [](CartesianReferenceHandle &handle, const Affine &target) { handle.set(toCartesianReference(target)); },
-          R"doc(Update the current Cartesian reference for a running CartesianImpedanceTrackingMotion.)doc",
-          "target"_a)
+          [](CartesianReferenceHandle &handle, const Affine &target, std::optional<Twist> target_twist) {
+            handle.set(toCartesianReference(target, target_twist));
+          },
+          R"doc(Update the current Cartesian reference for a running CartesianImpedanceTrackingMotion.
+
+If target_twist is provided, it is interpreted as the desired end-effector twist in the base frame and the damping term acts on twist error rather than motion relative to zero.)doc",
+          "target"_a,
+          "target_twist"_a = std::nullopt)
       .def("clear", &CartesianReferenceHandle::clear)
       .def_property_readonly("has_reference", &CartesianReferenceHandle::hasReference);
 
@@ -289,7 +295,9 @@ Any constant_torque_offset configured here is added to the per-cycle torque_feed
                 reference_handle,
                 base_params);
           }),
-          R"doc(Construct a dynamic Cartesian impedance tracking controller driven by a CartesianReferenceHandle.)doc",
+          R"doc(Construct a dynamic Cartesian impedance tracking controller driven by a CartesianReferenceHandle.
+
+Each published Cartesian reference may optionally include a desired end-effector twist in the base frame.)doc",
           "reference_handle"_a,
           "translational_stiffness"_a = 2000,
           "rotational_stiffness"_a = 200,

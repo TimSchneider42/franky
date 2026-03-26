@@ -41,7 +41,7 @@ class ExponentialImpedanceMotion : public CartesianImpedanceBase {
   explicit ExponentialImpedanceMotion(const Affine &target, const Params &params);
 
  protected:
-  std::tuple<Affine, bool> update(
+  std::tuple<CartesianReference, bool> update(
       const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time) override;
 
  private:
