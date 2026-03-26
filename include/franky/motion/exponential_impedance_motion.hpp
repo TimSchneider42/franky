@@ -5,7 +5,7 @@
 #include <map>
 #include <optional>
 
-#include "franky/motion/impedance_motion.hpp"
+#include "franky/motion/cartesian_impedance_base.hpp"
 #include "franky/robot_pose.hpp"
 
 namespace franky {
@@ -18,13 +18,13 @@ namespace franky {
  * Instead, it uses Franka's internal torque controller and calculates the
  * torques itself.
  */
-class ExponentialImpedanceMotion : public ImpedanceMotion {
+class ExponentialImpedanceMotion : public CartesianImpedanceBase {
  public:
   /**
    * @brief Parameters for the exponential cartesian impedance motion.
-   * @see ImpedanceMotion::Params
+   * @see CartesianImpedanceBase::Params
    */
-  struct Params : public ImpedanceMotion::Params {
+  struct Params : public CartesianImpedanceBase::Params {
     /** The exponential decay factor for the impedance controller. */
     double exponential_decay{0.005};
   };
@@ -42,7 +42,7 @@ class ExponentialImpedanceMotion : public ImpedanceMotion {
 
  protected:
   std::tuple<Affine, bool> update(
-      const RobotState &robot_state, franka::Duration time_step, franka::Duration time) override;
+      const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time) override;
 
  private:
   Params params_;

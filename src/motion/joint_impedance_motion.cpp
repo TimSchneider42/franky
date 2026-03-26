@@ -1,10 +1,15 @@
 #include "franky/motion/joint_impedance_motion.hpp"
+#include "franky/motion/joint_impedance_tracking_motion.hpp"
 
 #include <array>
 
 #include "franky/model.hpp"
 
 namespace franky {
+
+JointImpedanceBase::JointImpedanceBase(
+    const Vector7d &target, const Vector7d &target_velocity, const JointImpedanceParams &params)
+    : Motion<franka::Torques>(), params_(params), target_(target), target_velocity_(target_velocity) {}
 
 JointImpedanceMotion::JointImpedanceMotion(const Vector7d &target) : JointImpedanceMotion(target, Params{}) {}
 
@@ -16,16 +21,22 @@ JointImpedanceMotion::JointImpedanceMotion(const Vector7d &target, const Vector7
 
 JointImpedanceMotion::JointImpedanceMotion(
     const Vector7d &target, const Vector7d &target_velocity, const Params &params)
-    : Motion<franka::Torques>(), target_(target), target_velocity_(target_velocity), params_(params) {}
-
-void JointImpedanceMotion::initImpl(
-    const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) {}
+    : JointImpedanceBase(target, target_velocity, params) {}
 
 franka::Torques JointImpedanceMotion::nextCommandImpl(
     const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time,
     const std::optional<franka::Torques> &previous_command) {
-  Vector7d tau_d = params_.stiffness.asDiagonal() * (target_ - robot_state.q) +
-                   params_.damping.asDiagonal() * (target_velocity_ - robot_state.dq) + params_.torque_feedforward;
+  JointReference reference;
+  reference.q = target_;
+  reference.dq = target_velocity_;
+  return computeCommand(robot_state, reference);
+}
+
+franka::Torques JointImpedanceBase::computeCommand(const RobotState &robot_state, const JointReference &reference) const {
+  Vector7d torque_feedforward = params_.constant_torque_offset + reference.tau_ff;
+  Vector7d tau_d =
+      params_.stiffness.asDiagonal() * (reference.q - robot_state.q) +
+      params_.damping.asDiagonal() * (reference.dq - robot_state.dq) + torque_feedforward;
 
   if (params_.joint_limit_repulsion_active) tau_d += computeJointLimitTorque(robot_state);
 
@@ -38,7 +49,7 @@ franka::Torques JointImpedanceMotion::nextCommandImpl(
   return franka::Torques(tau_d_array);
 }
 
-Vector7d JointImpedanceMotion::computeJointLimitTorque(const RobotState &robot_state) const {
+Vector7d JointImpedanceBase::computeJointLimitTorque(const RobotState &robot_state) const {
   Vector7d tau_limit = Vector7d::Zero();
   const double activation_distance = std::max(params_.joint_limit_activation_distance, 1e-6);
 
@@ -64,7 +75,7 @@ Vector7d JointImpedanceMotion::computeJointLimitTorque(const RobotState &robot_s
   return tau_limit;
 }
 
-Vector7d JointImpedanceMotion::saturateTorqueRate(const Vector7d &tau_d_calculated, const RobotState &robot_state) const {
+Vector7d JointImpedanceBase::saturateTorqueRate(const Vector7d &tau_d_calculated, const RobotState &robot_state) const {
   const Vector7d &tau_reference = robot_state.tau_J_d;
   Vector7d tau_d_saturated;
   for (size_t i = 0; i < 7; i++) {

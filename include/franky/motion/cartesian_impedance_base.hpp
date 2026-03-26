@@ -11,14 +11,16 @@
 
 namespace franky {
 
+struct CartesianReference;
+
 /**
  * @brief Base class for client-side cartesian impedance motions.
  *
- * This motion is a implements a cartesian impedance controller on the client
+ * This motion is implements a cartesian impedance controller on the client
  * side and does not use Franka's internal impedance controller. Instead, it
  * uses Franka's internal torque controller and calculates the torques itself.
  */
-class ImpedanceMotion : public Motion<franka::Torques> {
+class CartesianImpedanceBase : public Motion<franka::Torques> {
  public:
   /**
    * @brief Parameters for the impedance motion.
@@ -44,7 +46,7 @@ class ImpedanceMotion : public Motion<franka::Torques> {
    * @param target The target pose.
    * @param params Parameters for the motion.
    */
-  explicit ImpedanceMotion(Affine target, const Params &params);
+  explicit CartesianImpedanceBase(Affine target, const Params &params);
 
  protected:
   void initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) override;
@@ -58,7 +60,7 @@ class ImpedanceMotion : public Motion<franka::Torques> {
   [[nodiscard]] inline Affine target() const { return absolute_target_; }
 
   virtual std::tuple<Affine, bool> update(
-      const RobotState &robot_state, franka::Duration time_step, franka::Duration time) = 0;
+      const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time) = 0;
 
  private:
   Affine absolute_target_;
@@ -70,5 +72,7 @@ class ImpedanceMotion : public Motion<franka::Torques> {
 
   std::unique_ptr<franka::Model> model_;
 };
+
+using ImpedanceMotion = CartesianImpedanceBase;
 
 }  // namespace franky
