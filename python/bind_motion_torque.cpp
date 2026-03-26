@@ -60,7 +60,9 @@ JointImpedanceParams makeJointImpedanceParams(
 CartesianImpedanceBase::Params makeCartesianImpedanceParams(
     double translational_stiffness,
     double rotational_stiffness,
-    const std::optional<std::array<std::optional<double>, 6>> &force_constraints) {
+    const std::optional<std::array<std::optional<double>, 6>> &force_constraints,
+    const std::optional<Vector7d> &nullspace_target,
+    double nullspace_stiffness) {
   Eigen::Vector<bool, 6> force_constraints_active = Eigen::Vector<bool, 6>::Zero();
   Eigen::Vector<double, 6> force_constraints_value;
   if (force_constraints.has_value()) {
@@ -73,7 +75,9 @@ CartesianImpedanceBase::Params makeCartesianImpedanceParams(
       translational_stiffness,
       rotational_stiffness,
       force_constraints_value,
-      force_constraints_active};
+      force_constraints_active,
+      nullspace_target,
+      nullspace_stiffness};
 }
 }  // namespace
 
@@ -224,9 +228,15 @@ Any constant_torque_offset configured here is added to the per-cycle torque_feed
                         double rotational_stiffness,
                         std::optional<std::array<std::optional<double>, 6>>
                             force_constraints,
+                        std::optional<Vector7d> nullspace_target,
+                        double nullspace_stiffness,
                         double exponential_decay = 0.005) {
             auto base_params = makeCartesianImpedanceParams(
-                translational_stiffness, rotational_stiffness, force_constraints);
+                translational_stiffness,
+                rotational_stiffness,
+                force_constraints,
+                nullspace_target,
+                nullspace_stiffness);
             return std::make_shared<ExponentialImpedanceMotion>(
                 target,
                 ExponentialImpedanceMotion::Params{
@@ -234,14 +244,21 @@ Any constant_torque_offset configured here is added to the per-cycle torque_feed
                     base_params.rotational_stiffness,
                     base_params.force_constraints,
                     base_params.force_constraints_active,
+                    base_params.nullspace_target,
+                    base_params.nullspace_stiffness,
                     target_type,
                     exponential_decay});
           }),
+          R"doc(Construct an exponential Cartesian impedance motion toward a fixed target pose.
+
+The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order.)doc",
           "target"_a,
           py::arg_v("target_type", ReferenceType::kAbsolute, "_franky.ReferenceType.Absolute"),
           "translational_stiffness"_a = 2000,
           "rotational_stiffness"_a = 200,
           "force_constraints"_a = std::nullopt,
+          "nullspace_target"_a = std::nullopt,
+          "nullspace_stiffness"_a = 0.0,
           "exponential_decay"_a = 0.005);
 
   py::class_<CartesianImpedanceMotion, CartesianImpedanceBase, std::shared_ptr<CartesianImpedanceMotion>>(
@@ -254,10 +271,16 @@ Any constant_torque_offset configured here is added to the per-cycle torque_feed
                         double rotational_stiffness,
                         std::optional<std::array<std::optional<double>, 6>>
                             force_constraints,
+                        std::optional<Vector7d> nullspace_target,
+                        double nullspace_stiffness,
                         bool return_when_finished,
                         double finish_wait_factor) {
             auto base_params = makeCartesianImpedanceParams(
-                translational_stiffness, rotational_stiffness, force_constraints);
+                translational_stiffness,
+                rotational_stiffness,
+                force_constraints,
+                nullspace_target,
+                nullspace_stiffness);
             return std::make_shared<CartesianImpedanceMotion>(
                 target,
                 duration,
@@ -266,16 +289,23 @@ Any constant_torque_offset configured here is added to the per-cycle torque_feed
                     base_params.rotational_stiffness,
                     base_params.force_constraints,
                     base_params.force_constraints_active,
+                    base_params.nullspace_target,
+                    base_params.nullspace_stiffness,
                     target_type,
                     return_when_finished,
                     finish_wait_factor});
           }),
+          R"doc(Construct a Cartesian impedance motion that interpolates to a fixed target pose over the given duration.
+
+The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order.)doc",
           "target"_a,
           "duration"_a,
           py::arg_v("target_type", ReferenceType::kAbsolute, "_franky.ReferenceType.Absolute"),
           "translational_stiffness"_a = 2000,
           "rotational_stiffness"_a = 200,
           "force_constraints"_a = std::nullopt,
+          "nullspace_target"_a = std::nullopt,
+          "nullspace_stiffness"_a = 0.0,
           "return_when_finished"_a = true,
           "finish_wait_factor"_a = 1.2)
       ;
@@ -286,18 +316,27 @@ Any constant_torque_offset configured here is added to the per-cycle torque_feed
           py::init<>([](const std::shared_ptr<CartesianReferenceHandle> &reference_handle,
                         double translational_stiffness,
                         double rotational_stiffness,
-                        std::optional<std::array<std::optional<double>, 6>> force_constraints) {
+                        std::optional<std::array<std::optional<double>, 6>> force_constraints,
+                        std::optional<Vector7d> nullspace_target,
+                        double nullspace_stiffness) {
             auto base_params = makeCartesianImpedanceParams(
-                translational_stiffness, rotational_stiffness, force_constraints);
+                translational_stiffness,
+                rotational_stiffness,
+                force_constraints,
+                nullspace_target,
+                nullspace_stiffness);
             return std::make_shared<CartesianImpedanceTrackingMotion>(
                 reference_handle,
                 base_params);
           }),
           R"doc(Construct a dynamic Cartesian impedance tracking controller driven by a CartesianReferenceHandle.
 
-Each published Cartesian reference may optionally include a desired end-effector twist in the base frame.)doc",
+Each published Cartesian reference may optionally include a desired end-effector twist in the base frame.
+The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order.)doc",
           "reference_handle"_a,
           "translational_stiffness"_a = 2000,
           "rotational_stiffness"_a = 200,
-          "force_constraints"_a = std::nullopt);
+          "force_constraints"_a = std::nullopt,
+          "nullspace_target"_a = std::nullopt,
+          "nullspace_stiffness"_a = 0.0);
 }

@@ -10,6 +10,20 @@
 
 namespace franky {
 
+namespace {
+Eigen::Matrix<double, 6, 7> pseudoInverse(const Eigen::Matrix<double, 7, 6> &matrix) {
+  Eigen::JacobiSVD<Eigen::Matrix<double, 7, 6>> svd(
+      matrix, Eigen::ComputeFullU | Eigen::ComputeFullV);
+  const auto &singular_values = svd.singularValues();
+  Eigen::Matrix<double, 6, 7> sigma_pinv = Eigen::Matrix<double, 6, 7>::Zero();
+  constexpr double tolerance = 1e-6;
+  for (int i = 0; i < singular_values.size(); ++i) {
+    if (singular_values[i] > tolerance) sigma_pinv(i, i) = 1.0 / singular_values[i];
+  }
+  return svd.matrixV() * sigma_pinv * svd.matrixU().transpose();
+}
+}  // namespace
+
 CartesianImpedanceBase::CartesianImpedanceBase(Affine target, const CartesianImpedanceBase::Params &params)
     : target_(std::move(target)), params_(params), Motion<franka::Torques>() {
   stiffness.setZero();
@@ -60,7 +74,18 @@ franka::Torques CartesianImpedanceBase::nextCommandImpl(
   auto wrench_cartesian = params_.force_constraints_active.select(params_.force_constraints, wrench_cartesian_default);
 
   auto tau_task = jacobian.transpose() * wrench_cartesian;
-  auto tau_d = tau_task + coriolis;
+  Vector7d tau_nullspace = Vector7d::Zero();
+  if (params_.nullspace_target.has_value() && params_.nullspace_stiffness > 0.0) {
+    const auto jacobian_transpose_pinv = pseudoInverse(jacobian.transpose());
+    const auto nullspace_projector =
+        Eigen::Matrix<double, 7, 7>::Identity() - jacobian.transpose() * jacobian_transpose_pinv;
+    const auto nullspace_error = params_.nullspace_target.value() - robot_state.q;
+    const double nullspace_damping = 2.0 * std::sqrt(params_.nullspace_stiffness);
+    tau_nullspace = nullspace_projector *
+                    (params_.nullspace_stiffness * nullspace_error - nullspace_damping * robot_state.dq);
+  }
+
+  auto tau_d = tau_task + tau_nullspace + coriolis;
 
   std::array<double, 7> tau_d_array{};
   Eigen::VectorXd::Map(&tau_d_array[0], 7) = tau_d;
