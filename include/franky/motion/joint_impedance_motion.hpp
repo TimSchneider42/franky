@@ -9,25 +9,7 @@ namespace franky {
 
 struct JointReference;
 
-/**
- * @brief Client-side joint impedance controller.
- *
- * This motion uses Franka's torque interface and computes joint torques from a
- * joint-space spring-damper law plus optional torque offset/model compensation.
- */
-struct JointImpedanceParams {
-  /** Joint stiffness gains in [Nm/rad]. */
-  Vector7d stiffness{Vector7d::Constant(50.0)};
-
-  /** Joint damping gains in [Nms/rad]. */
-  Vector7d damping{Vector7d::Constant(10.0)};
-
-  /** Constant torque offset added to every command in [Nm]. */
-  Vector7d constant_torque_offset{Vector7d::Zero()};
-
-  /** Compensate Coriolis forces using the robot model. */
-  bool compensate_coriolis{true};
-
+struct TorqueSafetyParams {
   /** Maximum allowed torque step per cycle in [Nm]. */
   double max_delta_tau{1.0};
 
@@ -53,6 +35,26 @@ struct JointImpedanceParams {
   double joint_limit_max_torque{5.0};
 };
 
+/**
+ * @brief Client-side joint impedance controller.
+ *
+ * This motion uses Franka's torque interface and computes joint torques from a
+ * joint-space spring-damper law plus optional torque offset/model compensation.
+ */
+struct JointImpedanceParams : public TorqueSafetyParams {
+  /** Joint stiffness gains in [Nm/rad]. */
+  Vector7d stiffness{Vector7d::Constant(50.0)};
+
+  /** Joint damping gains in [Nms/rad]. */
+  Vector7d damping{Vector7d::Constant(10.0)};
+
+  /** Constant torque offset added to every command in [Nm]. */
+  Vector7d constant_torque_offset{Vector7d::Zero()};
+
+  /** Compensate Coriolis forces using the robot model. */
+  bool compensate_coriolis{true};
+};
+
 class JointImpedanceBase : public Motion<franka::Torques> {
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -65,8 +67,6 @@ class JointImpedanceBase : public Motion<franka::Torques> {
 
   [[nodiscard]] franka::Torques computeCommand(
       const RobotState &robot_state, const JointReference &reference) const;
-  [[nodiscard]] Vector7d computeJointLimitTorque(const RobotState &robot_state) const;
-  [[nodiscard]] Vector7d saturateTorqueRate(const Vector7d &tau_d_calculated, const RobotState &robot_state) const;
 
   JointImpedanceParams params_;
   Vector7d target_;

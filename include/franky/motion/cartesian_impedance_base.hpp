@@ -6,6 +6,7 @@
 #include <map>
 #include <optional>
 
+#include "franky/motion/joint_impedance_motion.hpp"
 #include "franky/motion/motion.hpp"
 #include "franky/robot_pose.hpp"
 #include "franky/twist.hpp"
@@ -40,7 +41,7 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
   /**
    * @brief Parameters for the impedance motion.
    */
-  struct Params {
+  struct Params : public TorqueSafetyParams {
     /** The translational stiffness in [10, 3000] N/m. */
     double translational_stiffness{2000};
 

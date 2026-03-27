@@ -707,12 +707,20 @@ motion = CartesianImpedanceTrackingMotion(
     rotational_stiffness=80.0,
     nullspace_target=[0.0, -0.6, 0.0, -2.2, 0.0, 1.7, 0.7],
     nullspace_stiffness=10.0,
+    max_delta_tau=0.5,
 )
 ```
 
 For Cartesian tracking, `target_twist` is optional. When provided, it is
 interpreted as the desired end-effector twist in the base frame, so the damping
 term acts on twist error instead of damping all motion toward zero.
+
+Cartesian damping is chosen internally as critically damped with respect to
+the requested stiffness.
+
+For Cartesian motions with a nullspace posture objective, you can also set
+`max_delta_tau` to make the commanded torque changes less abrupt by limiting 
+the commanded torque change per control cycle in Nm.
 
 Cartesian impedance motions also support an optional secondary posture
 objective through `nullspace_target` and `nullspace_stiffness`. When enabled,

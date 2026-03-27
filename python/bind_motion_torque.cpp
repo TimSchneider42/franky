@@ -62,7 +62,25 @@ CartesianImpedanceBase::Params makeCartesianImpedanceParams(
     double rotational_stiffness,
     const std::optional<std::array<std::optional<double>, 6>> &force_constraints,
     const std::optional<Vector7d> &nullspace_target,
-    double nullspace_stiffness) {
+    double nullspace_stiffness,
+    double max_delta_tau,
+    const std::optional<Vector7d> &lower_joint_limits,
+    const std::optional<Vector7d> &upper_joint_limits,
+    double joint_limit_activation_distance,
+    double joint_limit_stiffness,
+    double joint_limit_damping,
+    double joint_limit_max_torque) {
+  auto params = CartesianImpedanceBase::Params{};
+  params.translational_stiffness = translational_stiffness;
+  params.rotational_stiffness = rotational_stiffness;
+  params.nullspace_target = nullspace_target;
+  params.nullspace_stiffness = nullspace_stiffness;
+  params.max_delta_tau = max_delta_tau;
+  params.joint_limit_activation_distance = joint_limit_activation_distance;
+  params.joint_limit_stiffness = joint_limit_stiffness;
+  params.joint_limit_damping = joint_limit_damping;
+  params.joint_limit_max_torque = joint_limit_max_torque;
+
   Eigen::Vector<bool, 6> force_constraints_active = Eigen::Vector<bool, 6>::Zero();
   Eigen::Vector<double, 6> force_constraints_value;
   if (force_constraints.has_value()) {
@@ -71,13 +89,14 @@ CartesianImpedanceBase::Params makeCartesianImpedanceParams(
       force_constraints_active[i] = force_constraints.value()[i].has_value();
     }
   }
-  return CartesianImpedanceBase::Params{
-      translational_stiffness,
-      rotational_stiffness,
-      force_constraints_value,
-      force_constraints_active,
-      nullspace_target,
-      nullspace_stiffness};
+  params.force_constraints = force_constraints_value;
+  params.force_constraints_active = force_constraints_active;
+  if (lower_joint_limits.has_value() && upper_joint_limits.has_value()) {
+    params.joint_limit_repulsion_active = true;
+    params.lower_joint_limits = lower_joint_limits.value();
+    params.upper_joint_limits = upper_joint_limits.value();
+  }
+  return params;
 }
 }  // namespace
 
@@ -230,26 +249,38 @@ Any constant_torque_offset configured here is added to the per-cycle torque_feed
                             force_constraints,
                         std::optional<Vector7d> nullspace_target,
                         double nullspace_stiffness,
+                        double max_delta_tau,
+                        std::optional<Vector7d> lower_joint_limits,
+                        std::optional<Vector7d> upper_joint_limits,
+                        double joint_limit_activation_distance,
+                        double joint_limit_stiffness,
+                        double joint_limit_damping,
+                        double joint_limit_max_torque,
                         double exponential_decay = 0.005) {
             auto base_params = makeCartesianImpedanceParams(
                 translational_stiffness,
                 rotational_stiffness,
                 force_constraints,
                 nullspace_target,
-                nullspace_stiffness);
+                nullspace_stiffness,
+                max_delta_tau,
+                lower_joint_limits,
+                upper_joint_limits,
+                joint_limit_activation_distance,
+                joint_limit_stiffness,
+                joint_limit_damping,
+                joint_limit_max_torque);
+            auto params = ExponentialImpedanceMotion::Params{};
+            static_cast<CartesianImpedanceBase::Params &>(params) = base_params;
+            params.target_type = target_type;
+            params.exponential_decay = exponential_decay;
             return std::make_shared<ExponentialImpedanceMotion>(
                 target,
-                ExponentialImpedanceMotion::Params{
-                    base_params.translational_stiffness,
-                    base_params.rotational_stiffness,
-                    base_params.force_constraints,
-                    base_params.force_constraints_active,
-                    base_params.nullspace_target,
-                    base_params.nullspace_stiffness,
-                    target_type,
-                    exponential_decay});
+                params);
           }),
           R"doc(Construct an exponential Cartesian impedance motion toward a fixed target pose.
+
+Cartesian damping is chosen internally as critically damped with respect to the requested stiffness.
 
 The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order.)doc",
           "target"_a,
@@ -259,6 +290,13 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
           "force_constraints"_a = std::nullopt,
           "nullspace_target"_a = std::nullopt,
           "nullspace_stiffness"_a = 0.0,
+          "max_delta_tau"_a = 1.0,
+          "lower_joint_limits"_a = std::nullopt,
+          "upper_joint_limits"_a = std::nullopt,
+          "joint_limit_activation_distance"_a = 0.1,
+          "joint_limit_stiffness"_a = 4.0,
+          "joint_limit_damping"_a = 1.0,
+          "joint_limit_max_torque"_a = 5.0,
           "exponential_decay"_a = 0.005);
 
   py::class_<CartesianImpedanceMotion, CartesianImpedanceBase, std::shared_ptr<CartesianImpedanceMotion>>(
@@ -273,6 +311,13 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
                             force_constraints,
                         std::optional<Vector7d> nullspace_target,
                         double nullspace_stiffness,
+                        double max_delta_tau,
+                        std::optional<Vector7d> lower_joint_limits,
+                        std::optional<Vector7d> upper_joint_limits,
+                        double joint_limit_activation_distance,
+                        double joint_limit_stiffness,
+                        double joint_limit_damping,
+                        double joint_limit_max_torque,
                         bool return_when_finished,
                         double finish_wait_factor) {
             auto base_params = makeCartesianImpedanceParams(
@@ -280,22 +325,27 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
                 rotational_stiffness,
                 force_constraints,
                 nullspace_target,
-                nullspace_stiffness);
+                nullspace_stiffness,
+                max_delta_tau,
+                lower_joint_limits,
+                upper_joint_limits,
+                joint_limit_activation_distance,
+                joint_limit_stiffness,
+                joint_limit_damping,
+                joint_limit_max_torque);
+            auto params = CartesianImpedanceMotion::Params{};
+            static_cast<CartesianImpedanceBase::Params &>(params) = base_params;
+            params.target_type = target_type;
+            params.return_when_finished = return_when_finished;
+            params.finish_wait_factor = finish_wait_factor;
             return std::make_shared<CartesianImpedanceMotion>(
                 target,
                 duration,
-                CartesianImpedanceMotion::Params{
-                    base_params.translational_stiffness,
-                    base_params.rotational_stiffness,
-                    base_params.force_constraints,
-                    base_params.force_constraints_active,
-                    base_params.nullspace_target,
-                    base_params.nullspace_stiffness,
-                    target_type,
-                    return_when_finished,
-                    finish_wait_factor});
+                params);
           }),
           R"doc(Construct a Cartesian impedance motion that interpolates to a fixed target pose over the given duration.
+
+Cartesian damping is chosen internally as critically damped with respect to the requested stiffness.
 
 The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order.)doc",
           "target"_a,
@@ -306,6 +356,13 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
           "force_constraints"_a = std::nullopt,
           "nullspace_target"_a = std::nullopt,
           "nullspace_stiffness"_a = 0.0,
+          "max_delta_tau"_a = 1.0,
+          "lower_joint_limits"_a = std::nullopt,
+          "upper_joint_limits"_a = std::nullopt,
+          "joint_limit_activation_distance"_a = 0.1,
+          "joint_limit_stiffness"_a = 4.0,
+          "joint_limit_damping"_a = 1.0,
+          "joint_limit_max_torque"_a = 5.0,
           "return_when_finished"_a = true,
           "finish_wait_factor"_a = 1.2)
       ;
@@ -318,13 +375,27 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
                         double rotational_stiffness,
                         std::optional<std::array<std::optional<double>, 6>> force_constraints,
                         std::optional<Vector7d> nullspace_target,
-                        double nullspace_stiffness) {
+                        double nullspace_stiffness,
+                        double max_delta_tau,
+                        std::optional<Vector7d> lower_joint_limits,
+                        std::optional<Vector7d> upper_joint_limits,
+                        double joint_limit_activation_distance,
+                        double joint_limit_stiffness,
+                        double joint_limit_damping,
+                        double joint_limit_max_torque) {
             auto base_params = makeCartesianImpedanceParams(
                 translational_stiffness,
                 rotational_stiffness,
                 force_constraints,
                 nullspace_target,
-                nullspace_stiffness);
+                nullspace_stiffness,
+                max_delta_tau,
+                lower_joint_limits,
+                upper_joint_limits,
+                joint_limit_activation_distance,
+                joint_limit_stiffness,
+                joint_limit_damping,
+                joint_limit_max_torque);
             return std::make_shared<CartesianImpedanceTrackingMotion>(
                 reference_handle,
                 base_params);
@@ -332,11 +403,19 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
           R"doc(Construct a dynamic Cartesian impedance tracking controller driven by a CartesianReferenceHandle.
 
 Each published Cartesian reference may optionally include a desired end-effector twist in the base frame.
+Cartesian damping is chosen internally as critically damped with respect to the requested stiffness.
 The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order.)doc",
           "reference_handle"_a,
           "translational_stiffness"_a = 2000,
           "rotational_stiffness"_a = 200,
           "force_constraints"_a = std::nullopt,
           "nullspace_target"_a = std::nullopt,
-          "nullspace_stiffness"_a = 0.0);
+          "nullspace_stiffness"_a = 0.0,
+          "max_delta_tau"_a = 1.0,
+          "lower_joint_limits"_a = std::nullopt,
+          "upper_joint_limits"_a = std::nullopt,
+          "joint_limit_activation_distance"_a = 0.1,
+          "joint_limit_stiffness"_a = 4.0,
+          "joint_limit_damping"_a = 1.0,
+          "joint_limit_max_torque"_a = 5.0);
 }
