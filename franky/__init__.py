@@ -1,7 +1,6 @@
 from .robot import Robot
 from .robot_web_session import (
     RobotWebSession,
-    Desk,
     RobotWebSessionError,
     FrankaAPIError,
     TakeControlTimeoutError,
