@@ -30,6 +30,13 @@ CartesianImpedanceTrackingMotion::CartesianImpedanceTrackingMotion(
       reference_handle_(std::move(reference_handle)),
       target_(Affine::Identity()) {}
 
+CartesianImpedanceTrackingMotion::CartesianImpedanceTrackingMotion(
+    std::shared_ptr<CartesianReferenceHandle> reference_handle, const Params &params,
+    std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle, double gains_time_constant)
+    : CartesianImpedanceBase(Affine::Identity(), params, std::move(gains_handle), gains_time_constant),
+      reference_handle_(std::move(reference_handle)),
+      target_(Affine::Identity()) {}
+
 CartesianImpedanceTrackingMotion::CartesianImpedanceTrackingMotion(ReferenceCallback reference_callback)
     : CartesianImpedanceTrackingMotion(std::move(reference_callback), Params()) {}
 

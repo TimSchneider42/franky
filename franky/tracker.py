@@ -6,8 +6,10 @@ import numpy as np
 
 from ._franky import (
     Affine,
+    CartesianImpedanceGainsHandle,
     CartesianImpedanceTrackingMotion,
     CartesianReferenceHandle,
+    JointImpedanceGainsHandle,
     JointImpedanceTrackingMotion,
     JointReferenceHandle,
     Twist,
@@ -44,13 +46,18 @@ class CartesianImpedanceTracker:
         joint_limit_stiffness: float = 4.0,
         joint_limit_damping: float = 1.0,
         joint_limit_max_torque: float = 5.0,
+        gains_time_constant: float = 0.1,
     ):
         self._robot = robot
         self._reference_handle = CartesianReferenceHandle()
+        self._gains_handle = CartesianImpedanceGainsHandle()
 
         # Seed initial target from current pose so the robot doesn't jump.
         initial_pose = self._robot.current_pose.end_effector_pose
         self._reference_handle.set(initial_pose)
+
+        # Seed gains handle so the RT loop has a target from the start.
+        self._gains_handle.set(translational_stiffness, rotational_stiffness, nullspace_stiffness)
 
         kwargs = {
             "translational_stiffness": translational_stiffness,
@@ -64,6 +71,8 @@ class CartesianImpedanceTracker:
             "joint_limit_stiffness": joint_limit_stiffness,
             "joint_limit_damping": joint_limit_damping,
             "joint_limit_max_torque": joint_limit_max_torque,
+            "gains_handle": self._gains_handle,
+            "gains_time_constant": gains_time_constant,
         }
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
@@ -78,6 +87,23 @@ class CartesianImpedanceTracker:
             self._reference_handle.set(pose, twist)
         else:
             self._reference_handle.set(pose)
+
+    def set_gains(
+        self,
+        *,
+        translational_stiffness: Optional[float] = None,
+        rotational_stiffness: Optional[float] = None,
+        nullspace_stiffness: Optional[float] = None,
+    ) -> None:
+        """Update impedance gains. Smoothed in the RT loop via exponential interpolation.
+
+        Only the provided gains are changed; omitted gains keep their current target values.
+        """
+        current = self._gains_handle.get() if self._gains_handle.has_gains else None
+        ts = translational_stiffness if translational_stiffness is not None else (current.translational_stiffness if current else 2000.0)
+        rs = rotational_stiffness if rotational_stiffness is not None else (current.rotational_stiffness if current else 200.0)
+        ns = nullspace_stiffness if nullspace_stiffness is not None else (current.nullspace_stiffness if current else 0.0)
+        self._gains_handle.set(ts, rs, ns)
 
     # --- state ---
 
@@ -110,6 +136,11 @@ class CartesianImpedanceTracker:
     def reference_handle(self) -> CartesianReferenceHandle:
         """The underlying reference handle, for direct access from tight loops or C++ interop."""
         return self._reference_handle
+
+    @property
+    def gains_handle(self) -> CartesianImpedanceGainsHandle:
+        """The underlying gains handle, for direct access from tight loops or C++ interop."""
+        return self._gains_handle
 
     # --- context manager ---
 
@@ -146,13 +177,20 @@ class JointImpedanceTracker:
         joint_limit_stiffness: float = 4.0,
         joint_limit_damping: float = 1.0,
         joint_limit_max_torque: float = 5.0,
+        gains_time_constant: float = 0.1,
     ):
         self._robot = robot
         self._reference_handle = JointReferenceHandle()
+        self._gains_handle = JointImpedanceGainsHandle()
 
         # Seed initial target from current joint positions.
         q = self._robot.current_joint_positions
         self._reference_handle.set(q)
+
+        # Seed gains handle with initial values.
+        stiffness_init = np.asarray(stiffness) if stiffness is not None else np.full(7, 50.0)
+        damping_init = np.asarray(damping) if damping is not None else np.full(7, 10.0)
+        self._gains_handle.set(stiffness_init, damping_init)
 
         kwargs = {
             "stiffness": stiffness,
@@ -166,6 +204,8 @@ class JointImpedanceTracker:
             "joint_limit_stiffness": joint_limit_stiffness,
             "joint_limit_damping": joint_limit_damping,
             "joint_limit_max_torque": joint_limit_max_torque,
+            "gains_handle": self._gains_handle,
+            "gains_time_constant": gains_time_constant,
         }
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
@@ -182,6 +222,21 @@ class JointImpedanceTracker:
     ) -> None:
         """Update the joint target position, optional velocity, and optional feedforward torque."""
         self._reference_handle.set(q, dq, tau_ff)
+
+    def set_gains(
+        self,
+        *,
+        stiffness: Optional[np.ndarray] = None,
+        damping: Optional[np.ndarray] = None,
+    ) -> None:
+        """Update joint impedance gains. Smoothed in the RT loop via exponential interpolation.
+
+        Only the provided gains are changed; omitted gains keep their current target values.
+        """
+        current = self._gains_handle.get() if self._gains_handle.has_gains else None
+        k = np.asarray(stiffness) if stiffness is not None else (current.stiffness if current else np.full(7, 50.0))
+        d = np.asarray(damping) if damping is not None else (current.damping if current else np.full(7, 10.0))
+        self._gains_handle.set(k, d)
 
     # --- state ---
 
@@ -205,6 +260,10 @@ class JointImpedanceTracker:
     @property
     def reference_handle(self) -> JointReferenceHandle:
         return self._reference_handle
+
+    @property
+    def gains_handle(self) -> JointImpedanceGainsHandle:
+        return self._gains_handle
 
     # --- context manager ---
 

@@ -3,7 +3,9 @@
 #include <array>
 #include <atomic>
 #include <functional>
+#include <memory>
 
+#include "franky/motion/impedance_gains_handle.hpp"
 #include "franky/motion/joint_impedance_motion.hpp"
 
 namespace franky {
@@ -75,6 +77,9 @@ class JointImpedanceTrackingMotion : public JointImpedanceBase {
 
   explicit JointImpedanceTrackingMotion(std::shared_ptr<JointReferenceHandle> reference_handle);
   JointImpedanceTrackingMotion(std::shared_ptr<JointReferenceHandle> reference_handle, const Params &params);
+  JointImpedanceTrackingMotion(std::shared_ptr<JointReferenceHandle> reference_handle, const Params &params,
+                               std::shared_ptr<JointImpedanceGainsHandle> gains_handle,
+                               double gains_time_constant = 0.1);
   explicit JointImpedanceTrackingMotion(ReferenceCallback reference_callback);
   JointImpedanceTrackingMotion(ReferenceCallback reference_callback, const Params &params);
 

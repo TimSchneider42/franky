@@ -105,6 +105,65 @@ void bind_motion_torque(py::module &m) {
       m, "CartesianImpedanceBase");
   m.attr("ImpedanceMotion") = cartesian_impedance_base;
 
+  py::class_<CartesianImpedanceGains>(m, "CartesianImpedanceGains")
+      .def(
+          py::init<>([](double translational_stiffness, double rotational_stiffness, double nullspace_stiffness) {
+            return CartesianImpedanceGains{translational_stiffness, rotational_stiffness, nullspace_stiffness};
+          }),
+          "translational_stiffness"_a = 2000.0,
+          "rotational_stiffness"_a = 200.0,
+          "nullspace_stiffness"_a = 0.0)
+      .def_readwrite("translational_stiffness", &CartesianImpedanceGains::translational_stiffness)
+      .def_readwrite("rotational_stiffness", &CartesianImpedanceGains::rotational_stiffness)
+      .def_readwrite("nullspace_stiffness", &CartesianImpedanceGains::nullspace_stiffness);
+
+  py::class_<CartesianImpedanceGainsHandle, std::shared_ptr<CartesianImpedanceGainsHandle>>(
+      m, "CartesianImpedanceGainsHandle")
+      .def(py::init<>())
+      .def(
+          "set",
+          [](CartesianImpedanceGainsHandle &handle,
+             double translational_stiffness,
+             double rotational_stiffness,
+             double nullspace_stiffness) {
+            handle.set(CartesianImpedanceGains{translational_stiffness, rotational_stiffness, nullspace_stiffness});
+          },
+          "translational_stiffness"_a,
+          "rotational_stiffness"_a,
+          "nullspace_stiffness"_a = 0.0)
+      .def("clear", &CartesianImpedanceGainsHandle::clear)
+      .def("get", &CartesianImpedanceGainsHandle::get)
+      .def_property_readonly("has_gains", &CartesianImpedanceGainsHandle::hasGains);
+
+  py::class_<JointImpedanceGains>(m, "JointImpedanceGains")
+      .def(
+          py::init<>([](const std::optional<Vector7d> &stiffness, const std::optional<Vector7d> &damping) {
+            JointImpedanceGains g;
+            if (stiffness.has_value()) g.stiffness = stiffness.value();
+            if (damping.has_value()) g.damping = damping.value();
+            return g;
+          }),
+          "stiffness"_a = std::nullopt,
+          "damping"_a = std::nullopt)
+      .def_readwrite("stiffness", &JointImpedanceGains::stiffness)
+      .def_readwrite("damping", &JointImpedanceGains::damping);
+
+  py::class_<JointImpedanceGainsHandle, std::shared_ptr<JointImpedanceGainsHandle>>(
+      m, "JointImpedanceGainsHandle")
+      .def(py::init<>())
+      .def(
+          "set",
+          [](JointImpedanceGainsHandle &handle,
+             const Vector7d &stiffness,
+             const Vector7d &damping) {
+            handle.set(JointImpedanceGains{stiffness, damping});
+          },
+          "stiffness"_a,
+          "damping"_a)
+      .def("clear", &JointImpedanceGainsHandle::clear)
+      .def("get", &JointImpedanceGainsHandle::get)
+      .def_property_readonly("has_gains", &JointImpedanceGainsHandle::hasGains);
+
   py::class_<JointReferenceHandle, std::shared_ptr<JointReferenceHandle>>(m, "JointReferenceHandle")
       .def(py::init<>())
       .def(
@@ -205,7 +264,9 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
                         double joint_limit_activation_distance,
                         double joint_limit_stiffness,
                         double joint_limit_damping,
-                        double joint_limit_max_torque) {
+                        double joint_limit_max_torque,
+                        std::shared_ptr<JointImpedanceGainsHandle> gains_handle,
+                        double gains_time_constant) {
             auto params = makeJointImpedanceParams(
                 stiffness,
                 damping,
@@ -218,11 +279,18 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
                 joint_limit_stiffness,
                 joint_limit_damping,
                 joint_limit_max_torque);
+            if (gains_handle) {
+              return std::make_shared<JointImpedanceTrackingMotion>(
+                  reference_handle, params, gains_handle, gains_time_constant);
+            }
             return std::make_shared<JointImpedanceTrackingMotion>(reference_handle, params);
           }),
           R"doc(Construct a dynamic joint impedance controller driven by a JointReferenceHandle.
 
-Any constant_torque_offset configured here is added to the per-cycle torque_feedforward values published through the handle.)doc",
+Any constant_torque_offset configured here is added to the per-cycle torque_feedforward values published through the handle.
+
+If gains_handle is provided, the controller reads target gains from it each cycle and exponentially
+interpolates toward them with the given time constant, allowing smooth runtime stiffness/damping changes.)doc",
           "reference_handle"_a,
           "stiffness"_a = std::nullopt,
           "damping"_a = std::nullopt,
@@ -234,7 +302,9 @@ Any constant_torque_offset configured here is added to the per-cycle torque_feed
           "joint_limit_activation_distance"_a = 0.1,
           "joint_limit_stiffness"_a = 4.0,
           "joint_limit_damping"_a = 1.0,
-          "joint_limit_max_torque"_a = 5.0)
+          "joint_limit_max_torque"_a = 5.0,
+          "gains_handle"_a = nullptr,
+          "gains_time_constant"_a = 0.1)
       .def_property_readonly("target", &JointImpedanceTrackingMotion::target)
       .def_property_readonly("target_velocity", &JointImpedanceTrackingMotion::target_velocity);
 
@@ -382,7 +452,9 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
                         double joint_limit_activation_distance,
                         double joint_limit_stiffness,
                         double joint_limit_damping,
-                        double joint_limit_max_torque) {
+                        double joint_limit_max_torque,
+                        std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle,
+                        double gains_time_constant) {
             auto base_params = makeCartesianImpedanceParams(
                 translational_stiffness,
                 rotational_stiffness,
@@ -396,15 +468,21 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
                 joint_limit_stiffness,
                 joint_limit_damping,
                 joint_limit_max_torque);
+            if (gains_handle) {
+              return std::make_shared<CartesianImpedanceTrackingMotion>(
+                  reference_handle, base_params, gains_handle, gains_time_constant);
+            }
             return std::make_shared<CartesianImpedanceTrackingMotion>(
-                reference_handle,
-                base_params);
+                reference_handle, base_params);
           }),
           R"doc(Construct a dynamic Cartesian impedance tracking controller driven by a CartesianReferenceHandle.
 
 Each published Cartesian reference may optionally include a desired end-effector twist in the base frame.
 Cartesian damping is chosen internally as critically damped with respect to the requested stiffness.
-The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order.)doc",
+The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order.
+
+If gains_handle is provided, the controller reads target gains from it each cycle and exponentially
+interpolates toward them with the given time constant, allowing smooth runtime stiffness changes.)doc",
           "reference_handle"_a,
           "translational_stiffness"_a = 2000,
           "rotational_stiffness"_a = 200,
@@ -417,5 +495,7 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
           "joint_limit_activation_distance"_a = 0.1,
           "joint_limit_stiffness"_a = 4.0,
           "joint_limit_damping"_a = 1.0,
-          "joint_limit_max_torque"_a = 5.0);
+          "joint_limit_max_torque"_a = 5.0,
+          "gains_handle"_a = nullptr,
+          "gains_time_constant"_a = 0.1);
 }

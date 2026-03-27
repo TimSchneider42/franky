@@ -13,6 +13,7 @@
 #include "franky/motion/condition.hpp"
 #include "franky/motion/exponential_impedance_motion.hpp"
 #include "franky/motion/cartesian_impedance_base.hpp"
+#include "franky/motion/impedance_gains_handle.hpp"
 #include "franky/motion/joint_impedance_motion.hpp"
 #include "franky/motion/joint_impedance_tracking_motion.hpp"
 #include "franky/motion/joint_motion.hpp"

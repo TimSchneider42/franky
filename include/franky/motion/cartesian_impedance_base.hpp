@@ -4,8 +4,10 @@
 #include <Eigen/Geometry>
 #include <Eigen/SVD>
 #include <map>
+#include <memory>
 #include <optional>
 
+#include "franky/motion/impedance_gains_handle.hpp"
 #include "franky/motion/joint_impedance_motion.hpp"
 #include "franky/motion/motion.hpp"
 #include "franky/robot_pose.hpp"
@@ -70,8 +72,15 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
   /**
    * @param target The target pose.
    * @param params Parameters for the motion.
+   * @param gains_handle Optional handle for runtime gain updates. When null,
+   *        gains are static (set once from params). When present, gains are
+   *        read each cycle and exponentially interpolated toward the target.
+   * @param gains_time_constant Smoothing time constant for gain transitions [s].
+   *        Only used when gains_handle is provided. Default 0.1s.
    */
-  explicit CartesianImpedanceBase(Affine target, const Params &params);
+  explicit CartesianImpedanceBase(Affine target, const Params &params,
+                                  std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle = nullptr,
+                                  double gains_time_constant = 0.1);
 
  protected:
   void initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) override;
@@ -93,9 +102,17 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
       const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time) = 0;
 
  private:
+  void rebuildStiffnessDamping();
+
   Affine absolute_target_;
   Affine target_;
   Params params_;
+
+  std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle_;
+  double gains_time_constant_;
+  double current_translational_stiffness_;
+  double current_rotational_stiffness_;
+  double current_nullspace_stiffness_;
 
   Eigen::Matrix<double, 6, 6> stiffness, damping;
   Affine intermediate_target_;

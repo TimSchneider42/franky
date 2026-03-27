@@ -26,14 +26,28 @@ Eigen::Matrix<double, 6, 7> pseudoInverse(const Eigen::Matrix<double, 7, 6> &mat
 }
 }  // namespace
 
-CartesianImpedanceBase::CartesianImpedanceBase(Affine target, const CartesianImpedanceBase::Params &params)
-    : target_(std::move(target)), params_(params), Motion<franka::Torques>() {
+CartesianImpedanceBase::CartesianImpedanceBase(
+    Affine target, const CartesianImpedanceBase::Params &params,
+    std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle,
+    double gains_time_constant)
+    : target_(std::move(target)),
+      params_(params),
+      gains_handle_(std::move(gains_handle)),
+      gains_time_constant_(gains_time_constant),
+      current_translational_stiffness_(params.translational_stiffness),
+      current_rotational_stiffness_(params.rotational_stiffness),
+      current_nullspace_stiffness_(params.nullspace_stiffness),
+      Motion<franka::Torques>() {
+  rebuildStiffnessDamping();
+}
+
+void CartesianImpedanceBase::rebuildStiffnessDamping() {
   stiffness.setZero();
-  stiffness.topLeftCorner(3, 3) << params.translational_stiffness * Eigen::MatrixXd::Identity(3, 3);
-  stiffness.bottomRightCorner(3, 3) << params.rotational_stiffness * Eigen::MatrixXd::Identity(3, 3);
+  stiffness.topLeftCorner(3, 3) << current_translational_stiffness_ * Eigen::MatrixXd::Identity(3, 3);
+  stiffness.bottomRightCorner(3, 3) << current_rotational_stiffness_ * Eigen::MatrixXd::Identity(3, 3);
   damping.setZero();
-  const double translational_damping = 2.0 * std::sqrt(params.translational_stiffness);
-  const double rotational_damping = 2.0 * std::sqrt(params.rotational_stiffness);
+  const double translational_damping = 2.0 * std::sqrt(current_translational_stiffness_);
+  const double rotational_damping = 2.0 * std::sqrt(current_rotational_stiffness_);
   damping.topLeftCorner(3, 3) << translational_damping * Eigen::MatrixXd::Identity(3, 3);
   damping.bottomRightCorner(3, 3) << rotational_damping * Eigen::MatrixXd::Identity(3, 3);
 }
@@ -50,6 +64,17 @@ franka::Torques CartesianImpedanceBase::nextCommandImpl(
     const std::optional<franka::Torques> &previous_command) {
   auto [reference, finish] = update(robot_state, time_step, rel_time, abs_time);
   intermediate_target_ = reference.target;
+
+  // If a gains handle is present, interpolate toward the target gains.
+  if (gains_handle_ && gains_handle_->hasGains()) {
+    const auto target_gains = gains_handle_->get();
+    const double dt = time_step.toSec();
+    const double alpha = 1.0 - std::exp(-dt / gains_time_constant_);
+    current_translational_stiffness_ += alpha * (target_gains.translational_stiffness - current_translational_stiffness_);
+    current_rotational_stiffness_ += alpha * (target_gains.rotational_stiffness - current_rotational_stiffness_);
+    current_nullspace_stiffness_ += alpha * (target_gains.nullspace_stiffness - current_nullspace_stiffness_);
+    rebuildStiffnessDamping();
+  }
 
   auto model = robot()->model();
   Vector7d coriolis = model->coriolis(robot_state);
@@ -79,14 +104,14 @@ franka::Torques CartesianImpedanceBase::nextCommandImpl(
 
   auto tau_task = jacobian.transpose() * wrench_cartesian;
   Vector7d tau_nullspace = Vector7d::Zero();
-  if (params_.nullspace_target.has_value() && params_.nullspace_stiffness > 0.0) {
+  if (params_.nullspace_target.has_value() && current_nullspace_stiffness_ > 0.0) {
     const auto jacobian_transpose_pinv = pseudoInverse(jacobian.transpose());
     const auto nullspace_projector =
         Eigen::Matrix<double, 7, 7>::Identity() - jacobian.transpose() * jacobian_transpose_pinv;
     const auto nullspace_error = params_.nullspace_target.value() - robot_state.q;
-    const double nullspace_damping = 2.0 * std::sqrt(params_.nullspace_stiffness);
+    const double nullspace_damping = 2.0 * std::sqrt(current_nullspace_stiffness_);
     tau_nullspace = nullspace_projector *
-                    (params_.nullspace_stiffness * nullspace_error - nullspace_damping * robot_state.dq);
+                    (current_nullspace_stiffness_ * nullspace_error - nullspace_damping * robot_state.dq);
   }
 
   Vector7d tau_limit = Vector7d::Zero();

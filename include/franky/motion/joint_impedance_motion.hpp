@@ -1,7 +1,9 @@
 #pragma once
 
+#include <memory>
 #include <optional>
 
+#include "franky/motion/impedance_gains_handle.hpp"
 #include "franky/motion/motion.hpp"
 #include "franky/types.hpp"
 
@@ -63,14 +65,22 @@ class JointImpedanceBase : public Motion<franka::Torques> {
   [[nodiscard]] const Vector7d &target_velocity() const { return target_velocity_; }
 
  protected:
-  explicit JointImpedanceBase(const Vector7d &target, const Vector7d &target_velocity, const JointImpedanceParams &params);
+  explicit JointImpedanceBase(const Vector7d &target, const Vector7d &target_velocity, const JointImpedanceParams &params,
+                              std::shared_ptr<JointImpedanceGainsHandle> gains_handle = nullptr,
+                              double gains_time_constant = 0.1);
 
   [[nodiscard]] franka::Torques computeCommand(
-      const RobotState &robot_state, const JointReference &reference) const;
+      const RobotState &robot_state, const JointReference &reference, double dt);
 
   JointImpedanceParams params_;
   Vector7d target_;
   Vector7d target_velocity_;
+
+ private:
+  std::shared_ptr<JointImpedanceGainsHandle> gains_handle_;
+  double gains_time_constant_;
+  Vector7d current_stiffness_;
+  Vector7d current_damping_;
 };
 
 class JointImpedanceMotion : public JointImpedanceBase {

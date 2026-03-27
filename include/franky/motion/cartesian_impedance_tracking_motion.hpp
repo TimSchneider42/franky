@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "franky/motion/cartesian_impedance_base.hpp"
+#include "franky/motion/impedance_gains_handle.hpp"
 
 namespace franky {
 
@@ -46,6 +47,9 @@ class CartesianImpedanceTrackingMotion : public CartesianImpedanceBase {
 
   explicit CartesianImpedanceTrackingMotion(std::shared_ptr<CartesianReferenceHandle> reference_handle);
   CartesianImpedanceTrackingMotion(std::shared_ptr<CartesianReferenceHandle> reference_handle, const Params &params);
+  CartesianImpedanceTrackingMotion(std::shared_ptr<CartesianReferenceHandle> reference_handle, const Params &params,
+                                   std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle,
+                                   double gains_time_constant = 0.1);
   explicit CartesianImpedanceTrackingMotion(ReferenceCallback reference_callback);
   CartesianImpedanceTrackingMotion(ReferenceCallback reference_callback, const Params &params);
 
