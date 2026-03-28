@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 
-from franky import JointImpedanceMotion, Robot
+from franky import JointImpedanceTracker, Robot
 
 
 # Franka Panda / FR3 joint limits from the standard libfranka model.
@@ -18,67 +18,66 @@ if __name__ == "__main__":
         help="Uniform joint stiffness used for manual guidance",
     )
     parser.add_argument(
-        "--damping",
-        type=float,
-        default=1.0,
-        help="Uniform joint damping used for manual guidance",
+        "--lock-joint6",
+        action="store_true",
+        help="Hold joint 6 at its starting angle while leaving the other joints compliant",
     )
     parser.add_argument(
-        "--activation-distance",
-        type=float,
-        default=0.15,
-        help="Distance from a joint limit where pushback starts [rad]",
+        "--lock-joint7",
+        action="store_true",
+        help="Hold joint 7 at its starting angle while leaving the other joints compliant",
     )
     parser.add_argument(
-        "--limit-stiffness",
+        "--lock-stiffness",
         type=float,
-        default=4.0,
-        help="Repulsion gain for the joint-limit soft wall [Nm]",
+        default=40.0,
+        help="Extra stiffness used for locked joints [Nm/rad]",
     )
-    parser.add_argument(
-        "--limit-damping",
-        type=float,
-        default=1.0,
-        help="Extra damping when moving into a joint limit [Nms/rad]",
-    )
-    parser.add_argument(
-        "--limit-max-torque",
-        type=float,
-        default=5.0,
-        help="Maximum absolute torque contributed by the joint-limit soft wall [Nm]",
-    )
+
     args = parser.parse_args()
 
     robot = Robot(args.host)
     robot.recover_from_errors()
+    robot.set_collision_behavior(
+        torque_thresholds=[35.0, 35.0, 35.0, 35.0, 35.0, 35.0, 35.0],
+        force_thresholds=[60.0, 60.0, 60.0, 60.0, 60.0, 60.0],
+    )
 
     q_current = robot.current_joint_positions
     stiffness = [args.stiffness] * 7
     damping = [args.damping] * 7
+    locked_targets = list(q_current)
 
-    motion = JointImpedanceMotion(
-        target=q_current,
+    if args.lock_joint6:
+        stiffness[5] = max(stiffness[5], args.lock_stiffness)
+        damping[5] = max(damping[5], 2.0 * args.damping)
+    if args.lock_joint7:
+        stiffness[6] = max(stiffness[6], args.lock_stiffness)
+        damping[6] = max(damping[6], 2.0 * args.damping)
+
+    print("Entering compliant joint impedance mode.")
+    print("You should be able to guide the robot by hand while feeling pushback near joint limits.")
+    if args.lock_joint6 or args.lock_joint7:
+        locked = []
+        if args.lock_joint6:
+            locked.append("6")
+        if args.lock_joint7:
+            locked.append("7")
+        print(f"Joint lock active on joint(s): {', '.join(locked)}.")
+    print("Press Ctrl-C to stop.")
+
+    with JointImpedanceTracker(
+        robot,
         stiffness=stiffness,
         damping=damping,
         lower_joint_limits=DEFAULT_LOWER_JOINT_LIMITS,
         upper_joint_limits=DEFAULT_UPPER_JOINT_LIMITS,
-        joint_limit_activation_distance=args.activation_distance,
-        joint_limit_stiffness=args.limit_stiffness,
-        joint_limit_damping=args.limit_damping,
-        joint_limit_max_torque=args.limit_max_torque,
-        compensate_coriolis=True,
-        max_delta_tau=1.0,
-    )
-
-    print("Entering compliant joint impedance mode.")
-    print("You should be able to guide the robot by hand while feeling pushback near joint limits.")
-    print("Press Ctrl-C to stop.")
-
-    robot.move(motion, asynchronous=True)
-
-    try:
-        robot.join_motion()
-    except KeyboardInterrupt:
-        print("\nStopping...")
-        robot.stop()
-        robot.join_motion()
+        period=0.001,
+    ) as tracker:
+        while tracker.tick():
+            q_ref = list(robot.current_joint_positions)
+            if args.lock_joint6:
+                q_ref[5] = locked_targets[5]
+            if args.lock_joint7:
+                q_ref[6] = locked_targets[6]
+            tracker.set_target(q_ref, dq=[0.0] * 7, tau_ff=[0.0] * 7)
