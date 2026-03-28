@@ -65,9 +65,9 @@ class JointImpedanceBase : public Motion<franka::Torques> {
   [[nodiscard]] const Vector7d &target_velocity() const { return target_velocity_; }
 
  protected:
-  explicit JointImpedanceBase(const Vector7d &target, const Vector7d &target_velocity, const JointImpedanceParams &params,
-                              std::shared_ptr<JointImpedanceGainsHandle> gains_handle = nullptr,
-                              double gains_time_constant = 0.1);
+  explicit JointImpedanceBase(
+      const Vector7d &target, const Vector7d &target_velocity, const JointImpedanceParams &params,
+      std::shared_ptr<JointImpedanceGainsHandle> gains_handle = nullptr, double gains_time_constant = 0.1);
 
   [[nodiscard]] franka::Torques computeCommand(
       const RobotState &robot_state, const JointReference &reference, double dt);

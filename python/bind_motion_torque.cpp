@@ -17,8 +17,7 @@ CartesianReference toCartesianReference(const Affine &target, const std::optiona
 }
 
 JointReference toJointReference(
-    const Vector7d &position,
-    const std::optional<Vector7d> &velocity,
+    const Vector7d &position, const std::optional<Vector7d> &velocity,
     const std::optional<Vector7d> &torque_feedforward) {
   JointReference reference;
   reference.q = position;
@@ -28,16 +27,10 @@ JointReference toJointReference(
 }
 
 JointImpedanceParams makeJointImpedanceParams(
-    const std::optional<Vector7d> &stiffness,
-    const std::optional<Vector7d> &damping,
-    const std::optional<Vector7d> &constant_torque_offset,
-    const std::optional<Vector7d> &lower_joint_limits,
-    const std::optional<Vector7d> &upper_joint_limits,
-    bool compensate_coriolis,
-    double max_delta_tau,
-    double joint_limit_activation_distance,
-    double joint_limit_stiffness,
-    double joint_limit_damping,
+    const std::optional<Vector7d> &stiffness, const std::optional<Vector7d> &damping,
+    const std::optional<Vector7d> &constant_torque_offset, const std::optional<Vector7d> &lower_joint_limits,
+    const std::optional<Vector7d> &upper_joint_limits, bool compensate_coriolis, double max_delta_tau,
+    double joint_limit_activation_distance, double joint_limit_stiffness, double joint_limit_damping,
     double joint_limit_max_torque) {
   auto params = JointImpedanceParams{};
   if (stiffness.has_value()) params.stiffness = stiffness.value();
@@ -58,17 +51,11 @@ JointImpedanceParams makeJointImpedanceParams(
 }
 
 CartesianImpedanceBase::Params makeCartesianImpedanceParams(
-    double translational_stiffness,
-    double rotational_stiffness,
+    double translational_stiffness, double rotational_stiffness,
     const std::optional<std::array<std::optional<double>, 6>> &force_constraints,
-    const std::optional<Vector7d> &nullspace_target,
-    double nullspace_stiffness,
-    double max_delta_tau,
-    const std::optional<Vector7d> &lower_joint_limits,
-    const std::optional<Vector7d> &upper_joint_limits,
-    double joint_limit_activation_distance,
-    double joint_limit_stiffness,
-    double joint_limit_damping,
+    const std::optional<Vector7d> &nullspace_target, double nullspace_stiffness, double max_delta_tau,
+    const std::optional<Vector7d> &lower_joint_limits, const std::optional<Vector7d> &upper_joint_limits,
+    double joint_limit_activation_distance, double joint_limit_stiffness, double joint_limit_damping,
     double joint_limit_max_torque) {
   auto params = CartesianImpedanceBase::Params{};
   params.translational_stiffness = translational_stiffness;
@@ -101,8 +88,9 @@ CartesianImpedanceBase::Params makeCartesianImpedanceParams(
 }  // namespace
 
 void bind_motion_torque(py::module &m) {
-  auto cartesian_impedance_base = py::class_<CartesianImpedanceBase, Motion<franka::Torques>, std::shared_ptr<CartesianImpedanceBase>>(
-      m, "CartesianImpedanceBase");
+  auto cartesian_impedance_base =
+      py::class_<CartesianImpedanceBase, Motion<franka::Torques>, std::shared_ptr<CartesianImpedanceBase>>(
+          m, "CartesianImpedanceBase");
   m.attr("ImpedanceMotion") = cartesian_impedance_base;
 
   py::class_<CartesianImpedanceGains>(m, "CartesianImpedanceGains")
@@ -148,14 +136,11 @@ void bind_motion_torque(py::module &m) {
       .def_readwrite("stiffness", &JointImpedanceGains::stiffness)
       .def_readwrite("damping", &JointImpedanceGains::damping);
 
-  py::class_<JointImpedanceGainsHandle, std::shared_ptr<JointImpedanceGainsHandle>>(
-      m, "JointImpedanceGainsHandle")
+  py::class_<JointImpedanceGainsHandle, std::shared_ptr<JointImpedanceGainsHandle>>(m, "JointImpedanceGainsHandle")
       .def(py::init<>())
       .def(
           "set",
-          [](JointImpedanceGainsHandle &handle,
-             const Vector7d &stiffness,
-             const Vector7d &damping) {
+          [](JointImpedanceGainsHandle &handle, const Vector7d &stiffness, const Vector7d &damping) {
             handle.set(JointImpedanceGains{stiffness, damping});
           },
           "stiffness"_a,
@@ -170,10 +155,10 @@ void bind_motion_torque(py::module &m) {
           "set",
           [](JointReferenceHandle &handle,
              const Vector7d &position,
-             std::optional<Vector7d> velocity,
-             std::optional<Vector7d> torque_feedforward) {
-            handle.set(toJointReference(position, velocity, torque_feedforward));
-          },
+             std::optional<Vector7d>
+                 velocity,
+             std::optional<Vector7d>
+                 torque_feedforward) { handle.set(toJointReference(position, velocity, torque_feedforward)); },
           R"doc(Update the current joint reference for a running JointImpedanceTrackingMotion.
 
 The provided torque_feedforward is added on top of any constant_torque_offset configured on the motion.)doc",
@@ -202,12 +187,18 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
       m, "JointImpedanceMotion")
       .def(
           py::init<>([](const Vector7d &target,
-                        std::optional<Vector7d> target_velocity,
-                        std::optional<Vector7d> stiffness,
-                        std::optional<Vector7d> damping,
-                        std::optional<Vector7d> constant_torque_offset,
-                        std::optional<Vector7d> lower_joint_limits,
-                        std::optional<Vector7d> upper_joint_limits,
+                        std::optional<Vector7d>
+                            target_velocity,
+                        std::optional<Vector7d>
+                            stiffness,
+                        std::optional<Vector7d>
+                            damping,
+                        std::optional<Vector7d>
+                            constant_torque_offset,
+                        std::optional<Vector7d>
+                            lower_joint_limits,
+                        std::optional<Vector7d>
+                            upper_joint_limits,
                         bool compensate_coriolis,
                         double max_delta_tau,
                         double joint_limit_activation_distance,
@@ -229,8 +220,7 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
 
             const Vector7d target_vector = target;
             if (target_velocity.has_value()) {
-              return std::make_shared<JointImpedanceMotion>(
-                  target_vector, target_velocity.value(), params);
+              return std::make_shared<JointImpedanceMotion>(target_vector, target_velocity.value(), params);
             }
             return std::make_shared<JointImpedanceMotion>(target_vector, params);
           }),
@@ -254,18 +244,24 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
       m, "JointImpedanceTrackingMotion")
       .def(
           py::init<>([](const std::shared_ptr<JointReferenceHandle> &reference_handle,
-                        std::optional<Vector7d> stiffness,
-                        std::optional<Vector7d> damping,
-                        std::optional<Vector7d> constant_torque_offset,
-                        std::optional<Vector7d> lower_joint_limits,
-                        std::optional<Vector7d> upper_joint_limits,
+                        std::optional<Vector7d>
+                            stiffness,
+                        std::optional<Vector7d>
+                            damping,
+                        std::optional<Vector7d>
+                            constant_torque_offset,
+                        std::optional<Vector7d>
+                            lower_joint_limits,
+                        std::optional<Vector7d>
+                            upper_joint_limits,
                         bool compensate_coriolis,
                         double max_delta_tau,
                         double joint_limit_activation_distance,
                         double joint_limit_stiffness,
                         double joint_limit_damping,
                         double joint_limit_max_torque,
-                        std::shared_ptr<JointImpedanceGainsHandle> gains_handle,
+                        std::shared_ptr<JointImpedanceGainsHandle>
+                            gains_handle,
                         double gains_time_constant) {
             auto params = makeJointImpedanceParams(
                 stiffness,
@@ -317,11 +313,14 @@ interpolates toward them with the given time constant, allowing smooth runtime s
                         double rotational_stiffness,
                         std::optional<std::array<std::optional<double>, 6>>
                             force_constraints,
-                        std::optional<Vector7d> nullspace_target,
+                        std::optional<Vector7d>
+                            nullspace_target,
                         double nullspace_stiffness,
                         double max_delta_tau,
-                        std::optional<Vector7d> lower_joint_limits,
-                        std::optional<Vector7d> upper_joint_limits,
+                        std::optional<Vector7d>
+                            lower_joint_limits,
+                        std::optional<Vector7d>
+                            upper_joint_limits,
                         double joint_limit_activation_distance,
                         double joint_limit_stiffness,
                         double joint_limit_damping,
@@ -344,9 +343,7 @@ interpolates toward them with the given time constant, allowing smooth runtime s
             static_cast<CartesianImpedanceBase::Params &>(params) = base_params;
             params.target_type = target_type;
             params.exponential_decay = exponential_decay;
-            return std::make_shared<ExponentialImpedanceMotion>(
-                target,
-                params);
+            return std::make_shared<ExponentialImpedanceMotion>(target, params);
           }),
           R"doc(Construct an exponential Cartesian impedance motion toward a fixed target pose.
 
@@ -379,11 +376,14 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
                         double rotational_stiffness,
                         std::optional<std::array<std::optional<double>, 6>>
                             force_constraints,
-                        std::optional<Vector7d> nullspace_target,
+                        std::optional<Vector7d>
+                            nullspace_target,
                         double nullspace_stiffness,
                         double max_delta_tau,
-                        std::optional<Vector7d> lower_joint_limits,
-                        std::optional<Vector7d> upper_joint_limits,
+                        std::optional<Vector7d>
+                            lower_joint_limits,
+                        std::optional<Vector7d>
+                            upper_joint_limits,
                         double joint_limit_activation_distance,
                         double joint_limit_stiffness,
                         double joint_limit_damping,
@@ -408,10 +408,7 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
             params.target_type = target_type;
             params.return_when_finished = return_when_finished;
             params.finish_wait_factor = finish_wait_factor;
-            return std::make_shared<CartesianImpedanceMotion>(
-                target,
-                duration,
-                params);
+            return std::make_shared<CartesianImpedanceMotion>(target, duration, params);
           }),
           R"doc(Construct a Cartesian impedance motion that interpolates to a fixed target pose over the given duration.
 
@@ -434,26 +431,32 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
           "joint_limit_damping"_a = 1.0,
           "joint_limit_max_torque"_a = 5.0,
           "return_when_finished"_a = true,
-          "finish_wait_factor"_a = 1.2)
-      ;
+          "finish_wait_factor"_a = 1.2);
 
-  py::class_<CartesianImpedanceTrackingMotion, CartesianImpedanceBase, std::shared_ptr<CartesianImpedanceTrackingMotion>>(
-      m, "CartesianImpedanceTrackingMotion")
+  py::class_<
+      CartesianImpedanceTrackingMotion,
+      CartesianImpedanceBase,
+      std::shared_ptr<CartesianImpedanceTrackingMotion>>(m, "CartesianImpedanceTrackingMotion")
       .def(
           py::init<>([](const std::shared_ptr<CartesianReferenceHandle> &reference_handle,
                         double translational_stiffness,
                         double rotational_stiffness,
-                        std::optional<std::array<std::optional<double>, 6>> force_constraints,
-                        std::optional<Vector7d> nullspace_target,
+                        std::optional<std::array<std::optional<double>, 6>>
+                            force_constraints,
+                        std::optional<Vector7d>
+                            nullspace_target,
                         double nullspace_stiffness,
                         double max_delta_tau,
-                        std::optional<Vector7d> lower_joint_limits,
-                        std::optional<Vector7d> upper_joint_limits,
+                        std::optional<Vector7d>
+                            lower_joint_limits,
+                        std::optional<Vector7d>
+                            upper_joint_limits,
                         double joint_limit_activation_distance,
                         double joint_limit_stiffness,
                         double joint_limit_damping,
                         double joint_limit_max_torque,
-                        std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle,
+                        std::shared_ptr<CartesianImpedanceGainsHandle>
+                            gains_handle,
                         double gains_time_constant) {
             auto base_params = makeCartesianImpedanceParams(
                 translational_stiffness,
@@ -472,8 +475,7 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
               return std::make_shared<CartesianImpedanceTrackingMotion>(
                   reference_handle, base_params, gains_handle, gains_time_constant);
             }
-            return std::make_shared<CartesianImpedanceTrackingMotion>(
-                reference_handle, base_params);
+            return std::make_shared<CartesianImpedanceTrackingMotion>(reference_handle, base_params);
           }),
           R"doc(Construct a dynamic Cartesian impedance tracking controller driven by a CartesianReferenceHandle.
 

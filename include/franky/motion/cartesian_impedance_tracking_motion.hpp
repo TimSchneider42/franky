@@ -47,16 +47,17 @@ class CartesianImpedanceTrackingMotion : public CartesianImpedanceBase {
 
   explicit CartesianImpedanceTrackingMotion(std::shared_ptr<CartesianReferenceHandle> reference_handle);
   CartesianImpedanceTrackingMotion(std::shared_ptr<CartesianReferenceHandle> reference_handle, const Params &params);
-  CartesianImpedanceTrackingMotion(std::shared_ptr<CartesianReferenceHandle> reference_handle, const Params &params,
-                                   std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle,
-                                   double gains_time_constant = 0.1);
+  CartesianImpedanceTrackingMotion(
+      std::shared_ptr<CartesianReferenceHandle> reference_handle, const Params &params,
+      std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle, double gains_time_constant = 0.1);
   explicit CartesianImpedanceTrackingMotion(ReferenceCallback reference_callback);
   CartesianImpedanceTrackingMotion(ReferenceCallback reference_callback, const Params &params);
 
  protected:
   void initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) override;
   std::tuple<CartesianReference, bool> update(
-      const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time) override;
+      const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time,
+      franka::Duration abs_time) override;
 
  private:
   std::shared_ptr<CartesianReferenceHandle> reference_handle_;

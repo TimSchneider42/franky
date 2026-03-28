@@ -5,7 +5,15 @@ import numpy as np
 from franky import Affine, CartesianImpedanceTracker, Robot, Twist
 
 # Franka Panda / FR3 joint limits from the standard libfranka model.
-DEFAULT_LOWER_JOINT_LIMITS = [-2.8973, -1.7628, -2.8973, -3.0718, -2.8973, -0.0175, -2.8973]
+DEFAULT_LOWER_JOINT_LIMITS = [
+    -2.8973,
+    -1.7628,
+    -2.8973,
+    -3.0718,
+    -2.8973,
+    -0.0175,
+    -2.8973,
+]
 DEFAULT_UPPER_JOINT_LIMITS = [2.8973, 1.7628, 2.8973, -0.0698, 2.8973, 3.7525, 2.8973]
 
 if __name__ == "__main__":
@@ -27,7 +35,9 @@ if __name__ == "__main__":
     orientation = np.asarray(current_pose.quaternion, dtype=float)
 
     print("Entering Cartesian virtual-fixture mode.")
-    print("The robot will feel compliant along the world Z axis and resist motion away from it.")
+    print(
+        "The robot will feel compliant along the world Z axis and resist motion away from it."
+    )
     print("Press Ctrl-C to stop.")
 
     with CartesianImpedanceTracker(

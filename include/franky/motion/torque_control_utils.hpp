@@ -18,13 +18,8 @@ inline Vector7d saturateTorqueRate(
 }
 
 inline Vector7d computeJointLimitTorque(
-    const Vector7d &q,
-    const Vector7d &dq,
-    const Vector7d &lower_joint_limits,
-    const Vector7d &upper_joint_limits,
-    double joint_limit_activation_distance,
-    double joint_limit_stiffness,
-    double joint_limit_damping,
+    const Vector7d &q, const Vector7d &dq, const Vector7d &lower_joint_limits, const Vector7d &upper_joint_limits,
+    double joint_limit_activation_distance, double joint_limit_stiffness, double joint_limit_damping,
     double joint_limit_max_torque) {
   Vector7d tau_limit = Vector7d::Zero();
   const double activation_distance = std::max(joint_limit_activation_distance, 1e-6);

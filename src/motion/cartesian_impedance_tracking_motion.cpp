@@ -21,7 +21,8 @@ CartesianReference CartesianReferenceHandle::get() const {
   return buffers_[active_index];
 }
 
-CartesianImpedanceTrackingMotion::CartesianImpedanceTrackingMotion(std::shared_ptr<CartesianReferenceHandle> reference_handle)
+CartesianImpedanceTrackingMotion::CartesianImpedanceTrackingMotion(
+    std::shared_ptr<CartesianReferenceHandle> reference_handle)
     : CartesianImpedanceTrackingMotion(std::move(reference_handle), Params()) {}
 
 CartesianImpedanceTrackingMotion::CartesianImpedanceTrackingMotion(

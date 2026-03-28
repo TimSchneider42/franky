@@ -78,9 +78,9 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
    * @param gains_time_constant Smoothing time constant for gain transitions [s].
    *        Only used when gains_handle is provided. Default 0.1s.
    */
-  explicit CartesianImpedanceBase(Affine target, const Params &params,
-                                  std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle = nullptr,
-                                  double gains_time_constant = 0.1);
+  explicit CartesianImpedanceBase(
+      Affine target, const Params &params, std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle = nullptr,
+      double gains_time_constant = 0.1);
 
  protected:
   void initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) override;
@@ -99,7 +99,8 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
   }
 
   virtual std::tuple<CartesianReference, bool> update(
-      const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time) = 0;
+      const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time,
+      franka::Duration abs_time) = 0;
 
  private:
   void rebuildStiffnessDamping();

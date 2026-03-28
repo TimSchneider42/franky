@@ -62,7 +62,9 @@ class CartesianImpedanceTracker:
         self._reference_handle.set(initial_pose)
 
         # Seed gains handle so the RT loop has a target from the start.
-        self._gains_handle.set(translational_stiffness, rotational_stiffness, nullspace_stiffness)
+        self._gains_handle.set(
+            translational_stiffness, rotational_stiffness, nullspace_stiffness
+        )
 
         kwargs = {
             "translational_stiffness": translational_stiffness,
@@ -134,9 +136,21 @@ class CartesianImpedanceTracker:
         Only the provided gains are changed; omitted gains keep their current target values.
         """
         current = self._gains_handle.get() if self._gains_handle.has_gains else None
-        ts = translational_stiffness if translational_stiffness is not None else (current.translational_stiffness if current else 2000.0)
-        rs = rotational_stiffness if rotational_stiffness is not None else (current.rotational_stiffness if current else 200.0)
-        ns = nullspace_stiffness if nullspace_stiffness is not None else (current.nullspace_stiffness if current else 0.0)
+        ts = (
+            translational_stiffness
+            if translational_stiffness is not None
+            else (current.translational_stiffness if current else 2000.0)
+        )
+        rs = (
+            rotational_stiffness
+            if rotational_stiffness is not None
+            else (current.rotational_stiffness if current else 200.0)
+        )
+        ns = (
+            nullspace_stiffness
+            if nullspace_stiffness is not None
+            else (current.nullspace_stiffness if current else 0.0)
+        )
         self._gains_handle.set(ts, rs, ns)
 
     # --- state ---
@@ -236,7 +250,9 @@ class JointImpedanceTracker:
         self._reference_handle.set(q)
 
         # Seed gains handle with initial values.
-        stiffness_init = np.asarray(stiffness) if stiffness is not None else np.full(7, 50.0)
+        stiffness_init = (
+            np.asarray(stiffness) if stiffness is not None else np.full(7, 50.0)
+        )
         damping_init = np.asarray(damping) if damping is not None else np.full(7, 10.0)
         self._gains_handle.set(stiffness_init, damping_init)
 
@@ -310,8 +326,16 @@ class JointImpedanceTracker:
         Only the provided gains are changed; omitted gains keep their current target values.
         """
         current = self._gains_handle.get() if self._gains_handle.has_gains else None
-        k = np.asarray(stiffness) if stiffness is not None else (current.stiffness if current else np.full(7, 50.0))
-        d = np.asarray(damping) if damping is not None else (current.damping if current else np.full(7, 10.0))
+        k = (
+            np.asarray(stiffness)
+            if stiffness is not None
+            else (current.stiffness if current else np.full(7, 50.0))
+        )
+        d = (
+            np.asarray(damping)
+            if damping is not None
+            else (current.damping if current else np.full(7, 10.0))
+        )
         self._gains_handle.set(k, d)
 
     # --- state ---

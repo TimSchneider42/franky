@@ -1,11 +1,11 @@
 #include "franky/motion/joint_impedance_motion.hpp"
-#include "franky/motion/joint_impedance_tracking_motion.hpp"
-#include "franky/motion/torque_control_utils.hpp"
 
 #include <array>
 #include <cmath>
 
 #include "franky/model.hpp"
+#include "franky/motion/joint_impedance_tracking_motion.hpp"
+#include "franky/motion/torque_control_utils.hpp"
 
 namespace franky {
 
@@ -54,9 +54,8 @@ franka::Torques JointImpedanceBase::computeCommand(
   }
 
   Vector7d torque_feedforward = params_.constant_torque_offset + reference.tau_ff;
-  Vector7d tau_d =
-      current_stiffness_.asDiagonal() * (reference.q - robot_state.q) +
-      current_damping_.asDiagonal() * (reference.dq - robot_state.dq) + torque_feedforward;
+  Vector7d tau_d = current_stiffness_.asDiagonal() * (reference.q - robot_state.q) +
+                   current_damping_.asDiagonal() * (reference.dq - robot_state.dq) + torque_feedforward;
 
   if (params_.joint_limit_repulsion_active) {
     tau_d += franky::computeJointLimitTorque(

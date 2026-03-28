@@ -23,14 +23,12 @@ JointImpedanceTrackingMotion::JointImpedanceTrackingMotion(std::shared_ptr<Joint
 
 JointImpedanceTrackingMotion::JointImpedanceTrackingMotion(
     std::shared_ptr<JointReferenceHandle> reference_handle, const Params &params)
-    : JointImpedanceBase(Vector7d::Zero(), Vector7d::Zero(), params),
-      reference_handle_(std::move(reference_handle)) {}
+    : JointImpedanceBase(Vector7d::Zero(), Vector7d::Zero(), params), reference_handle_(std::move(reference_handle)) {}
 
 JointImpedanceTrackingMotion::JointImpedanceTrackingMotion(
     std::shared_ptr<JointReferenceHandle> reference_handle, const Params &params,
     std::shared_ptr<JointImpedanceGainsHandle> gains_handle, double gains_time_constant)
-    : JointImpedanceBase(Vector7d::Zero(), Vector7d::Zero(), params,
-                         std::move(gains_handle), gains_time_constant),
+    : JointImpedanceBase(Vector7d::Zero(), Vector7d::Zero(), params, std::move(gains_handle), gains_time_constant),
       reference_handle_(std::move(reference_handle)) {}
 
 JointImpedanceTrackingMotion::JointImpedanceTrackingMotion(ReferenceCallback reference_callback)

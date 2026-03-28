@@ -1,21 +1,20 @@
 #include "franky/motion/cartesian_impedance_base.hpp"
-#include "franky/motion/torque_control_utils.hpp"
 
-#include <algorithm>
 #include <Eigen/Core>
 #include <Eigen/Geometry>
+#include <algorithm>
 #include <map>
 #include <utility>
 
 #include "franky/motion/motion.hpp"
+#include "franky/motion/torque_control_utils.hpp"
 #include "franky/robot_pose.hpp"
 
 namespace franky {
 
 namespace {
 Eigen::Matrix<double, 6, 7> pseudoInverse(const Eigen::Matrix<double, 7, 6> &matrix) {
-  Eigen::JacobiSVD<Eigen::Matrix<double, 7, 6>> svd(
-      matrix, Eigen::ComputeFullU | Eigen::ComputeFullV);
+  Eigen::JacobiSVD<Eigen::Matrix<double, 7, 6>> svd(matrix, Eigen::ComputeFullU | Eigen::ComputeFullV);
   const auto &singular_values = svd.singularValues();
   Eigen::Matrix<double, 6, 7> sigma_pinv = Eigen::Matrix<double, 6, 7>::Zero();
   constexpr double tolerance = 1e-6;
@@ -28,8 +27,7 @@ Eigen::Matrix<double, 6, 7> pseudoInverse(const Eigen::Matrix<double, 7, 6> &mat
 
 CartesianImpedanceBase::CartesianImpedanceBase(
     Affine target, const CartesianImpedanceBase::Params &params,
-    std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle,
-    double gains_time_constant)
+    std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle, double gains_time_constant)
     : target_(std::move(target)),
       params_(params),
       gains_handle_(std::move(gains_handle)),
@@ -70,7 +68,8 @@ franka::Torques CartesianImpedanceBase::nextCommandImpl(
     const auto target_gains = gains_handle_->get();
     const double dt = time_step.toSec();
     const double alpha = 1.0 - std::exp(-dt / gains_time_constant_);
-    current_translational_stiffness_ += alpha * (target_gains.translational_stiffness - current_translational_stiffness_);
+    current_translational_stiffness_ +=
+        alpha * (target_gains.translational_stiffness - current_translational_stiffness_);
     current_rotational_stiffness_ += alpha * (target_gains.rotational_stiffness - current_rotational_stiffness_);
     current_nullspace_stiffness_ += alpha * (target_gains.nullspace_stiffness - current_nullspace_stiffness_);
     rebuildStiffnessDamping();
@@ -110,8 +109,8 @@ franka::Torques CartesianImpedanceBase::nextCommandImpl(
         Eigen::Matrix<double, 7, 7>::Identity() - jacobian.transpose() * jacobian_transpose_pinv;
     const auto nullspace_error = params_.nullspace_target.value() - robot_state.q;
     const double nullspace_damping = 2.0 * std::sqrt(current_nullspace_stiffness_);
-    tau_nullspace = nullspace_projector *
-                    (current_nullspace_stiffness_ * nullspace_error - nullspace_damping * robot_state.dq);
+    tau_nullspace =
+        nullspace_projector * (current_nullspace_stiffness_ * nullspace_error - nullspace_damping * robot_state.dq);
   }
 
   Vector7d tau_limit = Vector7d::Zero();

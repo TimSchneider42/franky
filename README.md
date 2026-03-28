@@ -723,7 +723,7 @@ Cartesian damping is chosen internally as critically damped with respect to
 the requested stiffness.
 
 For Cartesian motions with a nullspace posture objective, you can also set
-`max_delta_tau` to make the commanded torque changes less abrupt by limiting 
+`max_delta_tau` to make the commanded torque changes less abrupt by limiting
 the commanded torque change per control cycle in Nm.
 
 Cartesian impedance motions also support an optional secondary posture

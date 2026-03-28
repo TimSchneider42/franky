@@ -4,7 +4,15 @@ from franky import JointImpedanceTracker, Robot
 
 
 # Franka Panda / FR3 joint limits from the standard libfranka model.
-DEFAULT_LOWER_JOINT_LIMITS = [-2.8973, -1.7628, -2.8973, -3.0718, -2.8973, -0.0175, -2.8973]
+DEFAULT_LOWER_JOINT_LIMITS = [
+    -2.8973,
+    -1.7628,
+    -2.8973,
+    -3.0718,
+    -2.8973,
+    -0.0175,
+    -2.8973,
+]
 DEFAULT_UPPER_JOINT_LIMITS = [2.8973, 1.7628, 2.8973, -0.0698, 2.8973, 3.7525, 2.8973]
 
 
@@ -56,7 +64,9 @@ if __name__ == "__main__":
         damping[6] = max(damping[6], 2.0 * args.damping)
 
     print("Entering compliant joint impedance mode.")
-    print("You should be able to guide the robot by hand while feeling pushback near joint limits.")
+    print(
+        "You should be able to guide the robot by hand while feeling pushback near joint limits."
+    )
     if args.lock_joint6 or args.lock_joint7:
         locked = []
         if args.lock_joint6:
