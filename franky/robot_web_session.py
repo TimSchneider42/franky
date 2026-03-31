@@ -358,12 +358,7 @@ class RobotWebSession:
             self.__pilot_button_socket = None
 
     def _parse_pilot_button_payload(self, payload: str) -> List[PilotButtonEvent]:
-        try:
-            data = json.loads(payload)
-        except json.JSONDecodeError:
-            logger.warning("Received non-JSON event payload: %s", payload)
-            return []
-
+        data = json.loads(payload)
         if not isinstance(data, dict):
             logger.debug(
                 "Ignoring non-object event payload of type %s: %r",
@@ -374,11 +369,7 @@ class RobotWebSession:
 
         events = []
         for key, value in data.items():
-            try:
-                button = PilotButton(key)
-            except ValueError:
-                logger.debug("Unknown button key in event: %s", key)
-                continue
+            button = PilotButton(key)
             events.append(PilotButtonEvent(button=button, pressed=bool(value)))
         return events
 
