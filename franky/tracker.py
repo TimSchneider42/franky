@@ -10,11 +10,17 @@ from ._franky import (
     CartesianImpedanceGainsHandle,
     CartesianImpedanceTrackingMotion,
     CartesianReferenceHandle,
+    ControlException,
     JointImpedanceGainsHandle,
     JointImpedanceTrackingMotion,
     JointReferenceHandle,
     Twist,
 )
+
+
+def _is_premption_exception(exc: ControlException) -> bool:
+    """Return whether this is a preemption error from libfranka."""
+    return "Move command preempted!" in str(exc)
 
 
 class CartesianImpedanceTracker:
@@ -184,9 +190,17 @@ class CartesianImpedanceTracker:
 
     def stop(self) -> None:
         """Stop the tracking controller and wait for the motion to finish."""
+        requested_stop = self._robot.is_in_control
         if self._robot.is_in_control:
             self._robot.stop()
-        self._robot.join_motion()
+        try:
+            self._robot.join_motion()
+        except ControlException as exc:
+            # libfranka reports our own stop() as a preempted move when the
+            # asynchronous control thread unwinds. Treat that as normal shutdown.
+            if requested_stop and _is_premption_exception(exc):
+                return
+            raise
 
     # --- escape hatches ---
 
@@ -205,8 +219,18 @@ class CartesianImpedanceTracker:
     def __enter__(self) -> CartesianImpedanceTracker:
         return self
 
-    def __exit__(self, *exc) -> None:
-        self.stop()
+    def __exit__(self, exc_type, exc, tb) -> bool:
+        try:
+            self.stop()
+        except ControlException as stop_exc:
+            # If the body is already unwinding due to another exception
+            # (especially KeyboardInterrupt), do not let cleanup mask it.
+            # Only ignore the specific self-preemption raised by libfranka in
+            # response to our stop() call; propagate real controller faults.
+            if exc_type is not None and _is_premption_exception(stop_exc):
+                return False
+            raise
+        return False
 
 
 class JointImpedanceTracker:
@@ -361,9 +385,17 @@ class JointImpedanceTracker:
     # --- lifecycle ---
 
     def stop(self) -> None:
+        requested_stop = self._robot.is_in_control
         if self._robot.is_in_control:
             self._robot.stop()
-        self._robot.join_motion()
+        try:
+            self._robot.join_motion()
+        except ControlException as exc:
+            # libfranka reports our own stop() as a preempted move when the
+            # asynchronous control thread unwinds. Treat that as normal shutdown.
+            if requested_stop and _is_premption_exception(exc):
+                return
+            raise
 
     # --- escape hatches ---
 
@@ -380,5 +412,13 @@ class JointImpedanceTracker:
     def __enter__(self) -> JointImpedanceTracker:
         return self
 
-    def __exit__(self, *exc) -> None:
-        self.stop()
+    def __exit__(self, exc_type, exc, tb) -> bool:
+        try:
+            self.stop()
+        except ControlException as stop_exc:
+            # Only ignore the specific preemption raised by libfranka in
+            # response to our stop() call; propagate real controller faults.
+            if exc_type is not None and _is_premption_exception(stop_exc):
+                return False
+            raise
+        return False
