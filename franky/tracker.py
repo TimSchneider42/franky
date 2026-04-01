@@ -43,6 +43,8 @@ class CartesianImpedanceTracker:
         *,
         translational_stiffness: float = 2000.0,
         rotational_stiffness: float = 200.0,
+        translational_error_clip: Optional[np.ndarray] = None,
+        rotational_error_clip: Optional[np.ndarray] = None,
         nullspace_target: Optional[np.ndarray] = None,
         nullspace_stiffness: float = 0.0,
         max_delta_tau: float = 1.0,
@@ -75,6 +77,8 @@ class CartesianImpedanceTracker:
         kwargs = {
             "translational_stiffness": translational_stiffness,
             "rotational_stiffness": rotational_stiffness,
+            "translational_error_clip": translational_error_clip,
+            "rotational_error_clip": rotational_error_clip,
             "nullspace_target": nullspace_target,
             "nullspace_stiffness": nullspace_stiffness,
             "max_delta_tau": max_delta_tau,

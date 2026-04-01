@@ -56,10 +56,13 @@ CartesianImpedanceBase::Params makeCartesianImpedanceParams(
     const std::optional<Vector7d> &nullspace_target, double nullspace_stiffness, double max_delta_tau,
     const std::optional<Vector7d> &lower_joint_limits, const std::optional<Vector7d> &upper_joint_limits,
     double joint_limit_activation_distance, double joint_limit_stiffness, double joint_limit_damping,
-    double joint_limit_max_torque) {
+    double joint_limit_max_torque, const Eigen::Vector3d &translational_error_clip,
+    const Eigen::Vector3d &rotational_error_clip) {
   auto params = CartesianImpedanceBase::Params{};
   params.translational_stiffness = translational_stiffness;
   params.rotational_stiffness = rotational_stiffness;
+  params.translational_error_clip = translational_error_clip;
+  params.rotational_error_clip = rotational_error_clip;
   params.nullspace_target = nullspace_target;
   params.nullspace_stiffness = nullspace_stiffness;
   params.max_delta_tau = max_delta_tau;
@@ -325,6 +328,8 @@ interpolates toward them with the given time constant, allowing smooth runtime s
                         double joint_limit_stiffness,
                         double joint_limit_damping,
                         double joint_limit_max_torque,
+                        const Eigen::Vector3d &translational_error_clip,
+                        const Eigen::Vector3d &rotational_error_clip,
                         double exponential_decay = 0.005) {
             auto base_params = makeCartesianImpedanceParams(
                 translational_stiffness,
@@ -338,7 +343,9 @@ interpolates toward them with the given time constant, allowing smooth runtime s
                 joint_limit_activation_distance,
                 joint_limit_stiffness,
                 joint_limit_damping,
-                joint_limit_max_torque);
+                joint_limit_max_torque,
+                translational_error_clip,
+                rotational_error_clip);
             auto params = ExponentialImpedanceMotion::Params{};
             static_cast<CartesianImpedanceBase::Params &>(params) = base_params;
             params.target_type = target_type;
@@ -364,6 +371,8 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
           "joint_limit_stiffness"_a = 4.0,
           "joint_limit_damping"_a = 1.0,
           "joint_limit_max_torque"_a = 5.0,
+          "translational_error_clip"_a = Eigen::Vector3d::Constant(0.10),
+          "rotational_error_clip"_a = Eigen::Vector3d::Constant(0.25),
           "exponential_decay"_a = 0.005);
 
   py::class_<CartesianImpedanceMotion, CartesianImpedanceBase, std::shared_ptr<CartesianImpedanceMotion>>(
@@ -388,6 +397,8 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
                         double joint_limit_stiffness,
                         double joint_limit_damping,
                         double joint_limit_max_torque,
+                        const Eigen::Vector3d &translational_error_clip,
+                        const Eigen::Vector3d &rotational_error_clip,
                         bool return_when_finished,
                         double finish_wait_factor) {
             auto base_params = makeCartesianImpedanceParams(
@@ -402,7 +413,9 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
                 joint_limit_activation_distance,
                 joint_limit_stiffness,
                 joint_limit_damping,
-                joint_limit_max_torque);
+                joint_limit_max_torque,
+                translational_error_clip,
+                rotational_error_clip);
             auto params = CartesianImpedanceMotion::Params{};
             static_cast<CartesianImpedanceBase::Params &>(params) = base_params;
             params.target_type = target_type;
@@ -430,6 +443,8 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
           "joint_limit_stiffness"_a = 4.0,
           "joint_limit_damping"_a = 1.0,
           "joint_limit_max_torque"_a = 5.0,
+          "translational_error_clip"_a = Eigen::Vector3d::Constant(0.10),
+          "rotational_error_clip"_a = Eigen::Vector3d::Constant(0.25),
           "return_when_finished"_a = true,
           "finish_wait_factor"_a = 1.2);
 
@@ -455,6 +470,8 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
                         double joint_limit_stiffness,
                         double joint_limit_damping,
                         double joint_limit_max_torque,
+                        const Eigen::Vector3d &translational_error_clip,
+                        const Eigen::Vector3d &rotational_error_clip,
                         std::shared_ptr<CartesianImpedanceGainsHandle>
                             gains_handle,
                         double gains_time_constant) {
@@ -470,7 +487,9 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
                 joint_limit_activation_distance,
                 joint_limit_stiffness,
                 joint_limit_damping,
-                joint_limit_max_torque);
+                joint_limit_max_torque,
+                translational_error_clip,
+                rotational_error_clip);
             if (gains_handle) {
               return std::make_shared<CartesianImpedanceTrackingMotion>(
                   reference_handle, base_params, gains_handle, gains_time_constant);
@@ -498,6 +517,8 @@ interpolates toward them with the given time constant, allowing smooth runtime s
           "joint_limit_stiffness"_a = 4.0,
           "joint_limit_damping"_a = 1.0,
           "joint_limit_max_torque"_a = 5.0,
+          "translational_error_clip"_a = Eigen::Vector3d::Constant(0.10),
+          "rotational_error_clip"_a = Eigen::Vector3d::Constant(0.25),
           "gains_handle"_a = nullptr,
           "gains_time_constant"_a = 0.1);
 }

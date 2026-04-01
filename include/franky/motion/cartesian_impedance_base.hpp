@@ -50,6 +50,23 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
     /** The rotational stiffness in [1, 300] Nm/rad. */
     double rotational_stiffness{200};
 
+    /**
+     * Maximum absolute Cartesian position error [m] used by the task-space controller.
+     *
+     * The translational error is clamped elementwise before the impedance wrench
+     * is computed. This bounds the commanded Cartesian force when the reference
+     * jumps or contact prevents the end effector from reaching the target.
+     */
+    Eigen::Vector3d translational_error_clip{Eigen::Vector3d::Constant(0.10)};
+
+    /**
+     * Maximum absolute Cartesian orientation error [rad] used by the task-space controller.
+     *
+     * The rotational error is clamped elementwise in the base frame before the
+     * impedance wrench is computed. This bounds the commanded Cartesian torque.
+     */
+    Eigen::Vector3d rotational_error_clip{Eigen::Vector3d::Constant(0.25)};
+
     /** The force constraints in [N, Nm] for each joint. */
     Eigen::Vector<double, 6> force_constraints;
 

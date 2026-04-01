@@ -84,6 +84,8 @@ franka::Torques CartesianImpedanceBase::nextCommandImpl(
 
   Eigen::Matrix<double, 6, 1> error;
   error.head(3) << robot_state.O_T_EE.translation() - intermediate_target_.translation();
+  error.head(3) =
+      error.head(3).cwiseMax(-params_.translational_error_clip).cwiseMin(params_.translational_error_clip);
 
   Eigen::Quaterniond quat(intermediate_target_.rotation());
   if (quat.coeffs().dot(orientation.coeffs()) < 0.0) {
@@ -93,6 +95,7 @@ franka::Torques CartesianImpedanceBase::nextCommandImpl(
   Eigen::Quaterniond error_quaternion(orientation.inverse() * quat);
   error.tail(3) << error_quaternion.x(), error_quaternion.y(), error_quaternion.z();
   error.tail(3) << -transform.linear() * error.tail(3);
+  error.tail(3) = error.tail(3).cwiseMax(-params_.rotational_error_clip).cwiseMin(params_.rotational_error_clip);
 
   const Vector6d desired_twist =
       reference.target_twist.has_value() ? reference.target_twist->vector_repr() : Vector6d::Zero();
