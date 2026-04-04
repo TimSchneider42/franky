@@ -53,16 +53,12 @@ if __name__ == "__main__":
 
     q_current = robot.current_joint_positions
     stiffness = [args.stiffness] * 7
-    damping = [args.damping] * 7
     locked_targets = list(q_current)
 
     if args.lock_joint6:
         stiffness[5] = max(stiffness[5], args.lock_stiffness)
-        damping[5] = max(damping[5], 2.0 * args.damping)
     if args.lock_joint7:
         stiffness[6] = max(stiffness[6], args.lock_stiffness)
-        damping[6] = max(damping[6], 2.0 * args.damping)
-
     print("Entering compliant joint impedance mode.")
     print(
         "You should be able to guide the robot by hand while feeling pushback near joint limits."
@@ -79,7 +75,6 @@ if __name__ == "__main__":
     with JointImpedanceTracker(
         robot,
         stiffness=stiffness,
-        damping=damping,
         lower_joint_limits=DEFAULT_LOWER_JOINT_LIMITS,
         upper_joint_limits=DEFAULT_UPPER_JOINT_LIMITS,
         period=0.001,
