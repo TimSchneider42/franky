@@ -985,7 +985,7 @@ This is exposed via `RobotWebSession.poll_buttons`, which waits for up to `timeo
 <img src="doc/franka_buttons.jpg" width="420" alt="Franka pilot buttons">
 
 
-Buttons are represented by the `PilotButton` enum. 
+Buttons are represented by the `PilotButton` enum.
 Note that the top button is not accessible, and the center directional keys will not work while FCI is activated.
 Each event is returned as a `PilotButtonEvent` containing the button and whether it was pressed or released.
 
