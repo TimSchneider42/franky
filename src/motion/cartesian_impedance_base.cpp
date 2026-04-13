@@ -84,8 +84,7 @@ franka::Torques CartesianImpedanceBase::nextCommandImpl(
 
   Eigen::Matrix<double, 6, 1> error;
   error.head(3) << robot_state.O_T_EE.translation() - intermediate_target_.translation();
-  error.head(3) =
-      error.head(3).cwiseMax(-params_.translational_error_clip).cwiseMin(params_.translational_error_clip);
+  error.head(3) = error.head(3).cwiseMax(-params_.translational_error_clip).cwiseMin(params_.translational_error_clip);
 
   Eigen::Quaterniond quat(intermediate_target_.rotation());
   if (quat.coeffs().dot(orientation.coeffs()) < 0.0) {
