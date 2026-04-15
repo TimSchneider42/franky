@@ -976,6 +976,29 @@ with franky.RobotWebSession("10.90.90.1", "username", "password") as robot_web_s
 If you want to call other API functions, you can use the `RobotWebSession.send_api_request` and `RobotWebSession.send_control_api_request` methods.
 See [robot_web_session.py](franky/robot_web_session.py) for an example of how to use these methods.
 
+#### Reading Pilot Button Events
+
+`RobotWebSession` can also read button events.
+This is exposed via `RobotWebSession.poll_buttons`, which waits for up to `timeout` seconds for the next websocket message and then returns all button events that are currently available.
+
+
+<img src="doc/franka_buttons.jpg" width="420" alt="Franka pilot buttons">
+
+
+Buttons are represented by the `PilotButton` enum.
+Note that the top button is not accessible, and the center directional keys will not work while FCI is activated.
+Each event is returned as a `PilotButtonEvent` containing the button and whether it was pressed or released.
+
+```python
+import franky
+
+with franky.RobotWebSession("10.90.90.1", "username", "password") as robot_web_session:
+    while True:
+        for event in robot_web_session.poll_buttons(timeout=1.0):
+            print(event.button, event.pressed)
+```
+
+
 ## 🛠️ Development
 
 franky is currently tested against the following versions

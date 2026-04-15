@@ -4,6 +4,8 @@ from .robot_web_session import (
     RobotWebSessionError,
     FrankaAPIError,
     TakeControlTimeoutError,
+    PilotButton,
+    PilotButtonEvent,
 )
 from .reaction import (
     Reaction,

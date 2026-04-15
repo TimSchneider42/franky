@@ -87,7 +87,7 @@ setup(
         "Topic :: Scientific/Engineering",
         "Programming Language :: C++",
     ],
-    install_requires=["numpy"],
+    install_requires=["numpy", "websockets>=11"],
     python_requires=">=3.7",
     zip_safe=False,
 )
