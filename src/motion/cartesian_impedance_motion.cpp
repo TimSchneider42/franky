@@ -4,7 +4,7 @@
 #include <Eigen/Geometry>
 #include <map>
 
-#include "franky/motion/impedance_motion.hpp"
+#include "franky/motion/cartesian_impedance_base.hpp"
 
 namespace franky {
 
@@ -13,16 +13,18 @@ CartesianImpedanceMotion::CartesianImpedanceMotion(const Affine &target, franka:
 
 CartesianImpedanceMotion::CartesianImpedanceMotion(
     const Affine &target, franka::Duration duration, const CartesianImpedanceMotion::Params &params)
-    : duration_(duration), params_(params), ImpedanceMotion(target, params) {}
+    : duration_(duration), params_(params), CartesianImpedanceBase(target, params) {}
 
 void CartesianImpedanceMotion::initImpl(
     const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) {
-  ImpedanceMotion::initImpl(robot_state, previous_command);
+  if (params_.target_type == ReferenceType::kRelative)
+    setAbsoluteTarget(Affine(Eigen::Matrix4d::Map(robot_state.O_T_EE.data())) * target());
+  CartesianImpedanceBase::initImpl(robot_state, previous_command);
   initial_pose_ = Affine(Eigen::Matrix4d::Map(robot_state.O_T_EE_c.data()));
 }
 
-std::tuple<Affine, bool> CartesianImpedanceMotion::update(
-    const RobotState &robot_state, franka::Duration time_step, franka::Duration time) {
+std::tuple<CartesianReference, bool> CartesianImpedanceMotion::update(
+    const RobotState &robot_state, franka::Duration time_step, franka::Duration time, franka::Duration /*abs_time*/) {
   double transition_parameter = time / duration_;
   Affine intermediate_goal;
   bool done;
@@ -38,7 +40,7 @@ std::tuple<Affine, bool> CartesianImpedanceMotion::update(
     done = true;
     intermediate_goal = target();
   }
-  return {intermediate_goal, done};
+  return {CartesianReference{intermediate_goal, std::nullopt}, done};
 }
 
 }  // namespace franky

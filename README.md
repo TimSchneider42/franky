@@ -440,7 +440,7 @@ and [Model](https://timschneider42.github.io/franky/classfranky_1_1_model.html) 
 
 ### <a id="motion-types" /> 🏃‍♂️ Motion Types
 
-franky currently supports four different impedance control modes: **joint position control**, **joint velocity control**, **cartesian position control**, and **cartesian velocity control**.
+franky currently supports four trajectory control modes: **joint position control**, **joint velocity control**, **cartesian position control**, and **cartesian velocity control**.
 Each of these control modes is invoked by passing the robot an appropriate _Motion_ object.
 
 In the following, we provide a brief example for each motion type implemented by franky in Python.
@@ -622,6 +622,116 @@ m_cv4 = CartesianVelocityWaypointMotion(
 # Stop the robot in Cartesian velocity control mode.
 m_cv6 = CartesianVelocityStopMotion()
 ```
+
+#### Impedance Control
+
+In addition to the trajectory-based motion types above, franky also provides
+client-side impedance controllers in torque mode.
+
+There are two variants for both joint-space and Cartesian impedance:
+
+- `JointImpedanceMotion` and `CartesianImpedanceMotion` are fixed-target motions.
+  They interpret a target once at motion start and then regulate toward it.
+- `JointImpedanceTrackingMotion` and `CartesianImpedanceTrackingMotion` keep the
+  same controller alive while consuming updated references online.
+
+The tracking variants are useful when the desired reference changes every
+control cycle, for example for manual guidance, teleoperation, or virtual
+fixtures. In Python, the recommended interface for these use cases is
+`JointImpedanceTracker` or `CartesianImpedanceTracker`.
+
+Joint-space impedance can be used either as a fixed posture controller
+
+```python
+from franky import JointImpedanceMotion
+
+motion = JointImpedanceMotion(
+    target=[0.0, -0.6, 0.0, -2.2, 0.0, 1.7, 0.7],
+    stiffness=[600.0] * 7,
+    damping=[50.0] * 7,
+)
+```
+
+or as a tracking controller with online reference updates:
+
+```python
+from franky import JointImpedanceTracker
+
+with JointImpedanceTracker(
+    robot,
+    stiffness=[600.0] * 7,
+    damping=[50.0] * 7,
+    period=0.01,
+) as tracker:
+    while tracker.tick():
+        tracker.set_target(
+            [0.0, -0.6, 0.0, -2.2, 0.0, 1.7, 0.7],
+            dq=[0.0] * 7,
+        )
+```
+
+Joint tracking targets can optionally include `tau_ff`. This is
+added on top of any `constant_torque_offset` configured on the tracker itself.
+
+Cartesian impedance follows the same split:
+
+```python
+from franky import Affine, CartesianImpedanceMotion, Duration, ReferenceType
+
+motion = CartesianImpedanceMotion(
+    target=Affine([0.45, 0.0, 0.35]),
+    duration=Duration(1500),
+    target_type=ReferenceType.Absolute,
+    translational_stiffness=1200.0,
+    rotational_stiffness=80.0,
+)
+```
+
+```python
+from franky import (
+    Affine,
+    CartesianImpedanceTracker,
+    Twist,
+)
+
+with CartesianImpedanceTracker(
+    robot,
+    translational_stiffness=1200.0,
+    rotational_stiffness=80.0,
+    nullspace_target=[0.0, -0.6, 0.0, -2.2, 0.0, 1.7, 0.7],
+    nullspace_stiffness=10.0,
+    max_delta_tau=0.5,
+    period=0.01,
+) as tracker:
+    while tracker.tick():
+        tracker.set_target(
+            Affine([0.45, 0.0, 0.35]),
+            Twist([0.0, 0.0, 0.05], [0.0, 0.0, 0.0]),
+        )
+```
+
+For Cartesian tracking, the twist argument to `set_target` is optional. When provided, it is
+interpreted as the desired end-effector twist in the base frame, so the damping
+term acts on twist error instead of damping all motion toward zero.
+
+When a `period` is configured, `tracker.tick()` maintains that loop rate using
+`time.perf_counter()` internally and compensates for the time spent in the loop
+body. `tracker.elapsed_time` and `tracker.tick_count` are available for
+time-based target generation.
+
+Cartesian damping is chosen internally as critically damped with respect to
+the requested stiffness.
+
+For Cartesian motions with a nullspace posture objective, you can also set
+`max_delta_tau` to make the commanded torque changes less abrupt by limiting
+the commanded torque change per control cycle in Nm.
+
+Cartesian impedance motions also support an optional secondary posture
+objective through `nullspace_target` and `nullspace_stiffness`. When enabled,
+the controller adds a joint-space posture term projected into the Jacobian
+nullspace, so it biases the redundant arm posture without changing the
+Cartesian task to first order.
+
 
 #### Relative Dynamics Factors
 

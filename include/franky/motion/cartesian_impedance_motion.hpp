@@ -5,7 +5,8 @@
 #include <map>
 #include <optional>
 
-#include "franky/motion/impedance_motion.hpp"
+#include "franky/motion/cartesian_impedance_base.hpp"
+#include "franky/motion/reference_type.hpp"
 
 namespace franky {
 
@@ -16,13 +17,16 @@ namespace franky {
  * side and does not use Franka's internal impedance controller. Instead, it
  * uses Franka's internal torque controller and calculates the torques itself.
  */
-class CartesianImpedanceMotion : public ImpedanceMotion {
+class CartesianImpedanceMotion : public CartesianImpedanceBase {
  public:
   /**
    * @brief Parameters for the Cartesian impedance motion.
-   * @see ImpedanceMotion::Params
+   * @see CartesianImpedanceBase::Params
    */
-  struct Params : public ImpedanceMotion::Params {
+  struct Params : public CartesianImpedanceBase::Params {
+    /** The type of the target reference (relative or absolute). */
+    ReferenceType target_type{ReferenceType::kAbsolute};
+
     /** Whether to end the motion when the target is reached or keep holding the
      * last target. */
     bool return_when_finished{true};
@@ -52,8 +56,9 @@ class CartesianImpedanceMotion : public ImpedanceMotion {
  protected:
   void initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) override;
 
-  std::tuple<Affine, bool> update(
-      const RobotState &robot_state, franka::Duration time_step, franka::Duration time) override;
+  std::tuple<CartesianReference, bool> update(
+      const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time,
+      franka::Duration abs_time) override;
 
  private:
   Affine initial_pose_;
