@@ -8,6 +8,14 @@
 
 namespace franky {
 
+inline Vector7d defaultJointImpedanceStiffness() { return Vector7d::Constant(50.0); }
+
+inline Vector7d defaultJointImpedanceDamping(const Vector7d &stiffness) { return 2.0 * stiffness.cwiseSqrt(); }
+
+inline Vector7d defaultJointImpedanceDamping() {
+  return defaultJointImpedanceDamping(defaultJointImpedanceStiffness());
+}
+
 /**
  * @brief Target gains for a Cartesian impedance controller.
  */
@@ -45,8 +53,8 @@ class CartesianImpedanceGainsHandle {
 struct JointImpedanceGains {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-  Vector7d stiffness{Vector7d::Constant(50.0)};
-  Vector7d damping{Vector7d::Constant(10.0)};
+  Vector7d stiffness{defaultJointImpedanceStiffness()};
+  Vector7d damping{defaultJointImpedanceDamping()};
 };
 
 /**

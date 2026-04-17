@@ -23,6 +23,24 @@ def _is_premption_exception(exc: ControlException) -> bool:
     return "Move command preempted!" in str(exc)
 
 
+_DEFAULT_JOINT_STIFFNESS = np.full(7, 50.0)
+
+
+def _default_joint_damping(stiffness: np.ndarray) -> np.ndarray:
+    return 2.0 * np.sqrt(stiffness)
+
+
+def _as_joint_gain(name: str, value) -> np.ndarray:
+    vector = np.asarray(value, dtype=float)
+    if vector.shape != (7,):
+        raise ValueError(f"{name} must contain exactly 7 values")
+    if not np.all(np.isfinite(vector)):
+        raise ValueError(f"{name} must contain only finite values")
+    if np.any(vector < 0.0):
+        raise ValueError(f"{name} must contain only non-negative values")
+    return vector.copy()
+
+
 class CartesianImpedanceTracker:
     """A long-lived session for streaming Cartesian impedance tracking commands.
 
@@ -277,16 +295,21 @@ class JointImpedanceTracker:
         q = self._robot.current_joint_positions
         self._reference_handle.set(q)
 
-        # Seed gains handle with initial values.
-        stiffness_init = (
-            np.asarray(stiffness) if stiffness is not None else np.full(7, 50.0)
+        # Seed gains handle with initial values. When damping is omitted, use
+        # critical damping for unit inertia so zero stiffness implies zero damping.
+        stiffness_init = _as_joint_gain(
+            "stiffness", _DEFAULT_JOINT_STIFFNESS if stiffness is None else stiffness
         )
-        damping_init = np.asarray(damping) if damping is not None else np.full(7, 10.0)
+        damping_init = (
+            _as_joint_gain("damping", damping)
+            if damping is not None
+            else _default_joint_damping(stiffness_init)
+        )
         self._gains_handle.set(stiffness_init, damping_init)
 
         kwargs = {
-            "stiffness": stiffness,
-            "damping": damping,
+            "stiffness": stiffness_init,
+            "damping": damping_init,
             "constant_torque_offset": constant_torque_offset,
             "compensate_coriolis": compensate_coriolis,
             "max_delta_tau": max_delta_tau,
@@ -351,18 +374,27 @@ class JointImpedanceTracker:
     ) -> None:
         """Update joint impedance gains. Smoothed in the RT loop via exponential interpolation.
 
-        Only the provided gains are changed; omitted gains keep their current target values.
+        When stiffness is changed and damping is omitted, damping is updated to
+        the critical damping heuristic 2*sqrt(stiffness). Otherwise, omitted
+        gains keep their current target values.
         """
         current = self._gains_handle.get() if self._gains_handle.has_gains else None
-        k = (
-            np.asarray(stiffness)
-            if stiffness is not None
-            else (current.stiffness if current else np.full(7, 50.0))
+        k = _as_joint_gain(
+            "stiffness",
+            (
+                stiffness
+                if stiffness is not None
+                else (current.stiffness if current else _DEFAULT_JOINT_STIFFNESS)
+            ),
         )
         d = (
-            np.asarray(damping)
+            _as_joint_gain("damping", damping)
             if damping is not None
-            else (current.damping if current else np.full(7, 10.0))
+            else (
+                _default_joint_damping(k)
+                if stiffness is not None or current is None
+                else _as_joint_gain("damping", current.damping)
+            )
         )
         self._gains_handle.set(k, d)
 

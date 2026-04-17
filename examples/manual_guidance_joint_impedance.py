@@ -22,24 +22,24 @@ if __name__ == "__main__":
     parser.add_argument(
         "--stiffness",
         type=float,
-        default=6.0,
-        help="Uniform joint stiffness used for manual guidance",
+        default=2.0,
+        help="Joint stiffness",
     )
     parser.add_argument(
         "--lock-joint6",
         action="store_true",
-        help="Hold joint 6 at its starting angle while leaving the other joints compliant",
+        help="Hold joint 6 at its starting angle",
     )
     parser.add_argument(
         "--lock-joint7",
         action="store_true",
-        help="Hold joint 7 at its starting angle while leaving the other joints compliant",
+        help="Hold joint 7 at its starting angle",
     )
     parser.add_argument(
         "--lock-stiffness",
         type=float,
         default=40.0,
-        help="Extra stiffness used for locked joints [Nm/rad]",
+        help="Stiffness used for locked joints [Nm/rad]",
     )
 
     args = parser.parse_args()
@@ -80,7 +80,7 @@ if __name__ == "__main__":
         period=0.001,
     ) as tracker:
         while tracker.tick():
-            q_ref = list(robot.current_joint_positions)
+            q_ref = robot.current_joint_positions
             if args.lock_joint6:
                 q_ref[5] = locked_targets[5]
             if args.lock_joint7:

@@ -45,10 +45,10 @@ struct TorqueSafetyParams {
  */
 struct JointImpedanceParams : public TorqueSafetyParams {
   /** Joint stiffness gains in [Nm/rad]. */
-  Vector7d stiffness{Vector7d::Constant(50.0)};
+  Vector7d stiffness{defaultJointImpedanceStiffness()};
 
   /** Joint damping gains in [Nms/rad]. */
-  Vector7d damping{Vector7d::Constant(10.0)};
+  Vector7d damping{defaultJointImpedanceDamping()};
 
   /** Constant torque offset added to every command in [Nm]. */
   Vector7d constant_torque_offset{Vector7d::Zero()};

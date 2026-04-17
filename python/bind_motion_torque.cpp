@@ -2,6 +2,9 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
+#include <cmath>
+#include <string>
+
 #include "franky.hpp"
 
 namespace py = pybind11;
@@ -26,6 +29,14 @@ JointReference toJointReference(
   return reference;
 }
 
+void validateNonNegativeFinite(const Vector7d &values, const char *name) {
+  for (int i = 0; i < values.size(); ++i) {
+    if (!std::isfinite(values[i]) || values[i] < 0.0) {
+      throw py::value_error(std::string(name) + " must contain only finite, non-negative values");
+    }
+  }
+}
+
 JointImpedanceParams makeJointImpedanceParams(
     const std::optional<Vector7d> &stiffness, const std::optional<Vector7d> &damping,
     const std::optional<Vector7d> &constant_torque_offset, const std::optional<Vector7d> &lower_joint_limits,
@@ -33,8 +44,15 @@ JointImpedanceParams makeJointImpedanceParams(
     double joint_limit_activation_distance, double joint_limit_stiffness, double joint_limit_damping,
     double joint_limit_max_torque) {
   auto params = JointImpedanceParams{};
-  if (stiffness.has_value()) params.stiffness = stiffness.value();
-  if (damping.has_value()) params.damping = damping.value();
+  if (stiffness.has_value()) {
+    validateNonNegativeFinite(stiffness.value(), "stiffness");
+    params.stiffness = stiffness.value();
+    if (!damping.has_value()) params.damping = defaultJointImpedanceDamping(params.stiffness);
+  }
+  if (damping.has_value()) {
+    validateNonNegativeFinite(damping.value(), "damping");
+    params.damping = damping.value();
+  }
   if (constant_torque_offset.has_value()) params.constant_torque_offset = constant_torque_offset.value();
   if (lower_joint_limits.has_value() && upper_joint_limits.has_value()) {
     params.joint_limit_repulsion_active = true;
@@ -130,8 +148,15 @@ void bind_motion_torque(py::module &m) {
       .def(
           py::init<>([](const std::optional<Vector7d> &stiffness, const std::optional<Vector7d> &damping) {
             JointImpedanceGains g;
-            if (stiffness.has_value()) g.stiffness = stiffness.value();
-            if (damping.has_value()) g.damping = damping.value();
+            if (stiffness.has_value()) {
+              validateNonNegativeFinite(stiffness.value(), "stiffness");
+              g.stiffness = stiffness.value();
+              if (!damping.has_value()) g.damping = defaultJointImpedanceDamping(g.stiffness);
+            }
+            if (damping.has_value()) {
+              validateNonNegativeFinite(damping.value(), "damping");
+              g.damping = damping.value();
+            }
             return g;
           }),
           "stiffness"_a = std::nullopt,
