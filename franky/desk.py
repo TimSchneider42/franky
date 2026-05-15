@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import base64
+import configparser
 import hashlib
 import http.client
 import json
 import logging
+import os
 import ssl
 import time
 import urllib.parse
@@ -22,6 +24,16 @@ except ImportError:  # Python 3.7
 import websockets.sync.client as ws_sync
 
 logger = logging.getLogger(__name__)
+
+
+def _user_config_home() -> str:
+    config_home = os.environ.get("XDG_CONFIG_HOME")
+    if config_home and os.path.isabs(config_home):
+        return config_home
+    return os.path.expanduser("~/.config")
+
+
+TOKEN_STORAGE_PATH = os.path.join(_user_config_home(), "franky", "control_tokens.conf")
 
 
 class DeskError(Exception):
@@ -78,6 +90,13 @@ class BrakeState(Enum):
     UNLOCKED = "Unlocked"
 
 
+class NoTokenIdType:
+    pass
+
+
+NO_TOKEN_ID = NoTokenIdType()
+
+
 @dataclass(frozen=True)
 class PilotButtonEvent:
     """A single Pilot button state change."""
@@ -88,6 +107,88 @@ class PilotButtonEvent:
     def __repr__(self) -> str:
         action = "pressed" if self.pressed else "released"
         return f"PilotButtonEvent({self.button.value} {action})"
+
+
+@dataclass(frozen=True)
+class _ControlToken:
+    id: str | NoTokenIdType
+    token: str
+
+
+class _ControlTokenStore:
+    """Stores the control token of one (hostname, username) in a config file.
+
+    The store is a cache, not a source of truth: every read failure yields "no token stored"
+    rather than an error, so a corrupt or unreadable file cannot keep a session from starting.
+    """
+
+    _NO_TOKEN_ID = "__NO_TOKEN_ID__"
+
+    def __init__(self, path: str, hostname: str, username: str):
+        self._path = os.path.expanduser(path)
+        self._section = f"{hostname}:{username}"
+
+    def _read(self) -> configparser.ConfigParser:
+        # Interpolation off: tokens are opaque strings, and a "%" in one is a syntax error to
+        # BasicInterpolation both on write and on read.
+        config = configparser.ConfigParser(interpolation=None)
+        try:
+            config.read(self._path)
+        except (configparser.Error, OSError) as e:
+            logger.warning(
+                "Ignoring unreadable control token file %s: %s", self._path, e
+            )
+            return configparser.ConfigParser(interpolation=None)
+        return config
+
+    def _write(self, config: configparser.ConfigParser) -> None:
+        directory = os.path.dirname(self._path)
+        if directory:
+            os.makedirs(directory, exist_ok=True)
+        # Written through a temporary file so that a crash or a concurrent writer cannot leave a
+        # half-written file behind, taking the tokens of every other robot in it down as well.
+        temporary_path = f"{self._path}.{os.getpid()}.tmp"
+        fd = os.open(temporary_path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+        try:
+            with os.fdopen(fd, "w") as config_file:
+                config.write(config_file)
+            os.replace(temporary_path, self._path)
+        except BaseException:
+            try:
+                os.unlink(temporary_path)
+            except OSError:
+                pass
+            raise
+
+    def load(self) -> _ControlToken | None:
+        config = self._read()
+        if not config.has_section(self._section):
+            return None
+        token_id = config.get(self._section, "id", fallback="")
+        token = config.get(self._section, "token", fallback="")
+        if not token_id or not token:
+            return None
+        if token_id == self._NO_TOKEN_ID:
+            return _ControlToken(id=NO_TOKEN_ID, token=token)
+        return _ControlToken(id=token_id, token=token)
+
+    def save(self, control_token: _ControlToken) -> None:
+        config = self._read()
+        config[self._section] = {
+            "id": (
+                self._NO_TOKEN_ID
+                if control_token.id is NO_TOKEN_ID
+                else control_token.id
+            ),
+            "token": control_token.token,
+        }
+        self._write(config)
+
+    def delete(self) -> None:
+        config = self._read()
+        if not config.remove_section(self._section):
+            return
+        self._write(config)
 
 
 def _encode_password(user: str, password: str) -> str:
@@ -113,17 +214,42 @@ class BaseDesk(ABC):
         hostname: Hostname or IP address of the robot.
         username: Username to log into Franka Desk.
         password: Password to log into Franka Desk.
+        token_storage: Whether and where to persist control tokens.
     """
 
-    def __init__(self, hostname: str, username: str, password: str):
+    def __init__(
+        self,
+        hostname: str,
+        username: str,
+        password: str,
+        token_storage: bool | str | os.PathLike = False,
+    ):
         super().__init__()
         self.__hostname = hostname
         self.__username = username
         self.__password = password
+        self.__token_store = (
+            None
+            if token_storage is False
+            else _ControlTokenStore(
+                (
+                    TOKEN_STORAGE_PATH
+                    if token_storage is True
+                    else os.fspath(token_storage)
+                ),
+                hostname,
+                username,
+            )
+        )
         self.__pilot_button_socket = None
         self.__client = None
-        self.__control_token = None
-        self.__control_token_id = None
+        stored_token = self.__token_store.load() if self.__token_store else None
+        self.__control_token = stored_token.token if stored_token is not None else None
+        self.__control_token_id = stored_token.id if stored_token is not None else None
+        # A token adopted from the store was neither taken by this session nor checked against the
+        # robot yet: it may have expired, and another process may still be relying on it.
+        self.__took_control = False
+        self.__control_token_verified = False
 
     def open(self, timeout: float = 30.0):
         """Open the connection to Franka Desk and log in.
@@ -142,14 +268,28 @@ class BaseDesk(ABC):
         self.__client.connect()
 
     def close(self):
-        """Release control if held, and close the connection to Franka Desk."""
+        """Release control if this session took it, and close the connection to Franka Desk.
+
+        A control token that was only adopted from the token store is left alone: it is not this
+        session's to release, and it stays in the store for the next one.
+        """
         if not self.is_open:
             raise RuntimeError("Session is not open.")
-        self._close_pilot_button_socket()
-        if self.__control_token is not None:
-            self.release_control()
-        self.__client.close()
-        self.__client = None
+        try:
+            self._close_pilot_button_socket()
+            if self.__control_token is not None:
+                if not self.__took_control:
+                    # Only a token this session took is this session's to give back. One adopted
+                    # from the store may still be in use by another process, and has to stay
+                    # behind for the next one regardless.
+                    self.__control_token = None
+                    self.__control_token_id = None
+                elif self.has_control:
+                    self.release_control()
+                else:
+                    self.__discard_control_token()
+        finally:
+            self._close_client()
 
     def take_control(self, wait_timeout: float = 30.0, force: bool = False):
         """Obtain exclusive control over the robot.
@@ -170,13 +310,22 @@ class BaseDesk(ABC):
             self.__control_token_id, self.__control_token = self._take_control(
                 wait_timeout=wait_timeout, force=force
             )
+            if self.__token_store is not None:
+                self.__token_store.save(
+                    _ControlToken(
+                        id=self.__control_token_id, token=self.__control_token
+                    )
+                )
+        # Either control was just taken, or has_control confirmed that an adopted token still
+        # holds it. Both make this session the owner, which is what close() gives back.
+        self.__took_control = True
+        self.__control_token_verified = True
 
     def release_control(self):
         """Release control over the robot, allowing other users to take it."""
         if self.__control_token is not None:
             self._release_control()
-        self.__control_token = None
-        self.__control_token_id = None
+        self.__discard_control_token()
 
     def send_api_request(
         self,
@@ -452,6 +601,28 @@ class BaseDesk(ABC):
             raise RuntimeError(
                 "Client does not have control. Call take_control() first."
             )
+        if not self.__control_token_verified:
+            # A token adopted from the store may have expired since. Checking it once here beats
+            # letting the request fail with an opaque API error.
+            if not self.has_control:
+                self.__discard_control_token()
+                raise RuntimeError(
+                    "The stored control token is no longer valid. Call take_control() first."
+                )
+            self.__control_token_verified = True
+
+    def __discard_control_token(self) -> None:
+        self.__control_token = None
+        self.__control_token_id = None
+        self.__took_control = False
+        self.__control_token_verified = False
+        if self.__token_store is not None:
+            self.__token_store.delete()
+
+    def _close_client(self) -> None:
+        if self.__client is not None:
+            self.__client.close()
+            self.__client = None
 
     def _get_pilot_button_socket(self):
         if self.__pilot_button_socket is None:
@@ -556,13 +727,6 @@ class BaseDesk(ABC):
         return self._get_brake_state()
 
 
-class NoTokenIdType:
-    pass
-
-
-NO_TOKEN_ID = NoTokenIdType()
-
-
 class DeskWebSession(BaseDesk):
     """Desk web session for the legacy Franka Desk API.
 
@@ -570,8 +734,14 @@ class DeskWebSession(BaseDesk):
     firmware, use :class:`Desk` instead.
     """
 
-    def __init__(self, hostname: str, username: str, password: str):
-        super().__init__(hostname, username, password)
+    def __init__(
+        self,
+        hostname: str,
+        username: str,
+        password: str,
+        token_storage: bool | str | os.PathLike = False,
+    ):
+        super().__init__(hostname, username, password, token_storage=token_storage)
         self.__token = None
 
     def _get_pilot_auth_headers(self) -> dict[str, str]:
@@ -595,7 +765,7 @@ class DeskWebSession(BaseDesk):
                 response_encoding="text",
             )
         except:
-            self.close()
+            self._close_client()
             raise
 
     def close(self):
@@ -612,13 +782,15 @@ class DeskWebSession(BaseDesk):
                 "Forcibly taking control: "
                 f"Please physically take control by pressing the top button on the FR3 within {wait_timeout}s!"
             )
-        token_id, token = response_dict["id"], response_dict["token"]
+        # Token ids are strings from here on: the API reports them as numbers, but they have to
+        # survive a round trip through the token store as text.
+        token_id, token = str(response_dict["id"]), response_dict["token"]
 
         # Cannot use self.has_control here as the token is only stored in the
         # base class once this method returns.
         def granted() -> bool:
             active_token = self._get_system_status()["controlToken"]["activeToken"]
-            return active_token is not None and active_token["id"] == token_id
+            return active_token is not None and str(active_token["id"]) == token_id
 
         start = time.time()
         has_control = granted()
@@ -634,7 +806,10 @@ class DeskWebSession(BaseDesk):
     def _get_has_control(self):
         status = self._get_system_status()
         active_token = status["controlToken"]["activeToken"]
-        return active_token is not None and active_token["id"] == self.control_token_id
+        return (
+            active_token is not None
+            and str(active_token["id"]) == self.control_token_id
+        )
 
     def _release_control(self):
         self.send_control_api_request(
@@ -736,8 +911,14 @@ class Desk(BaseDesk):
     on System 5+ firmware. For older firmware, use :class:`DeskWebSession`.
     """
 
-    def __init__(self, hostname: str, username: str, password: str):
-        super().__init__(hostname, username, password)
+    def __init__(
+        self,
+        hostname: str,
+        username: str,
+        password: str,
+        token_storage: bool | str | os.PathLike = False,
+    ):
+        super().__init__(hostname, username, password, token_storage=token_storage)
         self.__warned_no_token_id = False
 
     def _get_pilot_auth_headers(self) -> dict[str, str]:
@@ -752,7 +933,7 @@ class Desk(BaseDesk):
             # Verify connectivity and credentials right away.
             self._get_system_status()
         except:
-            self.close()
+            self._close_client()
             raise
 
     def _take_control(self, wait_timeout: float = 30.0, force: bool = False):
@@ -762,7 +943,9 @@ class Desk(BaseDesk):
             "/api/system/control-token:take",
             content={"owner": self.username, "timeout": int(wait_timeout)},
         )
-        return res.get("tokenId", NO_TOKEN_ID), res["token"]
+        # See DeskWebSession._take_control on why the id is stringified here.
+        token_id = res.get("tokenId")
+        return (NO_TOKEN_ID if token_id is None else str(token_id)), res["token"]
 
     def _release_control(self):
         self.send_control_api_request("/api/system/control-token:release")
@@ -778,7 +961,8 @@ class Desk(BaseDesk):
                 )
                 self.__warned_no_token_id = True
             return data.get("owner") == self.username
-        return data.get("tokenId") == self.control_token_id
+        token_id = data.get("tokenId")
+        return token_id is not None and str(token_id) == self.control_token_id
 
     def _get_operating_mode(self) -> OperatingMode:
         data = self.send_api_request("/api/system/operating-mode", method="GET")
