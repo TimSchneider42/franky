@@ -407,3 +407,212 @@ class RobotWebSession(_PilotMixin):
     @property
     def is_open(self) -> bool:
         return self.__token is not None
+
+
+class Desk(_PilotMixin):
+    """Robot web session for the current Franka Desk API (v1).
+
+    Uses HTTP Basic authentication on every request. Compatible with FR3
+    on System 5+ firmware. For older firmware, use :class:`RobotWebSession`.
+    """
+
+    def __init__(self, hostname: str, username: str, password: str):
+        super().__init__()
+        self._hostname = hostname
+        self.__username = username
+        self.__basic = base64.b64encode(f"{username}:{password}".encode()).decode()
+        self.__client: Optional[HTTPSConnection] = None
+        self.__control_token: Optional[str] = None
+        self.__control_token_id: Optional[int] = None
+
+    def _pilot_auth_headers(self) -> Dict[str, str]:
+        return {"Authorization": f"Basic {self.__basic}"}
+
+    def _send_request(
+        self,
+        method: Literal["GET", "POST", "DELETE"],
+        path: str,
+        body: Optional[Any] = None,
+        control_token: bool = False,
+    ) -> bytes:
+        headers: Dict[str, str] = {"Authorization": f"Basic {self.__basic}"}
+        if body is not None:
+            headers["Content-Type"] = "application/json"
+        if control_token:
+            if self.__control_token is None:
+                raise RuntimeError(
+                    "Client does not have control. Call take_control() first."
+                )
+            headers["X-Control-Token"] = self.__control_token
+        encoded_body = json.dumps(body).encode() if body is not None else None
+        self.__client.request(method, path, headers=headers, body=encoded_body)
+        res = self.__client.getresponse()
+        data = res.read()
+        if res.getcode() not in (200, 204):
+            raise FrankaAPIError(
+                path, res.getcode(), res.reason, dict(res.headers), data.decode("utf-8")
+            )
+        return data
+
+    def _request(
+        self,
+        method: Literal["GET", "POST", "DELETE"],
+        path: str,
+        body: Optional[Any] = None,
+        control_token: bool = False,
+    ) -> bytes:
+        last_error = None
+        for _ in range(3):
+            try:
+                return self._send_request(
+                    method, path, body=body, control_token=control_token
+                )
+            except http.client.RemoteDisconnected as ex:
+                last_error = ex
+        raise last_error
+
+    def open(self, timeout: float = 30.0):
+        if self.is_open:
+            raise RuntimeError("Session is already open.")
+        self.__client = HTTPSConnection(
+            self._hostname, timeout=timeout, context=ssl._create_unverified_context()
+        )
+        self.__client.connect()
+        self._request("GET", "/api/system")
+        return self
+
+    def close(self):
+        if not self.is_open:
+            raise RuntimeError("Session is not open.")
+        self._close_pilot_button_socket()
+        if self.__control_token is not None:
+            self.release_control()
+        self.__client.close()
+        self.__client = None
+
+    def __enter__(self):
+        return self.open()
+
+    def __exit__(self, type, value, traceback):
+        self.close()
+
+    def take_control(self, wait_timeout: float = 30.0, force: bool = False):
+        """Request the control token.
+
+        Args:
+            wait_timeout: Seconds to wait if another client currently holds
+                the token. The server handles the wait; has no effect if we
+                already hold the token.
+            force: Ignored on v1 API — the server queues the request until
+                the current holder releases.
+        """
+        if self.has_control():
+            return
+        res = json.loads(
+            self._request(
+                "POST",
+                "/api/system/control-token:take",
+                body={"owner": self.__username, "timeout": int(wait_timeout)},
+            )
+        )
+        self.__control_token = res["token"]
+        self.__control_token_id = res["tokenId"]
+
+    def release_control(self):
+        if self.__control_token is None:
+            return
+        self._request("POST", "/api/system/control-token:release", control_token=True)
+        self.__control_token = None
+        self.__control_token_id = None
+
+    def has_control(self) -> bool:
+        if self.__control_token_id is None:
+            return False
+        data = json.loads(self._request("GET", "/api/system/control-token"))
+        return data.get("tokenId") == self.__control_token_id
+
+    def unlock_brakes(self):
+        self._request("POST", "/api/arm/joints:unlock", control_token=True)
+
+    def lock_brakes(self):
+        self._request("POST", "/api/arm/joints:lock")
+
+    def set_mode_programming(self):
+        self._request(
+            "POST",
+            "/api/system/operating-mode:change",
+            body={"desiredOperatingMode": "Programming"},
+            control_token=True,
+        )
+
+    def set_mode_execution(self):
+        self._request(
+            "POST",
+            "/api/system/operating-mode:change",
+            body={"desiredOperatingMode": "Execution"},
+            control_token=True,
+        )
+
+    def enable_fci(self):
+        self._request("POST", "/api/fci:activate", control_token=True)
+
+    def disable_fci(self):
+        self._request("POST", "/api/fci:deactivate", control_token=True)
+
+    def get_fci_status(self) -> str:
+        return json.loads(self._request("GET", "/api/fci"))["status"]
+
+    def get_system_status(self) -> dict:
+        return json.loads(self._request("GET", "/api/system"))
+
+    def execute_self_test(self):
+        self._request("POST", "/api/safety/self-tests:execute", control_token=True)
+        while (
+            json.loads(self._request("GET", "/api/safety/self-tests"))["status"]
+            == "Running"
+        ):
+            time.sleep(0.5)
+
+    def get_recovery_status(self) -> Optional[dict]:
+        """Return the active recovery descriptor, or None if no recovery is needed."""
+        data = json.loads(self._request("GET", "/api/safety/recovery"))
+        return data.get("recovery")
+
+    def recover(self) -> None:
+        """Attempt to clear an active recoverable safety error.
+
+        Handles errors that can be confirmed programmatically
+        (LifetimeStatusExceeded, SelfTestsElapsed, GenericJointError,
+        SafetyError, SafeInputUnacknowledged, SafetyRuleViolation).
+        Raises :class:`RobotWebSessionError` for errors that require
+        physical joint movement (JointPositionError, JointLimitViolation).
+        Does nothing if no recovery is needed.
+        """
+        recovery = self.get_recovery_status()
+        if recovery is None:
+            return
+        recovery_type = recovery["type"]
+        if recovery_type in ("JointPositionError", "JointLimitViolation"):
+            raise RobotWebSessionError(
+                f"Recovery type '{recovery_type}' requires physical joint movement. "
+                "Move the affected joints to their reference positions and confirm "
+                "via the Desk interface. Consult the product manual for details."
+            )
+        body: Dict[str, Any] = {"type": recovery_type}
+        if recovery_type == "SafetyError":
+            body["safetyErrors"] = recovery.get("safetyErrors", [])
+        elif recovery_type == "SafeInputUnacknowledged":
+            body["safeInputs"] = recovery.get("safeInputs", [])
+        self._request("POST", "/api/safety/recovery:confirm", body=body)
+
+    def reboot(self) -> None:
+        """Initiate a system reboot. Closes all open connections."""
+        self._request("POST", "/api/system:reboot")
+
+    def shutdown(self) -> None:
+        """Initiate a system shutdown."""
+        self._request("POST", "/api/system:shutdown")
+
+    @property
+    def is_open(self) -> bool:
+        return self.__client is not None
