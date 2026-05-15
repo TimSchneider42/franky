@@ -66,11 +66,122 @@ class PilotButtonEvent:
         return f"PilotButtonEvent({self.button.value} {action})"
 
 
-class RobotWebSession:
+def _encode_password(user: str, password: str) -> str:
+    bs = ",".join(
+        [
+            str(b)
+            for b in hashlib.sha256(
+                (password + "#" + user + "@franka").encode("utf-8")
+            ).digest()
+        ]
+    )
+    return base64.encodebytes(bs.encode("utf-8")).decode("utf-8")
+
+
+def _parse_pilot_button_payload(payload: str) -> List[PilotButtonEvent]:
+    data = json.loads(payload)
+    if not isinstance(data, dict):
+        logger.debug(
+            "Ignoring non-object event payload of type %s: %r",
+            type(data).__name__,
+            data,
+        )
+        return []
+    events = []
+    for key, value in data.items():
+        button = PilotButton(key)
+        events.append(PilotButtonEvent(button=button, pressed=bool(value)))
+    return events
+
+
+class _PilotMixin:
+    """Shared Pilot button websocket logic for both legacy and v1 session classes."""
+
     _NAVIGATION_EVENTS_PATH = "/desk/api/navigation/events"
+    _hostname: str  # set by subclass
+
+    def __init__(self):
+        self._pilot_button_socket = None
+
+    @property
+    def is_open(self) -> bool:
+        raise NotImplementedError
+
+    def _pilot_auth_headers(self) -> Dict[str, str]:
+        raise NotImplementedError
+
+    def poll_buttons(self, timeout: Optional[float] = 0.0) -> List[PilotButtonEvent]:
+        """Poll for Pilot button events, returning all currently available.
+
+        Args:
+            timeout: Maximum seconds to wait for the first event.
+                0.0 (default) returns immediately with any buffered events.
+                None blocks until at least one event is available.
+                After the first event arrives, any additional buffered
+                events are drained without waiting.
+
+        Returns:
+            List of button events, or an empty list if none arrived
+            within the timeout.
+        """
+        if not self.is_open:
+            raise RuntimeError(
+                "Session is not open. Call open() or use a context manager first."
+            )
+
+        try:
+            websocket = self._get_pilot_button_socket()
+            message = websocket.recv(timeout=timeout)
+        except TimeoutError:
+            return []
+        except Exception:
+            self._close_pilot_button_socket()
+            raise
+
+        events = list(_parse_pilot_button_payload(message))
+        while True:
+            try:
+                message = websocket.recv(timeout=0.0)
+            except TimeoutError:
+                return events
+            except Exception:
+                self._close_pilot_button_socket()
+                raise
+            events.extend(_parse_pilot_button_payload(message))
+
+    def _get_pilot_button_socket(self):
+        if self._pilot_button_socket is None:
+            uri = f"wss://{self._hostname}{self._NAVIGATION_EVENTS_PATH}"
+            ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+            ssl_ctx.check_hostname = False
+            ssl_ctx.verify_mode = ssl.CERT_NONE
+            self._pilot_button_socket = ws_sync.connect(
+                uri,
+                ssl=ssl_ctx,
+                additional_headers=self._pilot_auth_headers(),
+                open_timeout=2.0,
+            )
+        return self._pilot_button_socket
+
+    def _close_pilot_button_socket(self) -> None:
+        if self._pilot_button_socket is None:
+            return
+        try:
+            self._pilot_button_socket.close()
+        finally:
+            self._pilot_button_socket = None
+
+
+class RobotWebSession(_PilotMixin):
+    """Robot web session for the legacy Franka Desk API.
+
+    Compatible with Panda and FR3 on pre-v1 firmware. For FR3 on current
+    firmware, use :class:`Desk` instead.
+    """
 
     def __init__(self, hostname: str, username: str, password: str):
-        self.__hostname = hostname
+        super().__init__()
+        self._hostname = hostname
         self.__username = username
         self.__password = password
 
@@ -78,19 +189,9 @@ class RobotWebSession:
         self.__token = None
         self.__control_token = None
         self.__control_token_id = None
-        self.__pilot_button_socket = None
 
-    @staticmethod
-    def __encode_password(user: str, password: str) -> str:
-        bs = ",".join(
-            [
-                str(b)
-                for b in hashlib.sha256(
-                    (password + "#" + user + "@franka").encode("utf-8")
-                ).digest()
-            ]
-        )
-        return base64.encodebytes(bs.encode("utf-8")).decode("utf-8")
+    def _pilot_auth_headers(self) -> Dict[str, str]:
+        return {"authorization": self.__token}
 
     def _send_api_request(
         self,
@@ -147,13 +248,13 @@ class RobotWebSession:
         if self.is_open:
             raise RuntimeError("Session is already open.")
         self.__client = HTTPSConnection(
-            self.__hostname, timeout=timeout, context=ssl._create_unverified_context()
+            self._hostname, timeout=timeout, context=ssl._create_unverified_context()
         )
         self.__client.connect()
         payload = json.dumps(
             {
                 "login": self.__username,
-                "password": self.__encode_password(self.__username, self.__password),
+                "password": _encode_password(self.__username, self.__password),
             }
         )
         self.__token = self.send_api_request(
@@ -294,84 +395,6 @@ class RobotWebSession:
             self.get_system_status()["safety"]["safetyControllerStatus"] == "SelfTest"
         ):
             time.sleep(0.5)
-
-    def poll_buttons(self, timeout: Optional[float] = 0.0) -> List[PilotButtonEvent]:
-        """Poll for Pilot button events, returning all currently available.
-
-        Args:
-            timeout: Maximum seconds to wait for the first event.
-                0.0 (default) returns immediately with any buffered events.
-                None blocks until at least one event is available.
-                After the first event arrives, any additional buffered
-                events are drained without waiting.
-
-        Returns:
-            List of button events, or an empty list if none arrived
-            within the timeout.
-        """
-        if not self.is_open:
-            raise RuntimeError(
-                "Session is not open. Call open() or use a context manager first."
-            )
-
-        try:
-            websocket = self._get_pilot_button_socket()
-            events = []
-            message = websocket.recv(timeout=timeout)
-        except TimeoutError:
-            return []
-        except Exception:
-            self._close_pilot_button_socket()
-            raise
-
-        events.extend(self._parse_pilot_button_payload(message))
-        while True:
-            try:
-                message = websocket.recv(timeout=0.0)
-            except TimeoutError:
-                return events
-            except Exception:
-                self._close_pilot_button_socket()
-                raise
-            events.extend(self._parse_pilot_button_payload(message))
-
-    def _get_pilot_button_socket(self):
-        if self.__pilot_button_socket is None:
-            uri = f"wss://{self.__hostname}{self._NAVIGATION_EVENTS_PATH}"
-            ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-            ssl_context.check_hostname = False
-            ssl_context.verify_mode = ssl.CERT_NONE
-            self.__pilot_button_socket = ws_sync.connect(
-                uri,
-                ssl=ssl_context,
-                additional_headers={"authorization": self.__token},
-                open_timeout=2.0,
-            )
-        return self.__pilot_button_socket
-
-    def _close_pilot_button_socket(self) -> None:
-        if self.__pilot_button_socket is None:
-            return
-        try:
-            self.__pilot_button_socket.close()
-        finally:
-            self.__pilot_button_socket = None
-
-    def _parse_pilot_button_payload(self, payload: str) -> List[PilotButtonEvent]:
-        data = json.loads(payload)
-        if not isinstance(data, dict):
-            logger.debug(
-                "Ignoring non-object event payload of type %s: %r",
-                type(data).__name__,
-                data,
-            )
-            return []
-
-        events = []
-        for key, value in data.items():
-            button = PilotButton(key)
-            events.append(PilotButtonEvent(button=button, pressed=bool(value)))
-        return events
 
     @property
     def client(self) -> HTTPSConnection:
