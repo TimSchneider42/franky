@@ -36,7 +36,7 @@ Although Python does not provide real-time guarantees, franky strives to maintai
 Motions can be preempted at any moment, prompting franky to re-plan trajectories on the fly.
 To handle unforeseen situations—such as unexpected contact with the environment — franky includes a reaction system that
 allows for updating motion commands dynamically.
-Furthermore, most non-real-time functionality of [libfranka](https://frankarobotics.github.io/docs/libfranka/docs/index.html), such as
+Furthermore, most non-real-time functionality of [libfranka](https://frankarobotics.github.io/docs/doc/libfranka/docs/index.html), such as
 Gripper control is made directly available in Python.
 
 Check out the [tutorial](#-tutorial) and the [examples](https://github.com/TimSchneider42/franky/tree/master/examples)
@@ -124,7 +124,7 @@ Linux [PCNAME] 5.15.0-1056-realtime #63-Ubuntu SMP PREEMPT_RT ...
 If it does not say PREEMPT_RT, you are not currently running a real-time kernel.
 
 There are multiple ways of installing a real-time kernel.
-You can [build it from source](https://frankarobotics.github.io/docs/libfranka/docs/real_time_kernel.html) or, if you are using Ubuntu, it can be [enabled through Ubuntu Pro](https://ubuntu.com/real-time).
+You can [build it from source](https://frankarobotics.github.io/docs/doc/libfranka/docs/real_time_kernel.html) or, if you are using Ubuntu, it can be [enabled through Ubuntu Pro](https://ubuntu.com/real-time).
 
 ### Allowing the executing user to run real-time applications
 
