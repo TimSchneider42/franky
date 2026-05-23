@@ -46,6 +46,8 @@ class PositionWaypointMotion : public WaypointMotion<ControlSignalType, Position
       : WaypointMotion<ControlSignalType, PositionWaypoint<TargetType>, TargetType>(waypoints, return_when_finished),
         relative_dynamics_factor_(relative_dynamics_factor) {}
 
+  [[nodiscard]] const RelativeDynamicsFactor &relative_dynamics_factor() const { return relative_dynamics_factor_; }
+
  protected:
   void setInputLimits(
       const PositionWaypoint<TargetType> &waypoint, ruckig::InputParameter<7> &input_parameter) const override {

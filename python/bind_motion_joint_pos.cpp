@@ -46,7 +46,10 @@ void bind_motion_joint_pos(py::module &m) {
           }),
           "waypoints"_a,
           "relative_dynamics_factor"_a = 1.0,
-          "return_when_finished"_a = true);
+          "return_when_finished"_a = true)
+      .def_property_readonly("waypoints", &JointWaypointMotion::waypoints)
+      .def_property_readonly("relative_dynamics_factor", &JointWaypointMotion::relative_dynamics_factor)
+      .def_property_readonly("return_when_finished", &JointWaypointMotion::return_when_finished);
 
   py::class_<JointMotion, JointWaypointMotion, std::shared_ptr<JointMotion>>(m, "JointMotion")
       .def(
@@ -54,11 +57,15 @@ void bind_motion_joint_pos(py::module &m) {
           "target"_a,
           py::arg_v("reference_type", ReferenceType::kAbsolute, "_franky.ReferenceType.Absolute"),
           "relative_dynamics_factor"_a = 1.0,
-          "return_when_finished"_a = true);
+          "return_when_finished"_a = true)
+      .def_property_readonly("target", [](const JointMotion &motion) { return motion.waypoints().front().target; })
+      .def_property_readonly(
+          "reference_type", [](const JointMotion &motion) { return motion.waypoints().front().reference_type; });
 
   py::class_<
       StopMotion<franka::JointPositions>,
       Motion<franka::JointPositions>,
       std::shared_ptr<StopMotion<franka::JointPositions>>>(m, "JointStopMotion")
-      .def(py::init<RelativeDynamicsFactor>(), "relative_dynamics_factor"_a = 1.0);
+      .def(py::init<RelativeDynamicsFactor>(), "relative_dynamics_factor"_a = 1.0)
+      .def_property_readonly("relative_dynamics_factor", &StopMotion<franka::JointPositions>::relative_dynamics_factor);
 }
