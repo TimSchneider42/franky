@@ -49,7 +49,11 @@ void bind_motion_cartesian_pos(py::module &m) {
           "waypoints"_a,
           "ee_frame"_a = std::nullopt,
           "relative_dynamics_factor"_a = 1.0,
-          "return_when_finished"_a = true);
+          "return_when_finished"_a = true)
+      .def_property_readonly("waypoints", &CartesianWaypointMotion::waypoints)
+      .def_property_readonly("ee_frame", &CartesianWaypointMotion::ee_frame)
+      .def_property_readonly("relative_dynamics_factor", &CartesianWaypointMotion::relative_dynamics_factor)
+      .def_property_readonly("return_when_finished", &CartesianWaypointMotion::return_when_finished);
 
   py::class_<CartesianMotion, CartesianWaypointMotion, std::shared_ptr<CartesianMotion>>(m, "CartesianMotion")
       .def(
@@ -69,11 +73,15 @@ void bind_motion_cartesian_pos(py::module &m) {
           py::arg_v("reference_type", ReferenceType::kAbsolute, "_franky.ReferenceType.Absolute"),
           "relative_dynamics_factor"_a = 1.0,
           "return_when_finished"_a = true,
-          "ee_frame"_a = std::nullopt);
+          "ee_frame"_a = std::nullopt)
+      .def_property_readonly("target", [](const CartesianMotion &motion) { return motion.waypoints().front().target; })
+      .def_property_readonly(
+          "reference_type", [](const CartesianMotion &motion) { return motion.waypoints().front().reference_type; });
 
   py::class_<
       StopMotion<franka::CartesianPose>,
       Motion<franka::CartesianPose>,
       std::shared_ptr<StopMotion<franka::CartesianPose>>>(m, "CartesianStopMotion")
-      .def(py::init<RelativeDynamicsFactor>(), "relative_dynamics_factor"_a = 1.0);
+      .def(py::init<RelativeDynamicsFactor>(), "relative_dynamics_factor"_a = 1.0)
+      .def_property_readonly("relative_dynamics_factor", &StopMotion<franka::CartesianPose>::relative_dynamics_factor);
 }

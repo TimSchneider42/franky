@@ -42,7 +42,9 @@ void bind_motion_joint_vel(py::module &m) {
             return std::make_shared<JointVelocityWaypointMotion>(waypoints, relative_dynamics_factor);
           }),
           "waypoints"_a,
-          "relative_dynamics_factor"_a = 1.0);
+          "relative_dynamics_factor"_a = 1.0)
+      .def_property_readonly("waypoints", &JointVelocityWaypointMotion::waypoints)
+      .def_property_readonly("relative_dynamics_factor", &JointVelocityWaypointMotion::relative_dynamics_factor);
 
   py::class_<JointVelocityMotion, JointVelocityWaypointMotion, std::shared_ptr<JointVelocityMotion>>(
       m, "JointVelocityMotion")
@@ -50,11 +52,18 @@ void bind_motion_joint_vel(py::module &m) {
           py::init<const Vector7d &, franka::Duration, RelativeDynamicsFactor>(),
           "target"_a,
           "duration"_a = franka::Duration(1000),
-          "relative_dynamics_factor"_a = 1.0);
+          "relative_dynamics_factor"_a = 1.0)
+      .def_property_readonly(
+          "target", [](const JointVelocityMotion &motion) { return motion.waypoints().front().target; })
+      .def_property_readonly("duration", [](const JointVelocityMotion &motion) {
+        return motion.waypoints().front().hold_target_duration;
+      });
 
   py::class_<
       StopMotion<franka::JointVelocities>,
       Motion<franka::JointVelocities>,
       std::shared_ptr<StopMotion<franka::JointVelocities>>>(m, "JointVelocityStopMotion")
-      .def(py::init<RelativeDynamicsFactor>(), "relative_dynamics_factor"_a = 1.0);
+      .def(py::init<RelativeDynamicsFactor>(), "relative_dynamics_factor"_a = 1.0)
+      .def_property_readonly(
+          "relative_dynamics_factor", &StopMotion<franka::JointVelocities>::relative_dynamics_factor);
 }
