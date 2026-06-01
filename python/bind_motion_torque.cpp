@@ -143,22 +143,28 @@ void bind_motion_torque(py::module &m) {
       py::class_<CartesianImpedanceBase, Motion<franka::Torques>, std::shared_ptr<CartesianImpedanceBase>>(
           m, "CartesianImpedanceBase")
           .def(
-              "get_gains", &CartesianImpedanceBase::getGains,
+              "get_gains",
+              &CartesianImpedanceBase::getGains,
               "Get a copy of the current target impedance gains. Mutating the returned object has no effect on the "
               "motion; pass it to set_gains to apply changes.")
           .def(
-              "set_gains", &CartesianImpedanceBase::setGains, "gains"_a,
+              "set_gains",
+              &CartesianImpedanceBase::setGains,
+              "gains"_a,
               "Set the target impedance gains. The gains are validated and then smoothed in the control loop via "
               "exponential interpolation.");
   m.attr("ImpedanceMotion") = cartesian_impedance_base;
 
   py::class_<JointImpedanceBase, Motion<franka::Torques>, std::shared_ptr<JointImpedanceBase>>(m, "JointImpedanceBase")
       .def(
-          "get_gains", &JointImpedanceBase::getGains,
+          "get_gains",
+          &JointImpedanceBase::getGains,
           "Get a copy of the current target impedance gains. Mutating the returned object has no effect on the "
           "motion; pass it to set_gains to apply changes.")
       .def(
-          "set_gains", &JointImpedanceBase::setGains, "gains"_a,
+          "set_gains",
+          &JointImpedanceBase::setGains,
+          "gains"_a,
           "Set the target impedance gains. The gains are validated and then smoothed in the control loop via "
           "exponential interpolation.");
 
@@ -364,7 +370,9 @@ interpolates toward them with the given time constant, allowing smooth runtime s
           "Get a copy of the last commanded joint reference. Mutating the returned object has no effect on the "
           "motion; pass it to set_reference to apply changes.")
       .def(
-          "set_reference", &JointImpedanceTrackingMotion::setReference, "reference"_a,
+          "set_reference",
+          &JointImpedanceTrackingMotion::setReference,
+          "reference"_a,
           "Set the joint reference tracked by the controller. The reference is validated and picked up by the "
           "control loop in the next cycle.");
 
@@ -524,7 +532,9 @@ interpolates toward them with the given time constant, allowing smooth runtime s
           "Get a copy of the last commanded Cartesian reference. Mutating the returned object has no effect on the "
           "motion; pass it to set_reference to apply changes.")
       .def(
-          "set_reference", &CartesianImpedanceTrackingMotion::setReference, "reference"_a,
+          "set_reference",
+          &CartesianImpedanceTrackingMotion::setReference,
+          "reference"_a,
           "Set the Cartesian reference tracked by the controller. The reference is validated and picked up by the "
           "control loop in the next cycle.");
 }

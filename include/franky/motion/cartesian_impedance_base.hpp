@@ -4,6 +4,8 @@
 #include <array>
 #include <memory>
 #include <optional>
+#include <variant>
+#include <vector>
 
 #include "franky/motion/motion.hpp"
 #include "franky/motion/torque_control_utils.hpp"
@@ -68,6 +70,54 @@ struct CartesianImpedanceGains {
 };
 
 /**
+ * @brief Joint-posture objective projected into the Cartesian nullspace.
+ */
+struct PostureTask {
+  PostureTask() = default;
+
+  PostureTask(
+      const Vector7d &target, double stiffness, std::optional<double> damping = std::nullopt, double max_torque = 0.0)
+      : target(target), stiffness(stiffness), damping(damping), max_torque(max_torque) {}
+
+  /** Preferred joint posture [rad]. */
+  Vector7d target{Vector7d::Zero()};
+
+  /** Posture stiffness in [Nm/rad]. */
+  double stiffness{0.0};
+
+  /**
+   * Posture damping in [Nms/rad].
+   *
+   * If unset, the controller uses critical damping, 2*sqrt(stiffness).
+   */
+  std::optional<double> damping{std::nullopt};
+
+  /** Per-joint absolute torque clamp for this task [Nm]. Set <= 0 to disable. */
+  double max_torque{0.0};
+};
+
+/**
+ * @brief Manipulability maximization objective projected into the Cartesian nullspace.
+ */
+struct ManipulabilityTask {
+  ManipulabilityTask() = default;
+
+  ManipulabilityTask(double gain, double damping = 0.0, double max_torque = 0.0)
+      : gain(gain), damping(damping), max_torque(max_torque) {}
+
+  /** Gain applied to the manipulability gradient. */
+  double gain{0.0};
+
+  /** Joint damping applied to this task before projection [Nms/rad]. */
+  double damping{0.0};
+
+  /** Per-joint absolute torque clamp for this task [Nm]. Set <= 0 to disable. */
+  double max_torque{0.0};
+};
+
+using NullspaceTask = std::variant<PostureTask, ManipulabilityTask>;
+
+/**
  * @brief Base class for client-side cartesian impedance motions.
  *
  * This class computes joint torques from a task-space spring-damper law with
@@ -109,16 +159,12 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
     std::array<std::optional<double>, 6> force_constraints{};
 
     /**
-     * Preferred joint posture for the Cartesian controller nullspace.
+     * Nullspace objectives.
      *
-     * When set together with a positive nullspace_stiffness, the controller
-     * adds a secondary posture torque that does not change the Cartesian task
-     * to first order.
+     * Each task contributes a joint-space torque that is summed and projected
+     * into the Jacobian nullspace.
      */
-    std::optional<Vector7d> nullspace_target{std::nullopt};
-
-    /** Nullspace posture stiffness in [Nm/rad]. Set to 0 to disable. */
-    double nullspace_stiffness{0.0};
+    std::vector<NullspaceTask> nullspace_tasks{};
 
     /** Shared torque safety limits and soft joint-limit repulsion settings. */
     TorqueSafetyParams safety{};
@@ -130,7 +176,6 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
     void validate() const {
       validateNonNegativeFinite(translational_stiffness, "translational_stiffness");
       validateNonNegativeFinite(rotational_stiffness, "rotational_stiffness");
-      validateNonNegativeFinite(nullspace_stiffness, "nullspace_stiffness");
       friction.validate();
     }
   };
@@ -168,7 +213,6 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
   double gains_time_constant_;
   double current_translational_stiffness_;
   double current_rotational_stiffness_;
-  double current_nullspace_stiffness_;
 
   Eigen::Matrix<double, 6, 6> stiffness, damping;
 };

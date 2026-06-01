@@ -3,7 +3,10 @@
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 #include <Eigen/SVD>
+#include <algorithm>
+#include <array>
 #include <cmath>
+#include <type_traits>
 #include <utility>
 
 #include "franky/model.hpp"
@@ -12,6 +15,7 @@
 namespace franky {
 
 namespace {
+
 Eigen::Matrix<double, 6, 6> computeTaskSpaceInertia(const Jacobian &jacobian, const Eigen::Matrix<double, 7, 7> &mass) {
   const Eigen::Matrix<double, 7, 6> mass_inv_jacobian_transpose = mass.ldlt().solve(jacobian.transpose());
   const Eigen::Matrix<double, 6, 6> task_mass_inv = jacobian * mass_inv_jacobian_transpose;
@@ -34,6 +38,77 @@ Eigen::Matrix<double, 6, 7> pseudoInverse(const Eigen::Matrix<double, 7, 6> &mat
   }
   return svd.matrixV() * sigma_pinv * svd.matrixU().transpose();
 }
+
+Vector7d clampTorque(const Vector7d &tau, double max_torque) {
+  if (max_torque <= 0.0) return tau;
+  return tau.cwiseMax(-max_torque).cwiseMin(max_torque);
+}
+
+double manipulability(const Jacobian &jacobian) {
+  const double determinant = (jacobian * jacobian.transpose()).determinant();
+  return std::sqrt(std::max(determinant, 0.0));
+}
+
+Vector7d manipulabilityGradient(const Model &model, const RobotState &robot_state, const Jacobian &jacobian) {
+  const double w = manipulability(jacobian);
+  if (w < 1e-10) return Vector7d::Zero();
+
+  Eigen::JacobiSVD<Jacobian> svd(jacobian, Eigen::ComputeFullU | Eigen::ComputeFullV);
+  Eigen::Matrix<double, 7, 6> J_pinv = Eigen::Matrix<double, 7, 6>::Zero();
+  constexpr double tolerance = 1e-6;
+  for (int i = 0; i < 6; ++i) {
+    if (svd.singularValues()[i] > tolerance)
+      J_pinv += (1.0 / svd.singularValues()[i]) * svd.matrixV().col(i) * svd.matrixU().col(i).transpose();
+  }
+
+  const auto z = jacobian.bottomRows<3>();
+
+  static constexpr std::array<franka::Frame, 7> kJointFrames = {
+      franka::Frame::kJoint1,
+      franka::Frame::kJoint2,
+      franka::Frame::kJoint3,
+      franka::Frame::kJoint4,
+      franka::Frame::kJoint5,
+      franka::Frame::kJoint6,
+      franka::Frame::kJoint7};
+  Eigen::Matrix<double, 3, 7> p;
+  for (int k = 0; k < 7; ++k) p.col(k) = model.pose(kJointFrames[k], robot_state).translation();
+
+  const Eigen::Vector3d pn = robot_state.O_T_EE.translation();
+
+  Vector7d gradient = Vector7d::Zero();
+  for (int i = 0; i < 7; ++i) {
+    const Eigen::Vector3d zi = z.col(i);
+    Eigen::Matrix<double, 6, 7> dJ = Eigen::Matrix<double, 6, 7>::Zero();
+    for (int k = 0; k < 7; ++k) {
+      const Eigen::Vector3d zk = z.col(k);
+      if (k < i) {
+        dJ.block<3, 1>(0, k) = zk.cross(zi.cross(pn - p.col(i)));
+      } else {
+        const Eigen::Vector3d r = pn - p.col(k);
+        const Eigen::Vector3d zi_x_zk = zi.cross(zk);
+        dJ.block<3, 1>(0, k) = zi_x_zk.cross(r) + zk.cross(zi.cross(r));
+        dJ.block<3, 1>(3, k) = zi_x_zk;
+      }
+    }
+    gradient[i] = w * (J_pinv.transpose().array() * dJ.array()).sum();
+  }
+  return gradient;
+}
+
+Vector7d computeTaskTorque(const PostureTask &task, const RobotState &robot_state) {
+  const double stiffness = task.stiffness;
+  if (stiffness <= 0.0) return Vector7d::Zero();
+  const double damping = task.damping.value_or(2.0 * std::sqrt(stiffness));
+  return clampTorque(stiffness * (task.target - robot_state.q) - damping * robot_state.dq, task.max_torque);
+}
+
+Vector7d computeTaskTorque(
+    const ManipulabilityTask &task, const Model &model, const RobotState &robot_state, const Jacobian &jacobian) {
+  if (task.gain == 0.0) return Vector7d::Zero();
+  Vector7d tau = task.gain * manipulabilityGradient(model, robot_state, jacobian) - task.damping * robot_state.dq;
+  return clampTorque(tau, task.max_torque);
+}
 }  // namespace
 
 CartesianImpedanceBase::CartesianImpedanceBase(
@@ -45,8 +120,7 @@ CartesianImpedanceBase::CartesianImpedanceBase(
           params.translational_stiffness, params.rotational_stiffness, params.nullspace_stiffness)),
       gains_time_constant_(gains_time_constant),
       current_translational_stiffness_(params.translational_stiffness),
-      current_rotational_stiffness_(params.rotational_stiffness),
-      current_nullspace_stiffness_(params.nullspace_stiffness) {
+      current_rotational_stiffness_(params.rotational_stiffness) {
   params_.validate();
   rebuildStiffnessDamping();
 }
@@ -69,7 +143,6 @@ franka::Torques CartesianImpedanceBase::computeCommand(
   const double alpha = 1.0 - std::exp(-dt / gains_time_constant_);
   current_translational_stiffness_ += alpha * (target_gains.translational_stiffness - current_translational_stiffness_);
   current_rotational_stiffness_ += alpha * (target_gains.rotational_stiffness - current_rotational_stiffness_);
-  current_nullspace_stiffness_ += alpha * (target_gains.nullspace_stiffness - current_nullspace_stiffness_);
   rebuildStiffnessDamping();
 
   auto model = robot()->model();
@@ -109,14 +182,24 @@ franka::Torques CartesianImpedanceBase::computeCommand(
 
   auto tau_task = jacobian.transpose() * wrench_cartesian;
   Vector7d tau_nullspace = Vector7d::Zero();
-  if (params_.nullspace_target.has_value() && current_nullspace_stiffness_ > 0.0) {
+  if (!params_.nullspace_tasks.empty()) {
     const auto jacobian_transpose_pinv = pseudoInverse(jacobian.transpose());
     const auto nullspace_projector =
         Eigen::Matrix<double, 7, 7>::Identity() - jacobian.transpose() * jacobian_transpose_pinv;
-    const auto nullspace_error = params_.nullspace_target.value() - robot_state.q;
-    const double nullspace_damping = 2.0 * std::sqrt(current_nullspace_stiffness_);
-    tau_nullspace =
-        nullspace_projector * (current_nullspace_stiffness_ * nullspace_error - nullspace_damping * robot_state.dq);
+    Vector7d tau_nullspace_unprojected = Vector7d::Zero();
+    for (const auto &task : params_.nullspace_tasks) {
+      tau_nullspace_unprojected += std::visit(
+          [&](const auto &concrete_task) -> Vector7d {
+            using Task = std::decay_t<decltype(concrete_task)>;
+            if constexpr (std::is_same_v<Task, ManipulabilityTask>) {
+              return computeTaskTorque(concrete_task, *model, robot_state, jacobian);
+            } else {
+              return computeTaskTorque(concrete_task, robot_state);
+            }
+          },
+          task);
+    }
+    tau_nullspace = nullspace_projector.transpose() * tau_nullspace_unprojected;
   }
 
   Vector7d tau_limit = Vector7d::Zero();
