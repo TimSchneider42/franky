@@ -50,22 +50,27 @@ struct CartesianImpedanceGains {
   CartesianImpedanceGains() = default;
 
   explicit CartesianImpedanceGains(
-      double translational_stiffness, double rotational_stiffness, double nullspace_stiffness = 0.0)
+      double translational_stiffness, double rotational_stiffness,
+      std::optional<double> translational_damping = std::nullopt,
+      std::optional<double> rotational_damping = std::nullopt)
       : translational_stiffness(translational_stiffness),
         rotational_stiffness(rotational_stiffness),
-        nullspace_stiffness(nullspace_stiffness) {
+        translational_damping(translational_damping),
+        rotational_damping(rotational_damping) {
     validate();
   }
 
   double translational_stiffness{500.0};
   double rotational_stiffness{50.0};
-  double nullspace_stiffness{0.0};
+  std::optional<double> translational_damping{std::nullopt};
+  std::optional<double> rotational_damping{std::nullopt};
 
   /** @brief Throw std::invalid_argument if any gain is negative or non-finite. */
   void validate() const {
     validateNonNegativeFinite(translational_stiffness, "translational_stiffness");
     validateNonNegativeFinite(rotational_stiffness, "rotational_stiffness");
-    validateNonNegativeFinite(nullspace_stiffness, "nullspace_stiffness");
+    if (translational_damping.has_value()) validateNonNegativeFinite(*translational_damping, "translational_damping");
+    if (rotational_damping.has_value()) validateNonNegativeFinite(*rotational_damping, "rotational_damping");
   }
 };
 
@@ -139,6 +144,16 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
     double rotational_stiffness{50};
 
     /**
+     * Translational damping [N·s/m]. nullopt → critical damping (2*sqrt(stiffness)).
+     */
+    std::optional<double> translational_damping{std::nullopt};
+
+    /**
+     * Rotational damping [N·m·s/rad]. nullopt → critical damping (2*sqrt(stiffness)).
+     */
+    std::optional<double> rotational_damping{std::nullopt};
+
+    /**
      * Maximum absolute Cartesian position error [m] used by the task-space controller.
      *
      * The translational error is clamped elementwise before the impedance wrench
@@ -176,6 +191,8 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
     void validate() const {
       validateNonNegativeFinite(translational_stiffness, "translational_stiffness");
       validateNonNegativeFinite(rotational_stiffness, "rotational_stiffness");
+      if (translational_damping.has_value()) validateNonNegativeFinite(*translational_damping, "translational_damping");
+      if (rotational_damping.has_value()) validateNonNegativeFinite(*rotational_damping, "rotational_damping");
       friction.validate();
     }
   };
@@ -213,6 +230,8 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
   double gains_time_constant_;
   double current_translational_stiffness_;
   double current_rotational_stiffness_;
+  std::optional<double> current_translational_damping_;
+  std::optional<double> current_rotational_damping_;
 
   Eigen::Matrix<double, 6, 6> stiffness, damping;
 };
