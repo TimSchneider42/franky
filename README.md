@@ -159,7 +159,7 @@ If real-time is not listed in your groups, try rebooting.
 
 ### Installing franky
 
-To start using franky with Python and libfranka *0.16.0*, just install it via
+To start using franky with Python and libfranka *0.18.0*, just install it via
 
 ```bash
 pip install franky-control
@@ -188,7 +188,7 @@ cd franky/
 docker compose build franky-run
 ```
 
-To use another version of libfranka than the default (0.16.0), add a build argument:
+To use another version of libfranka than the default (0.18.0), add a build argument:
 
 ```bash
 docker compose build franky-run --build-arg LIBFRANKA_VERSION=0.9.2
