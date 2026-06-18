@@ -81,7 +81,8 @@ struct PostureTask {
   PostureTask() = default;
 
   PostureTask(
-      const Vector7d &target, double stiffness, std::optional<double> damping = std::nullopt, double max_torque = 0.0)
+      const Vector7d &target, double stiffness, std::optional<double> damping = std::nullopt,
+      std::optional<double> max_torque = std::nullopt)
       : target(target), stiffness(stiffness), damping(damping), max_torque(max_torque) {}
 
   /** Preferred joint posture [rad]. */
@@ -97,8 +98,8 @@ struct PostureTask {
    */
   std::optional<double> damping{std::nullopt};
 
-  /** Per-joint absolute torque clamp for this task [Nm]. Set <= 0 to disable. */
-  double max_torque{0.0};
+  /** Per-joint absolute torque clamp for this task [Nm]. Unset means no clamp. */
+  std::optional<double> max_torque{std::nullopt};
 };
 
 /**
@@ -107,7 +108,7 @@ struct PostureTask {
 struct ManipulabilityTask {
   ManipulabilityTask() = default;
 
-  ManipulabilityTask(double gain, double damping = 0.0, double max_torque = 0.0)
+  ManipulabilityTask(double gain, double damping = 0.0, std::optional<double> max_torque = std::nullopt)
       : gain(gain), damping(damping), max_torque(max_torque) {}
 
   /** Gain applied to the manipulability gradient. */
@@ -116,11 +117,24 @@ struct ManipulabilityTask {
   /** Joint damping applied to this task before projection [Nms/rad]. */
   double damping{0.0};
 
-  /** Per-joint absolute torque clamp for this task [Nm]. Set <= 0 to disable. */
-  double max_torque{0.0};
+  /** Per-joint absolute torque clamp for this task [Nm]. Unset means no clamp. */
+  std::optional<double> max_torque{std::nullopt};
 };
 
 using NullspaceTask = std::variant<PostureTask, ManipulabilityTask>;
+
+/**
+ * @brief Runtime-adjustable gains for a nullspace task.
+ */
+struct NullspaceGains {
+  double posture_stiffness{0.0};
+  std::optional<double> posture_damping{std::nullopt};
+  std::optional<double> posture_max_torque{std::nullopt};
+
+  double manipulability_gain{0.0};
+  double manipulability_damping{0.0};
+  std::optional<double> manipulability_max_torque{std::nullopt};
+};
 
 /**
  * @brief Base class for client-side cartesian impedance motions.
@@ -205,6 +219,9 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
   }
   [[nodiscard]] CartesianImpedanceGains getGains() const { return gains_handle_.getLastWritten(); }
 
+  void setNullspaceGains(const NullspaceGains &gains) { nullspace_gains_handle_.set(gains); }
+  [[nodiscard]] NullspaceGains getNullspaceGains() const { return nullspace_gains_handle_.getLastWritten(); }
+
  protected:
   /**
    * @param target The target pose.
@@ -227,11 +244,13 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
   Params params_;
 
   WaitFreeTripleBuffer<CartesianImpedanceGains> gains_handle_;
+  WaitFreeTripleBuffer<NullspaceGains> nullspace_gains_handle_;
   double gains_time_constant_;
   double current_translational_stiffness_;
   double current_rotational_stiffness_;
   std::optional<double> current_translational_damping_;
   std::optional<double> current_rotational_damping_;
+  NullspaceGains current_nullspace_gains_;
 
   Eigen::Matrix<double, 6, 6> stiffness, damping;
 };
