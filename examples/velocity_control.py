@@ -1,8 +1,6 @@
 import time
 from argparse import ArgumentParser
 
-from franky._franky import RelativeDynamicsFactor
-
 from franky import (
     Robot,
     JointVelocityMotion,
@@ -10,6 +8,7 @@ from franky import (
     Duration,
     JointMotion,
     Twist,
+    RelativeDynamicsFactor,
 )
 
 if __name__ == "__main__":
