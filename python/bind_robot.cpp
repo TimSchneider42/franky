@@ -78,11 +78,13 @@ void bind_robot(py::module &m) {
       .def("homing_async", &Gripper::homingAsync, py::call_guard<py::gil_scoped_release>())
       .def("stop", &Gripper::stop, py::call_guard<py::gil_scoped_release>())
       .def("stop_async", &Gripper::stopAsync, py::call_guard<py::gil_scoped_release>())
-      .def_property_readonly("state", &Gripper::state, py::call_guard<py::gil_scoped_release>())
+      .def_property_readonly("state", py::cpp_function(&Gripper::state, py::call_guard<py::gil_scoped_release>()))
       .def_property_readonly("server_version", reinterpret_cast<uint16_t (Gripper::*)()>(&Gripper::serverVersion))
-      .def_property_readonly("width", &Gripper::width, py::call_guard<py::gil_scoped_release>())
-      .def_property_readonly("is_grasped", &Gripper::is_grasped, py::call_guard<py::gil_scoped_release>())
-      .def_property_readonly("max_width", &Gripper::max_width, py::call_guard<py::gil_scoped_release>());
+      .def_property_readonly("width", py::cpp_function(&Gripper::width, py::call_guard<py::gil_scoped_release>()))
+      .def_property_readonly(
+          "is_grasped", py::cpp_function(&Gripper::is_grasped, py::call_guard<py::gil_scoped_release>()))
+      .def_property_readonly(
+          "max_width", py::cpp_function(&Gripper::max_width, py::call_guard<py::gil_scoped_release>()));
 
   py::class_<Robot>(m, "_RobotInternal")
       .def(
@@ -239,25 +241,33 @@ void bind_robot(py::module &m) {
       .def("stop", &Robot::stop, py::call_guard<py::gil_scoped_release>())
       .def_property(
           "relative_dynamics_factor",
-          &Robot::relative_dynamics_factor,
-          &Robot::setRelativeDynamicsFactor,
-          py::call_guard<py::gil_scoped_release>())
-      .def_property_readonly("has_errors", &Robot::hasErrors, py::call_guard<py::gil_scoped_release>())
-      .def_property_readonly("current_pose", &Robot::currentPose, py::call_guard<py::gil_scoped_release>())
+          py::cpp_function(&Robot::relative_dynamics_factor, py::call_guard<py::gil_scoped_release>()),
+          py::cpp_function(&Robot::setRelativeDynamicsFactor, py::call_guard<py::gil_scoped_release>()))
       .def_property_readonly(
-          "current_cartesian_velocity", &Robot::currentCartesianVelocity, py::call_guard<py::gil_scoped_release>())
+          "has_errors", py::cpp_function(&Robot::hasErrors, py::call_guard<py::gil_scoped_release>()))
       .def_property_readonly(
-          "current_cartesian_state", &Robot::currentCartesianState, py::call_guard<py::gil_scoped_release>())
-      .def_property_readonly("current_joint_state", &Robot::currentJointState, py::call_guard<py::gil_scoped_release>())
+          "current_pose", py::cpp_function(&Robot::currentPose, py::call_guard<py::gil_scoped_release>()))
       .def_property_readonly(
-          "current_joint_velocities", &Robot::currentJointVelocities, py::call_guard<py::gil_scoped_release>())
+          "current_cartesian_velocity",
+          py::cpp_function(&Robot::currentCartesianVelocity, py::call_guard<py::gil_scoped_release>()))
       .def_property_readonly(
-          "current_joint_positions", &Robot::currentJointPositions, py::call_guard<py::gil_scoped_release>())
-      .def_property_readonly("state", &Robot::state, py::call_guard<py::gil_scoped_release>())
-      .def_property_readonly("is_in_control", &Robot::is_in_control, py::call_guard<py::gil_scoped_release>())
+          "current_cartesian_state",
+          py::cpp_function(&Robot::currentCartesianState, py::call_guard<py::gil_scoped_release>()))
+      .def_property_readonly(
+          "current_joint_state", py::cpp_function(&Robot::currentJointState, py::call_guard<py::gil_scoped_release>()))
+      .def_property_readonly(
+          "current_joint_velocities",
+          py::cpp_function(&Robot::currentJointVelocities, py::call_guard<py::gil_scoped_release>()))
+      .def_property_readonly(
+          "current_joint_positions",
+          py::cpp_function(&Robot::currentJointPositions, py::call_guard<py::gil_scoped_release>()))
+      .def_property_readonly("state", py::cpp_function(&Robot::state, py::call_guard<py::gil_scoped_release>()))
+      .def_property_readonly(
+          "is_in_control", py::cpp_function(&Robot::is_in_control, py::call_guard<py::gil_scoped_release>()))
       .def_property_readonly("fci_hostname", &Robot::fci_hostname)
       .def_property_readonly(
-          "current_control_signal_type", &Robot::current_control_signal_type, py::call_guard<py::gil_scoped_release>())
+          "current_control_signal_type",
+          py::cpp_function(&Robot::current_control_signal_type, py::call_guard<py::gil_scoped_release>()))
       .def_property_readonly("model", &Robot::model)
 #ifdef FRANKA_0_15
       .def_property_readonly("model_urdf", &Robot::model_urdf)
