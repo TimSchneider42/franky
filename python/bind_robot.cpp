@@ -36,7 +36,7 @@ void robotMove(Robot &robot, const std::shared_ptr<Motion<ControlSignalType>> &m
 
 void bind_robot(py::module &m) {
   py::class_<DynamicsLimit<Vector7d>>(m, "VectorDynamicsLimit")
-      .def("set", &DynamicsLimit<Vector7d>::setFrom<Array<7>>, "value"_a)
+      .def("set", &DynamicsLimit<Vector7d>::setFrom<Array<7>>, "value"_a, py::call_guard<py::gil_scoped_release>())
       .def("get", &DynamicsLimit<Vector7d>::get)
       .def("__repr__", strFromStream<DynamicsLimit<Vector7d>>)
       .def_property_readonly(
@@ -44,14 +44,14 @@ void bind_robot(py::module &m) {
       .def_readonly("desc", &DynamicsLimit<Vector7d>::desc);
 
   py::class_<DynamicsLimit<double>>(m, "DoubleDynamicsLimit")
-      .def("set", &DynamicsLimit<double>::set, "value"_a)
+      .def("set", &DynamicsLimit<double>::set, "value"_a, py::call_guard<py::gil_scoped_release>())
       .def("get", &DynamicsLimit<double>::get)
       .def("__repr__", strFromStream<DynamicsLimit<double>>)
       .def_readonly("max", &DynamicsLimit<double>::max)
       .def_readonly("desc", &DynamicsLimit<double>::desc);
 
   py::class_<Gripper>(m, "Gripper")
-      .def(py::init<const std::string &>(), "fci_hostname"_a)
+      .def(py::init<const std::string &>(), "fci_hostname"_a, py::call_guard<py::gil_scoped_release>())
       .def(
           "grasp",
           &Gripper::grasp,
@@ -137,8 +137,9 @@ void bind_robot(py::module &m) {
           "kalman_q_d_obs_var"_a = 0.0001,
           "kalman_dq_d_obs_var"_a = 0.0001,
           "kalman_ddq_d_obs_var"_a = 0.0001,
-          "kalman_control_adaptation_rate"_a = 0.1)
-      .def("recover_from_errors", &Robot::recoverFromErrors)
+          "kalman_control_adaptation_rate"_a = 0.1,
+          py::call_guard<py::gil_scoped_release>())
+      .def("recover_from_errors", &Robot::recoverFromErrors, py::call_guard<py::gil_scoped_release>())
       .def(
           "move",
           &robotMove<franka::CartesianPose>,
@@ -179,12 +180,13 @@ void bind_robot(py::module &m) {
           },
           "timeout"_a = std::nullopt,
           py::call_guard<py::gil_scoped_release>())
-      .def("poll_motion", &Robot::pollMotion)
+      .def("poll_motion", &Robot::pollMotion, py::call_guard<py::gil_scoped_release>())
       .def(
           "set_collision_behavior",
           py::overload_cast<const ScalarOrArray<7> &, const ScalarOrArray<6> &>(&Robot::setCollisionBehavior),
           "torque_thresholds"_a,
-          "force_thresholds"_a)
+          "force_thresholds"_a,
+          py::call_guard<py::gil_scoped_release>())
       .def(
           "set_collision_behavior",
           py::overload_cast<
@@ -195,7 +197,8 @@ void bind_robot(py::module &m) {
           "lower_torque_threshold"_a,
           "upper_torque_threshold"_a,
           "lower_force_threshold"_a,
-          "upper_force_threshold"_a)
+          "upper_force_threshold"_a,
+          py::call_guard<py::gil_scoped_release>())
       .def(
           "set_collision_behavior",
           py::overload_cast<
@@ -214,15 +217,31 @@ void bind_robot(py::module &m) {
           "lower_force_threshold_acceleration"_a,
           "upper_force_threshold_acceleration"_a,
           "lower_force_threshold_nominal"_a,
-          "upper_force_threshold_nominal"_a)
-      .def("set_joint_impedance", &Robot::setJointImpedance, "K_theta"_a)
-      .def("set_cartesian_impedance", &Robot::setCartesianImpedance, "K_x"_a)
-      .def("set_guiding_mode", &Robot::setGuidingMode, "guiding_mode"_a, "elbow"_a)
-      .def("set_k", &Robot::setK, "EE_T_K"_a)
-      .def("set_ee", &Robot::setEE, "NE_T_EE"_a)
-      .def("set_load", &Robot::setLoad, "load_mass"_a, "F_x_Cload"_a, "load_inertia"_a)
-      .def("stop", &Robot::stop)
-      .def_property("relative_dynamics_factor", &Robot::relative_dynamics_factor, &Robot::setRelativeDynamicsFactor)
+          "upper_force_threshold_nominal"_a,
+          py::call_guard<py::gil_scoped_release>())
+      .def("set_joint_impedance", &Robot::setJointImpedance, "K_theta"_a, py::call_guard<py::gil_scoped_release>())
+      .def("set_cartesian_impedance", &Robot::setCartesianImpedance, "K_x"_a, py::call_guard<py::gil_scoped_release>())
+      .def(
+          "set_guiding_mode",
+          &Robot::setGuidingMode,
+          "guiding_mode"_a,
+          "elbow"_a,
+          py::call_guard<py::gil_scoped_release>())
+      .def("set_k", &Robot::setK, "EE_T_K"_a, py::call_guard<py::gil_scoped_release>())
+      .def("set_ee", &Robot::setEE, "NE_T_EE"_a, py::call_guard<py::gil_scoped_release>())
+      .def(
+          "set_load",
+          &Robot::setLoad,
+          "load_mass"_a,
+          "F_x_Cload"_a,
+          "load_inertia"_a,
+          py::call_guard<py::gil_scoped_release>())
+      .def("stop", &Robot::stop, py::call_guard<py::gil_scoped_release>())
+      .def_property(
+          "relative_dynamics_factor",
+          &Robot::relative_dynamics_factor,
+          &Robot::setRelativeDynamicsFactor,
+          py::call_guard<py::gil_scoped_release>())
       .def_property_readonly("has_errors", &Robot::hasErrors, py::call_guard<py::gil_scoped_release>())
       .def_property_readonly("current_pose", &Robot::currentPose, py::call_guard<py::gil_scoped_release>())
       .def_property_readonly(
@@ -235,9 +254,10 @@ void bind_robot(py::module &m) {
       .def_property_readonly(
           "current_joint_positions", &Robot::currentJointPositions, py::call_guard<py::gil_scoped_release>())
       .def_property_readonly("state", &Robot::state, py::call_guard<py::gil_scoped_release>())
-      .def_property_readonly("is_in_control", &Robot::is_in_control)
+      .def_property_readonly("is_in_control", &Robot::is_in_control, py::call_guard<py::gil_scoped_release>())
       .def_property_readonly("fci_hostname", &Robot::fci_hostname)
-      .def_property_readonly("current_control_signal_type", &Robot::current_control_signal_type)
+      .def_property_readonly(
+          "current_control_signal_type", &Robot::current_control_signal_type, py::call_guard<py::gil_scoped_release>())
       .def_property_readonly("model", &Robot::model)
 #ifdef FRANKA_0_15
       .def_property_readonly("model_urdf", &Robot::model_urdf)
