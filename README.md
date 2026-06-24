@@ -39,10 +39,11 @@ allows for updating motion commands dynamically.
 Furthermore, most non-real-time functionality of [libfranka](https://frankarobotics.github.io/docs/doc/libfranka/docs/index.html), such as
 Gripper control is made directly available in Python.
 
-Check out the [tutorial](#-tutorial) and the [examples](https://github.com/TimSchneider42/franky/tree/master/examples)
-for an introduction.
-The full documentation can be found
-at [https://timschneider42.github.io/franky/](https://timschneider42.github.io/franky/).
+Check out the [tutorial](#-tutorial) and the [examples](https://github.com/TimSchneider42/franky/tree/master/examples) for an introduction.
+The full documentation can be found at [https://timschneider42.github.io/franky/](https://timschneider42.github.io/franky/).
+
+If you do not have a robot at hand, you can also try the [simulation](#simulation) first.
+
 
 ## 🚀 Features
 
@@ -66,6 +67,8 @@ at [https://timschneider42.github.io/franky/](https://timschneider42.github.io/f
 
 - **Full Python access to the libfranka API**
   Want to tweak impedance, read the robot state, set force thresholds, or mess with the Jacobian? Go for it. If libfranka supports it, chances are franky does, too.
+
+- **Scared to test code on the real system?**: [franky-sim](https://github.com/TimSchneider42/franky-sim) provides **[simulator support](#simulation) for franky**! It is easy to install and use and serves as a drop-in replacement for the real robot.
 
 ## 📖 Python Quickstart Guide
 
@@ -159,14 +162,14 @@ If real-time is not listed in your groups, try rebooting.
 
 ### Installing franky
 
-To start using franky with Python and libfranka *0.18.0*, just install it via
+To start using franky with Python and libfranka *0.21.2*, just install it via
 
 ```bash
 pip install franky-control
 ```
 
 We also provide wheels for libfranka versions *0.7.1*, *0.8.0*, *0.9.2*, *0.12.1*, *0.13.3*,
-*0.14.2*, *0.17.0*, and *0.18.0*.
+*0.14.2*, *0.17.0*, and *0.21.2*.
 They can be installed via
 
 ```bash
@@ -998,17 +1001,50 @@ with franky.RobotWebSession("10.90.90.1", "username", "password") as robot_web_s
             print(event.button, event.pressed)
 ```
 
+### <a id="simulation" /> 🖥️ Simulating the Robot
+
+Looking to test your code in simulation before moving to the real system?
+Don't worry, we got you covered!
+[franky-sim](https://github.com/TimSchneider42/franky-sim) is a high-fidelity simulation server for the FR3 that speaks the same network protocol as the real robot and serves as a drop-in replacement.
+Hence, you can run the same franky code both in simulation and on the real system!
+
+<p align="center"><img src="./doc/simulation.webp" width="100%"/></p>
+
+Install it via
+
+```bash
+pip install franky-sim
+```
+
+Then run a simulation server and connect franky to it:
+
+```python
+import franky
+from franky_sim import SimulationServer
+from franky_sim.mujoco_simulator import MujocoSimulator
+
+with MujocoSimulator(enable_visualization=True) as sim:
+    robot_model = sim.add_robot()
+    with SimulationServer(sim) as server:
+        server.run_async()
+        robot = franky.Robot(robot_model.hostname, realtime_config=franky.RealtimeConfig.Ignore)
+
+        robot.move(franky.CartesianMotion(franky.Affine([0.1, 0.0, 0.0]), franky.ReferenceType.Relative))
+        print("End-effector pose:", robot.current_cartesian_state.pose.end_effector_pose)
+```
+
+See the [franky-sim repository](https://github.com/TimSchneider42/franky-sim) for more examples and configuration options.
 
 ## 🛠️ Development
 
 franky is currently tested against the following versions
 
-- libfranka 0.7.1, 0.8.0, 0.9.2, 0.10.0, 0.11.0, 0.12.1, 0.13.3, 0.14.2, 0.15.3, 0.16.1, 0.17.0, 0.18.0
+- libfranka >=0.7.1
 - Eigen 3.4.0
 - Pybind11 2.13.6
 - POCO 1.12.5p2
 - Pinocchio 3.4.0
-- Python 3.7, 3.8, 3.9, 3.10, 3.11, 3.12, 3.13
+- Python >=3.7
 - Catch2 2.13.8 (for testing only)
 
 ## 📜 License
