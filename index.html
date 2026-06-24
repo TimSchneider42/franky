@@ -82,6 +82,7 @@ $(function() {
 <p>franky is a high-level control library for Franka robots, offering Python and C++ support. By providing a high-level control interface, franky eliminates the need for strict real-time programming at 1 kHz, making control from non-real-time environments, such as Python programs, feasible. Instead of relying on low-level control commands, franky expects high-level position or velocity targets and uses <a href="https://github.com/pantor/ruckig">Ruckig</a> to plan time-optimal trajectories in real-time.</p>
 <p>Although Python does not provide real-time guarantees, franky strives to maintain as much real-time control as possible. Motions can be preempted at any moment, prompting franky to re-plan trajectories on the fly. To handle unforeseen situations—such as unexpected contact with the environment — franky includes a reaction system that allows for updating motion commands dynamically. Furthermore, most non-real-time functionality of <a href="https://frankarobotics.github.io/docs/doc/libfranka/docs/index.html">libfranka</a>, such as Gripper control is made directly available in Python.</p>
 <p>Check out the tutorial and the <a href="https://github.com/TimSchneider42/franky/tree/master/examples">examples</a> for an introduction. The full documentation can be found at <a href="https://timschneider42.github.io/franky/">https://timschneider42.github.io/franky/</a>.</p>
+<p>If you do not have a robot at hand, you can also try the <a class="el" href="index.html#simulation">simulation</a> first.</p>
 <h2>🚀 Features</h2>
 <ul>
 <li><b>Control your Franka robot directly from Python in just a few lines!</b> No more endless hours setting up ROS, juggling packages, or untangling dependencies. Just <code>pip install</code> — no ROS at all.</li>
@@ -91,6 +92,7 @@ $(function() {
 <li><b>Motion and reaction callbacks</b> Want to monitor what’s happening under the hood? Add callbacks to your motions and reactions. They won’t block the control thread and are super handy for debugging or logging.</li>
 <li><b>Things are moving too fast? Tune the robot's dynamics to your needs</b> Adjust max velocity, acceleration, and jerk to match your setup or task. Fine control for smooth, safe operation.</li>
 <li><b>Full Python access to the libfranka API</b> Want to tweak impedance, read the robot state, set force thresholds, or mess with the Jacobian? Go for it. If libfranka supports it, chances are franky does, too.</li>
+<li><b>Scared to test code on the real system?</b>: <a href="https://github.com/TimSchneider42/franky-sim">franky-sim</a> provides <b><a class="el" href="index.html#simulation">simulator support</a> for franky</b>! It is easy to install and use and serves as a drop-in replacement for the real robot.</li>
 </ul>
 <h2>📖 Python Quickstart Guide</h2>
 <p>Real-time kernel already installed and real-time permissions granted? Just install franky via</p>
@@ -140,9 +142,9 @@ $(function() {
 <div class="line">... realtime</div>
 </div><!-- fragment --><p>If real-time is not listed in your groups, try rebooting.</p>
 <h3>Installing franky</h3>
-<p>To start using franky with Python and libfranka <em>0.18.0</em>, just install it via</p>
+<p>To start using franky with Python and libfranka <em>0.21.2</em>, just install it via</p>
 <div class="fragment"><div class="line">pip install franky-control</div>
-</div><!-- fragment --><p>We also provide wheels for libfranka versions <em>0.7.1</em>, <em>0.8.0</em>, <em>0.9.2</em>, <em>0.12.1</em>, <em>0.13.3</em>, <em>0.14.2</em>, <em>0.17.0</em>, and <em>0.18.0</em>. They can be installed via</p>
+</div><!-- fragment --><p>We also provide wheels for libfranka versions <em>0.7.1</em>, <em>0.8.0</em>, <em>0.9.2</em>, <em>0.12.1</em>, <em>0.13.3</em>, <em>0.14.2</em>, <em>0.17.0</em>, and <em>0.21.2</em>. They can be installed via</p>
 <div class="fragment"><div class="line">VERSION=0-9-2</div>
 <div class="line">wget https://github.com/TimSchneider42/franky/releases/latest/download/libfranka_${VERSION}_wheels.zip</div>
 <div class="line">unzip libfranka_${VERSION}_wheels.zip</div>
@@ -735,15 +737,35 @@ $(function() {
 <div class="line">    <span class="keywordflow">while</span> <span class="keyword">True</span>:</div>
 <div class="line">        <span class="keywordflow">for</span> event <span class="keywordflow">in</span> robot_web_session.poll_buttons(timeout=1.0):</div>
 <div class="line">            print(event.button, event.pressed)</div>
-</div><!-- fragment --><h2>🛠️ Development</h2>
+</div><!-- fragment --><h3><a class="anchor" id="simulation"></a> 🖥️ Simulating the Robot</h3>
+<p>Looking to test your code in simulation before moving to the real system? Don't worry, we got you covered! <a href="https://github.com/TimSchneider42/franky-sim">franky-sim</a> is a high-fidelity simulation server for the FR3 that speaks the same network protocol as the real robot and serves as a drop-in replacement. Hence, you can run the same franky code both in simulation and on the real system!</p>
+<p align="center"></p>
+<p><img src="./doc/simulation.webp" alt="" width="100%" class="inline"/></p>
+<p>Install it via</p>
+<div class="fragment"><div class="line">pip install franky-sim</div>
+</div><!-- fragment --><p>Then run a simulation server and connect franky to it:</p>
+<div class="fragment"><div class="line"><span class="keyword">import</span> franky</div>
+<div class="line"><span class="keyword">from</span> franky_sim <span class="keyword">import</span> SimulationServer</div>
+<div class="line"><span class="keyword">from</span> franky_sim.mujoco_simulator <span class="keyword">import</span> MujocoSimulator</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">with</span> MujocoSimulator(enable_visualization=<span class="keyword">True</span>) <span class="keyword">as</span> sim:</div>
+<div class="line">    robot_model = sim.add_robot()</div>
+<div class="line">    <span class="keyword">with</span> SimulationServer(sim) <span class="keyword">as</span> server:</div>
+<div class="line">        server.run_async()</div>
+<div class="line">        robot = <a class="code hl_class" href="classfranky_1_1_robot.html">franky.Robot</a>(robot_model.hostname, realtime_config=franky.RealtimeConfig.Ignore)</div>
+<div class="line"> </div>
+<div class="line">        robot.move(<a class="code hl_class" href="classfranky_1_1_cartesian_motion.html">franky.CartesianMotion</a>(<a class="code hl_typedef" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">franky.Affine</a>([0.1, 0.0, 0.0]), franky.ReferenceType.Relative))</div>
+<div class="line">        print(<span class="stringliteral">&quot;End-effector pose:&quot;</span>, robot.current_cartesian_state.pose.end_effector_pose)</div>
+</div><!-- fragment --><p>See the <a href="https://github.com/TimSchneider42/franky-sim">franky-sim repository</a> for more examples and configuration options.</p>
+<h2>🛠️ Development</h2>
 <p>franky is currently tested against the following versions</p>
 <ul>
-<li>libfranka 0.7.1, 0.8.0, 0.9.2, 0.10.0, 0.11.0, 0.12.1, 0.13.3, 0.14.2, 0.15.3, 0.16.1, 0.17.0, 0.18.0</li>
+<li>libfranka &gt;=0.7.1</li>
 <li>Eigen 3.4.0</li>
 <li>Pybind11 2.13.6</li>
 <li>POCO 1.12.5p2</li>
 <li>Pinocchio 3.4.0</li>
-<li>Python 3.7, 3.8, 3.9, 3.10, 3.11, 3.12, 3.13</li>
+<li>Python &gt;=3.7</li>
 <li>Catch2 2.13.8 (for testing only)</li>
 </ul>
 <h2>📜 License</h2>
