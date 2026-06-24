@@ -82,7 +82,7 @@ setup(
     cmdclass=dict(build_ext=CMakeBuild),
     keywords=["control", "robotics", "franka", "franka-panda", "franka-research-3"],
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Science/Research",
         "Topic :: Scientific/Engineering",
         "Programming Language :: C++",
