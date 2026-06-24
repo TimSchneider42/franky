@@ -1,0 +1,24 @@
+name: Get libfranka versions
+
+on:
+  workflow_call:
+    outputs:
+      versions:
+        description: JSON array of all supported libfranka versions
+        value: ${{ jobs.read.outputs.versions }}
+      latest:
+        description: Latest supported libfranka version
+        value: ${{ jobs.read.outputs.latest }}
+
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.read-versions.outputs.versions }}
+      latest: ${{ steps.read-versions.outputs.latest }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: read-versions
+        run: |
+          echo "versions=$(jq -c '.versions' .github/libfranka-versions.json)" >> $GITHUB_OUTPUT
+          echo "latest=$(jq -r '.versions[-1]' .github/libfranka-versions.json)" >> $GITHUB_OUTPUT

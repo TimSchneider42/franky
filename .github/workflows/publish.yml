@@ -6,10 +6,14 @@ on:
       - "v[0-9]+.[0-9]+.[0-9]+"
 
 jobs:
+  get-versions:
+    uses: ./.github/workflows/get_libfranka_versions.yml
+
   build:
+    needs: get-versions
     strategy:
       matrix:
-        libfranka-version: [0.7.1, 0.8.0, 0.9.2, 0.12.1, 0.13.3, 0.14.2, 0.17.0, 0.18.0]
+        libfranka-version: ${{ fromJson(needs.get-versions.outputs.versions) }}
         manylinux-version: [manylinux_2_28_x86_64, manylinux_2_34_x86_64]
     uses: ./.github/workflows/build_wheels.yml
     with:
@@ -17,7 +21,7 @@ jobs:
       manylinux-version: ${{ matrix.manylinux-version }}
 
   publish:
-    needs: build
+    needs: [build, get-versions]
     runs-on: ubuntu-latest
 
     permissions:
@@ -88,7 +92,8 @@ jobs:
 
       - name: Unpack wheels
         run: |
-          unzip output/libfranka_0-18-0_wheels.zip
+          version="${{ needs.get-versions.outputs.latest }}"
+          unzip "output/libfranka_${version//./-}_wheels.zip"
 
       - name: Publish python package
         uses: pypa/gh-action-pypi-publish@release/v1
