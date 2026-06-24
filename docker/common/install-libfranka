@@ -47,6 +47,7 @@ cd build
 cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.10 -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF -DCMAKE_POLICY_DEFAULT_CMP0167=OLD ..
 make -j "$(nproc)"
 sudo make install || make install
+sudo ldconfig || ldconfig
 
 cd /
 rm -rf "${TMP_DIR}"

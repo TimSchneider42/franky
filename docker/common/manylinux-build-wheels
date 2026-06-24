@@ -46,10 +46,11 @@ done
 # Install packages and test
 for PYBIN in /opt/python/*/bin/; do
   if [[ "${PYBIN}" =~ ${PYBIN_SUPPORTED_VERSIONS} ]]; then
-    venv_dir=".venv_$(basename "$(dirname "$PYBIN")")"
+    PY_DIR=$(basename "$(dirname "$PYBIN")")
+    venv_dir=".venv_${PY_DIR}"
     "${PYBIN}/python" -m venv "${venv_dir}"
     source "${venv_dir}/bin/activate"
-    "${PYBIN}/pip" install franky-control --no-index -f dist_full
+    pip install dist_full/franky_control-*-${PY_DIR}-*.whl
   fi
 done
 

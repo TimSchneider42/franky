@@ -1,0 +1,48 @@
+name: Integration Tests
+
+on: [push, pull_request]
+
+jobs:
+  get-versions:
+    uses: ./.github/workflows/get_libfranka_versions.yml
+
+  build-wheels:
+    needs: get-versions
+    uses: ./.github/workflows/build_wheels.yml
+    with:
+      libfranka-version: ${{ needs.get-versions.outputs.latest }}
+      manylinux-version: manylinux_2_28_x86_64
+
+  integration_test:
+    needs: [get-versions, build-wheels]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Download wheels
+        uses: actions/download-artifact@v4
+        with:
+          name: wheels___${{ needs.get-versions.outputs.latest }}___manylinux_2_28_x86_64
+          path: artifacts/
+
+      - name: Install franky
+        run: |
+          version="${{ needs.get-versions.outputs.latest }}"
+          unzip "artifacts/libfranka_${version//./-}_wheels.zip" -d unpacked/
+          PY_TAG=$(python -c "import sys; v=sys.version_info; print(f'cp{v.major}{v.minor}')")
+          pip install unpacked/dist/franky_control-*-${PY_TAG}-${PY_TAG}-*.whl
+
+      - name: Run integration tests
+        run: |
+          pip install pytest pytest-cov franky-sim
+          pytest tests/pytest/
