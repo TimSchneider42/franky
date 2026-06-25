@@ -13,11 +13,39 @@ jobs:
       libfranka-version: ${{ needs.get-versions.outputs.latest }}
       manylinux-version: manylinux_2_28_x86_64
 
-  integration_test:
-    needs: [get-versions, build-wheels]
+  compute-matrix:
     runs-on: ubuntu-latest
     container:
       image: quay.io/pypa/manylinux_2_28_x86_64
+    outputs:
+      python-dirs: ${{ steps.list.outputs.python-dirs }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: List supported Python versions
+        id: list
+        run: |
+          . docker/common/dependency_versions
+          dirs=()
+          for PYBIN in /opt/python/*/bin; do
+            if [[ "${PYBIN}" =~ ${PYBIN_SUPPORTED_VERSIONS} ]]; then
+              PY_VER=$("${PYBIN}/python3" -c "import sys; v=sys.version_info; print(v.major * 100 + v.minor)")
+              [[ "${PY_VER}" -lt 310 ]] && continue
+              dirs+=("$(basename "$(dirname "$PYBIN")")")
+            fi
+          done
+          python3 -c "import json, sys; print('python-dirs=' + json.dumps(sys.argv[1:]))" "${dirs[@]}" >> "$GITHUB_OUTPUT"
+
+  integration_test:
+    needs: [get-versions, build-wheels, compute-matrix]
+    runs-on: ubuntu-latest
+    container:
+      image: quay.io/pypa/manylinux_2_28_x86_64
+    strategy:
+      fail-fast: false
+      matrix:
+        python-dir: ${{ fromJSON(needs.compute-matrix.outputs.python-dirs) }}
 
     steps:
       - name: Checkout repository
@@ -29,29 +57,20 @@ jobs:
           name: wheels___${{ needs.get-versions.outputs.latest }}___manylinux_2_28_x86_64
           path: artifacts/
 
-      - name: Run integration tests
+      - name: Run integration tests for ${{ matrix.python-dir }}
         run: |
-          . docker/common/dependency_versions
           yum -y install -q unzip
 
           version="${{ needs.get-versions.outputs.latest }}"
           unzip -q "artifacts/libfranka_${version//./-}_wheels.zip" -d unpacked/
 
-          for PYBIN in /opt/python/*/bin; do
-            if [[ "${PYBIN}" =~ ${PYBIN_SUPPORTED_VERSIONS} ]]; then
-              PY_VER=$("${PYBIN}/python3" -c "import sys; v=sys.version_info; print(v.major * 100 + v.minor)")
-              [[ "${PY_VER}" -lt 310 ]] && continue
+          PYBIN="/opt/python/${{ matrix.python-dir }}/bin"
 
-              PY_DIR=$(basename "$(dirname "$PYBIN")")
-              echo "=== Testing ${PY_DIR} ==="
+          "${PYBIN}/python3" -m venv ".venv_${{ matrix.python-dir }}"
+          source ".venv_${{ matrix.python-dir }}/bin/activate"
 
-              "${PYBIN}/python3" -m venv ".venv_${PY_DIR}"
-              source ".venv_${PY_DIR}/bin/activate"
+          pip install -q unpacked/dist/franky_control-*-${{ matrix.python-dir }}-*.whl
+          pip install -q pytest pytest-cov franky-sim
+          pytest tests/pytest/
 
-              pip install -q unpacked/dist/franky_control-*-${PY_DIR}-*.whl
-              pip install -q pytest pytest-cov franky-sim
-              pytest tests/pytest/
-
-              deactivate
-            fi
-          done
+          deactivate
