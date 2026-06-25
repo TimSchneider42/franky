@@ -17,6 +17,8 @@ CartesianImpedanceMotion::CartesianImpedanceMotion(
 
 void CartesianImpedanceMotion::initImpl(
     const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) {
+  if (params_.target_type == ReferenceType::kRelative)
+    setAbsoluteTarget(Affine(Eigen::Matrix4d::Map(robot_state.O_T_EE.data())) * target());
   CartesianImpedanceBase::initImpl(robot_state, previous_command);
   initial_pose_ = Affine(Eigen::Matrix4d::Map(robot_state.O_T_EE_c.data()));
 }

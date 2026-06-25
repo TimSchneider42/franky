@@ -15,6 +15,13 @@ ExponentialImpedanceMotion::ExponentialImpedanceMotion(
     const Affine &target, const ExponentialImpedanceMotion::Params &params)
     : params_(params), CartesianImpedanceBase(target, params) {}
 
+void ExponentialImpedanceMotion::initImpl(
+    const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) {
+  if (params_.target_type == ReferenceType::kRelative)
+    setAbsoluteTarget(Affine(Eigen::Matrix4d::Map(robot_state.O_T_EE.data())) * target());
+  CartesianImpedanceBase::initImpl(robot_state, previous_command);
+}
+
 std::tuple<CartesianReference, bool> ExponentialImpedanceMotion::update(
     const RobotState &robot_state, franka::Duration time_step, franka::Duration time, franka::Duration /*abs_time*/) {
   auto trans = params_.exponential_decay * target().translation() +

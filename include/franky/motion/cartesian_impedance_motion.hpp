@@ -6,6 +6,7 @@
 #include <optional>
 
 #include "franky/motion/cartesian_impedance_base.hpp"
+#include "franky/motion/reference_type.hpp"
 
 namespace franky {
 
@@ -23,6 +24,9 @@ class CartesianImpedanceMotion : public CartesianImpedanceBase {
    * @see CartesianImpedanceBase::Params
    */
   struct Params : public CartesianImpedanceBase::Params {
+    /** The type of the target reference (relative or absolute). */
+    ReferenceType target_type{ReferenceType::kAbsolute};
+
     /** Whether to end the motion when the target is reached or keep holding the
      * last target. */
     bool return_when_finished{true};
