@@ -16,18 +16,12 @@ jobs:
   integration_test:
     needs: [get-versions, build-wheels]
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
+    container:
+      image: quay.io/pypa/manylinux_2_28_x86_64
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
 
       - name: Download wheels
         uses: actions/download-artifact@v4
@@ -35,14 +29,29 @@ jobs:
           name: wheels___${{ needs.get-versions.outputs.latest }}___manylinux_2_28_x86_64
           path: artifacts/
 
-      - name: Install franky
-        run: |
-          version="${{ needs.get-versions.outputs.latest }}"
-          unzip "artifacts/libfranka_${version//./-}_wheels.zip" -d unpacked/
-          PY_TAG=$(python -c "import sys; v=sys.version_info; print(f'cp{v.major}{v.minor}')")
-          pip install unpacked/dist/franky_control-*-${PY_TAG}-${PY_TAG}-*.whl
-
       - name: Run integration tests
         run: |
-          pip install pytest pytest-cov franky-sim
-          pytest tests/pytest/
+          . docker/common/dependency_versions
+          yum -y install -q unzip
+
+          version="${{ needs.get-versions.outputs.latest }}"
+          unzip -q "artifacts/libfranka_${version//./-}_wheels.zip" -d unpacked/
+
+          for PYBIN in /opt/python/*/bin; do
+            if [[ "${PYBIN}" =~ ${PYBIN_SUPPORTED_VERSIONS} ]]; then
+              PY_VER=$("${PYBIN}/python3" -c "import sys; v=sys.version_info; print(v.major * 100 + v.minor)")
+              [[ "${PY_VER}" -lt 310 ]] && continue
+
+              PY_DIR=$(basename "$(dirname "$PYBIN")")
+              echo "=== Testing ${PY_DIR} ==="
+
+              "${PYBIN}/python3" -m venv ".venv_${PY_DIR}"
+              source ".venv_${PY_DIR}/bin/activate"
+
+              pip install -q unpacked/dist/franky_control-*-${PY_DIR}-*.whl
+              pip install -q pytest pytest-cov franky-sim
+              pytest tests/pytest/
+
+              deactivate
+            fi
+          done
