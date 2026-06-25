@@ -3,9 +3,8 @@ set -e
 
 echo "Installing POCO version ${POCO_VERSION}..."
 TMP_DIR="$(mktemp -d /var/tmp/tmp.XXXXXXXXXX)"
-git clone https://github.com/pocoproject/poco.git "${TMP_DIR}"
+git clone --depth 1 --branch "${POCO_VERSION}" https://github.com/pocoproject/poco.git "${TMP_DIR}"
 cd "${TMP_DIR}"
-git checkout "${POCO_VERSION}"
 mkdir build_
 cd build_
 cmake .. -DCMAKE_BUILD_TYPE=Release

@@ -3,9 +3,8 @@ set -e
 
 echo "Installing Eigen version ${EIGEN_VERSION}..."
 TMP_DIR="$(mktemp -d /var/tmp/tmp.XXXXXXXXXX)"
-git clone https://gitlab.com/libeigen/eigen.git "${TMP_DIR}"
+git clone --depth 1 --branch "${EIGEN_VERSION}" https://gitlab.com/libeigen/eigen.git "${TMP_DIR}"
 cd "${TMP_DIR}"
-git checkout "${EIGEN_VERSION}"
 mkdir build
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release

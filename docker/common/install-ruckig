@@ -3,9 +3,8 @@ set -e
 
 echo "Installing ruckig version ${RUCKIG_VERSION}..."
 TMP_DIR="$(mktemp -d /var/tmp/tmp.XXXXXXXXXX)"
-git clone https://github.com/pantor/ruckig.git "${TMP_DIR}"
+git clone --depth 1 --branch "v${RUCKIG_VERSION}" https://github.com/pantor/ruckig.git "${TMP_DIR}"
 cd "${TMP_DIR}"
-git checkout "v${RUCKIG_VERSION}"
 mkdir build
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DBUILD_PYTHON_MODULE=OFF -DBUILD_CLOUD_CLIENT=OFF

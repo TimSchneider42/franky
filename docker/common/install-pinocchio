@@ -3,16 +3,15 @@ set -e
 
 echo "Installing Pinocchio version ${PINOCCHIO_VERSION}..."
 TMP_DIR="$(mktemp -d /var/tmp/tmp.XXXXXXXXXX)"
-git clone https://github.com/stack-of-tasks/pinocchio "${TMP_DIR}"
+git clone --depth 1 --branch "${PINOCCHIO_VERSION}" --recurse-submodules --shallow-submodules \
+  https://github.com/stack-of-tasks/pinocchio "${TMP_DIR}"
 cd "${TMP_DIR}"
-git checkout "${PINOCCHIO_VERSION}"
-git submodule update --init --recursive
 # Workaround to prevent them from overriding CMP0167=OLD again
 sed -i 's/^[[:space:]]*cmake_policy(SET CMP0167 NEW)/# &/' CMakeLists.txt
 mkdir build
 cd build
 # CMP0167 has to be set to OLD to be compatible with outdated boost versions
-cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_DEFAULT_CMP0167=OLD -DBUILD_WITH_URDF_SUPPORT=on -DBUILD_PYTHON_INTERFACE=off -DBUILD_TESTING=off
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_DEFAULT_CMP0167=OLD -DBUILD_WITH_URDF_SUPPORT=on -DBUILD_WITH_COLLISION_SUPPORT=off -DBUILD_PYTHON_INTERFACE=off -DBUILD_TESTING=off
 make -j "$(nproc)"
 sudo make install || make install
 cd /

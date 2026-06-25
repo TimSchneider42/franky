@@ -3,9 +3,8 @@ set -e
 
 echo "Installing Catch2 version ${CATCH2_VERSION}..."
 TMP_DIR="$(mktemp -d)"
-git clone https://github.com/catchorg/Catch2.git "${TMP_DIR}"
+git clone --depth 1 --branch "v${CATCH2_VERSION}" https://github.com/catchorg/Catch2.git "${TMP_DIR}"
 cd "${TMP_DIR}"
-git checkout "v${CATCH2_VERSION}"
 mkdir build
 cd build
 cmake -DCATCH_BUILD_TESTING=OFF -DCATCH_ENABLE_WERROR=OFF -DCATCH_INSTALL_DOCS=OFF -DCATCH_INSTALL_HELPERS=OFF ..
