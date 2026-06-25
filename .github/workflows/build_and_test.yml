@@ -11,6 +11,9 @@ jobs:
   build_and_test:
     runs-on: ubuntu-latest
 
+    env:
+      APT_PACKAGES: build-essential cmake git python3-dev libboost-all-dev liburdfdom-dev libfmt-dev libssl-dev libmysqlclient-dev libpq-dev
+
     steps:
       - name: Checkout repository and submodules
         uses: actions/checkout@v4
@@ -20,14 +23,18 @@ jobs:
       - name: Install apt dependencies
         run: |
           sudo apt-get update
-          sudo apt-get -y install build-essential cmake git python3-dev libboost-all-dev liburdfdom-dev libfmt-dev libssl-dev libmysqlclient-dev libpq-dev
+          sudo apt-get -y install $APT_PACKAGES
+
+      - name: Hash system packages
+        id: syspkg
+        run: echo "hash=$(dpkg-query -W -f='${Package} ${Version}\n' $APT_PACKAGES | sort | sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
 
       - name: Cache build dependencies
         id: cache-deps
         uses: actions/cache@v4
         with:
           path: /usr/local
-          key: deps-ubuntu-${{ hashFiles('docker/common/install-*', 'docker/common/dependency_versions') }}-${{ inputs.libfranka-version }}
+          key: deps-ubuntu-${{ steps.syspkg.outputs.hash }}-${{ hashFiles('docker/common/install-*', 'docker/common/dependency_versions') }}-${{ inputs.libfranka-version }}
 
       - name: Install other dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'

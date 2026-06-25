@@ -17,6 +17,9 @@ jobs:
     container:
       image: quay.io/pypa/${{ inputs.manylinux-version }}
 
+    env:
+      YUM_PACKAGES: zip boost-devel urdfdom-devel fmt-devel gcc-c++ openssl-devel mysql-devel postgresql-devel tinyxml2-devel
+
     steps:
       - name: Checkout repository and submodules
         uses: actions/checkout@v4
@@ -24,15 +27,18 @@ jobs:
           submodules: recursive
 
       - name: Install yum dependencies
-        run: |
-          yum -y install zip boost-devel urdfdom-devel fmt-devel gcc-c++ openssl-devel mysql-devel postgresql-devel tinyxml2-devel
+        run: yum -y install $YUM_PACKAGES
+
+      - name: Hash system packages
+        id: syspkg
+        run: echo "hash=$(rpm -q $YUM_PACKAGES | sort | sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
 
       - name: Cache build dependencies
         id: cache-deps
         uses: actions/cache@v4
         with:
           path: /usr/local
-          key: deps-${{ inputs.manylinux-version }}-${{ hashFiles('docker/common/install-*', 'docker/common/dependency_versions') }}-${{ inputs.libfranka-version }}
+          key: deps-${{ inputs.manylinux-version }}-${{ steps.syspkg.outputs.hash }}-${{ hashFiles('docker/common/install-*', 'docker/common/dependency_versions') }}-${{ inputs.libfranka-version }}
 
       - name: Install other dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
