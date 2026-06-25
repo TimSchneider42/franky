@@ -1,4 +1,4 @@
-#include "franky/motion/impedance_motion.hpp"
+#include "franky/motion/cartesian_impedance_base.hpp"
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
@@ -10,7 +10,7 @@
 
 namespace franky {
 
-ImpedanceMotion::ImpedanceMotion(Affine target, const ImpedanceMotion::Params &params)
+CartesianImpedanceBase::CartesianImpedanceBase(Affine target, const CartesianImpedanceBase::Params &params)
     : target_(std::move(target)), params_(params), Motion<franka::Torques>() {
   stiffness.setZero();
   stiffness.topLeftCorner(3, 3) << params.translational_stiffness * Eigen::MatrixXd::Identity(3, 3);
@@ -20,7 +20,8 @@ ImpedanceMotion::ImpedanceMotion(Affine target, const ImpedanceMotion::Params &p
   damping.bottomRightCorner(3, 3) << 2.0 * sqrt(params.rotational_stiffness) * Eigen::MatrixXd::Identity(3, 3);
 }
 
-void ImpedanceMotion::initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) {
+void CartesianImpedanceBase::initImpl(
+    const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) {
   auto robot_pose = Affine(Eigen::Matrix4d::Map(robot_state.O_T_EE.data()));
   intermediate_target_ = robot_pose;
   if (params_.target_type == ReferenceType::kRelative)
@@ -29,9 +30,12 @@ void ImpedanceMotion::initImpl(const RobotState &robot_state, const std::optiona
     absolute_target_ = target_;
 }
 
-franka::Torques ImpedanceMotion::nextCommandImpl(
+franka::Torques CartesianImpedanceBase::nextCommandImpl(
     const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time,
     const std::optional<franka::Torques> &previous_command) {
+  auto [intermediate_target, finish] = update(robot_state, time_step, rel_time, abs_time);
+  intermediate_target_ = intermediate_target;
+
   auto model = robot()->model();
   Vector7d coriolis = model->coriolis(robot_state);
   Jacobian jacobian = model->zeroJacobian(franka::Frame::kEndEffector, robot_state);
@@ -42,7 +46,7 @@ franka::Torques ImpedanceMotion::nextCommandImpl(
   Eigen::Matrix<double, 6, 1> error;
   error.head(3) << robot_state.O_T_EE.translation() - intermediate_target_.translation();
 
-  Eigen::Quaterniond quat(target().rotation());
+  Eigen::Quaterniond quat(intermediate_target_.rotation());
   if (quat.coeffs().dot(orientation.coeffs()) < 0.0) {
     orientation.coeffs() << -orientation.coeffs();
   }
@@ -59,10 +63,6 @@ franka::Torques ImpedanceMotion::nextCommandImpl(
 
   std::array<double, 7> tau_d_array{};
   Eigen::VectorXd::Map(&tau_d_array[0], 7) = tau_d;
-
-  // Update target with target motion
-  auto [intermediate_target, finish] = update(robot_state, time_step, rel_time);
-  intermediate_target_ = intermediate_target;
 
   auto output = franka::Torques(tau_d_array);
   if (finish) output = franka::MotionFinished(output);
