@@ -2,10 +2,12 @@
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
+#include <algorithm>
 #include <map>
 #include <utility>
 
 #include "franky/motion/motion.hpp"
+#include "franky/motion/torque_control_utils.hpp"
 #include "franky/robot_pose.hpp"
 
 namespace franky {
@@ -29,8 +31,10 @@ CartesianImpedanceBase::CartesianImpedanceBase(Affine target, const CartesianImp
   stiffness.topLeftCorner(3, 3) << params.translational_stiffness * Eigen::MatrixXd::Identity(3, 3);
   stiffness.bottomRightCorner(3, 3) << params.rotational_stiffness * Eigen::MatrixXd::Identity(3, 3);
   damping.setZero();
-  damping.topLeftCorner(3, 3) << 2.0 * sqrt(params.translational_stiffness) * Eigen::MatrixXd::Identity(3, 3);
-  damping.bottomRightCorner(3, 3) << 2.0 * sqrt(params.rotational_stiffness) * Eigen::MatrixXd::Identity(3, 3);
+  const double translational_damping = 2.0 * std::sqrt(params.translational_stiffness);
+  const double rotational_damping = 2.0 * std::sqrt(params.rotational_stiffness);
+  damping.topLeftCorner(3, 3) << translational_damping * Eigen::MatrixXd::Identity(3, 3);
+  damping.bottomRightCorner(3, 3) << rotational_damping * Eigen::MatrixXd::Identity(3, 3);
 }
 
 void CartesianImpedanceBase::initImpl(
@@ -84,7 +88,21 @@ franka::Torques CartesianImpedanceBase::nextCommandImpl(
         nullspace_projector * (params_.nullspace_stiffness * nullspace_error - nullspace_damping * robot_state.dq);
   }
 
-  auto tau_d = tau_task + tau_nullspace + coriolis;
+  Vector7d tau_limit = Vector7d::Zero();
+  if (params_.joint_limit_repulsion_active) {
+    tau_limit = franky::computeJointLimitTorque(
+        robot_state.q,
+        robot_state.dq,
+        params_.lower_joint_limits,
+        params_.upper_joint_limits,
+        params_.joint_limit_activation_distance,
+        params_.joint_limit_stiffness,
+        params_.joint_limit_damping,
+        params_.joint_limit_max_torque);
+  }
+
+  Vector7d tau_d = tau_task + tau_nullspace + tau_limit + coriolis;
+  tau_d = franky::saturateTorqueRate(tau_d, robot_state.tau_J_d, params_.max_delta_tau);
 
   std::array<double, 7> tau_d_array{};
   Eigen::VectorXd::Map(&tau_d_array[0], 7) = tau_d;
