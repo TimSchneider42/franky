@@ -26,10 +26,24 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install dependencies
+      - name: Install yum dependencies
         run: |
           yum -y install zip boost-devel urdfdom-devel fmt-devel gcc-c++ openssl-devel mysql-devel postgresql-devel tinyxml2-devel
+
+      - name: Cache build dependencies
+        id: cache-deps
+        uses: actions/cache@v4
+        with:
+          path: /usr/local
+          key: deps-${{ inputs.manylinux-version }}-${{ hashFiles('docker/common/install-*', 'docker/common/dependency_versions') }}-${{ inputs.libfranka-version }}
+
+      - name: Install other dependencies
+        if: steps.cache-deps.outputs.cache-hit != 'true'
+        run: |
           LIBFRANKA_VERSION=${{ inputs.libfranka-version }} ./docker/common/install-dependencies
+
+      - name: Refresh linker cache
+        run: ldconfig
 
       - name: Setting up pip
         run: |
