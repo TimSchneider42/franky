@@ -2,6 +2,7 @@
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
+#include <Eigen/SVD>
 #include <map>
 #include <optional>
 
@@ -51,6 +52,18 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
 
     /** Allows to enable or disable individual force constraints. */
     Eigen::Vector<bool, 6> force_constraints_active{Eigen::Vector<bool, 6>::Zero()};
+
+    /**
+     * Preferred joint posture for the Cartesian controller nullspace.
+     *
+     * When set together with a positive nullspace_stiffness, the controller
+     * adds a secondary posture torque that does not change the Cartesian task
+     * to first order.
+     */
+    std::optional<Vector7d> nullspace_target{std::nullopt};
+
+    /** Nullspace posture stiffness in [Nm/rad]. Set to 0 to disable. */
+    double nullspace_stiffness{0.0};
   };
 
   /**
