@@ -1,7 +1,9 @@
 #pragma once
 
+#include <memory>
 #include <optional>
 
+#include "franky/motion/impedance_gains_handle.hpp"
 #include "franky/motion/motion.hpp"
 #include "franky/types.hpp"
 
@@ -43,10 +45,10 @@ struct TorqueSafetyParams {
  */
 struct JointImpedanceParams : public TorqueSafetyParams {
   /** Joint stiffness gains in [Nm/rad]. */
-  Vector7d stiffness{Vector7d::Constant(50.0)};
+  Vector7d stiffness{defaultJointImpedanceStiffness()};
 
   /** Joint damping gains in [Nms/rad]. */
-  Vector7d damping{Vector7d::Constant(10.0)};
+  Vector7d damping{defaultJointImpedanceDamping()};
 
   /** Constant torque offset added to every command in [Nm]. */
   Vector7d constant_torque_offset{Vector7d::Zero()};
@@ -64,13 +66,21 @@ class JointImpedanceBase : public Motion<franka::Torques> {
 
  protected:
   explicit JointImpedanceBase(
-      const Vector7d &target, const Vector7d &target_velocity, const JointImpedanceParams &params);
+      const Vector7d &target, const Vector7d &target_velocity, const JointImpedanceParams &params,
+      std::shared_ptr<JointImpedanceGainsHandle> gains_handle = nullptr, double gains_time_constant = 0.1);
 
-  [[nodiscard]] franka::Torques computeCommand(const RobotState &robot_state, const JointReference &reference) const;
+  [[nodiscard]] franka::Torques computeCommand(
+      const RobotState &robot_state, const JointReference &reference, double dt);
 
   JointImpedanceParams params_;
   Vector7d target_;
   Vector7d target_velocity_;
+
+ private:
+  std::shared_ptr<JointImpedanceGainsHandle> gains_handle_;
+  double gains_time_constant_;
+  Vector7d current_stiffness_;
+  Vector7d current_damping_;
 };
 
 class JointImpedanceMotion : public JointImpedanceBase {
