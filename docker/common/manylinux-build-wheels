@@ -22,6 +22,9 @@ mkdir -p "${WHEELS_DIR}"
 mkdir -p dist
 mkdir -p dist_full
 
+export FRANKY_LIB_CACHE_DIR="${FRANKY_LIB_CACHE_DIR:-$(pwd)/lib_cache}"
+mkdir -p "${FRANKY_LIB_CACHE_DIR}"
+
 # Compile wheels
 echo "Building wheels..."
 for PYBIN in /opt/python/*/bin; do

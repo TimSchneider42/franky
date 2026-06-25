@@ -1,6 +1,7 @@
 import multiprocessing
 import os
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -15,6 +16,20 @@ with (Path(__file__).resolve().parent / "README.md").open() as readme_file:
 
 class CMakeBuild(build_ext):
     def run(self):
+        for ext in self.extensions:
+            self.build_extension(ext)
+
+    def build_extension(self, ext):
+        ext_dir = Path(self.get_ext_fullpath(ext.name)).parent.resolve()
+
+        franky_lib_cache_dir = os.environ.get("FRANKY_LIB_CACHE_DIR")
+
+        prebuilt_lib = None
+        if franky_lib_cache_dir is not None:
+            candidate = Path(franky_lib_cache_dir) / "libfranky.so"
+            if candidate.exists():
+                prebuilt_lib = candidate
+
         try:
             out = subprocess.check_output(["cmake", "--version"])
         except OSError:
@@ -28,12 +43,6 @@ class CMakeBuild(build_ext):
         )
         if cmake_version < LooseVersion("3.10.0"):
             raise RuntimeError("CMake >= 3.10.0 is required")
-
-        for ext in self.extensions:
-            self.build_extension(ext)
-
-    def build_extension(self, ext):
-        ext_dir = Path(self.get_ext_fullpath(ext.name)).parent.resolve()
 
         build_type = os.environ.get("BUILD_TYPE", "Release")
         build_args = ["--config", build_type]
@@ -51,6 +60,12 @@ class CMakeBuild(build_ext):
             "-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
         ]
 
+        if prebuilt_lib is not None:
+            ext_dir.mkdir(exist_ok=True, parents=True)
+            dest = ext_dir / prebuilt_lib.name
+            shutil.copy2(prebuilt_lib, dest)
+            cmake_args.append("-DFRANKY_PREBUILT_LIB={}".format(dest))
+
         Path(self.build_temp).mkdir(exist_ok=True, parents=True)
 
         subprocess.check_call(
@@ -62,6 +77,12 @@ class CMakeBuild(build_ext):
             + ["--", "-j", str(multiprocessing.cpu_count())],
             cwd=self.build_temp,
         )
+
+        if franky_lib_cache_dir is not None and prebuilt_lib is None:
+            Path(franky_lib_cache_dir).mkdir(exist_ok=True, parents=True)
+            shutil.copy2(
+                ext_dir / "libfranky.so", Path(franky_lib_cache_dir) / "libfranky.so"
+            )
 
 
 with (Path(__file__).resolve().parent / "VERSION").open() as f:

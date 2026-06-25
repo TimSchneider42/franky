@@ -41,10 +41,21 @@ message("Found Franka Version: ${Franka_VERSION}")
 
 find_package(ruckig 0.17.3 REQUIRED)
 
-file(GLOB_RECURSE SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
-add_library(franky SHARED ${SRC})
-target_include_directories(franky PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(franky PUBLIC Franka::Franka Eigen3::Eigen ruckig::ruckig)
+set(FRANKY_PREBUILT_LIB "" CACHE FILEPATH "Path to a pre-built libfranky.so; skips rebuilding the core library")
+
+if (FRANKY_PREBUILT_LIB)
+    add_library(franky SHARED IMPORTED GLOBAL)
+    set_target_properties(franky PROPERTIES
+        IMPORTED_LOCATION "${FRANKY_PREBUILT_LIB}"
+        INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/include"
+        INTERFACE_LINK_LIBRARIES "Franka::Franka;Eigen3::Eigen;ruckig::ruckig"
+    )
+else ()
+    file(GLOB_RECURSE SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+    add_library(franky SHARED ${SRC})
+    target_include_directories(franky PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+    target_link_libraries(franky PUBLIC Franka::Franka Eigen3::Eigen ruckig::ruckig)
+endif ()
 
 
 if (BUILD_PYTHON_MODULE)
@@ -108,9 +119,11 @@ if (BUILD_TESTS)
 endif ()
 
 
-install(TARGETS franky
-        ARCHIVE DESTINATION lib
-        LIBRARY DESTINATION lib
-        RUNTIME DESTINATION bin
-        INCLUDES DESTINATION include
-)
+if (NOT FRANKY_PREBUILT_LIB)
+    install(TARGETS franky
+            ARCHIVE DESTINATION lib
+            LIBRARY DESTINATION lib
+            RUNTIME DESTINATION bin
+            INCLUDES DESTINATION include
+    )
+endif ()
