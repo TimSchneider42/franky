@@ -33,8 +33,8 @@ void CartesianImpedanceBase::initImpl(
 franka::Torques CartesianImpedanceBase::nextCommandImpl(
     const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time,
     const std::optional<franka::Torques> &previous_command) {
-  auto [intermediate_target, finish] = update(robot_state, time_step, rel_time, abs_time);
-  intermediate_target_ = intermediate_target;
+  auto [reference, finish] = update(robot_state, time_step, rel_time, abs_time);
+  intermediate_target_ = reference.target;
 
   auto model = robot()->model();
   Vector7d coriolis = model->coriolis(robot_state);
@@ -55,7 +55,11 @@ franka::Torques CartesianImpedanceBase::nextCommandImpl(
   error.tail(3) << error_quaternion.x(), error_quaternion.y(), error_quaternion.z();
   error.tail(3) << -transform.linear() * error.tail(3);
 
-  auto wrench_cartesian_default = -stiffness * error - damping * (jacobian * robot_state.dq);
+  const Vector6d desired_twist =
+      reference.target_twist.has_value() ? reference.target_twist->vector_repr() : Vector6d::Zero();
+  const Vector6d measured_twist = jacobian * robot_state.dq;
+
+  auto wrench_cartesian_default = -stiffness * error - damping * (measured_twist - desired_twist);
   auto wrench_cartesian = params_.force_constraints_active.select(params_.force_constraints, wrench_cartesian_default);
 
   auto tau_task = jacobian.transpose() * wrench_cartesian;
