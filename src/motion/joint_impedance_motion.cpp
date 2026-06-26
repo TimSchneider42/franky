@@ -57,12 +57,12 @@ franka::Torques JointImpedanceBase::computeCommand(
   Vector7d tau_d = current_stiffness_.asDiagonal() * (reference.q - robot_state.q) +
                    current_damping_.asDiagonal() * (reference.dq - robot_state.dq) + torque_feedforward;
 
-  if (params_.joint_limit_repulsion_active) {
+  if (params_.lower_joint_limits.has_value() && params_.upper_joint_limits.has_value()) {
     tau_d += franky::computeJointLimitTorque(
         robot_state.q,
         robot_state.dq,
-        params_.lower_joint_limits,
-        params_.upper_joint_limits,
+        *params_.lower_joint_limits,
+        *params_.upper_joint_limits,
         params_.joint_limit_activation_distance,
         params_.joint_limit_stiffness,
         params_.joint_limit_damping,

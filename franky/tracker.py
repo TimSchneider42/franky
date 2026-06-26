@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import time as _time
 from typing import Optional
 
 import numpy as np
@@ -9,11 +10,37 @@ from ._franky import (
     CartesianImpedanceGainsHandle,
     CartesianImpedanceTrackingMotion,
     CartesianReferenceHandle,
+    ControlException,
+    FrictionCompensationParams,
     JointImpedanceGainsHandle,
     JointImpedanceTrackingMotion,
     JointReferenceHandle,
     Twist,
+    TwistAcceleration,
 )
+
+
+def _is_premption_exception(exc: ControlException) -> bool:
+    """Return whether this is a preemption error from libfranka."""
+    return "Move command preempted!" in str(exc)
+
+
+_DEFAULT_JOINT_STIFFNESS = np.full(7, 50.0)
+
+
+def _default_joint_damping(stiffness: np.ndarray) -> np.ndarray:
+    return 2.0 * np.sqrt(stiffness)
+
+
+def _as_joint_gain(name: str, value) -> np.ndarray:
+    vector = np.asarray(value, dtype=float)
+    if vector.shape != (7,):
+        raise ValueError(f"{name} must contain exactly 7 values")
+    if not np.all(np.isfinite(vector)):
+        raise ValueError(f"{name} must contain only finite values")
+    if np.any(vector < 0.0):
+        raise ValueError(f"{name} must contain only non-negative values")
+    return vector.copy()
 
 
 class CartesianImpedanceTracker:
@@ -25,10 +52,9 @@ class CartesianImpedanceTracker:
 
     Example::
 
-        with CartesianImpedanceTracker(robot, translational_stiffness=800.0) as tracker:
-            while tracker.is_running:
+        with CartesianImpedanceTracker(robot, translational_stiffness=800.0, period=0.01) as tracker:
+            while tracker.tick():
                 tracker.set_target(desired_pose)
-                time.sleep(0.01)
     """
 
     def __init__(
@@ -47,10 +73,15 @@ class CartesianImpedanceTracker:
         joint_limit_damping: float = 1.0,
         joint_limit_max_torque: float = 5.0,
         gains_time_constant: float = 0.1,
+        period: Optional[float] = None,
     ):
         self._robot = robot
         self._reference_handle = CartesianReferenceHandle()
         self._gains_handle = CartesianImpedanceGainsHandle()
+        self._period = period
+        self._tick_count = 0
+        self._t_start = _time.perf_counter()
+        self._t_next = self._t_start
 
         # Seed initial target from current pose so the robot doesn't jump.
         initial_pose = self._robot.current_pose.end_effector_pose
@@ -82,6 +113,35 @@ class CartesianImpedanceTracker:
             reference_handle=self._reference_handle, **kwargs
         )
         self._robot.move(motion, asynchronous=True)
+
+    # --- tick ---
+
+    def tick(self) -> bool:
+        """Sleep to maintain the requested period and return whether the controller is alive.
+
+        On the first call, returns immediately (no sleep). On subsequent calls,
+        sleeps the remaining time until the next tick boundary so that loop body
+        time is compensated for.
+
+        If no period was set, just returns is_running without sleeping.
+        """
+        if self._period is not None and self._tick_count > 0:
+            now = _time.perf_counter()
+            remaining = self._t_next - now
+            if remaining > 0:
+                _time.sleep(remaining)
+            self._t_next += self._period
+        elif self._period is not None:
+            # First tick: set up the schedule.
+            self._t_next = _time.perf_counter() + self._period
+
+        if not self._robot.is_in_control:
+            return False
+
+        self._tick_count += 1
+        return True
+
+    # --- streaming updates ---
 
     def set_target(self, pose: Affine, twist: Optional[Twist] = None) -> None:
         """Update the Cartesian target pose and optional twist (feedforward velocity)."""
@@ -136,6 +196,16 @@ class CartesianImpedanceTracker:
         """Whether the tracking controller is still active."""
         return self._robot.is_in_control
 
+    @property
+    def elapsed_time(self) -> float:
+        """Seconds since the tracker was created."""
+        return _time.perf_counter() - self._t_start
+
+    @property
+    def tick_count(self) -> int:
+        """Number of ticks that have returned True."""
+        return self._tick_count
+
     # --- lifecycle ---
 
     def stop(self) -> None:
@@ -144,7 +214,7 @@ class CartesianImpedanceTracker:
             self._robot.stop()
         self._robot.join_motion()
 
-    # --- escape hatch ---
+    # --- escape hatches ---
 
     @property
     def reference_handle(self) -> CartesianReferenceHandle:
@@ -170,10 +240,9 @@ class JointImpedanceTracker:
 
     Example::
 
-        with JointImpedanceTracker(robot, stiffness=[6.0]*7) as tracker:
-            while tracker.is_running:
+        with JointImpedanceTracker(robot, stiffness=[6.0]*7, period=0.01) as tracker:
+            while tracker.tick():
                 tracker.set_target(q_desired)
-                time.sleep(0.01)
     """
 
     def __init__(
@@ -192,25 +261,35 @@ class JointImpedanceTracker:
         joint_limit_damping: float = 1.0,
         joint_limit_max_torque: float = 5.0,
         gains_time_constant: float = 0.1,
+        period: Optional[float] = None,
     ):
         self._robot = robot
         self._reference_handle = JointReferenceHandle()
         self._gains_handle = JointImpedanceGainsHandle()
+        self._period = period
+        self._tick_count = 0
+        self._t_start = _time.perf_counter()
+        self._t_next = self._t_start
 
         # Seed initial target from current joint positions.
         q = self._robot.current_joint_positions
         self._reference_handle.set(q)
 
-        # Seed gains handle with initial values.
-        stiffness_init = (
-            np.asarray(stiffness) if stiffness is not None else np.full(7, 50.0)
+        # Seed gains handle with initial values. When damping is omitted, use
+        # critical damping for unit inertia so zero stiffness implies zero damping.
+        stiffness_init = _as_joint_gain(
+            "stiffness", _DEFAULT_JOINT_STIFFNESS if stiffness is None else stiffness
         )
-        damping_init = np.asarray(damping) if damping is not None else np.full(7, 10.0)
+        damping_init = (
+            _as_joint_gain("damping", damping)
+            if damping is not None
+            else _default_joint_damping(stiffness_init)
+        )
         self._gains_handle.set(stiffness_init, damping_init)
 
         kwargs = {
-            "stiffness": stiffness,
-            "damping": damping,
+            "stiffness": stiffness_init,
+            "damping": damping_init,
             "constant_torque_offset": constant_torque_offset,
             "compensate_coriolis": compensate_coriolis,
             "max_delta_tau": max_delta_tau,
@@ -230,6 +309,34 @@ class JointImpedanceTracker:
         )
         self._robot.move(motion, asynchronous=True)
 
+    # --- tick ---
+
+    def tick(self) -> bool:
+        """Sleep to maintain the requested period and return whether the controller is alive.
+
+        On the first call, returns immediately (no sleep). On subsequent calls,
+        sleeps the remaining time until the next tick boundary so that loop body
+        time is compensated for.
+
+        If no period was set, just returns is_running without sleeping.
+        """
+        if self._period is not None and self._tick_count > 0:
+            now = _time.perf_counter()
+            remaining = self._t_next - now
+            if remaining > 0:
+                _time.sleep(remaining)
+            self._t_next += self._period
+        elif self._period is not None:
+            self._t_next = _time.perf_counter() + self._period
+
+        if not self._robot.is_in_control:
+            return False
+
+        self._tick_count += 1
+        return True
+
+    # --- streaming updates ---
+
     def set_target(
         self,
         q: np.ndarray,
@@ -247,18 +354,27 @@ class JointImpedanceTracker:
     ) -> None:
         """Update joint impedance gains. Smoothed in the RT loop via exponential interpolation.
 
-        Only the provided gains are changed; omitted gains keep their current target values.
+        When stiffness is changed and damping is omitted, damping is updated to
+        the critical damping heuristic 2*sqrt(stiffness). Otherwise, omitted
+        gains keep their current target values.
         """
         current = self._gains_handle.get() if self._gains_handle.has_gains else None
-        k = (
-            np.asarray(stiffness)
-            if stiffness is not None
-            else (current.stiffness if current else np.full(7, 50.0))
+        k = _as_joint_gain(
+            "stiffness",
+            (
+                stiffness
+                if stiffness is not None
+                else (current.stiffness if current else _DEFAULT_JOINT_STIFFNESS)
+            ),
         )
         d = (
-            np.asarray(damping)
+            _as_joint_gain("damping", damping)
             if damping is not None
-            else (current.damping if current else np.full(7, 10.0))
+            else (
+                _default_joint_damping(k)
+                if stiffness is not None or current is None
+                else _as_joint_gain("damping", current.damping)
+            )
         )
         self._gains_handle.set(k, d)
 
@@ -272,6 +388,16 @@ class JointImpedanceTracker:
     def is_running(self) -> bool:
         return self._robot.is_in_control
 
+    @property
+    def elapsed_time(self) -> float:
+        """Seconds since the tracker was created."""
+        return _time.perf_counter() - self._t_start
+
+    @property
+    def tick_count(self) -> int:
+        """Number of ticks that have returned True."""
+        return self._tick_count
+
     # --- lifecycle ---
 
     def stop(self) -> None:
@@ -279,7 +405,7 @@ class JointImpedanceTracker:
             self._robot.stop()
         self._robot.join_motion()
 
-    # --- escape hatch ---
+    # --- escape hatches ---
 
     @property
     def reference_handle(self) -> JointReferenceHandle:

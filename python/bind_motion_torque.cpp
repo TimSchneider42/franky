@@ -9,6 +9,7 @@ using namespace pybind11::literals;  // to bring in the '_a' literal
 using namespace franky;
 
 namespace {
+
 CartesianReference toCartesianReference(const Affine &target, const std::optional<Twist> &target_twist) {
   CartesianReference reference;
   reference.target = target;
@@ -36,11 +37,8 @@ JointImpedanceParams makeJointImpedanceParams(
   if (stiffness.has_value()) params.stiffness = stiffness.value();
   if (damping.has_value()) params.damping = damping.value();
   if (constant_torque_offset.has_value()) params.constant_torque_offset = constant_torque_offset.value();
-  if (lower_joint_limits.has_value() && upper_joint_limits.has_value()) {
-    params.joint_limit_repulsion_active = true;
-    params.lower_joint_limits = lower_joint_limits.value();
-    params.upper_joint_limits = upper_joint_limits.value();
-  }
+  params.lower_joint_limits = lower_joint_limits;
+  params.upper_joint_limits = upper_joint_limits;
   params.compensate_coriolis = compensate_coriolis;
   params.max_delta_tau = max_delta_tau;
   params.joint_limit_activation_distance = joint_limit_activation_distance;
@@ -67,24 +65,12 @@ CartesianImpedanceBase::Params makeCartesianImpedanceParams(
   params.joint_limit_stiffness = joint_limit_stiffness;
   params.joint_limit_damping = joint_limit_damping;
   params.joint_limit_max_torque = joint_limit_max_torque;
-
-  Eigen::Vector<bool, 6> force_constraints_active = Eigen::Vector<bool, 6>::Zero();
-  Eigen::Vector<double, 6> force_constraints_value;
-  if (force_constraints.has_value()) {
-    for (int i = 0; i < 6; i++) {
-      force_constraints_value[i] = force_constraints.value()[i].value_or(NAN);
-      force_constraints_active[i] = force_constraints.value()[i].has_value();
-    }
-  }
-  params.force_constraints = force_constraints_value;
-  params.force_constraints_active = force_constraints_active;
-  if (lower_joint_limits.has_value() && upper_joint_limits.has_value()) {
-    params.joint_limit_repulsion_active = true;
-    params.lower_joint_limits = lower_joint_limits.value();
-    params.upper_joint_limits = upper_joint_limits.value();
-  }
+  params.lower_joint_limits = lower_joint_limits;
+  params.upper_joint_limits = upper_joint_limits;
+  if (force_constraints.has_value()) params.force_constraints = force_constraints.value();
   return params;
 }
+
 }  // namespace
 
 void bind_motion_torque(py::module &m) {
@@ -127,8 +113,15 @@ void bind_motion_torque(py::module &m) {
       .def(
           py::init<>([](const std::optional<Vector7d> &stiffness, const std::optional<Vector7d> &damping) {
             JointImpedanceGains g;
-            if (stiffness.has_value()) g.stiffness = stiffness.value();
-            if (damping.has_value()) g.damping = damping.value();
+            if (stiffness.has_value()) {
+              validateNonNegativeFinite(stiffness.value(), "stiffness");
+              g.stiffness = stiffness.value();
+              if (!damping.has_value()) g.damping = defaultJointImpedanceDamping(g.stiffness);
+            }
+            if (damping.has_value()) {
+              validateNonNegativeFinite(damping.value(), "damping");
+              g.damping = damping.value();
+            }
             return g;
           }),
           "stiffness"_a = std::nullopt,
@@ -182,6 +175,50 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
           "target_twist"_a = std::nullopt)
       .def("clear", &CartesianReferenceHandle::clear)
       .def_property_readonly("has_reference", &CartesianReferenceHandle::hasReference);
+
+  // Params classes — bind before the motion classes that use them.
+
+  py::class_<JointImpedanceParams>(m, "JointImpedanceParams")
+      .def(py::init<>())
+      .def_readwrite("stiffness", &JointImpedanceParams::stiffness)
+      .def_readwrite("damping", &JointImpedanceParams::damping)
+      .def_readwrite("constant_torque_offset", &JointImpedanceParams::constant_torque_offset)
+      .def_readwrite("compensate_coriolis", &JointImpedanceParams::compensate_coriolis)
+      .def_readwrite("max_delta_tau", &TorqueSafetyParams::max_delta_tau)
+      .def_readwrite("lower_joint_limits", &TorqueSafetyParams::lower_joint_limits)
+      .def_readwrite("upper_joint_limits", &TorqueSafetyParams::upper_joint_limits)
+      .def_readwrite("joint_limit_activation_distance", &TorqueSafetyParams::joint_limit_activation_distance)
+      .def_readwrite("joint_limit_stiffness", &TorqueSafetyParams::joint_limit_stiffness)
+      .def_readwrite("joint_limit_damping", &TorqueSafetyParams::joint_limit_damping)
+      .def_readwrite("joint_limit_max_torque", &TorqueSafetyParams::joint_limit_max_torque);
+
+  py::class_<CartesianImpedanceBase::Params>(m, "CartesianImpedanceParams")
+      .def(py::init<>())
+      .def_readwrite("translational_stiffness", &CartesianImpedanceBase::Params::translational_stiffness)
+      .def_readwrite("rotational_stiffness", &CartesianImpedanceBase::Params::rotational_stiffness)
+      .def_readwrite("translational_error_clip", &CartesianImpedanceBase::Params::translational_error_clip)
+      .def_readwrite("rotational_error_clip", &CartesianImpedanceBase::Params::rotational_error_clip)
+      .def_readwrite("force_constraints", &CartesianImpedanceBase::Params::force_constraints)
+      .def_readwrite("nullspace_target", &CartesianImpedanceBase::Params::nullspace_target)
+      .def_readwrite("nullspace_stiffness", &CartesianImpedanceBase::Params::nullspace_stiffness)
+      .def_readwrite("max_delta_tau", &TorqueSafetyParams::max_delta_tau)
+      .def_readwrite("lower_joint_limits", &TorqueSafetyParams::lower_joint_limits)
+      .def_readwrite("upper_joint_limits", &TorqueSafetyParams::upper_joint_limits)
+      .def_readwrite("joint_limit_activation_distance", &TorqueSafetyParams::joint_limit_activation_distance)
+      .def_readwrite("joint_limit_stiffness", &TorqueSafetyParams::joint_limit_stiffness)
+      .def_readwrite("joint_limit_damping", &TorqueSafetyParams::joint_limit_damping)
+      .def_readwrite("joint_limit_max_torque", &TorqueSafetyParams::joint_limit_max_torque);
+
+  py::class_<ExponentialImpedanceMotion::Params, CartesianImpedanceBase::Params>(m, "ExponentialImpedanceParams")
+      .def(py::init<>())
+      .def_readwrite("target_type", &ExponentialImpedanceMotion::Params::target_type)
+      .def_readwrite("exponential_decay", &ExponentialImpedanceMotion::Params::exponential_decay);
+
+  py::class_<CartesianImpedanceMotion::Params, CartesianImpedanceBase::Params>(m, "CartesianImpedanceMotionParams")
+      .def(py::init<>())
+      .def_readwrite("target_type", &CartesianImpedanceMotion::Params::target_type)
+      .def_readwrite("return_when_finished", &CartesianImpedanceMotion::Params::return_when_finished)
+      .def_readwrite("finish_wait_factor", &CartesianImpedanceMotion::Params::finish_wait_factor);
 
   py::class_<JointImpedanceMotion, Motion<franka::Torques>, std::shared_ptr<JointImpedanceMotion>>(
       m, "JointImpedanceMotion")
@@ -238,7 +275,8 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
           "joint_limit_damping"_a = 1.0,
           "joint_limit_max_torque"_a = 5.0)
       .def_property_readonly("target", &JointImpedanceMotion::target)
-      .def_property_readonly("target_velocity", &JointImpedanceMotion::target_velocity);
+      .def_property_readonly("target_velocity", &JointImpedanceMotion::target_velocity)
+      .def_property_readonly("params", [](const JointImpedanceMotion &m) { return m.params(); });
 
   py::class_<JointImpedanceTrackingMotion, Motion<franka::Torques>, std::shared_ptr<JointImpedanceTrackingMotion>>(
       m, "JointImpedanceTrackingMotion")
@@ -302,7 +340,8 @@ interpolates toward them with the given time constant, allowing smooth runtime s
           "gains_handle"_a = nullptr,
           "gains_time_constant"_a = 0.1)
       .def_property_readonly("target", &JointImpedanceTrackingMotion::target)
-      .def_property_readonly("target_velocity", &JointImpedanceTrackingMotion::target_velocity);
+      .def_property_readonly("target_velocity", &JointImpedanceTrackingMotion::target_velocity)
+      .def_property_readonly("params", [](const JointImpedanceTrackingMotion &m) { return m.params(); });
 
   py::class_<ExponentialImpedanceMotion, CartesianImpedanceBase, std::shared_ptr<ExponentialImpedanceMotion>>(
       m, "ExponentialImpedanceMotion")
@@ -364,7 +403,11 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
           "joint_limit_stiffness"_a = 4.0,
           "joint_limit_damping"_a = 1.0,
           "joint_limit_max_torque"_a = 5.0,
-          "exponential_decay"_a = 0.005);
+          "translational_error_clip"_a = Eigen::Vector3d::Constant(0.10),
+          "rotational_error_clip"_a = Eigen::Vector3d::Constant(0.25),
+          "exponential_decay"_a = 0.005)
+      .def_property_readonly("target", &ExponentialImpedanceMotion::target)
+      .def_property_readonly("params", [](const ExponentialImpedanceMotion &m) { return m.params(); });
 
   py::class_<CartesianImpedanceMotion, CartesianImpedanceBase, std::shared_ptr<CartesianImpedanceMotion>>(
       m, "CartesianImpedanceMotion")
@@ -431,7 +474,10 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
           "joint_limit_damping"_a = 1.0,
           "joint_limit_max_torque"_a = 5.0,
           "return_when_finished"_a = true,
-          "finish_wait_factor"_a = 1.2);
+          "finish_wait_factor"_a = 1.2)
+      .def_property_readonly("target", &CartesianImpedanceMotion::target)
+      .def_property_readonly("duration", &CartesianImpedanceMotion::duration)
+      .def_property_readonly("params", [](const CartesianImpedanceMotion &m) { return m.params(); });
 
   py::class_<
       CartesianImpedanceTrackingMotion,
@@ -499,5 +545,6 @@ interpolates toward them with the given time constant, allowing smooth runtime s
           "joint_limit_damping"_a = 1.0,
           "joint_limit_max_torque"_a = 5.0,
           "gains_handle"_a = nullptr,
-          "gains_time_constant"_a = 0.1);
+          "gains_time_constant"_a = 0.1)
+      .def_property_readonly("params", [](const CartesianImpedanceTrackingMotion &m) { return m.params(); });
 }

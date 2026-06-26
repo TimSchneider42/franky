@@ -98,8 +98,10 @@ franka::Torques CartesianImpedanceBase::nextCommandImpl(
       reference.target_twist.has_value() ? reference.target_twist->vector_repr() : Vector6d::Zero();
   const Vector6d measured_twist = jacobian * robot_state.dq;
 
-  auto wrench_cartesian_default = -stiffness * error - damping * (measured_twist - desired_twist);
-  auto wrench_cartesian = params_.force_constraints_active.select(params_.force_constraints, wrench_cartesian_default);
+  Vector6d wrench_cartesian = -stiffness * error - damping * (measured_twist - desired_twist);
+  for (int i = 0; i < 6; ++i) {
+    if (params_.force_constraints[i].has_value()) wrench_cartesian[i] = *params_.force_constraints[i];
+  }
 
   auto tau_task = jacobian.transpose() * wrench_cartesian;
   Vector7d tau_nullspace = Vector7d::Zero();
@@ -114,12 +116,12 @@ franka::Torques CartesianImpedanceBase::nextCommandImpl(
   }
 
   Vector7d tau_limit = Vector7d::Zero();
-  if (params_.joint_limit_repulsion_active) {
+  if (params_.lower_joint_limits.has_value() && params_.upper_joint_limits.has_value()) {
     tau_limit = franky::computeJointLimitTorque(
         robot_state.q,
         robot_state.dq,
-        params_.lower_joint_limits,
-        params_.upper_joint_limits,
+        *params_.lower_joint_limits,
+        *params_.upper_joint_limits,
         params_.joint_limit_activation_distance,
         params_.joint_limit_stiffness,
         params_.joint_limit_damping,

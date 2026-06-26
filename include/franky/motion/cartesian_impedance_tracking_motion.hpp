@@ -53,6 +53,8 @@ class CartesianImpedanceTrackingMotion : public CartesianImpedanceBase {
   explicit CartesianImpedanceTrackingMotion(ReferenceCallback reference_callback);
   CartesianImpedanceTrackingMotion(ReferenceCallback reference_callback, const Params &params);
 
+  [[nodiscard]] const Params &params() const { return base_params(); }
+
  protected:
   void initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) override;
   std::tuple<CartesianReference, bool> update(

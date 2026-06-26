@@ -3,6 +3,7 @@
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 #include <Eigen/SVD>
+#include <array>
 #include <map>
 #include <memory>
 #include <optional>
@@ -50,11 +51,25 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
     /** The rotational stiffness in [1, 300] Nm/rad. */
     double rotational_stiffness{200};
 
-    /** The force constraints in [N, Nm] for each joint. */
-    Eigen::Vector<double, 6> force_constraints;
+    /**
+     * Maximum absolute Cartesian position error [m] used by the task-space controller.
+     *
+     * The translational error is clamped elementwise before the impedance wrench
+     * is computed. This bounds the commanded Cartesian force when the reference
+     * jumps or contact prevents the end effector from reaching the target.
+     */
+    Eigen::Vector3d translational_error_clip{Eigen::Vector3d::Constant(0.10)};
 
-    /** Allows to enable or disable individual force constraints. */
-    Eigen::Vector<bool, 6> force_constraints_active{Eigen::Vector<bool, 6>::Zero()};
+    /**
+     * Maximum absolute Cartesian orientation error [rad] used by the task-space controller.
+     *
+     * The rotational error is clamped elementwise in the base frame before the
+     * impedance wrench is computed. This bounds the commanded Cartesian torque.
+     */
+    Eigen::Vector3d rotational_error_clip{Eigen::Vector3d::Constant(0.25)};
+
+    /** Per-axis force/torque constraints [N, Nm]. nullopt on an axis means unconstrained. */
+    std::array<std::optional<double>, 6> force_constraints{};
 
     /**
      * Preferred joint posture for the Cartesian controller nullspace.
@@ -82,6 +97,8 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
       Affine target, const Params &params, std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle = nullptr,
       double gains_time_constant = 0.1);
 
+  [[nodiscard]] inline Affine target() const { return absolute_target_; }
+
  protected:
   void initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) override;
 
@@ -91,7 +108,7 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
 
   [[nodiscard]] inline Affine intermediate_target() const { return intermediate_target_; }
 
-  [[nodiscard]] inline Affine target() const { return absolute_target_; }
+  [[nodiscard]] inline const Params &base_params() const { return params_; }
 
   inline void setAbsoluteTarget(const Affine &target) {
     target_ = target;

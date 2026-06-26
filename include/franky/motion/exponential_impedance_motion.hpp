@@ -44,6 +44,8 @@ class ExponentialImpedanceMotion : public CartesianImpedanceBase {
    */
   explicit ExponentialImpedanceMotion(const Affine &target, const Params &params);
 
+  [[nodiscard]] const Params &params() const { return params_; }
+
  protected:
   void initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) override;
 

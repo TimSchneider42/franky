@@ -15,14 +15,11 @@ struct TorqueSafetyParams {
   /** Maximum allowed torque step per cycle in [Nm]. */
   double max_delta_tau{1.0};
 
-  /** Whether to enable joint-limit repulsion torques. */
-  bool joint_limit_repulsion_active{false};
+  /** Lower soft joint limits in [rad]. Repulsion is active when both limits are set. */
+  std::optional<Vector7d> lower_joint_limits{};
 
-  /** Lower soft joint limits in [rad]. */
-  Vector7d lower_joint_limits{Vector7d::Zero()};
-
-  /** Upper soft joint limits in [rad]. */
-  Vector7d upper_joint_limits{Vector7d::Zero()};
+  /** Upper soft joint limits in [rad]. Repulsion is active when both limits are set. */
+  std::optional<Vector7d> upper_joint_limits{};
 
   /** Activation distance from a limit in [rad]. */
   double joint_limit_activation_distance{0.1};
@@ -63,6 +60,7 @@ class JointImpedanceBase : public Motion<franka::Torques> {
 
   [[nodiscard]] const Vector7d &target() const { return target_; }
   [[nodiscard]] const Vector7d &target_velocity() const { return target_velocity_; }
+  [[nodiscard]] const JointImpedanceParams &params() const { return params_; }
 
  protected:
   explicit JointImpedanceBase(

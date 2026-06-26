@@ -53,6 +53,9 @@ class CartesianImpedanceMotion : public CartesianImpedanceBase {
    */
   explicit CartesianImpedanceMotion(const Affine &target, franka::Duration duration, const Params &params);
 
+  [[nodiscard]] franka::Duration duration() const { return duration_; }
+  [[nodiscard]] const Params &params() const { return params_; }
+
  protected:
   void initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) override;
 
