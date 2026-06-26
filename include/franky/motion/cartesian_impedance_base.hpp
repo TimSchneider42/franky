@@ -13,6 +13,7 @@
 #include "franky/motion/torque_control_utils.hpp"
 #include "franky/robot_pose.hpp"
 #include "franky/twist.hpp"
+#include "franky/twist_acceleration.hpp"
 
 namespace franky {
 
@@ -30,6 +31,14 @@ struct CartesianReference {
    * all motion toward zero.
    */
   std::optional<Twist> target_twist{};
+
+  /**
+   * Desired end-effector acceleration in the base frame.
+   *
+   * When present, the controller adds a model-based inertial feedforward
+   * wrench Lambda(q) * target_acceleration before mapping through J^T.
+   */
+  std::optional<TwistAcceleration> target_acceleration{};
 };
 
 /**
@@ -85,6 +94,9 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
 
     /** Shared torque safety limits and soft joint-limit repulsion settings. */
     TorqueSafetyParams safety{};
+
+    /** Per-joint friction feedforward. Defaults to zero (disabled). */
+    FrictionCompensationParams friction{};
   };
 
   /**

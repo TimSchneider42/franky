@@ -52,14 +52,17 @@ void CartesianImpedanceTrackingMotion::initImpl(
   CartesianImpedanceBase::initImpl(robot_state, previous_command);
   target_ = Affine(Eigen::Matrix4d::Map(robot_state.O_T_EE_c.data()));
   target_twist_ = std::nullopt;
+  target_acceleration_ = std::nullopt;
   if (reference_handle_ && reference_handle_->hasReference()) {
     auto reference = reference_handle_->get();
     target_ = reference.target;
     target_twist_ = reference.target_twist;
+    target_acceleration_ = reference.target_acceleration;
   } else if (reference_callback_) {
     auto reference = reference_callback_(robot_state, franka::Duration(0), franka::Duration(0), franka::Duration(0));
     target_ = reference.target;
     target_twist_ = reference.target_twist;
+    target_acceleration_ = reference.target_acceleration;
   }
 }
 
@@ -69,12 +72,14 @@ std::tuple<CartesianReference, bool> CartesianImpedanceTrackingMotion::update(
     auto reference = reference_callback_(robot_state, time_step, rel_time, abs_time);
     target_ = reference.target;
     target_twist_ = reference.target_twist;
+    target_acceleration_ = reference.target_acceleration;
   } else if (reference_handle_ && reference_handle_->hasReference()) {
     auto reference = reference_handle_->get();
     target_ = reference.target;
     target_twist_ = reference.target_twist;
+    target_acceleration_ = reference.target_acceleration;
   }
-  return {CartesianReference{target_, target_twist_}, false};
+  return {CartesianReference{target_, target_twist_, target_acceleration_}, false};
 }
 
 }  // namespace franky

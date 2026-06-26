@@ -66,6 +66,7 @@ class CartesianImpedanceTrackingMotion : public CartesianImpedanceBase {
   ReferenceCallback reference_callback_;
   Affine target_;
   std::optional<Twist> target_twist_;
+  std::optional<TwistAcceleration> target_acceleration_;
 };
 
 }  // namespace franky

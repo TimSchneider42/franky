@@ -6,6 +6,7 @@
 #include <map>
 #include <utility>
 
+#include "franky/model.hpp"
 #include "franky/motion/motion.hpp"
 #include "franky/motion/torque_control_utils.hpp"
 #include "franky/robot_pose.hpp"
@@ -13,6 +14,18 @@
 namespace franky {
 
 namespace {
+Eigen::Matrix<double, 6, 6> computeTaskSpaceInertia(const Jacobian &jacobian, const Eigen::Matrix<double, 7, 7> &mass) {
+  const Eigen::Matrix<double, 7, 6> mass_inv_jacobian_transpose = mass.ldlt().solve(jacobian.transpose());
+  const Eigen::Matrix<double, 6, 6> task_mass_inv = jacobian * mass_inv_jacobian_transpose;
+  Eigen::JacobiSVD<Eigen::Matrix<double, 6, 6>> svd(task_mass_inv, Eigen::ComputeFullU | Eigen::ComputeFullV);
+  Eigen::Matrix<double, 6, 6> sigma_inv = Eigen::Matrix<double, 6, 6>::Zero();
+  constexpr double tolerance = 1e-6;
+  for (int i = 0; i < 6; ++i) {
+    if (svd.singularValues()[i] > tolerance) sigma_inv(i, i) = 1.0 / svd.singularValues()[i];
+  }
+  return svd.matrixV() * sigma_inv * svd.matrixU().transpose();
+}
+
 Eigen::Matrix<double, 6, 7> pseudoInverse(const Eigen::Matrix<double, 7, 6> &matrix) {
   Eigen::JacobiSVD<Eigen::Matrix<double, 7, 6>> svd(matrix, Eigen::ComputeFullU | Eigen::ComputeFullV);
   const auto &singular_values = svd.singularValues();
@@ -101,6 +114,11 @@ franka::Torques CartesianImpedanceBase::nextCommandImpl(
   const Vector6d measured_twist = jacobian * robot_state.dq;
 
   Vector6d wrench_cartesian = -stiffness * error - damping * (measured_twist - desired_twist);
+  if (reference.target_acceleration.has_value()) {
+    const Eigen::Matrix<double, 7, 7> mass = model->mass(robot_state);
+    const Eigen::Matrix<double, 6, 6> lambda = computeTaskSpaceInertia(jacobian, mass);
+    wrench_cartesian += lambda * reference.target_acceleration->vector_repr();
+  }
   for (int i = 0; i < 6; ++i) {
     if (params_.force_constraints[i].has_value()) wrench_cartesian[i] = *params_.force_constraints[i];
   }
@@ -131,6 +149,7 @@ franka::Torques CartesianImpedanceBase::nextCommandImpl(
   }
 
   Vector7d tau_d = tau_task + tau_nullspace + tau_limit + coriolis;
+  tau_d += computeFrictionCompensation(robot_state.dq, params_.friction);
   tau_d = franky::saturateTorqueRate(tau_d, robot_state.tau_J_d, params_.safety.max_delta_tau);
 
   std::array<double, 7> tau_d_array{};

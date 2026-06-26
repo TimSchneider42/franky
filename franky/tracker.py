@@ -67,6 +67,7 @@ class CartesianImpedanceTracker:
         rotational_error_clip: Optional[np.ndarray] = None,
         nullspace_target: Optional[np.ndarray] = None,
         nullspace_stiffness: float = 0.0,
+        friction: Optional[FrictionCompensationParams] = None,
         max_delta_tau: float = 1.0,
         lower_joint_limits: Optional[np.ndarray] = None,
         upper_joint_limits: Optional[np.ndarray] = None,
@@ -101,6 +102,7 @@ class CartesianImpedanceTracker:
             "rotational_error_clip": rotational_error_clip,
             "nullspace_target": nullspace_target,
             "nullspace_stiffness": nullspace_stiffness,
+            "friction": friction,
             "max_delta_tau": max_delta_tau,
             "lower_joint_limits": lower_joint_limits,
             "upper_joint_limits": upper_joint_limits,
@@ -147,10 +149,15 @@ class CartesianImpedanceTracker:
 
     # --- streaming updates ---
 
-    def set_target(self, pose: Affine, twist: Optional[Twist] = None) -> None:
-        """Update the Cartesian target pose and optional twist (feedforward velocity)."""
-        if twist is not None:
-            self._reference_handle.set(pose, twist)
+    def set_target(
+        self,
+        pose: Affine,
+        twist: Optional[Twist] = None,
+        acceleration: Optional[TwistAcceleration] = None,
+    ) -> None:
+        """Update the Cartesian target pose and optional twist/acceleration feedforward."""
+        if twist is not None or acceleration is not None:
+            self._reference_handle.set(pose, twist, acceleration)
         else:
             self._reference_handle.set(pose)
 
