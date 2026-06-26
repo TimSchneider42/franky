@@ -2,10 +2,48 @@
 
 #include <algorithm>
 #include <cmath>
+#include <optional>
 
 #include "franky/types.hpp"
 
 namespace franky {
+
+struct TorqueSafetyParams {
+  /** Maximum allowed torque step per cycle in [Nm]. */
+  double max_delta_tau{1.0};
+
+  /** Lower soft joint limits in [rad]. Joint-limit repulsion is active when both limits are set. */
+  std::optional<Vector7d> lower_joint_limits{};
+
+  /** Upper soft joint limits in [rad]. Joint-limit repulsion is active when both limits are set. */
+  std::optional<Vector7d> upper_joint_limits{};
+
+  /** Activation distance from a limit in [rad]. */
+  double joint_limit_activation_distance{0.1};
+
+  /** Base repulsion gain in [Nm]. */
+  double joint_limit_stiffness{4.0};
+
+  /** Additional damping when moving into a limit in [Nms/rad]. */
+  double joint_limit_damping{1.0};
+
+  /** Absolute torque clamp for the repulsion term in [Nm]. */
+  double joint_limit_max_torque{5.0};
+};
+
+struct FrictionCompensationParams {
+  /** Coulomb friction compensation gains in [Nm]. */
+  Vector7d coulomb{Vector7d::Zero()};
+
+  /** Viscous friction compensation gains in [Nms/rad]. */
+  Vector7d viscous{Vector7d::Zero()};
+
+  /** Absolute per-joint clamp for friction compensation in [Nm]. */
+  Vector7d max_torque{Vector7d::Ones()};
+
+  /** Velocity scale for the smooth Coulomb sign transition in [rad/s]. */
+  double velocity_epsilon{0.03};
+};
 
 inline Vector7d saturateTorqueRate(
     const Vector7d &tau_d_calculated, const Vector7d &tau_reference, double max_delta_tau) {
@@ -42,6 +80,17 @@ inline Vector7d computeJointLimitTorque(
   }
 
   return tau_limit;
+}
+
+inline Vector7d computeFrictionCompensation(const Vector7d &dq, const FrictionCompensationParams &params) {
+  Vector7d tau = Vector7d::Zero();
+  const double epsilon = std::max(params.velocity_epsilon, 1e-9);
+  for (int i = 0; i < 7; ++i) {
+    const double limit = std::max(params.max_torque[i], 0.0);
+    const double uncompensated = params.coulomb[i] * std::tanh(dq[i] / epsilon) + params.viscous[i] * dq[i];
+    tau[i] = std::clamp(uncompensated, -limit, limit);
+  }
+  return tau;
 }
 
 }  // namespace franky

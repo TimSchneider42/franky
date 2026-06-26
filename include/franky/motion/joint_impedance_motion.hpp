@@ -5,34 +5,12 @@
 
 #include "franky/motion/impedance_gains_handle.hpp"
 #include "franky/motion/motion.hpp"
+#include "franky/motion/torque_control_utils.hpp"
 #include "franky/types.hpp"
 
 namespace franky {
 
 struct JointReference;
-
-struct TorqueSafetyParams {
-  /** Maximum allowed torque step per cycle in [Nm]. */
-  double max_delta_tau{1.0};
-
-  /** Lower soft joint limits in [rad]. Repulsion is active when both limits are set. */
-  std::optional<Vector7d> lower_joint_limits{};
-
-  /** Upper soft joint limits in [rad]. Repulsion is active when both limits are set. */
-  std::optional<Vector7d> upper_joint_limits{};
-
-  /** Activation distance from a limit in [rad]. */
-  double joint_limit_activation_distance{0.1};
-
-  /** Base repulsion gain in [Nm]. */
-  double joint_limit_stiffness{4.0};
-
-  /** Additional damping when moving into a limit in [Nms/rad]. */
-  double joint_limit_damping{1.0};
-
-  /** Absolute torque clamp for the repulsion term in [Nm]. */
-  double joint_limit_max_torque{5.0};
-};
 
 /**
  * @brief Client-side joint impedance controller.
@@ -40,7 +18,7 @@ struct TorqueSafetyParams {
  * This motion uses Franka's torque interface and computes joint torques from a
  * joint-space spring-damper law plus optional torque offset/model compensation.
  */
-struct JointImpedanceParams : public TorqueSafetyParams {
+struct JointImpedanceParams {
   /** Joint stiffness gains in [Nm/rad]. */
   Vector7d stiffness{defaultJointImpedanceStiffness()};
 
@@ -53,20 +31,11 @@ struct JointImpedanceParams : public TorqueSafetyParams {
   /** Compensate Coriolis forces using the robot model. */
   bool compensate_coriolis{true};
 
-  /** Compensate joint friction with a velocity-based feedforward model. */
-  bool compensate_friction{false};
+  /** Shared torque safety limits and soft joint-limit repulsion settings. */
+  TorqueSafetyParams safety{};
 
-  /** Coulomb friction compensation gains in [Nm]. */
-  Vector7d friction_coulomb{Vector7d::Zero()};
-
-  /** Viscous friction compensation gains in [Nms/rad]. */
-  Vector7d friction_viscous{Vector7d::Zero()};
-
-  /** Absolute per-joint clamp for friction compensation in [Nm]. */
-  Vector7d friction_max_torque{Vector7d::Zero()};
-
-  /** Velocity scale for the smooth Coulomb sign transition in [rad/s]. */
-  double friction_velocity_epsilon{0.03};
+  /** Joint friction compensation settings. */
+  FrictionCompensationParams friction{};
 };
 
 class JointImpedanceBase : public Motion<franka::Torques> {

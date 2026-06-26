@@ -43,7 +43,7 @@ JointImpedanceParams makeJointImpedanceParams(
     const std::optional<Vector7d> &constant_torque_offset, const std::optional<Vector7d> &lower_joint_limits,
     const std::optional<Vector7d> &upper_joint_limits, bool compensate_coriolis, double max_delta_tau,
     double joint_limit_activation_distance, double joint_limit_stiffness, double joint_limit_damping,
-    double joint_limit_max_torque, bool compensate_friction, const std::optional<Vector7d> &friction_coulomb,
+    double joint_limit_max_torque, const std::optional<Vector7d> &friction_coulomb,
     const std::optional<Vector7d> &friction_viscous, const std::optional<Vector7d> &friction_max_torque,
     double friction_velocity_epsilon) {
   auto params = JointImpedanceParams{};
@@ -61,27 +61,26 @@ JointImpedanceParams makeJointImpedanceParams(
   }
   if (friction_coulomb.has_value()) {
     validateNonNegativeFinite(friction_coulomb.value(), "friction_coulomb");
-    params.friction_coulomb = friction_coulomb.value();
+    params.friction.coulomb = friction_coulomb.value();
   }
   if (friction_viscous.has_value()) {
     validateNonNegativeFinite(friction_viscous.value(), "friction_viscous");
-    params.friction_viscous = friction_viscous.value();
+    params.friction.viscous = friction_viscous.value();
   }
   if (friction_max_torque.has_value()) {
     validateNonNegativeFinite(friction_max_torque.value(), "friction_max_torque");
-    params.friction_max_torque = friction_max_torque.value();
+    params.friction.max_torque = friction_max_torque.value();
   }
   if (constant_torque_offset.has_value()) params.constant_torque_offset = constant_torque_offset.value();
-  params.lower_joint_limits = lower_joint_limits;
-  params.upper_joint_limits = upper_joint_limits;
+  params.safety.lower_joint_limits = lower_joint_limits;
+  params.safety.upper_joint_limits = upper_joint_limits;
   params.compensate_coriolis = compensate_coriolis;
-  params.compensate_friction = compensate_friction;
-  params.friction_velocity_epsilon = friction_velocity_epsilon;
-  params.max_delta_tau = max_delta_tau;
-  params.joint_limit_activation_distance = joint_limit_activation_distance;
-  params.joint_limit_stiffness = joint_limit_stiffness;
-  params.joint_limit_damping = joint_limit_damping;
-  params.joint_limit_max_torque = joint_limit_max_torque;
+  params.friction.velocity_epsilon = friction_velocity_epsilon;
+  params.safety.max_delta_tau = max_delta_tau;
+  params.safety.joint_limit_activation_distance = joint_limit_activation_distance;
+  params.safety.joint_limit_stiffness = joint_limit_stiffness;
+  params.safety.joint_limit_damping = joint_limit_damping;
+  params.safety.joint_limit_max_torque = joint_limit_max_torque;
   return params;
 }
 
@@ -100,13 +99,13 @@ CartesianImpedanceBase::Params makeCartesianImpedanceParams(
   params.rotational_error_clip = rotational_error_clip;
   params.nullspace_target = nullspace_target;
   params.nullspace_stiffness = nullspace_stiffness;
-  params.max_delta_tau = max_delta_tau;
-  params.joint_limit_activation_distance = joint_limit_activation_distance;
-  params.joint_limit_stiffness = joint_limit_stiffness;
-  params.joint_limit_damping = joint_limit_damping;
-  params.joint_limit_max_torque = joint_limit_max_torque;
-  params.lower_joint_limits = lower_joint_limits;
-  params.upper_joint_limits = upper_joint_limits;
+  params.safety.max_delta_tau = max_delta_tau;
+  params.safety.joint_limit_activation_distance = joint_limit_activation_distance;
+  params.safety.joint_limit_stiffness = joint_limit_stiffness;
+  params.safety.joint_limit_damping = joint_limit_damping;
+  params.safety.joint_limit_max_torque = joint_limit_max_torque;
+  params.safety.lower_joint_limits = lower_joint_limits;
+  params.safety.upper_joint_limits = upper_joint_limits;
   if (force_constraints.has_value()) params.force_constraints = force_constraints.value();
   return params;
 }
@@ -218,17 +217,8 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
 
   // Params classes — bind before the motion classes that use them.
 
-  py::class_<JointImpedanceParams>(m, "JointImpedanceParams")
+  py::class_<TorqueSafetyParams>(m, "TorqueSafetyParams")
       .def(py::init<>())
-      .def_readwrite("stiffness", &JointImpedanceParams::stiffness)
-      .def_readwrite("damping", &JointImpedanceParams::damping)
-      .def_readwrite("constant_torque_offset", &JointImpedanceParams::constant_torque_offset)
-      .def_readwrite("compensate_coriolis", &JointImpedanceParams::compensate_coriolis)
-      .def_readwrite("compensate_friction", &JointImpedanceParams::compensate_friction)
-      .def_readwrite("friction_coulomb", &JointImpedanceParams::friction_coulomb)
-      .def_readwrite("friction_viscous", &JointImpedanceParams::friction_viscous)
-      .def_readwrite("friction_max_torque", &JointImpedanceParams::friction_max_torque)
-      .def_readwrite("friction_velocity_epsilon", &JointImpedanceParams::friction_velocity_epsilon)
       .def_readwrite("max_delta_tau", &TorqueSafetyParams::max_delta_tau)
       .def_readwrite("lower_joint_limits", &TorqueSafetyParams::lower_joint_limits)
       .def_readwrite("upper_joint_limits", &TorqueSafetyParams::upper_joint_limits)
@@ -236,6 +226,22 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
       .def_readwrite("joint_limit_stiffness", &TorqueSafetyParams::joint_limit_stiffness)
       .def_readwrite("joint_limit_damping", &TorqueSafetyParams::joint_limit_damping)
       .def_readwrite("joint_limit_max_torque", &TorqueSafetyParams::joint_limit_max_torque);
+
+  py::class_<FrictionCompensationParams>(m, "FrictionCompensationParams")
+      .def(py::init<>())
+      .def_readwrite("coulomb", &FrictionCompensationParams::coulomb)
+      .def_readwrite("viscous", &FrictionCompensationParams::viscous)
+      .def_readwrite("max_torque", &FrictionCompensationParams::max_torque)
+      .def_readwrite("velocity_epsilon", &FrictionCompensationParams::velocity_epsilon);
+
+  py::class_<JointImpedanceParams>(m, "JointImpedanceParams")
+      .def(py::init<>())
+      .def_readwrite("stiffness", &JointImpedanceParams::stiffness)
+      .def_readwrite("damping", &JointImpedanceParams::damping)
+      .def_readwrite("constant_torque_offset", &JointImpedanceParams::constant_torque_offset)
+      .def_readwrite("compensate_coriolis", &JointImpedanceParams::compensate_coriolis)
+      .def_readwrite("safety", &JointImpedanceParams::safety)
+      .def_readwrite("friction", &JointImpedanceParams::friction);
 
   py::class_<CartesianImpedanceBase::Params>(m, "CartesianImpedanceParams")
       .def(py::init<>())
@@ -246,13 +252,7 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
       .def_readwrite("force_constraints", &CartesianImpedanceBase::Params::force_constraints)
       .def_readwrite("nullspace_target", &CartesianImpedanceBase::Params::nullspace_target)
       .def_readwrite("nullspace_stiffness", &CartesianImpedanceBase::Params::nullspace_stiffness)
-      .def_readwrite("max_delta_tau", &TorqueSafetyParams::max_delta_tau)
-      .def_readwrite("lower_joint_limits", &TorqueSafetyParams::lower_joint_limits)
-      .def_readwrite("upper_joint_limits", &TorqueSafetyParams::upper_joint_limits)
-      .def_readwrite("joint_limit_activation_distance", &TorqueSafetyParams::joint_limit_activation_distance)
-      .def_readwrite("joint_limit_stiffness", &TorqueSafetyParams::joint_limit_stiffness)
-      .def_readwrite("joint_limit_damping", &TorqueSafetyParams::joint_limit_damping)
-      .def_readwrite("joint_limit_max_torque", &TorqueSafetyParams::joint_limit_max_torque);
+      .def_readwrite("safety", &CartesianImpedanceBase::Params::safety);
 
   py::class_<ExponentialImpedanceMotion::Params, CartesianImpedanceBase::Params>(m, "ExponentialImpedanceParams")
       .def(py::init<>())
@@ -287,7 +287,6 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
                         double joint_limit_stiffness,
                         double joint_limit_damping,
                         double joint_limit_max_torque,
-                        bool compensate_friction,
                         std::optional<Vector7d>
                             friction_coulomb,
                         std::optional<Vector7d>
@@ -307,7 +306,6 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
                 joint_limit_stiffness,
                 joint_limit_damping,
                 joint_limit_max_torque,
-                compensate_friction,
                 friction_coulomb,
                 friction_viscous,
                 friction_max_torque,
@@ -332,7 +330,6 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
           "joint_limit_stiffness"_a = 4.0,
           "joint_limit_damping"_a = 1.0,
           "joint_limit_max_torque"_a = 5.0,
-          "compensate_friction"_a = false,
           "friction_coulomb"_a = std::nullopt,
           "friction_viscous"_a = std::nullopt,
           "friction_max_torque"_a = std::nullopt,
@@ -361,7 +358,6 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
                         double joint_limit_stiffness,
                         double joint_limit_damping,
                         double joint_limit_max_torque,
-                        bool compensate_friction,
                         std::optional<Vector7d>
                             friction_coulomb,
                         std::optional<Vector7d>
@@ -384,7 +380,6 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
                 joint_limit_stiffness,
                 joint_limit_damping,
                 joint_limit_max_torque,
-                compensate_friction,
                 friction_coulomb,
                 friction_viscous,
                 friction_max_torque,
@@ -413,7 +408,6 @@ interpolates toward them with the given time constant, allowing smooth runtime s
           "joint_limit_stiffness"_a = 4.0,
           "joint_limit_damping"_a = 1.0,
           "joint_limit_max_torque"_a = 5.0,
-          "compensate_friction"_a = false,
           "friction_coulomb"_a = std::nullopt,
           "friction_viscous"_a = std::nullopt,
           "friction_max_torque"_a = std::nullopt,

@@ -9,8 +9,8 @@
 #include <optional>
 
 #include "franky/motion/impedance_gains_handle.hpp"
-#include "franky/motion/joint_impedance_motion.hpp"
 #include "franky/motion/motion.hpp"
+#include "franky/motion/torque_control_utils.hpp"
 #include "franky/robot_pose.hpp"
 #include "franky/twist.hpp"
 
@@ -44,7 +44,7 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
   /**
    * @brief Parameters for the impedance motion.
    */
-  struct Params : public TorqueSafetyParams {
+  struct Params {
     /** The translational stiffness in [10, 3000] N/m. */
     double translational_stiffness{2000};
 
@@ -82,6 +82,9 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
 
     /** Nullspace posture stiffness in [Nm/rad]. Set to 0 to disable. */
     double nullspace_stiffness{0.0};
+
+    /** Shared torque safety limits and soft joint-limit repulsion settings. */
+    TorqueSafetyParams safety{};
   };
 
   /**

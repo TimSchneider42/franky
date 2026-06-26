@@ -118,20 +118,20 @@ franka::Torques CartesianImpedanceBase::nextCommandImpl(
   }
 
   Vector7d tau_limit = Vector7d::Zero();
-  if (params_.lower_joint_limits.has_value() && params_.upper_joint_limits.has_value()) {
+  if (params_.safety.lower_joint_limits.has_value() && params_.safety.upper_joint_limits.has_value()) {
     tau_limit = franky::computeJointLimitTorque(
         robot_state.q,
         robot_state.dq,
-        *params_.lower_joint_limits,
-        *params_.upper_joint_limits,
-        params_.joint_limit_activation_distance,
-        params_.joint_limit_stiffness,
-        params_.joint_limit_damping,
-        params_.joint_limit_max_torque);
+        *params_.safety.lower_joint_limits,
+        *params_.safety.upper_joint_limits,
+        params_.safety.joint_limit_activation_distance,
+        params_.safety.joint_limit_stiffness,
+        params_.safety.joint_limit_damping,
+        params_.safety.joint_limit_max_torque);
   }
 
   Vector7d tau_d = tau_task + tau_nullspace + tau_limit + coriolis;
-  tau_d = franky::saturateTorqueRate(tau_d, robot_state.tau_J_d, params_.max_delta_tau);
+  tau_d = franky::saturateTorqueRate(tau_d, robot_state.tau_J_d, params_.safety.max_delta_tau);
 
   std::array<double, 7> tau_d_array{};
   Eigen::VectorXd::Map(&tau_d_array[0], 7) = tau_d;

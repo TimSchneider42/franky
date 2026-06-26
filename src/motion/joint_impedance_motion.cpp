@@ -1,6 +1,5 @@
 #include "franky/motion/joint_impedance_motion.hpp"
 
-#include <algorithm>
 #include <array>
 #include <cmath>
 
@@ -9,21 +8,6 @@
 #include "franky/motion/torque_control_utils.hpp"
 
 namespace franky {
-
-namespace {
-Vector7d computeFrictionCompensation(
-    const Vector7d &dq, const Vector7d &coulomb, const Vector7d &viscous, const Vector7d &max_torque,
-    double velocity_epsilon) {
-  Vector7d tau = Vector7d::Zero();
-  const double epsilon = std::max(velocity_epsilon, 1e-9);
-  for (int i = 0; i < 7; ++i) {
-    const double limit = std::max(max_torque[i], 0.0);
-    const double uncompensated = coulomb[i] * std::tanh(dq[i] / epsilon) + viscous[i] * dq[i];
-    tau[i] = std::clamp(uncompensated, -limit, limit);
-  }
-  return tau;
-}
-}  // namespace
 
 JointImpedanceBase::JointImpedanceBase(
     const Vector7d &target, const Vector7d &target_velocity, const JointImpedanceParams &params,
@@ -73,30 +57,23 @@ franka::Torques JointImpedanceBase::computeCommand(
   Vector7d tau_d = current_stiffness_.asDiagonal() * (reference.q - robot_state.q) +
                    current_damping_.asDiagonal() * (reference.dq - robot_state.dq) + torque_feedforward;
 
-  if (params_.compensate_friction) {
-    tau_d += computeFrictionCompensation(
-        robot_state.dq,
-        params_.friction_coulomb,
-        params_.friction_viscous,
-        params_.friction_max_torque,
-        params_.friction_velocity_epsilon);
-  }
+  tau_d += computeFrictionCompensation(robot_state.dq, params_.friction);
 
-  if (params_.lower_joint_limits.has_value() && params_.upper_joint_limits.has_value()) {
+  if (params_.safety.lower_joint_limits.has_value() && params_.safety.upper_joint_limits.has_value()) {
     tau_d += franky::computeJointLimitTorque(
         robot_state.q,
         robot_state.dq,
-        *params_.lower_joint_limits,
-        *params_.upper_joint_limits,
-        params_.joint_limit_activation_distance,
-        params_.joint_limit_stiffness,
-        params_.joint_limit_damping,
-        params_.joint_limit_max_torque);
+        *params_.safety.lower_joint_limits,
+        *params_.safety.upper_joint_limits,
+        params_.safety.joint_limit_activation_distance,
+        params_.safety.joint_limit_stiffness,
+        params_.safety.joint_limit_damping,
+        params_.safety.joint_limit_max_torque);
   }
 
   auto model = robot()->model();
   if (params_.compensate_coriolis) tau_d += model->coriolis(robot_state);
-  tau_d = franky::saturateTorqueRate(tau_d, robot_state.tau_J_d, params_.max_delta_tau);
+  tau_d = franky::saturateTorqueRate(tau_d, robot_state.tau_J_d, params_.safety.max_delta_tau);
 
   std::array<double, 7> tau_d_array{};
   Eigen::VectorXd::Map(tau_d_array.data(), 7) = tau_d;
