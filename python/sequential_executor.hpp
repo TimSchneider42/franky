@@ -1,5 +1,6 @@
 #pragma once
 
+#include <atomic>
 #include <functional>
 #include <thread>
 
@@ -15,7 +16,7 @@ class SequentialExecutor {
 
  private:
   ConcurrentQueue<std::function<void()>> queue_;
-  bool terminate_{false};
+  std::atomic<bool> terminate_{false};
   std::thread thread_;
 
   void execute();

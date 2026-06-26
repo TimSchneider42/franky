@@ -3,12 +3,12 @@
 SequentialExecutor::SequentialExecutor() : thread_(&SequentialExecutor::execute, this) {}
 
 SequentialExecutor::~SequentialExecutor() {
-  terminate_ = true;
+  terminate_.store(true, std::memory_order_release);
   thread_.join();
 }
 
 void SequentialExecutor::execute() {
-  while (!terminate_) {
+  while (!terminate_.load(std::memory_order_acquire)) {
     auto callback = queue_.pop(std::chrono::microseconds(100));
     if (callback.has_value()) (*callback)();
   }
