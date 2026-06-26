@@ -3,20 +3,20 @@ from argparse import ArgumentParser
 from franky import JointImpedanceTracker, Robot
 
 
-# Franka Panda / FR3 joint limits from the standard libfranka model.
-DEFAULT_LOWER_JOINT_LIMITS = [
-    -2.8973,
-    -1.7628,
-    -2.8973,
-    -3.0718,
-    -2.8973,
-    -0.0175,
-    -2.8973,
-]
-DEFAULT_UPPER_JOINT_LIMITS = [2.8973, 1.7628, 2.8973, -0.0698, 2.8973, 3.7525, 2.8973]
-
 FRICTION_COULOMB = [0.5, 0.4, 0.5, 0.4, 0.4, 0.4, 0.2]
 FRICTION_VISCOUS = [0.08, 0.05, 0.08, 0.05, 0.08, 0.08, 0.05]
+
+
+def get_joint_limits(robot: Robot):
+    if "fr3" in robot.model_urdf.lower():
+        return (
+            [-2.9007, -1.8361, -2.9007, -3.0770, -2.8763, 0.4398, -3.0508],
+            [2.9007, 1.8361, 2.9007, -0.1169, 2.8763, 4.6216, 3.0508],
+        )
+    return (
+        [-2.8973, -1.7628, -2.8973, -3.0718, -2.8973, -0.0175, -2.8973],
+        [2.8973, 1.7628, 2.8973, -0.0698, 2.8973, 3.7525, 2.8973],
+    )
 
 
 if __name__ == "__main__":
@@ -48,6 +48,7 @@ if __name__ == "__main__":
 
     robot = Robot(args.host)
     robot.recover_from_errors()
+    lower_joint_limits, upper_joint_limits = get_joint_limits(robot)
     robot.set_collision_behavior(
         torque_thresholds=[35.0, 35.0, 35.0, 35.0, 35.0, 35.0, 35.0],
         force_thresholds=[60.0, 60.0, 60.0, 60.0, 60.0, 60.0],
@@ -81,8 +82,8 @@ if __name__ == "__main__":
         stiffness=stiffness,
         friction_coulomb=FRICTION_COULOMB if args.friction else None,
         friction_viscous=FRICTION_VISCOUS if args.friction else None,
-        lower_joint_limits=DEFAULT_LOWER_JOINT_LIMITS,
-        upper_joint_limits=DEFAULT_UPPER_JOINT_LIMITS,
+        lower_joint_limits=lower_joint_limits,
+        upper_joint_limits=upper_joint_limits,
         period=0.001,
     ) as tracker:
         while tracker.tick():

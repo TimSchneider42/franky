@@ -636,12 +636,12 @@ There are two variants for both joint-space and Cartesian impedance:
 - `JointImpedanceMotion` and `CartesianImpedanceMotion` are fixed-target motions.
   They interpret a target once at motion start and then regulate toward it.
 - `JointImpedanceTrackingMotion` and `CartesianImpedanceTrackingMotion` keep the
-  same controller alive while consuming updated references online through a
-  handle or callback.
+  same controller alive while consuming updated references online.
 
 The tracking variants are useful when the desired reference changes every
 control cycle, for example for manual guidance, teleoperation, or virtual
-fixtures.
+fixtures. In Python, the recommended interface for these use cases is
+`JointImpedanceTracker` or `CartesianImpedanceTracker`.
 
 Joint-space impedance can be used either as a fixed posture controller
 
@@ -658,23 +658,53 @@ motion = JointImpedanceMotion(
 or as a tracking controller with online reference updates:
 
 ```python
-from franky import JointImpedanceTrackingMotion, JointReferenceHandle
+from franky import JointImpedanceTracker
 
-reference_handle = JointReferenceHandle()
-reference_handle.set(
-    position=[0.0, -0.6, 0.0, -2.2, 0.0, 1.7, 0.7],
-    velocity=[0.0] * 7,
-)
-
-motion = JointImpedanceTrackingMotion(
-    reference_handle=reference_handle,
+with JointImpedanceTracker(
+    robot,
     stiffness=[600.0] * 7,
     damping=[50.0] * 7,
-)
+    period=0.01,
+) as tracker:
+    while tracker.tick():
+        tracker.set_target(
+            [0.0, -0.6, 0.0, -2.2, 0.0, 1.7, 0.7],
+            dq=[0.0] * 7,
+        )
 ```
 
-Joint tracking references can optionally include `torque_feedforward`. This is
-added on top of any `constant_torque_offset` configured on the motion itself.
+Joint tracking targets can optionally include feedforward torques `tau_ff`. This is
+added on top of any `constant_torque_offset` configured on the tracker itself.
+
+All joint-space impedance motions (`JointImpedanceMotion`, `JointImpedanceTrackingMotion`,
+and `JointImpedanceTracker`) support optional friction compensation. Coulomb and viscous
+terms are added as feedforward terms to the commanded torque each cycle and clamped per joint:
+
+```python
+# Use friction compensation to get a smooth zero-g mode kinesthetic demonstrations
+with JointImpedanceTracker(
+    robot,
+    stiffness=[0.0] * 7,
+    damping=[0.0] * 7,
+    friction_coulomb=[0.5, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2],   # [Nm]
+    friction_viscous=[0.1, 0.1, 0.1, 0.1, 0.05, 0.05, 0.05], # [Nms/rad]
+    friction_max_torque=[2.0] * 7,  # per-joint clamp [Nm]
+    period=0.01,
+) as tracker:
+    ...
+```
+
+The Coulomb term uses a smooth sign approximation controlled by
+`friction_velocity_epsilon` (default `0.03 rad/s`). Either or both terms can
+be omitted; unset terms default to zero.
+
+Both trackers support updating impedance gains at runtime via `set_gains()`.
+Changes are smoothed in the RT loop using exponential interpolation, so abrupt
+stiffness steps are avoided automatically.
+
+All torque-mode motions accept a `max_delta_tau` parameter that limits the
+commanded torque change per control cycle in Nm, which can help avoid
+discontinuity errors from abrupt torque steps.
 
 Cartesian impedance follows the same split:
 
@@ -693,43 +723,48 @@ motion = CartesianImpedanceMotion(
 ```python
 from franky import (
     Affine,
-    CartesianImpedanceTrackingMotion,
-    CartesianReferenceHandle,
+    CartesianImpedanceTracker,
     Twist,
 )
 
-reference_handle = CartesianReferenceHandle()
-reference_handle.set(
-    target=Affine([0.45, 0.0, 0.35]),
-    target_twist=Twist([0.0, 0.0, 0.05], [0.0, 0.0, 0.0]),
-)
-
-motion = CartesianImpedanceTrackingMotion(
-    reference_handle=reference_handle,
+with CartesianImpedanceTracker(
+    robot,
     translational_stiffness=1200.0,
     rotational_stiffness=80.0,
     nullspace_target=[0.0, -0.6, 0.0, -2.2, 0.0, 1.7, 0.7],
     nullspace_stiffness=10.0,
     max_delta_tau=0.5,
-)
+    period=0.01,
+) as tracker:
+    while tracker.tick():
+        tracker.set_target(
+            Affine([0.45, 0.0, 0.35]),
+            Twist([0.0, 0.0, 0.05], [0.0, 0.0, 0.0]),
+        )
 ```
 
-For Cartesian tracking, `target_twist` is optional. When provided, it is
+For Cartesian tracking, the twist argument to `set_target` is optional. When provided, it is
 interpreted as the desired end-effector twist in the base frame, so the damping
 term acts on twist error instead of damping all motion toward zero.
 
+When a `period` is configured, `tracker.tick()` maintains that loop rate using
+`time.perf_counter()` internally and compensates for the time spent in the loop
+body. `tracker.elapsed_time` and `tracker.tick_count` are available for
+time-based target generation.
+
 Cartesian damping is chosen internally as critically damped with respect to
 the requested stiffness.
-
-For Cartesian motions with a nullspace posture objective, you can also set
-`max_delta_tau` to make the commanded torque changes less abrupt by limiting 
-the commanded torque change per control cycle in Nm.
 
 Cartesian impedance motions also support an optional secondary posture
 objective through `nullspace_target` and `nullspace_stiffness`. When enabled,
 the controller adds a joint-space posture term projected into the Jacobian
 nullspace, so it biases the redundant arm posture without changing the
 Cartesian task to first order.
+
+`CartesianImpedanceTracker` also accepts `translational_error_clip` and
+`rotational_error_clip` (each a 3-vector in m and rad respectively) to hard-clip
+the pose error fed into the spring law, which can prevent large torque spikes
+when the reference jumps.
 
 
 #### Relative Dynamics Factors
