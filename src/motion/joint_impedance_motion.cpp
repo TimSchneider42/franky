@@ -1,5 +1,6 @@
 #include "franky/motion/joint_impedance_motion.hpp"
 
+#include <algorithm>
 #include <array>
 #include <cmath>
 
@@ -8,6 +9,21 @@
 #include "franky/motion/torque_control_utils.hpp"
 
 namespace franky {
+
+namespace {
+Vector7d computeFrictionCompensation(
+    const Vector7d &dq, const Vector7d &coulomb, const Vector7d &viscous, const Vector7d &max_torque,
+    double velocity_epsilon) {
+  Vector7d tau = Vector7d::Zero();
+  const double epsilon = std::max(velocity_epsilon, 1e-9);
+  for (int i = 0; i < 7; ++i) {
+    const double limit = std::max(max_torque[i], 0.0);
+    const double uncompensated = coulomb[i] * std::tanh(dq[i] / epsilon) + viscous[i] * dq[i];
+    tau[i] = std::clamp(uncompensated, -limit, limit);
+  }
+  return tau;
+}
+}  // namespace
 
 JointImpedanceBase::JointImpedanceBase(
     const Vector7d &target, const Vector7d &target_velocity, const JointImpedanceParams &params,
@@ -56,6 +72,15 @@ franka::Torques JointImpedanceBase::computeCommand(
   Vector7d torque_feedforward = params_.constant_torque_offset + reference.tau_ff;
   Vector7d tau_d = current_stiffness_.asDiagonal() * (reference.q - robot_state.q) +
                    current_damping_.asDiagonal() * (reference.dq - robot_state.dq) + torque_feedforward;
+
+  if (params_.compensate_friction) {
+    tau_d += computeFrictionCompensation(
+        robot_state.dq,
+        params_.friction_coulomb,
+        params_.friction_viscous,
+        params_.friction_max_torque,
+        params_.friction_velocity_epsilon);
+  }
 
   if (params_.lower_joint_limits.has_value() && params_.upper_joint_limits.has_value()) {
     tau_d += franky::computeJointLimitTorque(

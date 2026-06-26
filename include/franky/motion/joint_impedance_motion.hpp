@@ -52,6 +52,21 @@ struct JointImpedanceParams : public TorqueSafetyParams {
 
   /** Compensate Coriolis forces using the robot model. */
   bool compensate_coriolis{true};
+
+  /** Compensate joint friction with a velocity-based feedforward model. */
+  bool compensate_friction{false};
+
+  /** Coulomb friction compensation gains in [Nm]. */
+  Vector7d friction_coulomb{Vector7d::Zero()};
+
+  /** Viscous friction compensation gains in [Nms/rad]. */
+  Vector7d friction_viscous{Vector7d::Zero()};
+
+  /** Absolute per-joint clamp for friction compensation in [Nm]. */
+  Vector7d friction_max_torque{Vector7d::Zero()};
+
+  /** Velocity scale for the smooth Coulomb sign transition in [rad/s]. */
+  double friction_velocity_epsilon{0.03};
 };
 
 class JointImpedanceBase : public Motion<franka::Torques> {
