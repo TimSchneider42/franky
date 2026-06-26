@@ -3,6 +3,11 @@ set -e
 
 export LD_LIBRARY_PATH="/usr/local/lib64:/usr/local/lib"  # For whatever reason, this has to be set manually
 
+# Activate the highest available gcc-toolset so pip's isolated build environment
+# inherits the correct compiler (pip does not inherit SCL-activated PATH)
+TOOLSET_ENABLE=$(ls /opt/rh/gcc-toolset-*/enable 2>/dev/null | sort -V | tail -1)
+[ -n "${TOOLSET_ENABLE}" ] && source "${TOOLSET_ENABLE}"
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 . "${SCRIPT_DIR}/dependency_versions"
 

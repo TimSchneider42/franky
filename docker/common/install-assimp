@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+echo "Installing Assimp version ${ASSIMP_VERSION}..."
+TMP_DIR="$(mktemp -d /var/tmp/tmp.XXXXXXXXXX)"
+git clone --depth 1 --recurse-submodules --shallow-submodules \
+    --branch "v${ASSIMP_VERSION}" https://github.com/assimp/assimp.git "${TMP_DIR}"
+cd "${TMP_DIR}"
+mkdir build && cd build
+cmake .. \
+  -DBoost_USE_STATIC_LIBS=ON \
+  -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+  -DBUILD_SHARED_LIBS=OFF \
+  -DASSIMP_BUILD_TESTS=OFF \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_LIBDIR=lib \
+  -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+make -j "$(nproc)"
+sudo make install || make install
+cd /
+rm -rf "${TMP_DIR}"
+echo "Assimp installed successfully"

@@ -1,17 +1,29 @@
 #!/bin/bash
 set -e
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 echo "Installing Pinocchio version ${PINOCCHIO_VERSION}..."
 TMP_DIR="$(mktemp -d /var/tmp/tmp.XXXXXXXXXX)"
 git clone --depth 1 --branch "${PINOCCHIO_VERSION}" --recurse-submodules --shallow-submodules \
   https://github.com/stack-of-tasks/pinocchio "${TMP_DIR}"
 cd "${TMP_DIR}"
+git apply "${SCRIPT_DIR}/pinocchio.patch"
 # Workaround to prevent them from overriding CMP0167=OLD again
 sed -i 's/^[[:space:]]*cmake_policy(SET CMP0167 NEW)/# &/' CMakeLists.txt
 mkdir build
 cd build
 # CMP0167 has to be set to OLD to be compatible with outdated boost versions
-cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_DEFAULT_CMP0167=OLD -DBUILD_WITH_URDF_SUPPORT=on -DBUILD_WITH_COLLISION_SUPPORT=off -DBUILD_PYTHON_INTERFACE=off -DBUILD_TESTING=off
+cmake .. \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_POLICY_DEFAULT_CMP0167=OLD \
+  -DBoost_USE_STATIC_LIBS=ON \
+  -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+  -DBUILD_SHARED_LIBS=OFF \
+  -DCMAKE_INSTALL_LIBDIR=lib \
+  -DBUILD_PYTHON_INTERFACE=OFF \
+  -DBUILD_DOCUMENTATION=OFF \
+  -DBUILD_TESTING=OFF
 make -j "$(nproc)"
 sudo make install || make install
 cd /

@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      APT_PACKAGES: build-essential cmake git python3-dev libboost-all-dev liburdfdom-dev libfmt-dev libssl-dev libmysqlclient-dev libpq-dev
+      APT_PACKAGES: build-essential cmake git python3-dev libboost-all-dev libfmt-dev libssl-dev libmysqlclient-dev libpq-dev
 
     steps:
       - name: Checkout repository and submodules

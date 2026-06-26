@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+echo "Installing urdfdom version ${URDFDOM_VERSION}..."
+TMP_DIR="$(mktemp -d /var/tmp/tmp.XXXXXXXXXX)"
+git clone --depth 1 --branch "${URDFDOM_VERSION}" https://github.com/ros/urdfdom.git "${TMP_DIR}"
+cd "${TMP_DIR}"
+git apply "${SCRIPT_DIR}/urdfdom.patch"
+mkdir build && cd build
+cmake .. \
+  -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+  -DBUILD_SHARED_LIBS=OFF \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_LIBDIR=lib \
+  -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+make -j "$(nproc)"
+sudo make install || make install
+cd /
+rm -rf "${TMP_DIR}"
+echo "urdfdom installed successfully"

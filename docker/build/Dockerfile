@@ -2,7 +2,7 @@ FROM quay.io/pypa/manylinux_2_34_x86_64:latest
 
 LABEL maintainer="Tim Schneider <tim@robot-learning.de>"
 
-RUN yum -y install zip boost-devel urdfdom-devel fmt-devel gcc-c++ openssl-devel mysql-devel postgresql-devel tinyxml2-devel
+RUN yum -y install zip fmt-devel openssl-devel mysql-devel postgresql-devel boost-devel
 
 ADD docker/common/ /tmp/common/
 ARG LIBFRANKA_VERSION
