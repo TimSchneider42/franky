@@ -3,6 +3,9 @@ set -e
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
+"${SCRIPT_DIR}/install-assimp"
+"${SCRIPT_DIR}/install-urdfdom"
+
 echo "Installing Pinocchio version ${PINOCCHIO_VERSION}..."
 TMP_DIR="$(mktemp -d /var/tmp/tmp.XXXXXXXXXX)"
 git clone --depth 1 --branch "${PINOCCHIO_VERSION}" --recurse-submodules --shallow-submodules \

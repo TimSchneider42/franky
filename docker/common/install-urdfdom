@@ -3,6 +3,10 @@ set -e
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
+"${SCRIPT_DIR}/install-urdfdom-headers"
+"${SCRIPT_DIR}/install-console-bridge"
+"${SCRIPT_DIR}/install-tinyxml2"
+
 echo "Installing urdfdom version ${URDFDOM_VERSION}..."
 TMP_DIR="$(mktemp -d /var/tmp/tmp.XXXXXXXXXX)"
 git clone --depth 1 --branch "${URDFDOM_VERSION}" https://github.com/ros/urdfdom.git "${TMP_DIR}"

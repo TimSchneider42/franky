@@ -18,11 +18,6 @@ version_ge() {
 
 "${SCRIPT_DIR}/install-poco"
 if version_ge "$LIBFRANKA_VERSION" "0.14.0"; then
-  "${SCRIPT_DIR}/install-tinyxml2"
-  "${SCRIPT_DIR}/install-console-bridge"
-  "${SCRIPT_DIR}/install-urdfdom-headers"
-  "${SCRIPT_DIR}/install-urdfdom"
-  "${SCRIPT_DIR}/install-assimp"
   "${SCRIPT_DIR}/install-pinocchio"
 fi
 
