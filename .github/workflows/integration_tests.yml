@@ -59,8 +59,6 @@ jobs:
 
       - name: Run integration tests for ${{ matrix.python-dir }}
         run: |
-          yum -y install -q unzip
-
           version="${{ needs.get-versions.outputs.latest }}"
           unzip -q "artifacts/libfranka_${version//./-}_wheels.zip" -d unpacked/
 

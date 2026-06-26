@@ -18,7 +18,7 @@ jobs:
       image: quay.io/pypa/${{ inputs.manylinux-version }}
 
     env:
-      YUM_PACKAGES: zip boost-devel fmt-devel openssl-devel mysql-devel postgresql-devel
+      YUM_PACKAGES: zip unzip boost-devel fmt-devel openssl-devel mysql-devel postgresql-devel
 
     steps:
       - name: Checkout repository and submodules
