@@ -38,7 +38,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: /usr/local
-          key: deps-${{ inputs.manylinux-version }}-${{ steps.syspkg.outputs.hash }}-${{ hashFiles('docker/common/install-*', 'docker/common/dependency_versions') }}-${{ inputs.libfranka-version }}
+          key: deps-${{ inputs.manylinux-version }}-${{ steps.syspkg.outputs.hash }}-${{ hashFiles('docker/common/install-*', 'docker/common/dependency_versions', 'docker/common/*.patch') }}-${{ inputs.libfranka-version }}
 
       - name: Install other dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
