@@ -58,6 +58,8 @@ jobs:
           path: artifacts/
 
       - name: Run integration tests for ${{ matrix.python-dir }}
+        env:
+          CMEEL_RUN_TESTS: "false"
         run: |
           version="${{ needs.get-versions.outputs.latest }}"
           unzip -q "artifacts/libfranka_${version//./-}_wheels.zip" -d unpacked/
