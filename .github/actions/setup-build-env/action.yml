@@ -6,30 +6,15 @@ inputs:
     required: true
   manylinux-version:
     required: true
-  yum-packages:
-    required: true
 
 runs:
   using: composite
   steps:
     - name: Install yum dependencies
-      run: yum -y install ${{ inputs.yum-packages }}
+      run: yum -y install zip unzip boost-devel fmt-devel openssl-devel mysql-devel postgresql-devel
       shell: bash
-
-    - name: Hash system packages
-      id: syspkg
-      run: echo "hash=$(rpm -q ${{ inputs.yum-packages }} | sort | sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
-      shell: bash
-
-    - name: Cache build dependencies
-      id: cache-deps
-      uses: actions/cache@v4
-      with:
-        path: /usr/local
-        key: deps-${{ inputs.manylinux-version }}-${{ steps.syspkg.outputs.hash }}-${{ hashFiles('docker/common/install-*', 'docker/common/dependency_versions', 'docker/common/*.patch') }}-${{ inputs.libfranka-version }}
 
     - name: Install other dependencies
-      if: steps.cache-deps.outputs.cache-hit != 'true'
       run: LIBFRANKA_VERSION=${{ inputs.libfranka-version }} ./docker/common/install-dependencies
       shell: bash
 

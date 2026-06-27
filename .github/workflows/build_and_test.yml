@@ -28,7 +28,6 @@ jobs:
         with:
           libfranka-version: ${{ inputs.libfranka-version }}
           manylinux-version: ${{ inputs.manylinux-version }}
-          yum-packages: zip unzip boost-devel fmt-devel openssl-devel mysql-devel postgresql-devel
 
       - name: Configure & make
         run: |
