@@ -11,23 +11,22 @@ on:
         type: string
 
 jobs:
+  ensure-container:
+    uses: ./.github/workflows/ensure_build_container.yml
+    with:
+      libfranka-version: ${{ inputs.libfranka-version }}
+      manylinux-version: ${{ inputs.manylinux-version }}
+
   build_and_test:
+    needs: ensure-container
     runs-on: ubuntu-latest
-
     container:
-      image: quay.io/pypa/${{ inputs.manylinux-version }}
-
+      image: ${{ needs.ensure-container.outputs.image }}
     steps:
       - name: Checkout repository and submodules
         uses: actions/checkout@v4
         with:
           submodules: recursive
-
-      - name: Setup build environment
-        uses: ./.github/actions/setup-build-env
-        with:
-          libfranka-version: ${{ inputs.libfranka-version }}
-          manylinux-version: ${{ inputs.manylinux-version }}
 
       - name: Configure & make
         run: |
