@@ -14,3 +14,4 @@ jobs:
     uses: ./.github/workflows/build_and_test.yml
     with:
       libfranka-version: ${{ matrix.libfranka-version }}
+      manylinux-version: manylinux_2_28_x86_64

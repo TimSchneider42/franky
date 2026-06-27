@@ -6,13 +6,16 @@ on:
       libfranka-version:
         required: true
         type: string
+      manylinux-version:
+        required: true
+        type: string
 
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
 
-    env:
-      APT_PACKAGES: build-essential cmake git python3-dev libboost-all-dev libfmt-dev libssl-dev libmysqlclient-dev libpq-dev
+    container:
+      image: quay.io/pypa/${{ inputs.manylinux-version }}
 
     steps:
       - name: Checkout repository and submodules
@@ -20,30 +23,12 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install apt dependencies
-        run: |
-          sudo rm -f /etc/apt/sources.list.d/azure-cli.list
-          sudo apt-get update
-          sudo apt-get -y install $APT_PACKAGES
-
-      - name: Hash system packages
-        id: syspkg
-        run: echo "hash=$(dpkg-query -W -f='${Package} ${Version}\n' $APT_PACKAGES | sort | sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
-
-      - name: Cache build dependencies
-        id: cache-deps
-        uses: actions/cache@v4
+      - name: Setup build environment
+        uses: ./.github/actions/setup-build-env
         with:
-          path: /usr/local
-          key: deps-ubuntu-${{ steps.syspkg.outputs.hash }}-${{ hashFiles('docker/common/install-*', 'docker/common/dependency_versions', 'docker/common/*.patch') }}-${{ inputs.libfranka-version }}
-
-      - name: Install other dependencies
-        if: steps.cache-deps.outputs.cache-hit != 'true'
-        run: |
-          LIBFRANKA_VERSION=${{ inputs.libfranka-version }} ./docker/common/install-dependencies
-
-      - name: Refresh linker cache
-        run: sudo ldconfig
+          libfranka-version: ${{ inputs.libfranka-version }}
+          manylinux-version: ${{ inputs.manylinux-version }}
+          yum-packages: zip unzip boost-devel fmt-devel openssl-devel mysql-devel postgresql-devel
 
       - name: Configure & make
         run: |
