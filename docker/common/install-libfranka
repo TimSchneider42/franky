@@ -41,6 +41,14 @@ if ! git merge-base --is-ancestor f1f46fb HEAD; then
 fi
 git submodule update
 
+# 0.14.2, 0.17.0, and 0.18.0 are missing an explicit find_package(console_bridge)
+# before find_package(pinocchio), causing cmake 4.x to fail when pinocchio's
+# transitive urdfdom export references console_bridge::console_bridge before it is
+# imported. Fixed in 0.18.1. Versions without pinocchio are unaffected (no-op).
+if grep -q 'find_package(pinocchio' CMakeLists.txt && ! grep -q 'find_package(console_bridge' CMakeLists.txt; then
+  sed -i 's/find_package(pinocchio/find_package(console_bridge REQUIRED)\nfind_package(pinocchio/' CMakeLists.txt
+fi
+
 mkdir build
 cd build
 # CMP0167 has to be set to OLD to be compatible with outdated boost versions
