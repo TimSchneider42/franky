@@ -3,14 +3,16 @@ set -e
 
 echo "Found the following Python versions:"
 for PYBIN in /opt/python/*/bin; do
-  if [[ "${PYBIN}" =~ ${PYBIN_SUPPORTED_VERSIONS} ]]; then
-     echo "${PYBIN}" | cut -d / -f 4
+  PY_DIR=$(cut -d / -f 4 <<< "${PYBIN}")
+  if [[ " ${PYBIN_SUPPORTED_VERSIONS} " == *" ${PY_DIR} "* ]]; then
+     echo "${PY_DIR}"
   fi
 done
 
 echo "Setting up pip..."
 for PYBIN in /opt/python/*/bin; do
-  if [[ "${PYBIN}" =~ ${PYBIN_SUPPORTED_VERSIONS} ]]; then
+  PY_DIR=$(cut -d / -f 4 <<< "${PYBIN}")
+  if [[ " ${PYBIN_SUPPORTED_VERSIONS} " == *" ${PY_DIR} "* ]]; then
     "${PYBIN}/pip" install setuptools wheel --user
   fi
 done

@@ -16,8 +16,9 @@ CODE_DIR="${1:-$(pwd)}"
 # Log python versions
 echo "Found the following Python versions:"
 for PYBIN in /opt/python/*/bin; do
-  if [[ "${PYBIN}" =~ ${PYBIN_SUPPORTED_VERSIONS} ]]; then
-    echo "${PYBIN}" | cut -d / -f 4
+  PY_DIR=$(cut -d / -f 4 <<< "${PYBIN}")
+  if [[ " ${PYBIN_SUPPORTED_VERSIONS} " == *" ${PY_DIR} "* ]]; then
+    echo "${PY_DIR}"
   fi
 done
 
@@ -33,7 +34,8 @@ mkdir -p "${FRANKY_LIB_CACHE_DIR}"
 # Compile wheels
 echo "Building wheels..."
 for PYBIN in /opt/python/*/bin; do
-  if [[ "${PYBIN}" =~ ${PYBIN_SUPPORTED_VERSIONS} ]]; then
+  PY_DIR=$(cut -d / -f 4 <<< "${PYBIN}")
+  if [[ " ${PYBIN_SUPPORTED_VERSIONS} " == *" ${PY_DIR} "* ]]; then
     echo "Started building wheels for ${PYBIN}" &&
     "${PYBIN}/pip" wheel "$CODE_DIR" -w "${WHEELS_DIR}" 1> /dev/null &&
     echo "Successfully built wheel for ${PYBIN}"
@@ -53,7 +55,8 @@ done
 
 # Install packages and test
 for PYBIN in /opt/python/*/bin/; do
-  if [[ "${PYBIN}" =~ ${PYBIN_SUPPORTED_VERSIONS} ]]; then
+  PY_DIR=$(cut -d / -f 4 <<< "${PYBIN}")
+  if [[ " ${PYBIN_SUPPORTED_VERSIONS} " == *" ${PY_DIR} "* ]]; then
     PY_DIR=$(basename "$(dirname "$PYBIN")")
     venv_dir=".venv_${PY_DIR}"
     "${PYBIN}/python" -m venv "${venv_dir}"
