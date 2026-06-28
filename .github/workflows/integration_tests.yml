@@ -29,7 +29,8 @@ jobs:
           . docker/common/dependency_versions
           dirs=()
           for PYBIN in /opt/python/*/bin; do
-            if [[ "${PYBIN}" =~ ${PYBIN_SUPPORTED_VERSIONS} ]]; then
+            PY_DIR=$(cut -d / -f 4 <<< "${PYBIN}")
+            if [[ " ${PYBIN_SUPPORTED_VERSIONS} " == *" ${PY_DIR} "* ]]; then
               PY_VER=$("${PYBIN}/python3" -c "import sys; v=sys.version_info; print(v.major * 100 + v.minor)")
               [[ "${PY_VER}" -lt 310 ]] && continue
               dirs+=("$(basename "$(dirname "$PYBIN")")")

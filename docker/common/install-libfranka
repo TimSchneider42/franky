@@ -41,10 +41,20 @@ if ! git merge-base --is-ancestor f1f46fb HEAD; then
 fi
 git submodule update
 
-# 0.14.2, 0.17.0, and 0.18.0 are missing an explicit find_package(console_bridge)
-# before find_package(pinocchio), causing cmake 4.x to fail when pinocchio's
-# transitive urdfdom export references console_bridge::console_bridge before it is
-# imported. Fixed in 0.18.1. Versions without pinocchio are unaffected (no-op).
+# cmake 4.x validates INTERFACE_LINK_LIBRARIES of imported targets at generate time.
+# urdfdom (built as STATIC) exposes console_bridge and tinyxml2 as interface deps in its
+# export file, so both targets must be imported before cmake's generate step.
+# Any find_package call during configure is sufficient — order relative to pinocchio
+# does not matter, only that the target exists by generate time.
+#
+# TinyXML2 missing entirely (< 0.18.0): add it before pinocchio so the target exists.
+# Fixed in 0.18.0 (first version to call find_package(TinyXML2)).
+if grep -q 'find_package(pinocchio' CMakeLists.txt && ! grep -qi 'find_package(tinyxml2' CMakeLists.txt; then
+  sed -i 's/find_package(pinocchio/find_package(TinyXML2 REQUIRED)\nfind_package(pinocchio/' CMakeLists.txt
+fi
+
+# console_bridge missing (0.14.2, 0.17.0, 0.18.0): add it before pinocchio.
+# Fixed in 0.18.1 (first version to call find_package(console_bridge)).
 if grep -q 'find_package(pinocchio' CMakeLists.txt && ! grep -q 'find_package(console_bridge' CMakeLists.txt; then
   sed -i 's/find_package(pinocchio/find_package(console_bridge REQUIRED)\nfind_package(pinocchio/' CMakeLists.txt
 fi
