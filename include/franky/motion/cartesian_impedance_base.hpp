@@ -1,7 +1,9 @@
 #pragma once
 
 #include <Eigen/Core>
+#include <Eigen/Eigenvalues>
 #include <array>
+#include <cmath>
 #include <memory>
 #include <optional>
 #include <variant>
@@ -46,31 +48,58 @@ struct CartesianReference {
   }
 };
 
+inline Matrix6d cartesianGainBlocks(double translational, double rotational) {
+  Matrix6d gains = Matrix6d::Zero();
+  gains.topLeftCorner<3, 3>() = translational * Eigen::Matrix3d::Identity();
+  gains.bottomRightCorner<3, 3>() = rotational * Eigen::Matrix3d::Identity();
+  return gains;
+}
+
+inline Matrix6d defaultCartesianImpedanceStiffness() { return cartesianGainBlocks(500.0, 50.0); }
+
+inline Matrix6d defaultCartesianImpedanceDamping(const Matrix6d &stiffness) {
+  Eigen::SelfAdjointEigenSolver<Matrix6d> solver(stiffness);
+  return 2.0 * solver.operatorSqrt();
+}
+
 struct CartesianImpedanceGains {
   CartesianImpedanceGains() = default;
 
-  explicit CartesianImpedanceGains(
-      double translational_stiffness, double rotational_stiffness,
-      std::optional<double> translational_damping = std::nullopt,
-      std::optional<double> rotational_damping = std::nullopt)
-      : translational_stiffness(translational_stiffness),
-        rotational_stiffness(rotational_stiffness),
-        translational_damping(translational_damping),
-        rotational_damping(rotational_damping) {
+  explicit CartesianImpedanceGains(Matrix6d stiffness, std::optional<Matrix6d> damping = std::nullopt)
+      : stiffness(std::move(stiffness)), damping(std::move(damping)) {
     validate();
   }
 
-  double translational_stiffness{500.0};
-  double rotational_stiffness{50.0};
-  std::optional<double> translational_damping{std::nullopt};
-  std::optional<double> rotational_damping{std::nullopt};
+  static CartesianImpedanceGains isotropic(
+      double translational_stiffness, double rotational_stiffness,
+      std::optional<double> translational_damping = std::nullopt,
+      std::optional<double> rotational_damping = std::nullopt) {
+    CartesianImpedanceGains gains;
+    gains.stiffness = cartesianGainBlocks(translational_stiffness, rotational_stiffness);
+    if (translational_damping.has_value() || rotational_damping.has_value()) {
+      gains.damping = cartesianGainBlocks(
+          translational_damping.value_or(2.0 * std::sqrt(translational_stiffness)),
+          rotational_damping.value_or(2.0 * std::sqrt(rotational_stiffness)));
+    }
+    gains.validate();
+    return gains;
+  }
 
-  /** @brief Throw std::invalid_argument if any gain is negative or non-finite. */
+  static CartesianImpedanceGains diagonal(const Vector6d &stiffness, std::optional<Vector6d> damping = std::nullopt) {
+    CartesianImpedanceGains gains;
+    gains.stiffness = stiffness.asDiagonal();
+    if (damping.has_value()) gains.damping = damping->asDiagonal();
+    gains.validate();
+    return gains;
+  }
+
+  Matrix6d stiffness{defaultCartesianImpedanceStiffness()};
+  std::optional<Matrix6d> damping{std::nullopt};
+
+  /** @brief Throw std::invalid_argument if any gain is non-finite. */
   void validate() const {
-    validateNonNegativeFinite(translational_stiffness, "translational_stiffness");
-    validateNonNegativeFinite(rotational_stiffness, "rotational_stiffness");
-    if (translational_damping.has_value()) validateNonNegativeFinite(*translational_damping, "translational_damping");
-    if (rotational_damping.has_value()) validateNonNegativeFinite(*rotational_damping, "rotational_damping");
+    validateFinite(stiffness, "stiffness");
+    if (damping.has_value()) validateFinite(*damping, "damping");
   }
 };
 
@@ -139,11 +168,9 @@ struct NullspaceGains {
 /**
  * @brief Base class for client-side cartesian impedance motions.
  *
- * This class computes joint torques from a task-space spring-damper law with
- * optional nullspace posture control and model compensation. It does not use
- * Franka's internal impedance controller. Instead, it uses Franka's internal
- * torque controller and calculates the torques itself. Subclasses implement
- * nextCommandImpl and call computeCommand with their current reference.
+ * This motion implements a cartesian impedance controller on the client
+ * side and does not use Franka's internal impedance controller. Instead, it
+ * uses Franka's internal torque controller and calculates the torques itself.
  */
 class CartesianImpedanceBase : public Motion<franka::Torques> {
  public:
@@ -151,21 +178,11 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
    * @brief Parameters for the impedance motion.
    */
   struct Params {
-    /** The translational stiffness in [10, 3000] N/m. */
-    double translational_stiffness{500};
+    /** Cartesian stiffness matrix [N/m, Nm/rad], ordered [x, y, z, rx, ry, rz]. */
+    Matrix6d stiffness{defaultCartesianImpedanceStiffness()};
 
-    /** The rotational stiffness in [1, 300] Nm/rad. */
-    double rotational_stiffness{50};
-
-    /**
-     * Translational damping [N·s/m]. nullopt → critical damping (2*sqrt(stiffness)).
-     */
-    std::optional<double> translational_damping{std::nullopt};
-
-    /**
-     * Rotational damping [N·m·s/rad]. nullopt → critical damping (2*sqrt(stiffness)).
-     */
-    std::optional<double> rotational_damping{std::nullopt};
+    /** Cartesian damping matrix. If unset, critical damping is used. */
+    std::optional<Matrix6d> damping{std::nullopt};
 
     /**
      * Maximum absolute Cartesian position error [m] used by the task-space controller.
@@ -203,10 +220,8 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
 
     /** @brief Throw std::invalid_argument if any parameter is out of range. */
     void validate() const {
-      validateNonNegativeFinite(translational_stiffness, "translational_stiffness");
-      validateNonNegativeFinite(rotational_stiffness, "rotational_stiffness");
-      if (translational_damping.has_value()) validateNonNegativeFinite(*translational_damping, "translational_damping");
-      if (rotational_damping.has_value()) validateNonNegativeFinite(*rotational_damping, "rotational_damping");
+      validateFinite(stiffness, "stiffness");
+      if (damping.has_value()) validateFinite(*damping, "damping");
       friction.validate();
     }
   };
@@ -239,20 +254,25 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
   Affine target_;
 
  private:
-  void rebuildStiffnessDamping();
+  const Matrix6d &criticalDamping();
 
   Params params_;
 
   WaitFreeTripleBuffer<CartesianImpedanceGains> gains_handle_;
   WaitFreeTripleBuffer<NullspaceGains> nullspace_gains_handle_;
   double gains_time_constant_;
-  double current_translational_stiffness_;
-  double current_rotational_stiffness_;
-  std::optional<double> current_translational_damping_;
-  std::optional<double> current_rotational_damping_;
+  Matrix6d current_stiffness_;
+  Matrix6d current_damping_;
   NullspaceGains current_nullspace_gains_;
 
-  Eigen::Matrix<double, 6, 6> stiffness, damping;
+  /** Cached critical damping = defaultCartesianImpedanceDamping(current_stiffness_). */
+  Matrix6d critical_damping_;
+
+  /**
+   * Stiffness for which critical_damping_ was last computed. Lets criticalDamping() skip the
+   * eigendecomposition while the stiffness is unchanged.
+   */
+  std::optional<Matrix6d> critical_damping_stiffness_;
 };
 
 using ImpedanceMotion = CartesianImpedanceBase;

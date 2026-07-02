@@ -7,7 +7,6 @@ import numpy as np
 
 from ._franky import (
     Affine,
-    CartesianImpedanceGains,
     CartesianImpedanceTrackingMotion,
     CartesianReference,
     ControlException,
@@ -164,25 +163,23 @@ class CartesianImpedanceTracker:
     ) -> None:
         """Update impedance gains. Smoothed in the RT loop via exponential interpolation.
 
-        Only the provided gains are changed; omitted gains keep their current target values.
+        Omitted components keep their current target value. A named stiffness overwrites its
+        3x3 block isotropically; damping is preserved (use ``motion.set_gains`` for
+        anisotropic or explicit-damping gains).
         """
         current = self._motion.get_gains()
-        ts = (
-            translational_stiffness
-            if translational_stiffness is not None
-            else current.translational_stiffness
-        )
-        rs = (
-            rotational_stiffness
-            if rotational_stiffness is not None
-            else current.rotational_stiffness
-        )
-        ns = (
-            nullspace_stiffness
-            if nullspace_stiffness is not None
-            else current.nullspace_stiffness
-        )
-        self._motion.set_gains(CartesianImpedanceGains(ts, rs, ns))
+        # Preserve the full stiffness matrix (anisotropy) and damping; overwrite only named blocks.
+        stiffness = np.array(current.stiffness, copy=True)
+        if translational_stiffness is not None:
+            stiffness[0:3, 0:3] = translational_stiffness * np.eye(3)
+        if rotational_stiffness is not None:
+            stiffness[3:6, 3:6] = rotational_stiffness * np.eye(3)
+        current.stiffness = stiffness
+        self._motion.set_gains(current)
+        if nullspace_stiffness is not None:
+            nullspace_gains = self._motion.get_nullspace_gains()
+            nullspace_gains.posture_stiffness = nullspace_stiffness
+            self._motion.set_nullspace_gains(nullspace_gains)
 
     # --- state ---
 

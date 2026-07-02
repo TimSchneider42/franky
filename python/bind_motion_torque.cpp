@@ -69,12 +69,12 @@ CartesianImpedanceBase::Params makeCartesianImpedanceParams(
     double joint_limit_max_torque, const Eigen::Vector3d &translational_error_clip,
     const Eigen::Vector3d &rotational_error_clip, const std::optional<FrictionCompensationParams> &friction) {
   auto params = CartesianImpedanceBase::Params{};
-  params.translational_stiffness = translational_stiffness;
-  params.rotational_stiffness = rotational_stiffness;
+  params.stiffness = cartesianGainBlocks(translational_stiffness, rotational_stiffness);
   params.translational_error_clip = translational_error_clip;
   params.rotational_error_clip = rotational_error_clip;
-  params.nullspace_target = nullspace_target;
-  params.nullspace_stiffness = nullspace_stiffness;
+  if (nullspace_target.has_value()) {
+    params.nullspace_tasks.emplace_back(PostureTask{*nullspace_target, nullspace_stiffness});
+  }
   params.safety.max_delta_tau = max_delta_tau;
   params.safety.joint_limit_activation_distance = joint_limit_activation_distance;
   params.safety.joint_limit_stiffness = joint_limit_stiffness;
@@ -92,13 +92,30 @@ CartesianImpedanceBase::Params makeCartesianImpedanceParams(
 void bind_motion_torque(py::module &m) {
   py::class_<CartesianImpedanceGains>(m, "CartesianImpedanceGains")
       .def(
-          py::init<double, double, double>(),
+          py::init<>([](double translational_stiffness, double rotational_stiffness) {
+            return CartesianImpedanceGains::isotropic(translational_stiffness, rotational_stiffness);
+          }),
           "translational_stiffness"_a = 500.0,
-          "rotational_stiffness"_a = 50.0,
-          "nullspace_stiffness"_a = 0.0)
-      .def_readwrite("translational_stiffness", &CartesianImpedanceGains::translational_stiffness)
-      .def_readwrite("rotational_stiffness", &CartesianImpedanceGains::rotational_stiffness)
-      .def_readwrite("nullspace_stiffness", &CartesianImpedanceGains::nullspace_stiffness);
+          "rotational_stiffness"_a = 50.0)
+      .def_static(
+          "isotropic",
+          &CartesianImpedanceGains::isotropic,
+          "translational_stiffness"_a,
+          "rotational_stiffness"_a,
+          "translational_damping"_a = std::nullopt,
+          "rotational_damping"_a = std::nullopt)
+      .def_static("diagonal", &CartesianImpedanceGains::diagonal, "stiffness"_a, "damping"_a = std::nullopt)
+      .def_readwrite("stiffness", &CartesianImpedanceGains::stiffness)
+      .def_readwrite("damping", &CartesianImpedanceGains::damping);
+
+  py::class_<NullspaceGains>(m, "NullspaceGains")
+      .def(py::init<>())
+      .def_readwrite("posture_stiffness", &NullspaceGains::posture_stiffness)
+      .def_readwrite("posture_damping", &NullspaceGains::posture_damping)
+      .def_readwrite("posture_max_torque", &NullspaceGains::posture_max_torque)
+      .def_readwrite("manipulability_gain", &NullspaceGains::manipulability_gain)
+      .def_readwrite("manipulability_damping", &NullspaceGains::manipulability_damping)
+      .def_readwrite("manipulability_max_torque", &NullspaceGains::manipulability_max_torque);
 
   py::class_<CartesianReference>(m, "CartesianReference")
       .def(
@@ -152,7 +169,9 @@ void bind_motion_torque(py::module &m) {
               &CartesianImpedanceBase::setGains,
               "gains"_a,
               "Set the target impedance gains. The gains are validated and then smoothed in the control loop via "
-              "exponential interpolation.");
+              "exponential interpolation.")
+          .def("get_nullspace_gains", &CartesianImpedanceBase::getNullspaceGains)
+          .def("set_nullspace_gains", &CartesianImpedanceBase::setNullspaceGains, "gains"_a);
   m.attr("ImpedanceMotion") = cartesian_impedance_base;
 
   py::class_<JointImpedanceBase, Motion<franka::Torques>, std::shared_ptr<JointImpedanceBase>>(m, "JointImpedanceBase")
@@ -209,13 +228,12 @@ void bind_motion_torque(py::module &m) {
 
   py::class_<CartesianImpedanceBase::Params>(m, "CartesianImpedanceParams")
       .def(py::init<>())
-      .def_readwrite("translational_stiffness", &CartesianImpedanceBase::Params::translational_stiffness)
-      .def_readwrite("rotational_stiffness", &CartesianImpedanceBase::Params::rotational_stiffness)
+      .def_readwrite("stiffness", &CartesianImpedanceBase::Params::stiffness)
+      .def_readwrite("damping", &CartesianImpedanceBase::Params::damping)
       .def_readwrite("translational_error_clip", &CartesianImpedanceBase::Params::translational_error_clip)
       .def_readwrite("rotational_error_clip", &CartesianImpedanceBase::Params::rotational_error_clip)
       .def_readwrite("force_constraints", &CartesianImpedanceBase::Params::force_constraints)
-      .def_readwrite("nullspace_target", &CartesianImpedanceBase::Params::nullspace_target)
-      .def_readwrite("nullspace_stiffness", &CartesianImpedanceBase::Params::nullspace_stiffness)
+      .def_readwrite("nullspace_tasks", &CartesianImpedanceBase::Params::nullspace_tasks)
       .def_readwrite("safety", &CartesianImpedanceBase::Params::safety)
       .def_readwrite("friction", &CartesianImpedanceBase::Params::friction);
 
