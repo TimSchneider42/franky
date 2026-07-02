@@ -32,6 +32,7 @@ JointReference toJointReference(
 
 JointImpedanceParams makeJointImpedanceParams(
     const std::optional<Vector7d> &stiffness, const std::optional<Vector7d> &damping,
+    const std::optional<Vector6d> &cartesian_stiffness, const std::optional<Vector6d> &cartesian_damping,
     const std::optional<Vector7d> &constant_torque_offset, const std::optional<Vector7d> &lower_joint_limits,
     const std::optional<Vector7d> &upper_joint_limits, bool compensate_coriolis, double max_delta_tau,
     double joint_limit_activation_distance, double joint_limit_stiffness, double joint_limit_damping,
@@ -44,6 +45,11 @@ JointImpedanceParams makeJointImpedanceParams(
     if (!damping.has_value()) params.damping = defaultJointImpedanceDamping(params.stiffness);
   }
   if (damping.has_value()) params.damping = damping.value();
+  if (cartesian_stiffness.has_value()) {
+    params.cartesian_gains = CartesianImpedanceGains::diagonal(*cartesian_stiffness, cartesian_damping);
+  } else if (cartesian_damping.has_value()) {
+    throw py::value_error("cartesian_damping requires cartesian_stiffness to be set");
+  }
   if (friction_coulomb.has_value()) params.friction.coulomb = friction_coulomb.value();
   if (friction_viscous.has_value()) params.friction.viscous = friction_viscous.value();
   if (friction_max_torque.has_value()) params.friction.max_torque = friction_max_torque.value();
@@ -185,7 +191,9 @@ void bind_motion_torque(py::module &m) {
           &JointImpedanceBase::setGains,
           "gains"_a,
           "Set the target impedance gains. The gains are validated and then smoothed in the control loop via "
-          "exponential interpolation.");
+          "exponential interpolation.")
+      .def("get_cartesian_gains", &JointImpedanceBase::getCartesianGains)
+      .def("set_cartesian_gains", &JointImpedanceBase::setCartesianGains, "gains"_a);
 
   // Params classes — bind before the motion classes that use them.
 
@@ -221,8 +229,10 @@ void bind_motion_torque(py::module &m) {
       .def(py::init<>())
       .def_readwrite("stiffness", &JointImpedanceParams::stiffness)
       .def_readwrite("damping", &JointImpedanceParams::damping)
+      .def_readwrite("error_clip", &JointImpedanceParams::error_clip)
       .def_readwrite("constant_torque_offset", &JointImpedanceParams::constant_torque_offset)
       .def_readwrite("compensate_coriolis", &JointImpedanceParams::compensate_coriolis)
+      .def_readwrite("cartesian_gains", &JointImpedanceParams::cartesian_gains)
       .def_readwrite("safety", &JointImpedanceParams::safety)
       .def_readwrite("friction", &JointImpedanceParams::friction);
 
@@ -250,6 +260,10 @@ void bind_motion_torque(py::module &m) {
                             stiffness,
                         std::optional<Vector7d>
                             damping,
+                        std::optional<Vector6d>
+                            cartesian_stiffness,
+                        std::optional<Vector6d>
+                            cartesian_damping,
                         std::optional<Vector7d>
                             constant_torque_offset,
                         std::optional<Vector7d>
@@ -272,6 +286,8 @@ void bind_motion_torque(py::module &m) {
             auto params = makeJointImpedanceParams(
                 stiffness,
                 damping,
+                cartesian_stiffness,
+                cartesian_damping,
                 constant_torque_offset,
                 lower_joint_limits,
                 upper_joint_limits,
@@ -296,6 +312,8 @@ void bind_motion_torque(py::module &m) {
           "target_velocity"_a = std::nullopt,
           "stiffness"_a = std::nullopt,
           "damping"_a = std::nullopt,
+          "cartesian_stiffness"_a = std::nullopt,
+          "cartesian_damping"_a = std::nullopt,
           "constant_torque_offset"_a = std::nullopt,
           "lower_joint_limits"_a = std::nullopt,
           "upper_joint_limits"_a = std::nullopt,
@@ -319,6 +337,10 @@ void bind_motion_torque(py::module &m) {
           py::init<>([](std::optional<Vector7d> stiffness,
                         std::optional<Vector7d>
                             damping,
+                        std::optional<Vector6d>
+                            cartesian_stiffness,
+                        std::optional<Vector6d>
+                            cartesian_damping,
                         std::optional<Vector7d>
                             constant_torque_offset,
                         std::optional<Vector7d>
@@ -342,6 +364,8 @@ void bind_motion_torque(py::module &m) {
             auto params = makeJointImpedanceParams(
                 stiffness,
                 damping,
+                cartesian_stiffness,
+                cartesian_damping,
                 constant_torque_offset,
                 lower_joint_limits,
                 upper_joint_limits,
@@ -365,6 +389,8 @@ The controller reads target gains each cycle and exponentially
 interpolates toward them with the given time constant, allowing smooth runtime stiffness/damping changes.)doc",
           "stiffness"_a = std::nullopt,
           "damping"_a = std::nullopt,
+          "cartesian_stiffness"_a = std::nullopt,
+          "cartesian_damping"_a = std::nullopt,
           "constant_torque_offset"_a = std::nullopt,
           "lower_joint_limits"_a = std::nullopt,
           "upper_joint_limits"_a = std::nullopt,

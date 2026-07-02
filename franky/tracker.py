@@ -251,6 +251,12 @@ class CartesianImpedanceTracker:
 class JointImpedanceTracker:
     """A long-lived session for streaming joint impedance tracking commands.
 
+    Passing ``cartesian_stiffness`` (a 6-vector ``[x, y, z, rx, ry, rz]`` in the base
+    frame at the end-effector) enables hybrid Cartesian gain shaping: the controller
+    adds ``J^T diag(cartesian_stiffness) J`` on top of the joint-space stiffness each
+    cycle (and likewise for ``cartesian_damping``, defaulting to critical damping when
+    omitted). The hybrid path is fixed for the lifetime of the motion.
+
     Example::
 
         with JointImpedanceTracker(robot, stiffness=[6.0]*7, period=0.01) as tracker:
@@ -264,6 +270,8 @@ class JointImpedanceTracker:
         *,
         stiffness: Optional[np.ndarray] = None,
         damping: Optional[np.ndarray] = None,
+        cartesian_stiffness: Optional[np.ndarray] = None,
+        cartesian_damping: Optional[np.ndarray] = None,
         constant_torque_offset: Optional[np.ndarray] = None,
         compensate_coriolis: bool = True,
         friction_coulomb: Optional[np.ndarray] = None,
@@ -300,6 +308,16 @@ class JointImpedanceTracker:
         kwargs = {
             "stiffness": stiffness_init,
             "damping": damping_init,
+            "cartesian_stiffness": (
+                np.asarray(cartesian_stiffness, dtype=float)
+                if cartesian_stiffness is not None
+                else None
+            ),
+            "cartesian_damping": (
+                np.asarray(cartesian_damping, dtype=float)
+                if cartesian_damping is not None
+                else None
+            ),
             "constant_torque_offset": constant_torque_offset,
             "compensate_coriolis": compensate_coriolis,
             "friction_coulomb": friction_coulomb,

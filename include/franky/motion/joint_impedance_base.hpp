@@ -1,7 +1,9 @@
 #pragma once
 
 #include <memory>
+#include <optional>
 
+#include "franky/motion/cartesian_impedance_base.hpp"
 #include "franky/motion/motion.hpp"
 #include "franky/motion/torque_control_utils.hpp"
 #include "franky/types.hpp"
@@ -66,6 +68,9 @@ struct JointImpedanceParams {
   /** Joint damping gains in [Nms/rad]. */
   Vector7d damping{defaultJointImpedanceDamping()};
 
+  /** Maximum absolute joint position error [rad] used by the joint-space controller. */
+  Vector7d error_clip{Vector7d::Constant(0.5)};
+
   /** Constant torque offset added to every command in [Nm]. */
   Vector7d constant_torque_offset{Vector7d::Zero()};
 
@@ -78,10 +83,17 @@ struct JointImpedanceParams {
   /** Joint friction compensation settings. */
   FrictionCompensationParams friction{};
 
+  /** Optional Cartesian-space stiffness/damping projected through the current Jacobian. */
+  std::optional<CartesianImpedanceGains> cartesian_gains{std::nullopt};
+
   /** @brief Throw std::invalid_argument if any parameter is out of range. */
   void validate() const {
     validateNonNegativeFinite(stiffness, "stiffness");
     validateNonNegativeFinite(damping, "damping");
+    validateNonNegativeFinite(error_clip, "error_clip");
+    if (cartesian_gains.has_value()) {
+      cartesian_gains->validate();
+    }
     friction.validate();
   }
 };
@@ -105,6 +117,12 @@ class JointImpedanceBase : public Motion<franka::Torques> {
   }
   [[nodiscard]] JointImpedanceGains getGains() const { return gains_handle_.getLastWritten(); }
 
+  void setCartesianGains(const CartesianImpedanceGains &gains) {
+    gains.validate();
+    cartesian_gains_handle_.set(gains);
+  }
+  [[nodiscard]] CartesianImpedanceGains getCartesianGains() const { return cartesian_gains_handle_.getLastWritten(); }
+
  protected:
   explicit JointImpedanceBase(
       const Vector7d &target, const Vector7d &target_velocity, const JointImpedanceParams &params,
@@ -118,10 +136,23 @@ class JointImpedanceBase : public Motion<franka::Torques> {
   Vector7d target_velocity_;
 
  private:
+  struct CartesianShapingState {
+    Matrix6d stiffness;
+    Matrix6d damping;                                    // always concrete, interpolated
+    Matrix6d critical_damping;                           // cached critical(stiffness)
+    std::optional<Matrix6d> critical_damping_stiffness;  // stiffness the cache was computed for
+  };
+
+  // Critical damping for the shaping stiffness; recomputes the eigendecomposition only while the
+  // stiffness moves and caches it otherwise.
+  static const Matrix6d &criticalShapingDamping(CartesianShapingState &shaping);
+
   WaitFreeTripleBuffer<JointImpedanceGains> gains_handle_;
+  WaitFreeTripleBuffer<CartesianImpedanceGains> cartesian_gains_handle_;
   double gains_time_constant_;
   Vector7d current_stiffness_;
   Vector7d current_damping_;
+  std::optional<CartesianShapingState> cartesian_shaping_;
 };
 
 }  // namespace franky

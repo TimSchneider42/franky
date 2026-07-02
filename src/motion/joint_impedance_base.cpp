@@ -16,10 +16,30 @@ JointImpedanceBase::JointImpedanceBase(
       target_(target),
       target_velocity_(target_velocity),
       gains_handle_(JointImpedanceGains(params.stiffness, params.damping)),
+      cartesian_gains_handle_(params.cartesian_gains.value_or(CartesianImpedanceGains{})),
       gains_time_constant_(gains_time_constant),
       current_stiffness_(params.stiffness),
       current_damping_(params.damping) {
+  if (params.cartesian_gains.has_value()) {
+    const auto &cartesian_gains = *params.cartesian_gains;
+    CartesianShapingState shaping;
+    shaping.stiffness = cartesian_gains.stiffness;
+    shaping.critical_damping = defaultCartesianImpedanceDamping(cartesian_gains.stiffness);
+    shaping.critical_damping_stiffness = cartesian_gains.stiffness;
+    shaping.damping = cartesian_gains.damping.value_or(shaping.critical_damping);
+    cartesian_shaping_ = shaping;
+  }
   params_.validate();
+}
+
+const Matrix6d &JointImpedanceBase::criticalShapingDamping(CartesianShapingState &shaping) {
+  // Recompute the critical-damping eigendecomposition only while the stiffness moves; cache otherwise.
+  if (!shaping.critical_damping_stiffness.has_value() ||
+      (shaping.critical_damping_stiffness->array() != shaping.stiffness.array()).any()) {
+    shaping.critical_damping = defaultCartesianImpedanceDamping(shaping.stiffness);
+    shaping.critical_damping_stiffness = shaping.stiffness;
+  }
+  return shaping.critical_damping;
 }
 
 franka::Torques JointImpedanceBase::computeCommand(
@@ -31,8 +51,31 @@ franka::Torques JointImpedanceBase::computeCommand(
   current_damping_ += alpha * (target_gains.damping - current_damping_);
 
   Vector7d torque_feedforward = params_.constant_torque_offset + reference.tau_ff;
-  Vector7d tau_d = current_stiffness_.asDiagonal() * (reference.q - robot_state.q) +
-                   current_damping_.asDiagonal() * (reference.dq - robot_state.dq) + torque_feedforward;
+  const Vector7d q_error = (reference.q - robot_state.q).cwiseMax(-params_.error_clip).cwiseMin(params_.error_clip);
+  auto model = robot()->model();
+
+  Vector7d tau_d;
+  if (cartesian_shaping_.has_value()) {
+    auto &shaping = *cartesian_shaping_;
+    const auto target_gains = cartesian_gains_handle_.get();
+    shaping.stiffness += alpha * (target_gains.stiffness - shaping.stiffness);
+    // An unset target means "critically damp the current stiffness"; interpolate toward it like any
+    // other gain so unsetting damping is as smooth as setting it. The ternary keeps the
+    // eigendecomposition off the explicit-damping path.
+    const Matrix6d &target_damping =
+        target_gains.damping.has_value() ? *target_gains.damping : criticalShapingDamping(shaping);
+    shaping.damping += alpha * (target_damping - shaping.damping);
+
+    const Jacobian jacobian = model->zeroJacobian(franka::Frame::kEndEffector, robot_state);
+    const Eigen::Matrix<double, 7, 7> stiffness_eff =
+        current_stiffness_.asDiagonal().toDenseMatrix() + jacobian.transpose() * shaping.stiffness * jacobian;
+    const Eigen::Matrix<double, 7, 7> damping_eff =
+        current_damping_.asDiagonal().toDenseMatrix() + jacobian.transpose() * shaping.damping * jacobian;
+    tau_d = stiffness_eff * q_error + damping_eff * (reference.dq - robot_state.dq) + torque_feedforward;
+  } else {
+    tau_d = current_stiffness_.asDiagonal() * q_error +
+            current_damping_.asDiagonal() * (reference.dq - robot_state.dq) + torque_feedforward;
+  }
 
   tau_d += computeFrictionCompensation(robot_state.dq, params_.friction);
 
@@ -48,7 +91,6 @@ franka::Torques JointImpedanceBase::computeCommand(
         params_.safety.joint_limit_max_torque);
   }
 
-  auto model = robot()->model();
   if (params_.compensate_coriolis) tau_d += model->coriolis(robot_state);
   tau_d = franky::saturateTorqueRate(tau_d, robot_state.tau_J_d, params_.safety.max_delta_tau);
 
