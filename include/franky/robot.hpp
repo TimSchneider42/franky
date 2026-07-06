@@ -358,21 +358,19 @@ class Robot : public franka::Robot {
    * @brief Execute the given motion
    * @param motion The motion to execute.
    * @param async Whether to execute the motion asynchronously.
+   * @param[in] limit_rate True if rate limiting should be activated. False by default.
+   *   This could distort your motion!
+   * @param[in] cutoff_frequency Cutoff frequency for a first order low-pass filter applied on
+   *   the user commanded signal. Set to franka::kMaxCutoffFrequency to disable.
    */
-  void move(const std::shared_ptr<Motion<franka::CartesianPose>> &motion, bool async = false) {
+  void move(
+      const std::shared_ptr<Motion<franka::CartesianPose>> &motion, bool async = false, bool limit_rate = false,
+      double cutoff_frequency = franka::kDefaultCutoffFrequency) {
     moveInternal<franka::CartesianPose>(
-        motion, [this](const ControlFunc<franka::CartesianPose> &m) { control(m, params_.controller_mode); }, async);
-  }
-
-  /**
-   * @brief Execute the given motion
-   * @param motion The motion to execute.
-   * @param async Whether to execute the motion asynchronously.
-   */
-  void move(const std::shared_ptr<Motion<franka::CartesianVelocities>> &motion, bool async = false) {
-    moveInternal<franka::CartesianVelocities>(
         motion,
-        [this](const ControlFunc<franka::CartesianVelocities> &m) { control(m, params_.controller_mode); },
+        [this, limit_rate, cutoff_frequency](const ControlFunc<franka::CartesianPose> &m) {
+          control(m, params_.controller_mode, limit_rate, cutoff_frequency);
+        },
         async);
   }
 
@@ -380,29 +378,80 @@ class Robot : public franka::Robot {
    * @brief Execute the given motion
    * @param motion The motion to execute.
    * @param async Whether to execute the motion asynchronously.
+   * @param[in] limit_rate True if rate limiting should be activated. False by default.
+   *   This could distort your motion!
+   * @param[in] cutoff_frequency Cutoff frequency for a first order low-pass filter applied on
+   *   the user commanded signal. Set to franka::kMaxCutoffFrequency to disable.
    */
-  void move(const std::shared_ptr<Motion<franka::JointPositions>> &motion, bool async = false) {
+  void move(
+      const std::shared_ptr<Motion<franka::CartesianVelocities>> &motion, bool async = false, bool limit_rate = false,
+      double cutoff_frequency = franka::kDefaultCutoffFrequency) {
+    moveInternal<franka::CartesianVelocities>(
+        motion,
+        [this, limit_rate, cutoff_frequency](const ControlFunc<franka::CartesianVelocities> &m) {
+          control(m, params_.controller_mode, limit_rate, cutoff_frequency);
+        },
+        async);
+  }
+
+  /**
+   * @brief Execute the given motion
+   * @param motion The motion to execute.
+   * @param async Whether to execute the motion asynchronously.
+   * @param[in] limit_rate True if rate limiting should be activated. False by default.
+   *   This could distort your motion!
+   * @param[in] cutoff_frequency Cutoff frequency for a first order low-pass filter applied on
+   *   the user commanded signal. Set to franka::kMaxCutoffFrequency to disable.
+   */
+  void move(
+      const std::shared_ptr<Motion<franka::JointPositions>> &motion, bool async = false, bool limit_rate = false,
+      double cutoff_frequency = franka::kDefaultCutoffFrequency) {
     moveInternal<franka::JointPositions>(
-        motion, [this](const ControlFunc<franka::JointPositions> &m) { control(m, params_.controller_mode); }, async);
+        motion,
+        [this, limit_rate, cutoff_frequency](const ControlFunc<franka::JointPositions> &m) {
+          control(m, params_.controller_mode, limit_rate, cutoff_frequency);
+        },
+        async);
   }
 
   /**
    * @brief Execute the given motion
    * @param motion The motion to execute.
    * @param async Whether to execute the motion asynchronously.
+   * @param[in] limit_rate True if rate limiting should be activated. False by default.
+   *   This could distort your motion!
+   * @param[in] cutoff_frequency Cutoff frequency for a first order low-pass filter applied on
+   *   the user commanded signal. Set to franka::kMaxCutoffFrequency to disable.
    */
-  void move(const std::shared_ptr<Motion<franka::JointVelocities>> &motion, bool async = false) {
+  void move(
+      const std::shared_ptr<Motion<franka::JointVelocities>> &motion, bool async = false, bool limit_rate = false,
+      double cutoff_frequency = franka::kDefaultCutoffFrequency) {
     moveInternal<franka::JointVelocities>(
-        motion, [this](const ControlFunc<franka::JointVelocities> &m) { control(m, params_.controller_mode); }, async);
+        motion,
+        [this, limit_rate, cutoff_frequency](const ControlFunc<franka::JointVelocities> &m) {
+          control(m, params_.controller_mode, limit_rate, cutoff_frequency);
+        },
+        async);
   }
 
   /**
    * @brief Execute the given motion
    * @param motion The motion to execute.
    * @param async Whether to execute the motion asynchronously.
+   * @param[in] limit_rate True if rate limiting should be activated. False by default.
+   *   This could distort your motion!
+   * @param[in] cutoff_frequency Cutoff frequency for a first order low-pass filter applied on
+   *   the user commanded signal. Set to franka::kMaxCutoffFrequency to disable.
    */
-  void move(const std::shared_ptr<Motion<franka::Torques>> &motion, bool async = false) {
-    moveInternal<franka::Torques>(motion, [this](const ControlFunc<franka::Torques> &m) { control(m); }, async);
+  void move(
+      const std::shared_ptr<Motion<franka::Torques>> &motion, bool async = false, bool limit_rate = false,
+      double cutoff_frequency = franka::kDefaultCutoffFrequency) {
+    moveInternal<franka::Torques>(
+        motion,
+        [this, limit_rate, cutoff_frequency](const ControlFunc<franka::Torques> &m) {
+          control(m, limit_rate, cutoff_frequency);
+        },
+        async);
   }
 
  private:
