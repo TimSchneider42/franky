@@ -205,10 +205,10 @@ class RobotWebSession(_PilotMixin):
             _headers.update(headers)
         self.__client.request(method, target, headers=_headers, body=body)
         res: HTTPResponse = self.__client.getresponse()
-        if res.getcode() != 200:
+        if res.status != 200:
             raise FrankaAPIError(
                 target,
-                res.getcode(),
+                res.status,
                 res.reason,
                 dict(res.headers),
                 res.read().decode("utf-8"),
@@ -448,9 +448,9 @@ class Desk(_PilotMixin):
         self.__client.request(method, path, headers=headers, body=encoded_body)
         res = self.__client.getresponse()
         data = res.read()
-        if res.getcode() not in (200, 204):
+        if res.status not in (200, 204):
             raise FrankaAPIError(
-                path, res.getcode(), res.reason, dict(res.headers), data.decode("utf-8")
+                path, res.status, res.reason, dict(res.headers), data.decode("utf-8")
             )
         return data
 
