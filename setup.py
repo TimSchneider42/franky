@@ -86,7 +86,17 @@ class CMakeBuild(build_ext):
 
 
 with (Path(__file__).resolve().parent / "VERSION").open() as f:
-    version = f.read()
+    version = f.read().strip()
+
+dev_build_number = os.environ.get("FRANKY_DEV_BUILD_NUMBER")
+dev_build_hash = os.environ.get("FRANKY_DEV_BUILD_HASH")
+if dev_build_number:
+    # VERSION holds the last released version. Dev builds are versioned as dev
+    # releases of the next patch version, as PEP 440 orders X.Y.Z.devN before X.Y.Z.
+    major, minor, patch = version.split(".")
+    version = "{}.{}.{}.dev{}".format(major, minor, int(patch) + 1, dev_build_number)
+    if dev_build_hash:
+        version += "+g{}".format(dev_build_hash)
 
 setup(
     name="franky-control",

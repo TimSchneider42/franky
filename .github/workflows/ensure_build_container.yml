@@ -25,7 +25,7 @@ jobs:
     outputs:
       image: ${{ steps.compute-tag.outputs.image }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Compute image tag
         id: compute-tag
@@ -36,7 +36,7 @@ jobs:
           echo "image=ghcr.io/${OWNER}/franky-build:${TAG}" >> $GITHUB_OUTPUT
 
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}

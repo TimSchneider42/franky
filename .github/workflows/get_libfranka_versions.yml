@@ -17,7 +17,7 @@ jobs:
       versions: ${{ steps.read-versions.outputs.versions }}
       latest: ${{ steps.read-versions.outputs.latest }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - id: read-versions
         run: |
           echo "versions=$(jq -c '.versions' .github/libfranka-versions.json)" >> $GITHUB_OUTPUT

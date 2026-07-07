@@ -9,6 +9,16 @@ on:
       manylinux-version:
         required: true
         type: string
+      dev-build-number:
+        description: Optional dev build number N, producing version <VERSION>.devN
+        required: false
+        type: string
+        default: ""
+      dev-commit-hash:
+        description: Optional short commit hash appended to dev versions as +g<hash>
+        required: false
+        type: string
+        default: ""
 
 jobs:
   ensure-container:
@@ -24,15 +34,18 @@ jobs:
       image: ${{ needs.ensure-container.outputs.image }}
     steps:
       - name: Checkout repository and submodules
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: recursive
 
       - name: Build wheels
         run: ./docker/common/manylinux-build-wheels
+        env:
+          FRANKY_DEV_BUILD_NUMBER: ${{ inputs.dev-build-number }}
+          FRANKY_DEV_BUILD_HASH: ${{ inputs.dev-commit-hash }}
 
       - name: Upload wheels
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: wheels___${{ inputs.libfranka-version }}___${{ inputs.manylinux-version }}
           path: output/libfranka_*_wheels.zip
