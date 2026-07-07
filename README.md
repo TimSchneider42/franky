@@ -176,7 +176,7 @@ They can be installed via
 VERSION=0-9-2
 wget https://github.com/TimSchneider42/franky/releases/latest/download/libfranka_${VERSION}_wheels.zip
 unzip libfranka_${VERSION}_wheels.zip
-pip install numpy
+pip install numpy websockets>=11
 pip install --no-index --find-links=./dist franky-control
 ```
 
@@ -190,7 +190,7 @@ They can be installed via
 VERSION=0-21-2
 wget https://github.com/TimSchneider42/franky/releases/download/dev/libfranka_${VERSION}_wheels.zip
 unzip libfranka_${VERSION}_wheels.zip
-pip install numpy
+pip install numpy websockets>=11
 pip install --pre --no-index --find-links=./dist franky-control
 ```
 
