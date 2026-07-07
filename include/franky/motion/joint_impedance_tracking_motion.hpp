@@ -17,8 +17,6 @@ namespace franky {
  * adds the optional per-cycle feedforward torque term to the commanded torques.
  */
 struct JointReference {
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-
   Vector7d q{Vector7d::Zero()};
   Vector7d dq{Vector7d::Zero()};
   Vector7d tau_ff{Vector7d::Zero()};
@@ -33,8 +31,6 @@ struct JointReference {
  */
 class JointReferenceHandle {
  public:
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-
   JointReferenceHandle() = default;
 
   /**

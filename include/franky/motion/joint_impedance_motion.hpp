@@ -40,8 +40,6 @@ struct JointImpedanceParams {
 
 class JointImpedanceBase : public Motion<franka::Torques> {
  public:
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-
   [[nodiscard]] const Vector7d &target() const { return target_; }
   [[nodiscard]] const Vector7d &target_velocity() const { return target_velocity_; }
   [[nodiscard]] const JointImpedanceParams &params() const { return params_; }

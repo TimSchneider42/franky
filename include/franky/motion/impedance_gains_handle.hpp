@@ -51,8 +51,6 @@ class CartesianImpedanceGainsHandle {
  * @brief Target gains for a joint impedance controller.
  */
 struct JointImpedanceGains {
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-
   Vector7d stiffness{defaultJointImpedanceStiffness()};
   Vector7d damping{defaultJointImpedanceDamping()};
 };
@@ -62,8 +60,6 @@ struct JointImpedanceGains {
  */
 class JointImpedanceGainsHandle {
  public:
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-
   JointImpedanceGainsHandle() = default;
 
   void set(const JointImpedanceGains &gains);
