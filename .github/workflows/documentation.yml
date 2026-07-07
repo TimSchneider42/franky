@@ -8,6 +8,9 @@ on:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+    # Serialize all deployments to gh-pages (shared with the package index workflow)
+    # to avoid push races
+    concurrency: gh-pages-deploy
     steps:
     - uses: actions/checkout@v6
 
@@ -18,6 +21,13 @@ jobs:
 
     - name: build
       run: cd doc && VERSION=$(cat ../VERSION) doxygen ./Doxyfile
+
+    # The deployment below replaces the entire gh-pages root, so it must include the
+    # package index
+    - name: generate package index
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: python3 tools/generate_simple_index.py --output doc/html/whl
 
     - name: deploy
       uses: peaceiris/actions-gh-pages@v4

@@ -90,13 +90,21 @@ with (Path(__file__).resolve().parent / "VERSION").open() as f:
 
 dev_build_number = os.environ.get("FRANKY_DEV_BUILD_NUMBER")
 dev_build_hash = os.environ.get("FRANKY_DEV_BUILD_HASH")
+# Distinguishes builds against different libfranka versions; unset for PyPI wheels
+libfranka_version = os.environ.get("FRANKY_LIBFRANKA_VERSION_LABEL")
 if dev_build_number:
     # VERSION holds the last released version. Dev builds are versioned as dev
     # releases of the next patch version, as PEP 440 orders X.Y.Z.devN before X.Y.Z.
     major, minor, patch = version.split(".")
     version = "{}.{}.{}.dev{}".format(major, minor, int(patch) + 1, dev_build_number)
-    if dev_build_hash:
-        version += "+g{}".format(dev_build_hash)
+
+local_segments = []
+if dev_build_number and dev_build_hash:
+    local_segments.append("g{}".format(dev_build_hash))
+if libfranka_version:
+    local_segments.append("libfranka.{}".format(libfranka_version))
+if local_segments:
+    version += "+" + ".".join(local_segments)
 
 setup(
     name="franky-control",

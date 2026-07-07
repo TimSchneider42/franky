@@ -68,7 +68,3 @@ done
 cp dist_full/franky_control-*.whl dist/
 echo "Built the following wheels:"
 ls dist
-
-mkdir -p output
-LIBFRANKA_VERSION="${LIBFRANKA_VERSION:-${LIBFRANKA_DEFAULT_VERSION}}"
-zip -r "output/libfranka_${LIBFRANKA_VERSION//./-}_wheels.zip" dist/

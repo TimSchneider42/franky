@@ -56,21 +56,18 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: wheels___${{ needs.get-versions.outputs.latest }}___manylinux_2_28_x86_64
-          path: artifacts/
+          path: wheels/
 
       - name: Run Python tests for ${{ matrix.python-dir }}
         env:
           CMEEL_RUN_TESTS: "false"
         run: |
-          version="${{ needs.get-versions.outputs.latest }}"
-          unzip -q "artifacts/libfranka_${version//./-}_wheels.zip" -d unpacked/
-
           PYBIN="/opt/python/${{ matrix.python-dir }}/bin"
 
           "${PYBIN}/python3" -m venv ".venv_${{ matrix.python-dir }}"
           source ".venv_${{ matrix.python-dir }}/bin/activate"
 
-          pip install -q unpacked/dist/franky_control-*-${{ matrix.python-dir }}-*.whl
+          pip install -q wheels/franky_control-*-${{ matrix.python-dir }}-*.whl
           pip install -q pytest pytest-cov franky-sim
           pytest tests/pytest/
 

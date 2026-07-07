@@ -19,9 +19,22 @@ jobs:
     with:
       libfranka-version: ${{ matrix.libfranka-version }}
       manylinux-version: ${{ matrix.manylinux-version }}
+      libfranka-version-label: ${{ matrix.libfranka-version }}
+
+  # Separate unlabeled build of the latest libfranka version for PyPI, which rejects
+  # local version labels
+  build-pypi:
+    needs: get-versions
+    strategy:
+      matrix:
+        manylinux-version: [manylinux_2_28_x86_64, manylinux_2_34_x86_64]
+    uses: ./.github/workflows/build_wheels.yml
+    with:
+      libfranka-version: ${{ needs.get-versions.outputs.latest }}
+      manylinux-version: ${{ matrix.manylinux-version }}
 
   publish:
-    needs: [build, get-versions]
+    needs: [build, build-pypi]
     runs-on: ubuntu-latest
 
     permissions:
@@ -35,10 +48,8 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           pattern: wheels___*
-          path: artifacts/
-
-      - name: Merge wheels
-        uses: ./.github/actions/merge-wheels
+          path: wheels/
+          merge-multiple: true
 
       - name: Create release
         uses: marvinpinto/action-automatic-releases@latest
@@ -47,12 +58,20 @@ jobs:
           prerelease: false
           draft: false
           files: |
-            output/libfranka_*_wheels.zip
+            wheels/*.whl
 
-      - name: Unpack wheels
+      - name: Collect PyPI wheels
         run: |
-          version="${{ needs.get-versions.outputs.latest }}"
-          unzip "output/libfranka_${version//./-}_wheels.zip"
+          # Only the unlabeled wheels (no `+` in the filename) go to PyPI
+          mkdir -p dist
+          find wheels -name '*.whl' ! -name '*+*' -exec cp {} dist/ \;
+          ls dist/*.whl
 
       - name: Publish python package
         uses: pypa/gh-action-pypi-publish@release/v1
+
+  update-package-index:
+    needs: publish
+    permissions:
+      contents: write
+    uses: ./.github/workflows/simple_index.yml

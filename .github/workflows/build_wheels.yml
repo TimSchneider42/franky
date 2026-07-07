@@ -19,6 +19,13 @@ on:
         required: false
         type: string
         default: ""
+      libfranka-version-label:
+        description: >
+          If set, the wheels get a `+libfranka.<version>` local version label. Leave
+          empty for wheels published to PyPI, as PyPI rejects local version labels.
+        required: false
+        type: string
+        default: ""
 
 jobs:
   ensure-container:
@@ -43,9 +50,11 @@ jobs:
         env:
           FRANKY_DEV_BUILD_NUMBER: ${{ inputs.dev-build-number }}
           FRANKY_DEV_BUILD_HASH: ${{ inputs.dev-commit-hash }}
+          FRANKY_LIBFRANKA_VERSION_LABEL: ${{ inputs.libfranka-version-label }}
 
       - name: Upload wheels
         uses: actions/upload-artifact@v7
         with:
-          name: wheels___${{ inputs.libfranka-version }}___${{ inputs.manylinux-version }}
-          path: output/libfranka_*_wheels.zip
+          # ___labeled avoids a collision with the unlabeled PyPI build of the same version
+          name: wheels___${{ inputs.libfranka-version }}___${{ inputs.manylinux-version }}${{ inputs.libfranka-version-label != '' && '___labeled' || '' }}
+          path: dist/*.whl

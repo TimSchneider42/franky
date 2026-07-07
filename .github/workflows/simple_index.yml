@@ -1,0 +1,35 @@
+name: Update package index
+
+# Regenerates the PEP 503 package index on gh-pages (under whl/) from the wheels
+# attached to the GitHub releases
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  update-index:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    # Serialize all deployments to gh-pages (shared with the documentation workflow)
+    # to avoid push races
+    concurrency: gh-pages-deploy
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Generate package index
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 tools/generate_simple_index.py --output whl-index
+
+      - name: Deploy package index
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./whl-index
+          # Replaces only whl/, leaving the documentation at the root untouched
+          destination_dir: whl

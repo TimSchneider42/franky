@@ -17,8 +17,11 @@ on:
 jobs:
   ensure:
     runs-on: ubuntu-latest
+    # Serialize concurrent requests for the same container. queue: max is required, as
+    # the default queue holds only one waiter and cancels it on further requests.
     concurrency:
       group: build-container-${{ inputs.manylinux-version }}-libfranka${{ inputs.libfranka-version }}
+      queue: max
       cancel-in-progress: false
     permissions:
       packages: write
