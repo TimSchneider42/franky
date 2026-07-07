@@ -2,9 +2,6 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
-#include <cmath>
-#include <string>
-
 #include "franky.hpp"
 
 namespace py = pybind11;
@@ -33,23 +30,6 @@ JointReference toJointReference(
   return reference;
 }
 
-void validateNonNegativeFinite(const Vector7d &values, const char *name) {
-  for (int i = 0; i < values.size(); ++i) {
-    if (!std::isfinite(values[i]) || values[i] < 0.0) {
-      throw py::value_error(std::string(name) + " must contain only finite, non-negative values");
-    }
-  }
-}
-
-void validateFrictionCompensationParams(const FrictionCompensationParams &friction) {
-  validateNonNegativeFinite(friction.coulomb, "friction.coulomb");
-  validateNonNegativeFinite(friction.viscous, "friction.viscous");
-  validateNonNegativeFinite(friction.max_torque, "friction.max_torque");
-  if (friction.velocity_epsilon <= 0.0 || !std::isfinite(friction.velocity_epsilon)) {
-    throw py::value_error("friction.velocity_epsilon must be finite and positive");
-  }
-}
-
 JointImpedanceParams makeJointImpedanceParams(
     const std::optional<Vector7d> &stiffness, const std::optional<Vector7d> &damping,
     const std::optional<Vector7d> &constant_torque_offset, const std::optional<Vector7d> &lower_joint_limits,
@@ -60,29 +40,13 @@ JointImpedanceParams makeJointImpedanceParams(
     double friction_velocity_epsilon) {
   auto params = JointImpedanceParams{};
   if (stiffness.has_value()) {
-    validateNonNegativeFinite(stiffness.value(), "stiffness");
     params.stiffness = stiffness.value();
     if (!damping.has_value()) params.damping = defaultJointImpedanceDamping(params.stiffness);
   }
-  if (damping.has_value()) {
-    validateNonNegativeFinite(damping.value(), "damping");
-    params.damping = damping.value();
-  }
-  if (friction_velocity_epsilon <= 0.0 || !std::isfinite(friction_velocity_epsilon)) {
-    throw py::value_error("friction_velocity_epsilon must be finite and positive");
-  }
-  if (friction_coulomb.has_value()) {
-    validateNonNegativeFinite(friction_coulomb.value(), "friction_coulomb");
-    params.friction.coulomb = friction_coulomb.value();
-  }
-  if (friction_viscous.has_value()) {
-    validateNonNegativeFinite(friction_viscous.value(), "friction_viscous");
-    params.friction.viscous = friction_viscous.value();
-  }
-  if (friction_max_torque.has_value()) {
-    validateNonNegativeFinite(friction_max_torque.value(), "friction_max_torque");
-    params.friction.max_torque = friction_max_torque.value();
-  }
+  if (damping.has_value()) params.damping = damping.value();
+  if (friction_coulomb.has_value()) params.friction.coulomb = friction_coulomb.value();
+  if (friction_viscous.has_value()) params.friction.viscous = friction_viscous.value();
+  if (friction_max_torque.has_value()) params.friction.max_torque = friction_max_torque.value();
   if (constant_torque_offset.has_value()) params.constant_torque_offset = constant_torque_offset.value();
   params.safety.lower_joint_limits = lower_joint_limits;
   params.safety.upper_joint_limits = upper_joint_limits;
@@ -119,10 +83,7 @@ CartesianImpedanceBase::Params makeCartesianImpedanceParams(
   params.safety.lower_joint_limits = lower_joint_limits;
   params.safety.upper_joint_limits = upper_joint_limits;
   if (force_constraints.has_value()) params.force_constraints = force_constraints.value();
-  if (friction.has_value()) {
-    validateFrictionCompensationParams(*friction);
-    params.friction = *friction;
-  }
+  if (friction.has_value()) params.friction = *friction;
   return params;
 }
 
@@ -136,9 +97,7 @@ void bind_motion_torque(py::module &m) {
 
   py::class_<CartesianImpedanceGains>(m, "CartesianImpedanceGains")
       .def(
-          py::init<>([](double translational_stiffness, double rotational_stiffness, double nullspace_stiffness) {
-            return CartesianImpedanceGains{translational_stiffness, rotational_stiffness, nullspace_stiffness};
-          }),
+          py::init<double, double, double>(),
           "translational_stiffness"_a = 2000.0,
           "rotational_stiffness"_a = 200.0,
           "nullspace_stiffness"_a = 0.0)
@@ -155,7 +114,7 @@ void bind_motion_torque(py::module &m) {
              double translational_stiffness,
              double rotational_stiffness,
              double nullspace_stiffness) {
-            handle.set(CartesianImpedanceGains{translational_stiffness, rotational_stiffness, nullspace_stiffness});
+            handle.set(CartesianImpedanceGains(translational_stiffness, rotational_stiffness, nullspace_stiffness));
           },
           "translational_stiffness"_a,
           "rotational_stiffness"_a,
@@ -166,19 +125,7 @@ void bind_motion_torque(py::module &m) {
 
   py::class_<JointImpedanceGains>(m, "JointImpedanceGains")
       .def(
-          py::init<>([](const std::optional<Vector7d> &stiffness, const std::optional<Vector7d> &damping) {
-            JointImpedanceGains g;
-            if (stiffness.has_value()) {
-              validateNonNegativeFinite(stiffness.value(), "stiffness");
-              g.stiffness = stiffness.value();
-              if (!damping.has_value()) g.damping = defaultJointImpedanceDamping(g.stiffness);
-            }
-            if (damping.has_value()) {
-              validateNonNegativeFinite(damping.value(), "damping");
-              g.damping = damping.value();
-            }
-            return g;
-          }),
+          py::init<const std::optional<Vector7d> &, const std::optional<Vector7d> &>(),
           "stiffness"_a = std::nullopt,
           "damping"_a = std::nullopt)
       .def_readwrite("stiffness", &JointImpedanceGains::stiffness)
@@ -189,7 +136,7 @@ void bind_motion_torque(py::module &m) {
       .def(
           "set",
           [](JointImpedanceGainsHandle &handle, const Vector7d &stiffness, const Vector7d &damping) {
-            handle.set(JointImpedanceGains{stiffness, damping});
+            handle.set(JointImpedanceGains(stiffness, damping));
           },
           "stiffness"_a,
           "damping"_a)
@@ -255,13 +202,8 @@ If target_acceleration is provided, it is interpreted as the desired end-effecto
                         const std::array<double, 7> &viscous,
                         const std::array<double, 7> &max_torque,
                         double velocity_epsilon) {
-            auto friction = FrictionCompensationParams{};
-            friction.coulomb = toEigenD<7>(coulomb);
-            friction.viscous = toEigenD<7>(viscous);
-            friction.max_torque = toEigenD<7>(max_torque);
-            friction.velocity_epsilon = velocity_epsilon;
-            validateFrictionCompensationParams(friction);
-            return friction;
+            return FrictionCompensationParams(
+                toEigenD<7>(coulomb), toEigenD<7>(viscous), toEigenD<7>(max_torque), velocity_epsilon);
           }),
           "coulomb"_a = std::array<double, 7>{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
           "viscous"_a = std::array<double, 7>{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},

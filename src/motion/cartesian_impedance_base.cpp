@@ -49,6 +49,7 @@ CartesianImpedanceBase::CartesianImpedanceBase(
       current_rotational_stiffness_(params.rotational_stiffness),
       current_nullspace_stiffness_(params.nullspace_stiffness),
       Motion<franka::Torques>() {
+  params_.validate();
   rebuildStiffnessDamping();
 }
 

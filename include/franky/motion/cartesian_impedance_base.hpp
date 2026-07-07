@@ -97,6 +97,14 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
 
     /** Per-joint friction feedforward. Defaults to zero (disabled). */
     FrictionCompensationParams friction{};
+
+    /** @brief Throw std::invalid_argument if any parameter is out of range. */
+    void validate() const {
+      validateNonNegativeFinite(translational_stiffness, "translational_stiffness");
+      validateNonNegativeFinite(rotational_stiffness, "rotational_stiffness");
+      validateNonNegativeFinite(nullspace_stiffness, "nullspace_stiffness");
+      friction.validate();
+    }
   };
 
   /**

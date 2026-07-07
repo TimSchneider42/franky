@@ -3,10 +3,32 @@
 #include <algorithm>
 #include <cmath>
 #include <optional>
+#include <stdexcept>
+#include <string>
 
 #include "franky/types.hpp"
 
 namespace franky {
+
+/**
+ * @brief Throw std::invalid_argument if value is negative or non-finite.
+ */
+inline void validateNonNegativeFinite(double value, const char *name) {
+  if (!std::isfinite(value) || value < 0.0) {
+    throw std::invalid_argument(std::string(name) + " must be finite and non-negative");
+  }
+}
+
+/**
+ * @brief Throw std::invalid_argument if any element of values is negative or non-finite.
+ */
+inline void validateNonNegativeFinite(const Vector7d &values, const char *name) {
+  for (int i = 0; i < values.size(); ++i) {
+    if (!std::isfinite(values[i]) || values[i] < 0.0) {
+      throw std::invalid_argument(std::string(name) + " must contain only finite, non-negative values");
+    }
+  }
+}
 
 struct TorqueSafetyParams {
   /** Maximum allowed torque step per cycle in [Nm]. */
@@ -32,6 +54,14 @@ struct TorqueSafetyParams {
 };
 
 struct FrictionCompensationParams {
+  FrictionCompensationParams() = default;
+
+  FrictionCompensationParams(
+      const Vector7d &coulomb, const Vector7d &viscous, const Vector7d &max_torque, double velocity_epsilon = 0.03)
+      : coulomb(coulomb), viscous(viscous), max_torque(max_torque), velocity_epsilon(velocity_epsilon) {
+    validate();
+  }
+
   /** Coulomb friction compensation gains in [Nm]. */
   Vector7d coulomb{Vector7d::Zero()};
 
@@ -43,6 +73,20 @@ struct FrictionCompensationParams {
 
   /** Velocity scale for the smooth Coulomb sign transition in [rad/s]. */
   double velocity_epsilon{0.03};
+
+  /**
+   * @brief Throw std::invalid_argument if any parameter is out of range.
+   *
+   * Fields are mutable, so consumers of this struct call this again at the point of use.
+   */
+  void validate() const {
+    validateNonNegativeFinite(coulomb, "friction.coulomb");
+    validateNonNegativeFinite(viscous, "friction.viscous");
+    validateNonNegativeFinite(max_torque, "friction.max_torque");
+    if (!std::isfinite(velocity_epsilon) || velocity_epsilon <= 0.0) {
+      throw std::invalid_argument("friction.velocity_epsilon must be finite and positive");
+    }
+  }
 };
 
 inline Vector7d saturateTorqueRate(

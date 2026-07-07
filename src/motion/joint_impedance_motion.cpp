@@ -19,7 +19,9 @@ JointImpedanceBase::JointImpedanceBase(
       gains_handle_(std::move(gains_handle)),
       gains_time_constant_(gains_time_constant),
       current_stiffness_(params.stiffness),
-      current_damping_(params.damping) {}
+      current_damping_(params.damping) {
+  params_.validate();
+}
 
 JointImpedanceMotion::JointImpedanceMotion(const Vector7d &target) : JointImpedanceMotion(target, Params{}) {}
 

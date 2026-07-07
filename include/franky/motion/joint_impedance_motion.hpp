@@ -36,6 +36,13 @@ struct JointImpedanceParams {
 
   /** Joint friction compensation settings. */
   FrictionCompensationParams friction{};
+
+  /** @brief Throw std::invalid_argument if any parameter is out of range. */
+  void validate() const {
+    validateNonNegativeFinite(stiffness, "stiffness");
+    validateNonNegativeFinite(damping, "damping");
+    friction.validate();
+  }
 };
 
 class JointImpedanceBase : public Motion<franka::Torques> {

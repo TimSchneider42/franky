@@ -3,8 +3,10 @@
 #include <array>
 #include <atomic>
 #include <cmath>
+#include <optional>
 
 #include "franky/motion/double_buffered_handle.hpp"
+#include "franky/motion/torque_control_utils.hpp"
 #include "franky/types.hpp"
 
 namespace franky {
@@ -21,9 +23,26 @@ inline Vector7d defaultJointImpedanceDamping() {
  * @brief Target gains for a Cartesian impedance controller.
  */
 struct CartesianImpedanceGains {
+  CartesianImpedanceGains() = default;
+
+  explicit CartesianImpedanceGains(
+      double translational_stiffness, double rotational_stiffness, double nullspace_stiffness = 0.0)
+      : translational_stiffness(translational_stiffness),
+        rotational_stiffness(rotational_stiffness),
+        nullspace_stiffness(nullspace_stiffness) {
+    validate();
+  }
+
   double translational_stiffness{2000.0};
   double rotational_stiffness{200.0};
   double nullspace_stiffness{0.0};
+
+  /** @brief Throw std::invalid_argument if any gain is negative or non-finite. */
+  void validate() const {
+    validateNonNegativeFinite(translational_stiffness, "translational_stiffness");
+    validateNonNegativeFinite(rotational_stiffness, "rotational_stiffness");
+    validateNonNegativeFinite(nullspace_stiffness, "nullspace_stiffness");
+  }
 };
 
 /**
@@ -39,8 +58,26 @@ using CartesianImpedanceGainsHandle = DoubleBufferedHandle<CartesianImpedanceGai
  * @brief Target gains for a joint impedance controller.
  */
 struct JointImpedanceGains {
+  JointImpedanceGains() = default;
+
+  /**
+   * @brief Construct gains, defaulting damping to critical damping w.r.t. the stiffness when not provided.
+   */
+  explicit JointImpedanceGains(
+      const std::optional<Vector7d> &stiffness, const std::optional<Vector7d> &damping = std::nullopt)
+      : stiffness(stiffness.value_or(defaultJointImpedanceStiffness())),
+        damping(damping.has_value() ? *damping : defaultJointImpedanceDamping(this->stiffness)) {
+    validate();
+  }
+
   Vector7d stiffness{defaultJointImpedanceStiffness()};
   Vector7d damping{defaultJointImpedanceDamping()};
+
+  /** @brief Throw std::invalid_argument if any gain is negative or non-finite. */
+  void validate() const {
+    validateNonNegativeFinite(stiffness, "stiffness");
+    validateNonNegativeFinite(damping, "damping");
+  }
 };
 
 /**
