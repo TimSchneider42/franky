@@ -151,13 +151,10 @@ $(function() {
 <div class="line">pip install numpy websockets&gt;=11</div>
 <div class="line">pip install --no-index --find-links=./dist franky-control</div>
 </div><!-- fragment --><h4>Development builds</h4>
-<p>If you need the latest features before they make it into an official release, we provide wheels of the current <code>master</code> branch in the rolling <a href="https://github.com/TimSchneider42/franky/releases/tag/dev">dev release</a>. These wheels are rebuilt on every push to <code>master</code> and are provided for all supported libfranka versions. They can be installed via</p>
-<div class="fragment"><div class="line">VERSION=0-21-2</div>
-<div class="line">wget https://github.com/TimSchneider42/franky/releases/download/dev/libfranka_${VERSION}_wheels.zip</div>
-<div class="line">unzip libfranka_${VERSION}_wheels.zip</div>
-<div class="line">pip install numpy websockets&gt;=11</div>
-<div class="line">pip install --pre --no-index --find-links=./dist franky-control</div>
-</div><!-- fragment --><p>Note the <code>--pre</code> flag: without it, pip will refuse to install development versions. Development builds are versioned as pre-releases of the next patch version, and their version indicates the commit they were built from: e.g., if the latest release is <em>1.1.4</em>, then <em>1.1.5.dev1234+g8cb09e5</em> is a development build of commit <code>8cb09e5</code> on <code>master</code>.</p>
+<p>If you need the latest features before they make it into an official release, we provide wheels of the current <code>master</code> branch in the rolling <a href="https://github.com/TimSchneider42/franky/releases/tag/dev">dev release</a>. These wheels are rebuilt on every push to <code>master</code> and are provided for all supported libfranka versions. They can be installed via the <a href="https://timschneider42.github.io/franky/whl/">package index</a> by adding the <code>--pre</code> flag:</p>
+<div class="fragment"><div class="line"># You can replace the libfranka version by any of the supported versions denoted above</div>
+<div class="line">pip install --pre franky-control --extra-index-url &quot;https://timschneider42.github.io/franky/whl/libfranka-0.21.2/&quot;</div>
+</div><!-- fragment --><p>Development builds are versioned as pre-releases of the next patch version, and their version indicates the commit and libfranka version they were built against: e.g., if the latest release is <em>1.1.4</em>, then <em>1.1.5.dev1234+g8cb09e5.libfranka.0.9.2</em> is a development build of commit <code>8cb09e5</code> on <code>master</code> for libfranka <em>0.9.2</em>.</p>
 <h3>Using Docker</h3>
 <p>To use franky within Docker we provide a <a href="docker/run/Dockerfile">Dockerfile</a> and accompanying <a href="docker-compose.yml">docker-compose</a> file.</p>
 <div class="fragment"><div class="line">git clone --recurse-submodules https://github.com/timschneider42/franky.git</div>
@@ -204,8 +201,9 @@ $(function() {
 <div class="fragment"><div class="line">docker compose build franky-build</div>
 <div class="line">docker compose run --rm franky-build run-tests  # To run the tests</div>
 <div class="line">docker compose run --rm franky-build build-wheels  # To build wheels for all supported python versions</div>
-</div><!-- fragment --><p>The built wheels are placed in <code>build/dist/</code>.</p>
-<h2>📚 Tutorial</h2>
+</div><!-- fragment --><p>The built wheels are placed in <code>build/dist/</code> and can be installed via</p>
+<div class="fragment"><div class="line">pip install --no-index --find-links=./build/dist franky-control</div>
+</div><!-- fragment --><h2>📚 Tutorial</h2>
 <p>franky comes with both a C++ and Python API that differ only regarding real-time capability. We will introduce both languages next to each other. In your C++ project, just include <code>include &lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">franky.hpp</a>&gt;</code> and link the library. For Python, just <code>import franky</code>. As a first example, only four lines of code are needed for simple robotic motions.</p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="franky_8hpp.html">franky.hpp</a>&gt;</span></div>
