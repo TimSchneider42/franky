@@ -2,22 +2,6 @@
 
 namespace franky {
 
-void JointReferenceHandle::set(const JointReference &reference) {
-  const uint8_t next_index = 1 - active_index_.load(std::memory_order_relaxed);
-  buffers_[next_index] = reference;
-  active_index_.store(next_index, std::memory_order_release);
-  valid_.store(true, std::memory_order_release);
-}
-
-void JointReferenceHandle::clear() { valid_.store(false, std::memory_order_release); }
-
-bool JointReferenceHandle::hasReference() const { return valid_.load(std::memory_order_acquire); }
-
-JointReference JointReferenceHandle::get() const {
-  const uint8_t active_index = active_index_.load(std::memory_order_acquire);
-  return buffers_[active_index];
-}
-
 JointImpedanceTrackingMotion::JointImpedanceTrackingMotion(std::shared_ptr<JointReferenceHandle> reference_handle)
     : JointImpedanceTrackingMotion(std::move(reference_handle), Params{}) {}
 
@@ -53,7 +37,7 @@ franka::Torques JointImpedanceTrackingMotion::nextCommandImpl(
 
   if (reference_callback_) {
     reference = reference_callback_(robot_state, time_step, rel_time, abs_time);
-  } else if (reference_handle_ && reference_handle_->hasReference()) {
+  } else if (reference_handle_ && reference_handle_->hasValue()) {
     reference = reference_handle_->get();
   }
 

@@ -46,7 +46,7 @@ franka::Torques JointImpedanceMotion::nextCommandImpl(
 franka::Torques JointImpedanceBase::computeCommand(
     const RobotState &robot_state, const JointReference &reference, double dt) {
   // If a gains handle is present, interpolate toward the target gains.
-  if (gains_handle_ && gains_handle_->hasGains()) {
+  if (gains_handle_ && gains_handle_->hasValue()) {
     const auto target_gains = gains_handle_->get();
     const double alpha = 1.0 - std::exp(-dt / gains_time_constant_);
     current_stiffness_ += alpha * (target_gains.stiffness - current_stiffness_);

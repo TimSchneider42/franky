@@ -4,6 +4,7 @@
 #include <atomic>
 #include <cmath>
 
+#include "franky/motion/double_buffered_handle.hpp"
 #include "franky/types.hpp"
 
 namespace franky {
@@ -32,20 +33,7 @@ struct CartesianImpedanceGains {
  * target gains each cycle and exponentially interpolates toward them, so
  * stiffness changes are smooth rather than instantaneous.
  */
-class CartesianImpedanceGainsHandle {
- public:
-  CartesianImpedanceGainsHandle() = default;
-
-  void set(const CartesianImpedanceGains &gains);
-  void clear();
-  [[nodiscard]] bool hasGains() const;
-  [[nodiscard]] CartesianImpedanceGains get() const;
-
- private:
-  std::array<CartesianImpedanceGains, 2> buffers_{};
-  std::atomic<uint8_t> active_index_{0};
-  std::atomic<bool> valid_{false};
-};
+using CartesianImpedanceGainsHandle = DoubleBufferedHandle<CartesianImpedanceGains>;
 
 /**
  * @brief Target gains for a joint impedance controller.
@@ -58,19 +46,6 @@ struct JointImpedanceGains {
 /**
  * @brief Double-buffered handle for updating joint impedance gains online.
  */
-class JointImpedanceGainsHandle {
- public:
-  JointImpedanceGainsHandle() = default;
-
-  void set(const JointImpedanceGains &gains);
-  void clear();
-  [[nodiscard]] bool hasGains() const;
-  [[nodiscard]] JointImpedanceGains get() const;
-
- private:
-  std::array<JointImpedanceGains, 2> buffers_{};
-  std::atomic<uint8_t> active_index_{0};
-  std::atomic<bool> valid_{false};
-};
+using JointImpedanceGainsHandle = DoubleBufferedHandle<JointImpedanceGains>;
 
 }  // namespace franky

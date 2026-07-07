@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "franky/motion/cartesian_impedance_base.hpp"
+#include "franky/motion/double_buffered_handle.hpp"
 #include "franky/motion/impedance_gains_handle.hpp"
 
 namespace franky {
@@ -18,20 +19,7 @@ namespace franky {
  * valid reference each control cycle without needing to replace the motion
  * object.
  */
-class CartesianReferenceHandle {
- public:
-  CartesianReferenceHandle() = default;
-
-  void set(const CartesianReference &reference);
-  void clear();
-  [[nodiscard]] bool hasReference() const;
-  [[nodiscard]] CartesianReference get() const;
-
- private:
-  std::array<CartesianReference, 2> buffers_{};
-  std::atomic<uint8_t> active_index_{0};
-  std::atomic<bool> valid_{false};
-};
+using CartesianReferenceHandle = DoubleBufferedHandle<CartesianReference>;
 
 /**
  * @brief Cartesian impedance tracking motion.

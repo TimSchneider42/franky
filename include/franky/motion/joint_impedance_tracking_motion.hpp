@@ -5,6 +5,7 @@
 #include <functional>
 #include <memory>
 
+#include "franky/motion/double_buffered_handle.hpp"
 #include "franky/motion/impedance_gains_handle.hpp"
 #include "franky/motion/joint_impedance_motion.hpp"
 
@@ -29,35 +30,7 @@ struct JointReference {
  * JointImpedanceTrackingMotion is running. The motion reads the latest valid
  * reference each control cycle without needing to replace the motion object.
  */
-class JointReferenceHandle {
- public:
-  JointReferenceHandle() = default;
-
-  /**
-   * @brief Publish a new joint-space reference for the running motion.
-   */
-  void set(const JointReference &reference);
-
-  /**
-   * @brief Mark the handle as having no externally supplied reference.
-   */
-  void clear();
-
-  /**
-   * @brief Whether a valid reference is currently available.
-   */
-  [[nodiscard]] bool hasReference() const;
-
-  /**
-   * @brief Get the most recently published reference.
-   */
-  [[nodiscard]] JointReference get() const;
-
- private:
-  std::array<JointReference, 2> buffers_{};
-  std::atomic<uint8_t> active_index_{0};
-  std::atomic<bool> valid_{false};
-};
+using JointReferenceHandle = DoubleBufferedHandle<JointReference>;
 
 /**
  * @brief Client-side joint impedance controller with a dynamic online reference.

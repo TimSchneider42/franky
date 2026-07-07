@@ -162,7 +162,7 @@ void bind_motion_torque(py::module &m) {
           "nullspace_stiffness"_a = 0.0)
       .def("clear", &CartesianImpedanceGainsHandle::clear)
       .def("get", &CartesianImpedanceGainsHandle::get)
-      .def_property_readonly("has_gains", &CartesianImpedanceGainsHandle::hasGains);
+      .def_property_readonly("has_value", &CartesianImpedanceGainsHandle::hasValue);
 
   py::class_<JointImpedanceGains>(m, "JointImpedanceGains")
       .def(
@@ -195,7 +195,7 @@ void bind_motion_torque(py::module &m) {
           "damping"_a)
       .def("clear", &JointImpedanceGainsHandle::clear)
       .def("get", &JointImpedanceGainsHandle::get)
-      .def_property_readonly("has_gains", &JointImpedanceGainsHandle::hasGains);
+      .def_property_readonly("has_value", &JointImpedanceGainsHandle::hasValue);
 
   py::class_<JointReferenceHandle, std::shared_ptr<JointReferenceHandle>>(m, "JointReferenceHandle")
       .def(py::init<>())
@@ -214,7 +214,7 @@ The provided torque_feedforward is added on top of any constant_torque_offset co
           "velocity"_a = std::nullopt,
           "torque_feedforward"_a = std::nullopt)
       .def("clear", &JointReferenceHandle::clear)
-      .def_property_readonly("has_reference", &JointReferenceHandle::hasReference);
+      .def_property_readonly("has_value", &JointReferenceHandle::hasValue);
 
   py::class_<CartesianReferenceHandle, std::shared_ptr<CartesianReferenceHandle>>(m, "CartesianReferenceHandle")
       .def(py::init<>())
@@ -235,7 +235,7 @@ If target_acceleration is provided, it is interpreted as the desired end-effecto
           "target_twist"_a = std::nullopt,
           "target_acceleration"_a = std::nullopt)
       .def("clear", &CartesianReferenceHandle::clear)
-      .def_property_readonly("has_reference", &CartesianReferenceHandle::hasReference);
+      .def_property_readonly("has_value", &CartesianReferenceHandle::hasValue);
 
   // Params classes — bind before the motion classes that use them.
 
