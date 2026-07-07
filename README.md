@@ -180,6 +180,23 @@ pip install numpy
 pip install --no-index --find-links=./dist franky-control
 ```
 
+#### Development builds
+
+If you need the latest features before they make it into an official release, we provide wheels of the current `master` branch in the rolling [dev release](https://github.com/TimSchneider42/franky/releases/tag/dev).
+These wheels are rebuilt on every push to `master` and are provided for all supported libfranka versions.
+They can be installed via
+
+```bash
+VERSION=0-21-2
+wget https://github.com/TimSchneider42/franky/releases/download/dev/libfranka_${VERSION}_wheels.zip
+unzip libfranka_${VERSION}_wheels.zip
+pip install numpy
+pip install --pre --no-index --find-links=./dist franky-control
+```
+
+Note the `--pre` flag: without it, pip will refuse to install development versions.
+Development builds are versioned as pre-releases of the next patch version, and their version indicates the commit they were built from: e.g., if the latest release is *1.1.4*, then *1.1.5.dev1234+g8cb09e5* is a development build of commit `8cb09e5` on `master`.
+
 ### Using Docker
 
 To use franky within Docker we provide a [Dockerfile](docker/run/Dockerfile) and
