@@ -69,6 +69,10 @@ class WaypointMotion : public Motion<ControlSignalType> {
   explicit WaypointMotion(std::vector<WaypointType> waypoints, bool return_when_finished = true)
       : waypoints_(std::move(waypoints)), return_when_finished_(return_when_finished), prev_result_() {}
 
+  [[nodiscard]] const std::vector<WaypointType> &waypoints() const { return waypoints_; }
+
+  [[nodiscard]] bool return_when_finished() const { return return_when_finished_; }
+
  protected:
   void initImpl(const RobotState &robot_state, const std::optional<ControlSignalType> &previous_command) override {
     target_reached_time_ = std::nullopt;

@@ -24,7 +24,7 @@ jobs:
       image: ${{ needs.ensure-container.outputs.image }}
     steps:
       - name: Checkout repository and submodules
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: recursive
 

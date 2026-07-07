@@ -39,6 +39,8 @@ class CartesianWaypointMotion : public PositionWaypointMotion<franka::CartesianP
       const RelativeDynamicsFactor &relative_dynamics_factor = 1.0, bool return_when_finished = true,
       Affine ee_frame = Affine::Identity());
 
+  [[nodiscard]] const Affine &ee_frame() const { return ee_frame_; }
+
  protected:
   void initWaypointMotion(
       const RobotState &robot_state, const std::optional<franka::CartesianPose> &previous_command,

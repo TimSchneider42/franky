@@ -12,8 +12,10 @@ using namespace pybind11::literals;  // to bring in the '_a' literal
 using namespace franky;
 
 template <typename ControlSignalType>
-void robotMove(Robot &robot, const std::shared_ptr<Motion<ControlSignalType>> &motion, bool async) {
-  robot.move(motion, true);
+void robotMove(
+    Robot &robot, const std::shared_ptr<Motion<ControlSignalType>> &motion, bool async, bool limit_rate,
+    double cutoff_frequency) {
+  robot.move(motion, true, limit_rate, cutoff_frequency);
   if (!async) {
     auto future = std::async(std::launch::async, (bool (Robot::*)())&Robot::joinMotion, &robot);
     // Check if python wants to terminate every 100 ms
@@ -147,30 +149,40 @@ void bind_robot(py::module &m) {
           &robotMove<franka::CartesianPose>,
           "motion"_a,
           "asynchronous"_a = false,
+          "limit_rate"_a = false,
+          "cutoff_frequency"_a = franka::kDefaultCutoffFrequency,
           py::call_guard<py::gil_scoped_release>())
       .def(
           "move",
           &robotMove<franka::CartesianVelocities>,
           "motion"_a,
           "asynchronous"_a = false,
+          "limit_rate"_a = false,
+          "cutoff_frequency"_a = franka::kDefaultCutoffFrequency,
           py::call_guard<py::gil_scoped_release>())
       .def(
           "move",
           &robotMove<franka::JointPositions>,
           "motion"_a,
           "asynchronous"_a = false,
+          "limit_rate"_a = false,
+          "cutoff_frequency"_a = franka::kDefaultCutoffFrequency,
           py::call_guard<py::gil_scoped_release>())
       .def(
           "move",
           &robotMove<franka::JointVelocities>,
           "motion"_a,
           "asynchronous"_a = false,
+          "limit_rate"_a = false,
+          "cutoff_frequency"_a = franka::kDefaultCutoffFrequency,
           py::call_guard<py::gil_scoped_release>())
       .def(
           "move",
           &robotMove<franka::Torques>,
           "motion"_a,
           "asynchronous"_a = false,
+          "limit_rate"_a = false,
+          "cutoff_frequency"_a = franka::kDefaultCutoffFrequency,
           py::call_guard<py::gil_scoped_release>())
       .def(
           "join_motion",

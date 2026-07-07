@@ -45,7 +45,10 @@ void bind_motion_cartesian_vel(py::module &m) {
           }),
           "waypoints"_a,
           "ee_frame"_a = std::nullopt,
-          "relative_dynamics_factor"_a = 1.0);
+          "relative_dynamics_factor"_a = 1.0)
+      .def_property_readonly("waypoints", &CartesianVelocityWaypointMotion::waypoints)
+      .def_property_readonly("ee_frame", &CartesianVelocityWaypointMotion::ee_frame)
+      .def_property_readonly("relative_dynamics_factor", &CartesianVelocityWaypointMotion::relative_dynamics_factor);
 
   py::class_<CartesianVelocityMotion, CartesianVelocityWaypointMotion, std::shared_ptr<CartesianVelocityMotion>>(
       m, "CartesianVelocityMotion")
@@ -60,11 +63,18 @@ void bind_motion_cartesian_vel(py::module &m) {
           "target"_a,
           "duration"_a = franka::Duration(1000),
           "relative_dynamics_factor"_a = 1.0,
-          "ee_frame"_a = std::nullopt);
+          "ee_frame"_a = std::nullopt)
+      .def_property_readonly(
+          "target", [](const CartesianVelocityMotion &motion) { return motion.waypoints().front().target; })
+      .def_property_readonly("duration", [](const CartesianVelocityMotion &motion) {
+        return motion.waypoints().front().hold_target_duration;
+      });
 
   py::class_<
       StopMotion<franka::CartesianVelocities>,
       Motion<franka::CartesianVelocities>,
       std::shared_ptr<StopMotion<franka::CartesianVelocities>>>(m, "CartesianVelocityStopMotion")
-      .def(py::init<RelativeDynamicsFactor>(), "relative_dynamics_factor"_a = 1.0);
+      .def(py::init<RelativeDynamicsFactor>(), "relative_dynamics_factor"_a = 1.0)
+      .def_property_readonly(
+          "relative_dynamics_factor", &StopMotion<franka::CartesianVelocities>::relative_dynamics_factor);
 }

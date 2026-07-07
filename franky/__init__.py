@@ -1,11 +1,15 @@
 from .robot import Robot
-from .robot_web_session import (
-    RobotWebSession,
-    RobotWebSessionError,
+from .desk import (
+    Desk,
+    DeskWebSession,
+    BaseDesk,
+    DeskError,
     FrankaAPIError,
     TakeControlTimeoutError,
     PilotButton,
     PilotButtonEvent,
+    BrakeState,
+    OperatingMode,
 )
 from .reaction import (
     Reaction,

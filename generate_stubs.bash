@@ -21,6 +21,6 @@ pip install --upgrade pip --no-cache-dir > /dev/null
 pip install setuptools --no-cache-dir > /dev/null
 (cd ${SCRIPT_DIR} && python "setup.py" egg_info -e "${STUBS_GEN_DIR}" > /dev/null)
 pip install -r "${STUBS_GEN_DIR}/franky_control.egg-info/requires.txt" --no-cache-dir > /dev/null
-pip install pybind11-stubgen==2.2.2  --no-cache-dir > /dev/null
+pip install pybind11-stubgen==2.2.2 --no-cache-dir > /dev/null
 
 PYTHONPATH="${LIB_DIR}" "${SCRIPT_DIR}/custom_stubgen.py" -o "${LIB_DIR}" _franky

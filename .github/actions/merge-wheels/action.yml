@@ -1,0 +1,52 @@
+name: Merge wheels
+description: >
+  Merge the per-manylinux wheel archives in artifacts/ into a single
+  libfranka_<version>_wheels.zip per libfranka version in output/
+
+runs:
+  using: composite
+  steps:
+    - name: Merge wheels
+      shell: bash
+      run: |
+        mkdir -p output
+
+        # find unique versions
+        versions=$(
+          cd artifacts &&
+          ls -1d wheels___*___* 2>/dev/null \
+            | sed -E 's/wheels___([^_]+)___.*/\1/' \
+            | sort -u
+        )
+
+        if [[ -z "$versions" ]]; then
+          echo "No wheel archives found, skipping."
+          exit 0
+        fi
+
+        for version in $versions; do
+          out="libfranka_${version//\./-}_wheels.zip"
+          out_full=$(realpath "output/$out")
+          echo "Creating $out from all wheels___${version}___*.zip"
+
+          tmp=$(mktemp -d)
+          mkdir "$tmp/dist"
+          # unpack each matching zip into the temp dir
+          for z in artifacts/wheels___${version}___*/*.zip; do
+            echo "Unpacking $z"
+            tmp2=$(mktemp -d)
+            unzip -q "$z" -d "$tmp2"
+            mv $tmp2/dist/* "$tmp/dist/"
+            rm -rf "$tmp2"
+          done
+
+          # re-combine into a single zip
+          (
+            cd "$tmp"
+            zip -qr "$out_full" .
+          )
+
+          # clean up
+          rm -rf "$tmp"
+          echo "$out done."
+        done

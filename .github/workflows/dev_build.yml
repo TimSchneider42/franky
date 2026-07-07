@@ -1,0 +1,77 @@
+name: Dev build
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+concurrency:
+  group: dev-build
+  cancel-in-progress: true
+
+jobs:
+  get-versions:
+    uses: ./.github/workflows/get_libfranka_versions.yml
+
+  get-build-info:
+    runs-on: ubuntu-latest
+    outputs:
+      build-number: ${{ steps.compute.outputs.build-number }}
+      commit-hash: ${{ steps.compute.outputs.commit-hash }}
+    steps:
+      # The workflow run number is used as build number, as it increases monotonically
+      # even if the history of master is rewritten
+      - id: compute
+        run: |
+          echo "build-number=${GITHUB_RUN_NUMBER}" >> $GITHUB_OUTPUT
+          echo "commit-hash=${GITHUB_SHA::8}" >> $GITHUB_OUTPUT
+
+  build:
+    needs: [get-versions, get-build-info]
+    strategy:
+      matrix:
+        libfranka-version: ${{ fromJson(needs.get-versions.outputs.versions) }}
+        manylinux-version: [manylinux_2_28_x86_64, manylinux_2_34_x86_64]
+    uses: ./.github/workflows/build_wheels.yml
+    with:
+      libfranka-version: ${{ matrix.libfranka-version }}
+      manylinux-version: ${{ matrix.manylinux-version }}
+      dev-build-number: ${{ needs.get-build-info.outputs.build-number }}
+      dev-commit-hash: ${{ needs.get-build-info.outputs.commit-hash }}
+
+  publish:
+    needs: [build, get-versions, get-build-info]
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Get wheels
+        uses: actions/download-artifact@v8
+        with:
+          pattern: wheels___*
+          path: artifacts/
+
+      - name: Merge wheels
+        uses: ./.github/actions/merge-wheels
+
+      - name: Update dev release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          IFS=. read -r major minor patch < VERSION
+          wheel_version="${major}.${minor}.$((patch + 1)).dev${{ needs.get-build-info.outputs.build-number }}+g${{ needs.get-build-info.outputs.commit-hash }}"
+          gh release delete dev --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag || true
+          gh release create dev \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --prerelease \
+            --title "Development build" \
+            --notes "Automatic build of the latest \`master\` (${GITHUB_SHA}).
+
+          Wheel version: \`${wheel_version}\`. Wheels are provided for all supported libfranka versions." \
+            output/libfranka_*_wheels.zip
