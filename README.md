@@ -184,18 +184,14 @@ pip install --no-index --find-links=./dist franky-control
 
 If you need the latest features before they make it into an official release, we provide wheels of the current `master` branch in the rolling [dev release](https://github.com/TimSchneider42/franky/releases/tag/dev).
 These wheels are rebuilt on every push to `master` and are provided for all supported libfranka versions.
-They can be installed via
+They can be installed via the [package index](https://timschneider42.github.io/franky/whl/) by adding the `--pre` flag:
 
 ```bash
-VERSION=0-21-2
-wget https://github.com/TimSchneider42/franky/releases/download/dev/libfranka_${VERSION}_wheels.zip
-unzip libfranka_${VERSION}_wheels.zip
-pip install numpy websockets>=11
-pip install --pre --no-index --find-links=./dist franky-control
+# You can replace the libfranka version by any of the supported versions denoted above
+pip install --pre franky-control --extra-index-url "https://timschneider42.github.io/franky/whl/libfranka-0.21.2/"
 ```
 
-Note the `--pre` flag: without it, pip will refuse to install development versions.
-Development builds are versioned as pre-releases of the next patch version, and their version indicates the commit they were built from: e.g., if the latest release is *1.1.4*, then *1.1.5.dev1234+g8cb09e5* is a development build of commit `8cb09e5` on `master`.
+Development builds are versioned as pre-releases of the next patch version, and their version indicates the commit and libfranka version they were built against: e.g., if the latest release is *1.1.4*, then *1.1.5.dev1234+g8cb09e5.libfranka.0.9.2* is a development build of commit `8cb09e5` on `master` for libfranka *0.9.2*.
 
 ### Using Docker
 
@@ -299,7 +295,11 @@ docker compose run --rm franky-build run-tests  # To run the tests
 docker compose run --rm franky-build build-wheels  # To build wheels for all supported python versions
 ```
 
-The built wheels are placed in `build/dist/`.
+The built wheels are placed in `build/dist/` and can be installed via
+
+```bash
+pip install --no-index --find-links=./build/dist franky-control
+```
 
 ## 📚 Tutorial
 
