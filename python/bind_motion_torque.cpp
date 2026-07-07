@@ -581,4 +581,53 @@ interpolates toward them with the given time constant, allowing smooth runtime s
           "reference"_a,
           "Set the Cartesian reference tracked by the controller. The reference is validated and picked up by the "
           "control loop in the next cycle.");
+
+  py::class_<TorqueStopParams>(m, "TorqueStopParams")
+      .def(py::init<>())
+      .def_readwrite("damping", &TorqueStopParams::damping)
+      .def_readwrite("ramp_duration", &TorqueStopParams::ramp_duration)
+      .def_readwrite("velocity_epsilon", &TorqueStopParams::velocity_epsilon)
+      .def_readwrite("max_duration", &TorqueStopParams::max_duration)
+      .def_readwrite("compensate_coriolis", &TorqueStopParams::compensate_coriolis)
+      .def_readwrite("max_delta_tau", &TorqueStopParams::max_delta_tau);
+
+  py::class_<StopMotion<franka::Torques>, Motion<franka::Torques>, std::shared_ptr<StopMotion<franka::Torques>>>(
+      m, "TorqueStopMotion")
+      .def(
+          py::init<>([](std::optional<Vector7d> damping,
+                        double ramp_duration,
+                        double velocity_epsilon,
+                        double max_duration,
+                        bool compensate_coriolis,
+                        double max_delta_tau) {
+            auto params = TorqueStopParams{};
+            if (damping.has_value()) {
+              validateNonNegativeFinite(damping.value(), "damping");
+              params.damping = damping.value();
+            }
+            validateNonNegativeFinite(ramp_duration, "ramp_duration");
+            validateNonNegativeFinite(velocity_epsilon, "velocity_epsilon");
+            validateNonNegativeFinite(max_duration, "max_duration");
+            validateNonNegativeFinite(max_delta_tau, "max_delta_tau");
+            params.ramp_duration = ramp_duration;
+            params.velocity_epsilon = velocity_epsilon;
+            params.max_duration = max_duration;
+            params.compensate_coriolis = compensate_coriolis;
+            params.max_delta_tau = max_delta_tau;
+            return std::make_shared<StopMotion<franka::Torques>>(params);
+          }),
+          R"doc(Graceful stop for torque-control (impedance) motions.
+
+Torque motions never signal MotionFinished on their own, and Robot.stop() preempts the
+control loop with a ControlException rather than ramping down. Enqueue this motion (or
+return it from a TorqueReaction) to end a torque loop cleanly: it blends the last
+commanded torque into a zero-stiffness joint-damping law, brings the arm to rest, then
+finishes. The motion also finishes after max_duration regardless of velocity, so a
+sustained external push cannot make it hang.)doc",
+          "damping"_a = std::nullopt,
+          "ramp_duration"_a = 0.2,
+          "velocity_epsilon"_a = 0.02,
+          "max_duration"_a = 2.0,
+          "compensate_coriolis"_a = true,
+          "max_delta_tau"_a = 1.0);
 }

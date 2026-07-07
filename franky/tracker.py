@@ -14,6 +14,7 @@ from ._franky import (
     JointImpedanceGains,
     JointImpedanceTrackingMotion,
     JointReference,
+    TorqueStopMotion,
     Twist,
     TwistAcceleration,
 )
@@ -210,17 +211,26 @@ class CartesianImpedanceTracker:
 
     # --- lifecycle ---
 
-    def stop(self) -> None:
-        """Stop the tracking controller and wait for the motion to finish."""
-        requested_stop = self._robot.is_in_control
+    def stop(self, stop_motion: Optional[TorqueStopMotion] = None) -> None:
+        """Gracefully stop the tracking controller and wait for the arm to come to rest.
+
+        Enqueues a :class:`TorqueStopMotion` that ramps the last commanded torque
+        into a damping-only law, brings the arm to rest, and finishes cleanly
+        (no preemption exception). Pass ``stop_motion`` to override the ramp/damping
+        behaviour; otherwise sensible defaults are used.
+
+        If the controller is no longer in control (e.g. it already faulted), this
+        just joins the motion to surface any stored exception.
+        """
         if self._robot.is_in_control:
-            self._robot.stop()
+            self._robot.move(stop_motion or TorqueStopMotion(), asynchronous=True)
         try:
             self._robot.join_motion()
         except ControlException as exc:
-            # libfranka reports our own stop() as a preempted move when the
-            # asynchronous control thread unwinds. Treat that as normal shutdown.
-            if requested_stop and _is_premption_exception(exc):
+            # A graceful TorqueStopMotion finishes without preemption. Tolerate a
+            # self-preemption only as a defensive fallback (e.g. if control ended
+            # abruptly before we could enqueue the stop).
+            if _is_premption_exception(exc):
                 return
             raise
 
@@ -237,12 +247,10 @@ class CartesianImpedanceTracker:
     def __exit__(self, exc_type, exc, tb) -> bool:
         try:
             self.stop()
-        except ControlException as stop_exc:
+        except ControlException:
             # If the body is already unwinding due to another exception
-            # (especially KeyboardInterrupt), do not let cleanup mask it.
-            # Only ignore the specific self-preemption raised by libfranka in
-            # response to our stop() call; propagate real controller faults.
-            if exc_type is not None and _is_premption_exception(stop_exc):
+            # (especially KeyboardInterrupt), do not let a cleanup fault mask it.
+            if exc_type is not None:
                 return False
             raise
         return False
@@ -435,16 +443,26 @@ class JointImpedanceTracker:
 
     # --- lifecycle ---
 
-    def stop(self) -> None:
-        requested_stop = self._robot.is_in_control
+    def stop(self, stop_motion: Optional[TorqueStopMotion] = None) -> None:
+        """Gracefully stop the tracking controller and wait for the arm to come to rest.
+
+        Enqueues a :class:`TorqueStopMotion` that ramps the last commanded torque
+        into a damping-only law, brings the arm to rest, and finishes cleanly
+        (no preemption exception). Pass ``stop_motion`` to override the ramp/damping
+        behaviour; otherwise sensible defaults are used.
+
+        If the controller is no longer in control (e.g. it already faulted), this
+        just joins the motion to surface any stored exception.
+        """
         if self._robot.is_in_control:
-            self._robot.stop()
+            self._robot.move(stop_motion or TorqueStopMotion(), asynchronous=True)
         try:
             self._robot.join_motion()
         except ControlException as exc:
-            # libfranka reports our own stop() as a preempted move when the
-            # asynchronous control thread unwinds. Treat that as normal shutdown.
-            if requested_stop and _is_premption_exception(exc):
+            # A graceful TorqueStopMotion finishes without preemption. Tolerate a
+            # self-preemption only as a defensive fallback (e.g. if control ended
+            # abruptly before we could enqueue the stop).
+            if _is_premption_exception(exc):
                 return
             raise
 
@@ -461,10 +479,10 @@ class JointImpedanceTracker:
     def __exit__(self, exc_type, exc, tb) -> bool:
         try:
             self.stop()
-        except ControlException as stop_exc:
-            # Only ignore the specific preemption raised by libfranka in
-            # response to our stop() call; propagate real controller faults.
-            if exc_type is not None and _is_premption_exception(stop_exc):
+        except ControlException:
+            # If the body is already unwinding due to another exception
+            # (especially KeyboardInterrupt), do not let a cleanup fault mask it.
+            if exc_type is not None:
                 return False
             raise
         return False
