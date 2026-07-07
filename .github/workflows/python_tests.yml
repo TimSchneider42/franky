@@ -1,4 +1,4 @@
-name: Integration Tests
+name: Python Tests
 
 on: [push, pull_request]
 
@@ -38,7 +38,7 @@ jobs:
           done
           python3 -c "import json, sys; print('python-dirs=' + json.dumps(sys.argv[1:]))" "${dirs[@]}" >> "$GITHUB_OUTPUT"
 
-  integration_test:
+  pytest:
     needs: [get-versions, build-wheels, compute-matrix]
     runs-on: ubuntu-latest
     container:
@@ -58,7 +58,7 @@ jobs:
           name: wheels___${{ needs.get-versions.outputs.latest }}___manylinux_2_28_x86_64
           path: artifacts/
 
-      - name: Run integration tests for ${{ matrix.python-dir }}
+      - name: Run Python tests for ${{ matrix.python-dir }}
         env:
           CMEEL_RUN_TESTS: "false"
         run: |
