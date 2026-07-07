@@ -18,6 +18,7 @@ from ._franky import (
     Twist,
     TwistAcceleration,
 )
+from .robot import Robot
 
 
 def _is_premption_exception(exc: ControlException) -> bool:
@@ -59,7 +60,7 @@ class CartesianImpedanceTracker:
 
     def __init__(
         self,
-        robot,
+        robot: Robot,
         *,
         translational_stiffness: float = 2000.0,
         rotational_stiffness: float = 200.0,
@@ -276,7 +277,7 @@ class JointImpedanceTracker:
 
     def __init__(
         self,
-        robot,
+        robot: Robot,
         *,
         stiffness: Optional[np.ndarray] = None,
         damping: Optional[np.ndarray] = None,
