@@ -97,7 +97,7 @@ RobotState RobotStateEstimator::update(const franka::RobotState &franka_robot_st
     }
   }
 
-  const auto ee_jacobian = model.bodyJacobian(
+  const auto ee_jacobian = model.zeroJacobian(
       franka::Frame::kEndEffector,
       toEigenD(franka_robot_state.q),
       stdToAffine(franka_robot_state.F_T_EE),
