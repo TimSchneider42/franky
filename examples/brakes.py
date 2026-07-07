@@ -1,5 +1,5 @@
 import argparse
-from franky import RobotWebSession
+from franky import Desk
 
 
 if __name__ == "__main__":
@@ -10,6 +10,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    with RobotWebSession(args.host, args.user, args.password) as robot_web_session:
-        # robot_web_session.lock_brakes()
-        robot_web_session.unlock_brakes()
+    with Desk(args.host, args.user, args.password) as desk:
+        # desk.lock_brakes()
+        desk.unlock_brakes()

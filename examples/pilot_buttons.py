@@ -1,6 +1,6 @@
 import argparse
 
-from franky import RobotWebSession
+from franky import Desk
 
 
 if __name__ == "__main__":
@@ -13,11 +13,11 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    with RobotWebSession(args.host, args.user, args.password) as session:
+    with Desk(args.host, args.user, args.password) as desk:
         print("Listening for Pilot button events. Press Ctrl+C to stop.")
         try:
             while True:
-                for event in session.poll_buttons(timeout=1.0):
+                for event in desk.poll_buttons(timeout=1.0):
                     print(event)
         except KeyboardInterrupt:
             pass

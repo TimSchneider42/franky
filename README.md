@@ -910,8 +910,8 @@ For Franka robots, control happens via the Franka Control Interface (FCI), which
 The Franka UI also provides methods for locking and unlocking the brakes, setting the execution mode, and executing the safety self-test.
 However, sometimes you may want to access these methods programmatically, e.g., for automatically unlocking the brakes before starting a motion, or automatically executing the self-test after 24h of continuous execution.
 
-For that reason, franky provides a `RobotWebSession` class that allows you to access the web interface API of the robot.
-Note that directly accessing the web interface API is not officially supported and documented by Franka.
+For that reason, franky provides two classes that allow you to programmatically access these features: `Desk` (for the current Franka Desk API v1) and `DeskWebSession` (for older firmwares).
+Note that `DeskWebSession` directly accesses the web interface API is not officially supported and documented by Franka.
 Hence, use this feature at your own risk.
 
 A typical automated workflow could look like this:
@@ -919,70 +919,70 @@ A typical automated workflow could look like this:
 ```python
 import franky
 
-with franky.RobotWebSession("10.90.90.1", "username", "password") as robot_web_session:
-    # First take control
-    try:
-        # Try taking control. The session currently holding control has to release it in order
-        # for this session to gain control. In the web interface, a notification will show
-        # prompting the user to release control. If the other session is another
-        # franky.RobotWebSession, then the `release_control` method can be called on the other
-        # session to release control.
-        robot_web_session.take_control(wait_timeout=10.0)
-    except franky.TakeControlTimeoutError:
-        # If nothing happens for 10s, we try to take control forcefully. This is particularly
-        # useful if the session holding control is dead. Taking control by force requires the
-        # user to manually push the blue button close to the robot's wrist.
-        robot_web_session.take_control(wait_timeout=30.0, force=True)
+with franky.Desk("10.90.90.1", "username", "password") as desk:
+  # First take control
+  try:
+    # Try taking control. The session currently holding control has to release it in order
+    # for this session to gain control. In the web interface, a notification will show
+    # prompting the user to release control. If the other session is another
+    # franky.Desk session, then the `release_control` method can be called on the other
+    # session to release control.
+    desk.take_control(wait_timeout=10.0)
+  except franky.TakeControlTimeoutError:
+    # If nothing happens for 10s, we try to take control forcefully. This is particularly
+    # useful if the session holding control is dead. Taking control by force requires the
+    # user to manually push the blue button close to the robot's wrist.
+    desk.take_control(wait_timeout=30.0, force=True)
 
-    # Unlock the brakes
-    robot_web_session.unlock_brakes()
+  # Unlock the brakes
+  desk.unlock_brakes()
 
-    # Enable the FCI
-    robot_web_session.enable_fci()
+  # Enable the FCI
+  desk.enable_fci()
 
-    # Create a franky.Robot instance and do whatever you want
-    ...
+  # Create a franky.Robot instance and do whatever you want
+  ...
 
-    # Disable the FCI
-    robot_web_session.disable_fci()
+  # Disable the FCI
+  desk.disable_fci()
 
-    # Lock brakes
-    robot_web_session.lock_brakes()
+  # Lock brakes
+  desk.lock_brakes()
 ```
 
 In case you are running the robot for longer than 24h you will have noticed that you have to do a safety self-test every 24h.
-`RobotWebSession` allows to automate this task as well:
+`Desk` allows to automate this task as well:
 
 ```python
 import time
 import franky
 
-with franky.RobotWebSession("10.90.90.1", "username", "password") as robot_web_session:
-    # Execute self-test if the time until self-test is less than 5 minutes.
-    if robot_web_session.get_system_status()["safety"]["timeToTd2"] < 300:
-        robot_web_session.disable_fci()
-        robot_web_session.lock_brakes()
-        time.sleep(1.0)
+with franky.Desk("10.90.90.1", "username", "password") as desk:
+  # Execute self-test if the time until self-test is less than 5 minutes.
+  if desk.system_status["safety"]["timeToTd2"] < 300:
+    desk.disable_fci()
+    desk.lock_brakes()
+    time.sleep(1.0)
 
-        robot_web_session.execute_self_test()
+    desk.execute_self_test()
 
-        robot_web_session.unlock_brakes()
-        robot_web_session.enable_fci()
-        time.sleep(1.0)
+    desk.unlock_brakes()
+    desk.enable_fci()
+    time.sleep(1.0)
 
-        # Recreate your franky.Robot instance as the FCI has been disabled and re-enabled
-        ...
+    # Recreate your franky.Robot instance as the FCI has been disabled and re-enabled
+    ...
 ```
 
-`robot_web_session.get_system_status()` contains more information than just the time until self-test, such as the current execution mode, whether the brakes are locked, whether the FCI is enabled, and more.
+`desk.system_status` contains more information than just the time until self-test, such as the current execution mode, whether the brakes are locked, whether the FCI is enabled, and more.
 
-If you want to call other API functions, you can use the `RobotWebSession.send_api_request` and `RobotWebSession.send_control_api_request` methods.
-See [robot_web_session.py](franky/robot_web_session.py) for an example of how to use these methods.
+If you want to call other API functions, you can use the `send_api_request` and `send_control_api_request` methods available on both `Desk` and `DeskWebSession`.
+See [desk.py](franky/desk.py) for an example of how to use these methods.
 
 #### Reading Pilot Button Events
 
-`RobotWebSession` can also read button events.
-This is exposed via `RobotWebSession.poll_buttons`, which waits for up to `timeout` seconds for the next websocket message and then returns all button events that are currently available.
+Both `Desk` and `DeskWebSession` can also read button events.
+This is exposed via `poll_buttons`, which waits for up to `timeout` seconds for the next websocket message and then returns all button events that are currently available.
 
 
 <img src="doc/franka_buttons.jpg" width="420" alt="Franka pilot buttons">
@@ -995,10 +995,10 @@ Each event is returned as a `PilotButtonEvent` containing the button and whether
 ```python
 import franky
 
-with franky.RobotWebSession("10.90.90.1", "username", "password") as robot_web_session:
-    while True:
-        for event in robot_web_session.poll_buttons(timeout=1.0):
-            print(event.button, event.pressed)
+with franky.Desk("10.90.90.1", "username", "password") as desk:
+  while True:
+    for event in desk.poll_buttons(timeout=1.0):
+      print(event.button, event.pressed)
 ```
 
 ### <a id="simulation" /> 🖥️ Simulating the Robot
