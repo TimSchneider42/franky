@@ -208,7 +208,7 @@ cd franky/
 docker compose build franky-run
 ```
 
-To use another version of libfranka than the default (0.18.0), add a build argument:
+To use another version of libfranka than the default (0.21.2), add a build argument:
 
 ```bash
 docker compose build franky-run --build-arg LIBFRANKA_VERSION=0.9.2
@@ -298,6 +298,8 @@ docker compose build franky-build
 docker compose run --rm franky-build run-tests  # To run the tests
 docker compose run --rm franky-build build-wheels  # To build wheels for all supported python versions
 ```
+
+The built wheels are placed in `build/dist/`.
 
 ## 📚 Tutorial
 
@@ -1058,9 +1060,10 @@ franky is currently tested against the following versions
 
 - libfranka >=0.7.1
 - Eigen 3.4.0
-- Pybind11 2.13.6
+- Pybind11 3.0.4
 - POCO 1.12.5p2
 - Pinocchio 3.4.0
+- Ruckig 0.17.3
 - Python >=3.7
 - Catch2 2.13.8 (for testing only)
 
