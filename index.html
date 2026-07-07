@@ -673,70 +673,70 @@ $(function() {
 <div class="line">    print(<span class="stringliteral">&quot;Gripper motion timed out.&quot;</span>)</div>
 </div><!-- fragment --><h3>Accessing the Web Interface API</h3>
 <p>For Franka robots, control happens via the Franka Control Interface (FCI), which has to be enabled through the Franka UI in the robot's web interface. The Franka UI also provides methods for locking and unlocking the brakes, setting the execution mode, and executing the safety self-test. However, sometimes you may want to access these methods programmatically, e.g., for automatically unlocking the brakes before starting a motion, or automatically executing the self-test after 24h of continuous execution.</p>
-<p>For that reason, franky provides a <code>RobotWebSession</code> class that allows you to access the web interface API of the robot. Note that directly accessing the web interface API is not officially supported and documented by Franka. Hence, use this feature at your own risk.</p>
+<p>For that reason, franky provides two classes that allow you to programmatically access these features: <code>Desk</code> (for the current Franka Desk API v1) and <code>DeskWebSession</code> (for older firmwares). Note that <code>DeskWebSession</code> directly accesses the web interface API is not officially supported and documented by Franka. Hence, use this feature at your own risk.</p>
 <p>A typical automated workflow could look like this:</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> franky</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">with</span> franky.RobotWebSession(<span class="stringliteral">&quot;10.90.90.1&quot;</span>, <span class="stringliteral">&quot;username&quot;</span>, <span class="stringliteral">&quot;password&quot;</span>) <span class="keyword">as</span> robot_web_session:</div>
-<div class="line">    <span class="comment"># First take control</span></div>
-<div class="line">    <span class="keywordflow">try</span>:</div>
-<div class="line">        <span class="comment"># Try taking control. The session currently holding control has to release it in order</span></div>
-<div class="line">        <span class="comment"># for this session to gain control. In the web interface, a notification will show</span></div>
-<div class="line">        <span class="comment"># prompting the user to release control. If the other session is another</span></div>
-<div class="line">        <span class="comment"># franky.RobotWebSession, then the `release_control` method can be called on the other</span></div>
-<div class="line">        <span class="comment"># session to release control.</span></div>
-<div class="line">        robot_web_session.take_control(wait_timeout=10.0)</div>
-<div class="line">    <span class="keywordflow">except</span> franky.TakeControlTimeoutError:</div>
-<div class="line">        <span class="comment"># If nothing happens for 10s, we try to take control forcefully. This is particularly</span></div>
-<div class="line">        <span class="comment"># useful if the session holding control is dead. Taking control by force requires the</span></div>
-<div class="line">        <span class="comment"># user to manually push the blue button close to the robot&#39;s wrist.</span></div>
-<div class="line">        robot_web_session.take_control(wait_timeout=30.0, force=<span class="keyword">True</span>)</div>
+<div class="line"><span class="keyword">with</span> franky.Desk(<span class="stringliteral">&quot;10.90.90.1&quot;</span>, <span class="stringliteral">&quot;username&quot;</span>, <span class="stringliteral">&quot;password&quot;</span>) <span class="keyword">as</span> desk:</div>
+<div class="line">  <span class="comment"># First take control</span></div>
+<div class="line">  <span class="keywordflow">try</span>:</div>
+<div class="line">    <span class="comment"># Try taking control. The session currently holding control has to release it in order</span></div>
+<div class="line">    <span class="comment"># for this session to gain control. In the web interface, a notification will show</span></div>
+<div class="line">    <span class="comment"># prompting the user to release control. If the other session is another</span></div>
+<div class="line">    <span class="comment"># franky.Desk session, then the `release_control` method can be called on the other</span></div>
+<div class="line">    <span class="comment"># session to release control.</span></div>
+<div class="line">    desk.take_control(wait_timeout=10.0)</div>
+<div class="line">  <span class="keywordflow">except</span> franky.TakeControlTimeoutError:</div>
+<div class="line">    <span class="comment"># If nothing happens for 10s, we try to take control forcefully. This is particularly</span></div>
+<div class="line">    <span class="comment"># useful if the session holding control is dead. Taking control by force requires the</span></div>
+<div class="line">    <span class="comment"># user to manually push the blue button close to the robot&#39;s wrist.</span></div>
+<div class="line">    desk.take_control(wait_timeout=30.0, force=<span class="keyword">True</span>)</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment"># Unlock the brakes</span></div>
-<div class="line">    robot_web_session.unlock_brakes()</div>
+<div class="line">  <span class="comment"># Unlock the brakes</span></div>
+<div class="line">  desk.unlock_brakes()</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment"># Enable the FCI</span></div>
-<div class="line">    robot_web_session.enable_fci()</div>
+<div class="line">  <span class="comment"># Enable the FCI</span></div>
+<div class="line">  desk.enable_fci()</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment"># Create a franky.Robot instance and do whatever you want</span></div>
-<div class="line">    ...</div>
+<div class="line">  <span class="comment"># Create a franky.Robot instance and do whatever you want</span></div>
+<div class="line">  ...</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment"># Disable the FCI</span></div>
-<div class="line">    robot_web_session.disable_fci()</div>
+<div class="line">  <span class="comment"># Disable the FCI</span></div>
+<div class="line">  desk.disable_fci()</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment"># Lock brakes</span></div>
-<div class="line">    robot_web_session.lock_brakes()</div>
-</div><!-- fragment --><p>In case you are running the robot for longer than 24h you will have noticed that you have to do a safety self-test every 24h. <code>RobotWebSession</code> allows to automate this task as well:</p>
+<div class="line">  <span class="comment"># Lock brakes</span></div>
+<div class="line">  desk.lock_brakes()</div>
+</div><!-- fragment --><p>In case you are running the robot for longer than 24h you will have noticed that you have to do a safety self-test every 24h. <code>Desk</code> allows to automate this task as well:</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> time</div>
 <div class="line"><span class="keyword">import</span> franky</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">with</span> franky.RobotWebSession(<span class="stringliteral">&quot;10.90.90.1&quot;</span>, <span class="stringliteral">&quot;username&quot;</span>, <span class="stringliteral">&quot;password&quot;</span>) <span class="keyword">as</span> robot_web_session:</div>
-<div class="line">    <span class="comment"># Execute self-test if the time until self-test is less than 5 minutes.</span></div>
-<div class="line">    <span class="keywordflow">if</span> robot_web_session.get_system_status()[<span class="stringliteral">&quot;safety&quot;</span>][<span class="stringliteral">&quot;timeToTd2&quot;</span>] &lt; 300:</div>
-<div class="line">        robot_web_session.disable_fci()</div>
-<div class="line">        robot_web_session.lock_brakes()</div>
-<div class="line">        time.sleep(1.0)</div>
+<div class="line"><span class="keyword">with</span> franky.Desk(<span class="stringliteral">&quot;10.90.90.1&quot;</span>, <span class="stringliteral">&quot;username&quot;</span>, <span class="stringliteral">&quot;password&quot;</span>) <span class="keyword">as</span> desk:</div>
+<div class="line">  <span class="comment"># Execute self-test if the time until self-test is less than 5 minutes.</span></div>
+<div class="line">  <span class="keywordflow">if</span> desk.system_status[<span class="stringliteral">&quot;safety&quot;</span>][<span class="stringliteral">&quot;timeToTd2&quot;</span>] &lt; 300:</div>
+<div class="line">    desk.disable_fci()</div>
+<div class="line">    desk.lock_brakes()</div>
+<div class="line">    time.sleep(1.0)</div>
 <div class="line"> </div>
-<div class="line">        robot_web_session.execute_self_test()</div>
+<div class="line">    desk.execute_self_test()</div>
 <div class="line"> </div>
-<div class="line">        robot_web_session.unlock_brakes()</div>
-<div class="line">        robot_web_session.enable_fci()</div>
-<div class="line">        time.sleep(1.0)</div>
+<div class="line">    desk.unlock_brakes()</div>
+<div class="line">    desk.enable_fci()</div>
+<div class="line">    time.sleep(1.0)</div>
 <div class="line"> </div>
-<div class="line">        <span class="comment"># Recreate your franky.Robot instance as the FCI has been disabled and re-enabled</span></div>
-<div class="line">        ...</div>
-</div><!-- fragment --><p><code>robot_web_session.get_system_status()</code> contains more information than just the time until self-test, such as the current execution mode, whether the brakes are locked, whether the FCI is enabled, and more.</p>
-<p>If you want to call other API functions, you can use the <code>RobotWebSession.send_api_request</code> and <code>RobotWebSession.send_control_api_request</code> methods. See <a href="franky/robot_web_session.py">robot_web_session.py</a> for an example of how to use these methods.</p>
+<div class="line">    <span class="comment"># Recreate your franky.Robot instance as the FCI has been disabled and re-enabled</span></div>
+<div class="line">    ...</div>
+</div><!-- fragment --><p><code>desk.system_status</code> contains more information than just the time until self-test, such as the current execution mode, whether the brakes are locked, whether the FCI is enabled, and more.</p>
+<p>If you want to call other API functions, you can use the <code>send_api_request</code> and <code>send_control_api_request</code> methods available on both <code>Desk</code> and <code>DeskWebSession</code>. See <a href="franky/desk.py">desk.py</a> for an example of how to use these methods.</p>
 <h4>Reading Pilot Button Events</h4>
-<p><code>RobotWebSession</code> can also read button events. This is exposed via <code>RobotWebSession.poll_buttons</code>, which waits for up to <code>timeout</code> seconds for the next websocket message and then returns all button events that are currently available.</p>
+<p>Both <code>Desk</code> and <code>DeskWebSession</code> can also read button events. This is exposed via <code>poll_buttons</code>, which waits for up to <code>timeout</code> seconds for the next websocket message and then returns all button events that are currently available.</p>
 <p><img src="doc/franka_buttons.jpg" alt="Franka pilot buttons" width="420" class="inline"/></p>
 <p>Buttons are represented by the <code>PilotButton</code> enum. Note that the top button is not accessible, and the center directional keys will not work while FCI is activated. Each event is returned as a <code>PilotButtonEvent</code> containing the button and whether it was pressed or released.</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> franky</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">with</span> franky.RobotWebSession(<span class="stringliteral">&quot;10.90.90.1&quot;</span>, <span class="stringliteral">&quot;username&quot;</span>, <span class="stringliteral">&quot;password&quot;</span>) <span class="keyword">as</span> robot_web_session:</div>
-<div class="line">    <span class="keywordflow">while</span> <span class="keyword">True</span>:</div>
-<div class="line">        <span class="keywordflow">for</span> event <span class="keywordflow">in</span> robot_web_session.poll_buttons(timeout=1.0):</div>
-<div class="line">            print(event.button, event.pressed)</div>
+<div class="line"><span class="keyword">with</span> franky.Desk(<span class="stringliteral">&quot;10.90.90.1&quot;</span>, <span class="stringliteral">&quot;username&quot;</span>, <span class="stringliteral">&quot;password&quot;</span>) <span class="keyword">as</span> desk:</div>
+<div class="line">  <span class="keywordflow">while</span> <span class="keyword">True</span>:</div>
+<div class="line">    <span class="keywordflow">for</span> event <span class="keywordflow">in</span> desk.poll_buttons(timeout=1.0):</div>
+<div class="line">      print(event.button, event.pressed)</div>
 </div><!-- fragment --><h3><a class="anchor" id="simulation"></a> 🖥️ Simulating the Robot</h3>
 <p>Looking to test your code in simulation before moving to the real system? Don't worry, we got you covered! <a href="https://github.com/TimSchneider42/franky-sim">franky-sim</a> is a high-fidelity simulation server for the FR3 that speaks the same network protocol as the real robot and serves as a drop-in replacement. Hence, you can run the same franky code both in simulation and on the real system!</p>
 <p align="center"></p>
