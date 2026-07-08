@@ -10,12 +10,12 @@ namespace franky {
 
 JointImpedanceBase::JointImpedanceBase(
     const Vector7d &target, const Vector7d &target_velocity, const JointImpedanceParams &params,
-    std::shared_ptr<JointImpedanceGainsHandle> gains_handle, double gains_time_constant)
+    double gains_time_constant)
     : Motion<franka::Torques>(),
       params_(params),
       target_(target),
       target_velocity_(target_velocity),
-      gains_handle_(std::move(gains_handle)),
+      gains_handle_(JointImpedanceGains(params.stiffness, params.damping)),
       gains_time_constant_(gains_time_constant),
       current_stiffness_(params.stiffness),
       current_damping_(params.damping) {
@@ -24,13 +24,11 @@ JointImpedanceBase::JointImpedanceBase(
 
 franka::Torques JointImpedanceBase::computeCommand(
     const RobotState &robot_state, const JointReference &reference, double dt) {
-  // If a gains handle is present, interpolate toward the target gains.
-  if (gains_handle_ && gains_handle_->hasValue()) {
-    const auto target_gains = gains_handle_->get();
-    const double alpha = 1.0 - std::exp(-dt / gains_time_constant_);
-    current_stiffness_ += alpha * (target_gains.stiffness - current_stiffness_);
-    current_damping_ += alpha * (target_gains.damping - current_damping_);
-  }
+  // Interpolate toward the target gains.
+  const auto target_gains = gains_handle_.get();
+  const double alpha = 1.0 - std::exp(-dt / gains_time_constant_);
+  current_stiffness_ += alpha * (target_gains.stiffness - current_stiffness_);
+  current_damping_ += alpha * (target_gains.damping - current_damping_);
 
   Vector7d torque_feedforward = params_.constant_torque_offset + reference.tau_ff;
   Vector7d tau_d = current_stiffness_.asDiagonal() * (reference.q - robot_state.q) +

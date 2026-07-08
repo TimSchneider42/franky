@@ -5,9 +5,9 @@
 #include <memory>
 #include <optional>
 
-#include "franky/motion/impedance_gains_handle.hpp"
 #include "franky/motion/motion.hpp"
 #include "franky/motion/torque_control_utils.hpp"
+#include "franky/motion/wait_free_triple_buffer.hpp"
 #include "franky/twist.hpp"
 #include "franky/twist_acceleration.hpp"
 
@@ -35,6 +35,29 @@ struct CartesianReference {
    * wrench Lambda(q) * target_acceleration before mapping through J^T.
    */
   std::optional<TwistAcceleration> target_acceleration{};
+};
+
+struct CartesianImpedanceGains {
+  CartesianImpedanceGains() = default;
+
+  explicit CartesianImpedanceGains(
+      double translational_stiffness, double rotational_stiffness, double nullspace_stiffness = 0.0)
+      : translational_stiffness(translational_stiffness),
+        rotational_stiffness(rotational_stiffness),
+        nullspace_stiffness(nullspace_stiffness) {
+    validate();
+  }
+
+  double translational_stiffness{500.0};
+  double rotational_stiffness{50.0};
+  double nullspace_stiffness{0.0};
+
+  /** @brief Throw std::invalid_argument if any gain is negative or non-finite. */
+  void validate() const {
+    validateNonNegativeFinite(translational_stiffness, "translational_stiffness");
+    validateNonNegativeFinite(rotational_stiffness, "rotational_stiffness");
+    validateNonNegativeFinite(nullspace_stiffness, "nullspace_stiffness");
+  }
 };
 
 /**
@@ -107,19 +130,20 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
 
   [[nodiscard]] const Affine &target() const { return target_; }
 
+  void setGains(const CartesianImpedanceGains &gains) {
+    gains.validate();
+    gains_handle_.set(gains);
+  }
+  [[nodiscard]] CartesianImpedanceGains getGains() const { return gains_handle_.getLastWritten(); }
+
  protected:
   /**
    * @param target The target pose.
    * @param params Parameters for the motion.
-   * @param gains_handle Optional handle for runtime gain updates. When null,
-   *        gains are static (set once from params). When present, gains are
-   *        read each cycle and exponentially interpolated toward the target.
    * @param gains_time_constant Smoothing time constant for gain transitions [s].
-   *        Only used when gains_handle is provided. Default 0.1s.
+   *        Default 0.1s.
    */
-  explicit CartesianImpedanceBase(
-      Affine target, const Params &params, std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle = nullptr,
-      double gains_time_constant = 0.1);
+  explicit CartesianImpedanceBase(Affine target, const Params &params, double gains_time_constant = 0.1);
 
   [[nodiscard]] franka::Torques computeCommand(
       const RobotState &robot_state, const CartesianReference &reference, double dt);
@@ -133,7 +157,7 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
 
   Params params_;
 
-  std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle_;
+  WaitFreeTripleBuffer<CartesianImpedanceGains> gains_handle_;
   double gains_time_constant_;
   double current_translational_stiffness_;
   double current_rotational_stiffness_;

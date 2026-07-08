@@ -1,10 +1,8 @@
 #pragma once
 
 #include <functional>
-#include <memory>
 #include <optional>
 
-#include "franky/motion/impedance_gains_handle.hpp"
 #include "franky/motion/joint_impedance_base.hpp"
 #include "franky/motion/wait_free_triple_buffer.hpp"
 
@@ -17,7 +15,7 @@ namespace franky {
  * JointImpedanceTrackingMotion is running. The motion reads the latest valid
  * reference each control cycle without needing to replace the motion object.
  */
-using JointReferenceHandle = WaitFreeTripleBuffer<JointReference>;
+using JointReferenceHandle = WaitFreeTripleBuffer<std::optional<JointReference>>;
 
 /**
  * @brief Client-side joint impedance controller with a dynamic online reference.
@@ -31,13 +29,12 @@ class JointImpedanceTrackingMotion : public JointImpedanceBase {
   using ReferenceCallback =
       std::function<JointReference(const RobotState &, franka::Duration, franka::Duration, franka::Duration)>;
 
-  explicit JointImpedanceTrackingMotion(std::shared_ptr<JointReferenceHandle> reference_handle);
-  JointImpedanceTrackingMotion(std::shared_ptr<JointReferenceHandle> reference_handle, const Params &params);
-  JointImpedanceTrackingMotion(
-      std::shared_ptr<JointReferenceHandle> reference_handle, const Params &params,
-      std::shared_ptr<JointImpedanceGainsHandle> gains_handle, double gains_time_constant = 0.1);
-  explicit JointImpedanceTrackingMotion(ReferenceCallback reference_callback);
-  JointImpedanceTrackingMotion(ReferenceCallback reference_callback, const Params &params);
+  explicit JointImpedanceTrackingMotion(const Params &params = Params{}, double gains_time_constant = 0.1);
+  explicit JointImpedanceTrackingMotion(
+      ReferenceCallback reference_callback, const Params &params = Params{}, double gains_time_constant = 0.1);
+
+  void setReference(const JointReference &reference) { reference_handle_.set(reference); }
+  [[nodiscard]] std::optional<JointReference> getReference() const { return reference_handle_.getLastWritten(); }
 
  protected:
   void initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) override;
@@ -46,7 +43,7 @@ class JointImpedanceTrackingMotion : public JointImpedanceBase {
       const std::optional<franka::Torques> &previous_command) override;
 
  private:
-  std::shared_ptr<JointReferenceHandle> reference_handle_;
+  JointReferenceHandle reference_handle_{std::nullopt};
   ReferenceCallback reference_callback_;
 };
 

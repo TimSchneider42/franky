@@ -5,7 +5,6 @@
 #include <optional>
 
 #include "franky/motion/cartesian_impedance_base.hpp"
-#include "franky/motion/impedance_gains_handle.hpp"
 #include "franky/motion/wait_free_triple_buffer.hpp"
 
 namespace franky {
@@ -18,7 +17,7 @@ namespace franky {
  * valid reference each control cycle without needing to replace the motion
  * object.
  */
-using CartesianReferenceHandle = WaitFreeTripleBuffer<CartesianReference>;
+using CartesianReferenceHandle = WaitFreeTripleBuffer<std::optional<CartesianReference>>;
 
 /**
  * @brief Cartesian impedance tracking motion.
@@ -32,13 +31,12 @@ class CartesianImpedanceTrackingMotion : public CartesianImpedanceBase {
   using ReferenceCallback =
       std::function<CartesianReference(const RobotState &, franka::Duration, franka::Duration, franka::Duration)>;
 
-  explicit CartesianImpedanceTrackingMotion(std::shared_ptr<CartesianReferenceHandle> reference_handle);
-  CartesianImpedanceTrackingMotion(std::shared_ptr<CartesianReferenceHandle> reference_handle, const Params &params);
-  CartesianImpedanceTrackingMotion(
-      std::shared_ptr<CartesianReferenceHandle> reference_handle, const Params &params,
-      std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle, double gains_time_constant = 0.1);
-  explicit CartesianImpedanceTrackingMotion(ReferenceCallback reference_callback);
-  CartesianImpedanceTrackingMotion(ReferenceCallback reference_callback, const Params &params);
+  explicit CartesianImpedanceTrackingMotion(const Params &params = Params{}, double gains_time_constant = 0.1);
+  explicit CartesianImpedanceTrackingMotion(
+      ReferenceCallback reference_callback, const Params &params = Params{}, double gains_time_constant = 0.1);
+
+  void setReference(const CartesianReference &reference) { reference_handle_.set(reference); }
+  [[nodiscard]] std::optional<CartesianReference> getReference() const { return reference_handle_.getLastWritten(); }
 
   [[nodiscard]] const Params &params() const { return base_params(); }
 
@@ -49,7 +47,7 @@ class CartesianImpedanceTrackingMotion : public CartesianImpedanceBase {
       const std::optional<franka::Torques> &previous_command) override;
 
  private:
-  std::shared_ptr<CartesianReferenceHandle> reference_handle_;
+  CartesianReferenceHandle reference_handle_{std::nullopt};
   ReferenceCallback reference_callback_;
   std::optional<Twist> target_twist_;
   std::optional<TwistAcceleration> target_acceleration_;

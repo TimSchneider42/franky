@@ -2,24 +2,12 @@
 
 namespace franky {
 
-JointImpedanceTrackingMotion::JointImpedanceTrackingMotion(std::shared_ptr<JointReferenceHandle> reference_handle)
-    : JointImpedanceTrackingMotion(std::move(reference_handle), Params{}) {}
+JointImpedanceTrackingMotion::JointImpedanceTrackingMotion(const Params &params, double gains_time_constant)
+    : JointImpedanceBase(Vector7d::Zero(), Vector7d::Zero(), params, gains_time_constant) {}
 
 JointImpedanceTrackingMotion::JointImpedanceTrackingMotion(
-    std::shared_ptr<JointReferenceHandle> reference_handle, const Params &params)
-    : JointImpedanceBase(Vector7d::Zero(), Vector7d::Zero(), params), reference_handle_(std::move(reference_handle)) {}
-
-JointImpedanceTrackingMotion::JointImpedanceTrackingMotion(
-    std::shared_ptr<JointReferenceHandle> reference_handle, const Params &params,
-    std::shared_ptr<JointImpedanceGainsHandle> gains_handle, double gains_time_constant)
-    : JointImpedanceBase(Vector7d::Zero(), Vector7d::Zero(), params, std::move(gains_handle), gains_time_constant),
-      reference_handle_(std::move(reference_handle)) {}
-
-JointImpedanceTrackingMotion::JointImpedanceTrackingMotion(ReferenceCallback reference_callback)
-    : JointImpedanceTrackingMotion(std::move(reference_callback), Params{}) {}
-
-JointImpedanceTrackingMotion::JointImpedanceTrackingMotion(ReferenceCallback reference_callback, const Params &params)
-    : JointImpedanceBase(Vector7d::Zero(), Vector7d::Zero(), params),
+    ReferenceCallback reference_callback, const Params &params, double gains_time_constant)
+    : JointImpedanceBase(Vector7d::Zero(), Vector7d::Zero(), params, gains_time_constant),
       reference_callback_(std::move(reference_callback)) {}
 
 void JointImpedanceTrackingMotion::initImpl(
@@ -35,10 +23,11 @@ franka::Torques JointImpedanceTrackingMotion::nextCommandImpl(
   reference.q = target_;
   reference.dq = target_velocity_;
 
-  if (reference_callback_) {
+  auto opt_reference = reference_handle_.get();
+  if (opt_reference) {
+    reference = *opt_reference;
+  } else if (reference_callback_) {
     reference = reference_callback_(robot_state, time_step, rel_time, abs_time);
-  } else if (reference_handle_ && reference_handle_->hasValue()) {
-    reference = reference_handle_->get();
   }
 
   target_ = reference.q;

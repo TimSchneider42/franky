@@ -90,99 +90,131 @@ CartesianImpedanceBase::Params makeCartesianImpedanceParams(
 }  // namespace
 
 void bind_motion_torque(py::module &m) {
-  auto cartesian_impedance_base =
-      py::class_<CartesianImpedanceBase, Motion<franka::Torques>, std::shared_ptr<CartesianImpedanceBase>>(
-          m, "CartesianImpedanceBase");
-  m.attr("ImpedanceMotion") = cartesian_impedance_base;
-
   py::class_<CartesianImpedanceGains>(m, "CartesianImpedanceGains")
       .def(
           py::init<double, double, double>(),
           "translational_stiffness"_a = 500.0,
           "rotational_stiffness"_a = 50.0,
           "nullspace_stiffness"_a = 0.0)
-      .def_readwrite("translational_stiffness", &CartesianImpedanceGains::translational_stiffness)
-      .def_readwrite("rotational_stiffness", &CartesianImpedanceGains::rotational_stiffness)
-      .def_readwrite("nullspace_stiffness", &CartesianImpedanceGains::nullspace_stiffness);
-
-  py::class_<CartesianImpedanceGainsHandle, std::shared_ptr<CartesianImpedanceGainsHandle>>(
-      m, "CartesianImpedanceGainsHandle")
-      .def(py::init<>())
       .def(
-          "set",
-          [](CartesianImpedanceGainsHandle &handle,
-             double translational_stiffness,
-             double rotational_stiffness,
-             double nullspace_stiffness) {
-            handle.set(CartesianImpedanceGains(translational_stiffness, rotational_stiffness, nullspace_stiffness));
-          },
-          "translational_stiffness"_a,
-          "rotational_stiffness"_a,
-          "nullspace_stiffness"_a = 0.0)
-      .def("clear", &CartesianImpedanceGainsHandle::clear)
-      .def("get", &CartesianImpedanceGainsHandle::get)
-      .def_property_readonly("has_value", &CartesianImpedanceGainsHandle::hasValue);
+          "replace",
+          [](const CartesianImpedanceGains &self, py::kwargs kwargs) {
+            CartesianImpedanceGains res = self;
+            for (auto item : kwargs) {
+              std::string key = py::cast<std::string>(item.first);
+              if (key == "translational_stiffness")
+                res.translational_stiffness = py::cast<double>(item.second);
+              else if (key == "rotational_stiffness")
+                res.rotational_stiffness = py::cast<double>(item.second);
+              else if (key == "nullspace_stiffness")
+                res.nullspace_stiffness = py::cast<double>(item.second);
+              else
+                throw py::value_error("Unknown keyword argument: " + key);
+            }
+            res.validate();
+            return res;
+          })
+      .def_readonly("translational_stiffness", &CartesianImpedanceGains::translational_stiffness)
+      .def_readonly("rotational_stiffness", &CartesianImpedanceGains::rotational_stiffness)
+      .def_readonly("nullspace_stiffness", &CartesianImpedanceGains::nullspace_stiffness);
+
+  py::class_<CartesianReference>(m, "CartesianReference")
+      .def(
+          py::init<>(
+              [](const Affine &target,
+                 std::optional<Twist>
+                     target_twist,
+                 std::optional<TwistAcceleration>
+                     target_acceleration) { return CartesianReference{target, target_twist, target_acceleration}; }),
+          "target"_a = Affine::Identity(),
+          "target_twist"_a = std::nullopt,
+          "target_acceleration"_a = std::nullopt)
+      .def(
+          "replace",
+          [](const CartesianReference &self, py::kwargs kwargs) {
+            CartesianReference res = self;
+            for (auto item : kwargs) {
+              std::string key = py::cast<std::string>(item.first);
+              if (key == "target")
+                res.target = py::cast<Affine>(item.second);
+              else if (key == "target_twist")
+                res.target_twist = py::cast<std::optional<Twist>>(item.second);
+              else if (key == "target_acceleration")
+                res.target_acceleration = py::cast<std::optional<TwistAcceleration>>(item.second);
+              else
+                throw py::value_error("Unknown keyword argument: " + key);
+            }
+            return res;
+          })
+      .def_readonly("target", &CartesianReference::target)
+      .def_readonly("target_twist", &CartesianReference::target_twist)
+      .def_readonly("target_acceleration", &CartesianReference::target_acceleration);
 
   py::class_<JointImpedanceGains>(m, "JointImpedanceGains")
       .def(
           py::init<const std::optional<Vector7d> &, const std::optional<Vector7d> &>(),
           "stiffness"_a = std::nullopt,
           "damping"_a = std::nullopt)
-      .def_readwrite("stiffness", &JointImpedanceGains::stiffness)
-      .def_readwrite("damping", &JointImpedanceGains::damping);
-
-  py::class_<JointImpedanceGainsHandle, std::shared_ptr<JointImpedanceGainsHandle>>(m, "JointImpedanceGainsHandle")
-      .def(py::init<>())
       .def(
-          "set",
-          [](JointImpedanceGainsHandle &handle, const Vector7d &stiffness, const Vector7d &damping) {
-            handle.set(JointImpedanceGains(stiffness, damping));
-          },
-          "stiffness"_a,
-          "damping"_a)
-      .def("clear", &JointImpedanceGainsHandle::clear)
-      .def("get", &JointImpedanceGainsHandle::get)
-      .def_property_readonly("has_value", &JointImpedanceGainsHandle::hasValue);
+          "replace",
+          [](const JointImpedanceGains &self, py::kwargs kwargs) {
+            JointImpedanceGains res = self;
+            for (auto item : kwargs) {
+              std::string key = py::cast<std::string>(item.first);
+              if (key == "stiffness")
+                res.stiffness = py::cast<Vector7d>(item.second);
+              else if (key == "damping")
+                res.damping = py::cast<Vector7d>(item.second);
+              else
+                throw py::value_error("Unknown keyword argument: " + key);
+            }
+            res.validate();
+            return res;
+          })
+      .def_readonly("stiffness", &JointImpedanceGains::stiffness)
+      .def_readonly("damping", &JointImpedanceGains::damping);
 
-  py::class_<JointReferenceHandle, std::shared_ptr<JointReferenceHandle>>(m, "JointReferenceHandle")
-      .def(py::init<>())
+  py::class_<JointReference>(m, "JointReference")
       .def(
-          "set",
-          [](JointReferenceHandle &handle,
-             const Vector7d &position,
-             std::optional<Vector7d>
-                 velocity,
-             std::optional<Vector7d>
-                 torque_feedforward) { handle.set(toJointReference(position, velocity, torque_feedforward)); },
-          R"doc(Update the current joint reference for a running JointImpedanceTrackingMotion.
-
-The provided torque_feedforward is added on top of any constant_torque_offset configured on the motion.)doc",
-          "position"_a,
-          "velocity"_a = std::nullopt,
-          "torque_feedforward"_a = std::nullopt)
-      .def("clear", &JointReferenceHandle::clear)
-      .def_property_readonly("has_value", &JointReferenceHandle::hasValue);
-
-  py::class_<CartesianReferenceHandle, std::shared_ptr<CartesianReferenceHandle>>(m, "CartesianReferenceHandle")
-      .def(py::init<>())
+          py::init<>([](std::optional<Vector7d> q, std::optional<Vector7d> dq, std::optional<Vector7d> tau_ff) {
+            JointReference ref;
+            if (q) ref.q = *q;
+            if (dq) ref.dq = *dq;
+            if (tau_ff) ref.tau_ff = *tau_ff;
+            return ref;
+          }),
+          "q"_a = std::nullopt,
+          "dq"_a = std::nullopt,
+          "tau_ff"_a = std::nullopt)
       .def(
-          "set",
-          [](CartesianReferenceHandle &handle,
-             const Affine &target,
-             std::optional<Twist>
-                 target_twist,
-             std::optional<TwistAcceleration>
-                 target_acceleration) { handle.set(toCartesianReference(target, target_twist, target_acceleration)); },
-          R"doc(Update the current Cartesian reference for a running CartesianImpedanceTrackingMotion.
+          "replace",
+          [](const JointReference &self, py::kwargs kwargs) {
+            JointReference res = self;
+            for (auto item : kwargs) {
+              std::string key = py::cast<std::string>(item.first);
+              if (key == "q")
+                res.q = py::cast<Vector7d>(item.second);
+              else if (key == "dq")
+                res.dq = py::cast<Vector7d>(item.second);
+              else if (key == "tau_ff")
+                res.tau_ff = py::cast<Vector7d>(item.second);
+              else
+                throw py::value_error("Unknown keyword argument: " + key);
+            }
+            return res;
+          })
+      .def_readonly("q", &JointReference::q)
+      .def_readonly("dq", &JointReference::dq)
+      .def_readonly("tau_ff", &JointReference::tau_ff);
 
-If target_twist is provided, it is interpreted as the desired end-effector twist in the base frame and the damping term acts on twist error rather than motion relative to zero.
+  auto cartesian_impedance_base =
+      py::class_<CartesianImpedanceBase, Motion<franka::Torques>, std::shared_ptr<CartesianImpedanceBase>>(
+          m, "CartesianImpedanceBase")
+          .def_property("gains", &CartesianImpedanceBase::getGains, &CartesianImpedanceBase::setGains);
+  m.attr("ImpedanceMotion") = cartesian_impedance_base;
 
-If target_acceleration is provided, it is interpreted as the desired end-effector acceleration in the base frame and contributes a model-based inertial feedforward wrench.)doc",
-          "target"_a,
-          "target_twist"_a = std::nullopt,
-          "target_acceleration"_a = std::nullopt)
-      .def("clear", &CartesianReferenceHandle::clear)
-      .def_property_readonly("has_value", &CartesianReferenceHandle::hasValue);
+  py::class_<JointImpedanceBase, Motion<franka::Torques>, std::shared_ptr<JointImpedanceBase>>(m, "JointImpedanceBase")
+      .def_property("gains", &JointImpedanceBase::getGains, &JointImpedanceBase::setGains);
 
   // Params classes — bind before the motion classes that use them.
 
@@ -239,8 +271,7 @@ If target_acceleration is provided, it is interpreted as the desired end-effecto
       .def(py::init<>())
       .def_readwrite("target_type", &CartesianImpedanceMotion::Params::target_type);
 
-  py::class_<JointImpedanceMotion, Motion<franka::Torques>, std::shared_ptr<JointImpedanceMotion>>(
-      m, "JointImpedanceMotion")
+  py::class_<JointImpedanceMotion, JointImpedanceBase, std::shared_ptr<JointImpedanceMotion>>(m, "JointImpedanceMotion")
       .def(
           py::init<>([](const Vector7d &target,
                         std::optional<Vector7d>
@@ -312,12 +343,10 @@ If target_acceleration is provided, it is interpreted as the desired end-effecto
       .def_property_readonly("target_velocity", &JointImpedanceMotion::target_velocity)
       .def_property_readonly("params", [](const JointImpedanceMotion &m) { return m.params(); });
 
-  py::class_<JointImpedanceTrackingMotion, Motion<franka::Torques>, std::shared_ptr<JointImpedanceTrackingMotion>>(
+  py::class_<JointImpedanceTrackingMotion, JointImpedanceBase, std::shared_ptr<JointImpedanceTrackingMotion>>(
       m, "JointImpedanceTrackingMotion")
       .def(
-          py::init<>([](const std::shared_ptr<JointReferenceHandle> &reference_handle,
-                        std::optional<Vector7d>
-                            stiffness,
+          py::init<>([](std::optional<Vector7d> stiffness,
                         std::optional<Vector7d>
                             damping,
                         std::optional<Vector7d>
@@ -339,8 +368,6 @@ If target_acceleration is provided, it is interpreted as the desired end-effecto
                         std::optional<Vector7d>
                             friction_max_torque,
                         double friction_velocity_epsilon,
-                        std::shared_ptr<JointImpedanceGainsHandle>
-                            gains_handle,
                         double gains_time_constant) {
             auto params = makeJointImpedanceParams(
                 stiffness,
@@ -358,19 +385,14 @@ If target_acceleration is provided, it is interpreted as the desired end-effecto
                 friction_viscous,
                 friction_max_torque,
                 friction_velocity_epsilon);
-            if (gains_handle) {
-              return std::make_shared<JointImpedanceTrackingMotion>(
-                  reference_handle, params, gains_handle, gains_time_constant);
-            }
-            return std::make_shared<JointImpedanceTrackingMotion>(reference_handle, params);
+            return std::make_shared<JointImpedanceTrackingMotion>(params, gains_time_constant);
           }),
-          R"doc(Construct a dynamic joint impedance controller driven by a JointReferenceHandle.
+          R"doc(Construct a dynamic joint impedance controller.
 
-Any constant_torque_offset configured here is added to the per-cycle torque_feedforward values published through the handle.
+Any constant_torque_offset configured here is added to the per-cycle torque_feedforward values.
 
-If gains_handle is provided, the controller reads target gains from it each cycle and exponentially
+The controller reads target gains each cycle and exponentially
 interpolates toward them with the given time constant, allowing smooth runtime stiffness/damping changes.)doc",
-          "reference_handle"_a,
           "stiffness"_a = std::nullopt,
           "damping"_a = std::nullopt,
           "constant_torque_offset"_a = std::nullopt,
@@ -386,11 +408,14 @@ interpolates toward them with the given time constant, allowing smooth runtime s
           "friction_viscous"_a = std::nullopt,
           "friction_max_torque"_a = std::nullopt,
           "friction_velocity_epsilon"_a = 0.03,
-          "gains_handle"_a = nullptr,
           "gains_time_constant"_a = 0.1)
       .def_property_readonly("target", &JointImpedanceTrackingMotion::target)
       .def_property_readonly("target_velocity", &JointImpedanceTrackingMotion::target_velocity)
-      .def_property_readonly("params", [](const JointImpedanceTrackingMotion &m) { return m.params(); });
+      .def_property_readonly("params", [](const JointImpedanceTrackingMotion &m) { return m.params(); })
+      .def_property(
+          "reference",
+          [](const JointImpedanceTrackingMotion &m) { return m.getReference().value_or(JointReference{}); },
+          &JointImpedanceTrackingMotion::setReference);
 
   py::class_<CartesianImpedanceMotion, CartesianImpedanceBase, std::shared_ptr<CartesianImpedanceMotion>>(
       m, "CartesianImpedanceMotion")
@@ -479,8 +504,7 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
       CartesianImpedanceBase,
       std::shared_ptr<CartesianImpedanceTrackingMotion>>(m, "CartesianImpedanceTrackingMotion")
       .def(
-          py::init<>([](const std::shared_ptr<CartesianReferenceHandle> &reference_handle,
-                        double translational_stiffness,
+          py::init<>([](double translational_stiffness,
                         double rotational_stiffness,
                         std::optional<std::array<std::optional<double>, 6>>
                             force_constraints,
@@ -498,8 +522,6 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
                         double joint_limit_max_torque,
                         const Eigen::Vector3d &translational_error_clip,
                         const Eigen::Vector3d &rotational_error_clip,
-                        std::shared_ptr<CartesianImpedanceGainsHandle>
-                            gains_handle,
                         double gains_time_constant,
                         std::optional<FrictionCompensationParams>
                             friction) {
@@ -519,21 +541,15 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
                 translational_error_clip,
                 rotational_error_clip,
                 friction);
-            if (gains_handle) {
-              return std::make_shared<CartesianImpedanceTrackingMotion>(
-                  reference_handle, base_params, gains_handle, gains_time_constant);
-            }
-            return std::make_shared<CartesianImpedanceTrackingMotion>(reference_handle, base_params);
+            return std::make_shared<CartesianImpedanceTrackingMotion>(base_params, gains_time_constant);
           }),
-          R"doc(Construct a dynamic Cartesian impedance tracking controller driven by a CartesianReferenceHandle.
+          R"doc(Construct a dynamic Cartesian impedance tracking controller.
 
-Each published Cartesian reference may optionally include a desired end-effector twist in the base frame.
 Cartesian damping is chosen internally as critically damped with respect to the requested stiffness.
 The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order.
 
-If gains_handle is provided, the controller reads target gains from it each cycle and exponentially
+The controller reads target gains each cycle and exponentially
 interpolates toward them with the given time constant, allowing smooth runtime stiffness changes.)doc",
-          "reference_handle"_a,
           "translational_stiffness"_a = 500,
           "rotational_stiffness"_a = 50,
           "force_constraints"_a = std::nullopt,
@@ -548,8 +564,11 @@ interpolates toward them with the given time constant, allowing smooth runtime s
           "joint_limit_max_torque"_a = 5.0,
           "translational_error_clip"_a = Eigen::Vector3d::Constant(0.10),
           "rotational_error_clip"_a = Eigen::Vector3d::Constant(0.25),
-          "gains_handle"_a = nullptr,
           "gains_time_constant"_a = 0.1,
           "friction"_a = std::nullopt)
-      .def_property_readonly("params", [](const CartesianImpedanceTrackingMotion &m) { return m.params(); });
+      .def_property_readonly("params", [](const CartesianImpedanceTrackingMotion &m) { return m.params(); })
+      .def_property(
+          "reference",
+          [](const CartesianImpedanceTrackingMotion &m) { return m.getReference().value_or(CartesianReference{}); },
+          &CartesianImpedanceTrackingMotion::setReference);
 }

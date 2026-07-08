@@ -18,12 +18,15 @@ class WaitFreeTripleBuffer {
  public:
   WaitFreeTripleBuffer() = default;
 
+  explicit WaitFreeTripleBuffer(const T &initial_value) { set(initial_value); }
+
   /**
    * @brief Publish new data.
    */
   void set(const T &value) {
     // 1. Write the payload into our privately owned write buffer
     buffers_[active_write_index_] = value;
+    last_written_index_ = active_write_index_;
 
     // 2. Pack the write index (bits 0-1) and set the "new data" flag (bit 2)
     const uint8_t new_state = active_write_index_ | 0x04;
@@ -34,19 +37,16 @@ class WaitFreeTripleBuffer {
 
     // 4. Our next write will go to the buffer that the reader just gave up (or never used).
     active_write_index_ = old_state & 0x03;
-
-    valid_.store(true, std::memory_order_release);
   }
 
   /**
-   * @brief Mark the handle as having no externally supplied data.
+   * @brief Get the most recently written value from the writer's side.
+   *
+   * Must only be called from the writer thread. Unlike get(), this does not
+   * consume the "new data" flag or interact with the reader in any way. Before
+   * the first set(), this returns a default-constructed T.
    */
-  void clear() { valid_.store(false, std::memory_order_release); }
-
-  /**
-   * @brief Whether valid data is currently available.
-   */
-  [[nodiscard]] bool hasValue() const { return valid_.load(std::memory_order_acquire); }
+  [[nodiscard]] T getLastWritten() const { return buffers_[last_written_index_]; }
 
   /**
    * @brief Get the most recently published data.
@@ -74,11 +74,14 @@ class WaitFreeTripleBuffer {
   uint8_t active_write_index_{1};
   uint8_t active_read_index_{2};
 
+  // Owned by the writer thread: index of the buffer holding the last written value.
+  // A published buffer is never written again until the writer reclaims it in a
+  // later set(), so the writer may safely read it back without synchronization.
+  uint8_t last_written_index_{0};
+
   // Packs both the shared clean index (bits 0-1) and the "new data" flag (bit 2).
   // Initial state: index 0, new data flag = 0.
   std::atomic<uint8_t> shared_state_{0};
-
-  std::atomic<bool> valid_{false};
 };
 
 }  // namespace franky

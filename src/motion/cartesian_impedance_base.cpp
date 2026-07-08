@@ -37,12 +37,12 @@ Eigen::Matrix<double, 6, 7> pseudoInverse(const Eigen::Matrix<double, 7, 6> &mat
 }  // namespace
 
 CartesianImpedanceBase::CartesianImpedanceBase(
-    Affine target, const CartesianImpedanceBase::Params &params,
-    std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle, double gains_time_constant)
+    Affine target, const CartesianImpedanceBase::Params &params, double gains_time_constant)
     : Motion<franka::Torques>(),
       target_(std::move(target)),
       params_(params),
-      gains_handle_(std::move(gains_handle)),
+      gains_handle_(CartesianImpedanceGains(
+          params.translational_stiffness, params.rotational_stiffness, params.nullspace_stiffness)),
       gains_time_constant_(gains_time_constant),
       current_translational_stiffness_(params.translational_stiffness),
       current_rotational_stiffness_(params.rotational_stiffness),
@@ -64,16 +64,13 @@ void CartesianImpedanceBase::rebuildStiffnessDamping() {
 
 franka::Torques CartesianImpedanceBase::computeCommand(
     const RobotState &robot_state, const CartesianReference &reference, double dt) {
-  // If a gains handle is present, interpolate toward the target gains.
-  if (gains_handle_ && gains_handle_->hasValue()) {
-    const auto target_gains = gains_handle_->get();
-    const double alpha = 1.0 - std::exp(-dt / gains_time_constant_);
-    current_translational_stiffness_ +=
-        alpha * (target_gains.translational_stiffness - current_translational_stiffness_);
-    current_rotational_stiffness_ += alpha * (target_gains.rotational_stiffness - current_rotational_stiffness_);
-    current_nullspace_stiffness_ += alpha * (target_gains.nullspace_stiffness - current_nullspace_stiffness_);
-    rebuildStiffnessDamping();
-  }
+  // Interpolate toward the target gains.
+  const auto target_gains = gains_handle_.get();
+  const double alpha = 1.0 - std::exp(-dt / gains_time_constant_);
+  current_translational_stiffness_ += alpha * (target_gains.translational_stiffness - current_translational_stiffness_);
+  current_rotational_stiffness_ += alpha * (target_gains.rotational_stiffness - current_rotational_stiffness_);
+  current_nullspace_stiffness_ += alpha * (target_gains.nullspace_stiffness - current_nullspace_stiffness_);
+  rebuildStiffnessDamping();
 
   auto model = robot()->model();
   Vector7d coriolis = model->coriolis(robot_state);

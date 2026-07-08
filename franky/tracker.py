@@ -7,14 +7,14 @@ import numpy as np
 
 from ._franky import (
     Affine,
-    CartesianImpedanceGainsHandle,
+    CartesianImpedanceGains,
     CartesianImpedanceTrackingMotion,
-    CartesianReferenceHandle,
+    CartesianReference,
     ControlException,
     FrictionCompensationParams,
-    JointImpedanceGainsHandle,
+    JointImpedanceGains,
     JointImpedanceTrackingMotion,
-    JointReferenceHandle,
+    JointReference,
     Twist,
     TwistAcceleration,
 )
@@ -80,21 +80,10 @@ class CartesianImpedanceTracker:
         period: Optional[float] = None,
     ):
         self._robot = robot
-        self._reference_handle = CartesianReferenceHandle()
-        self._gains_handle = CartesianImpedanceGainsHandle()
         self._period = period
         self._tick_count = 0
         self._t_start = _time.perf_counter()
         self._t_next = self._t_start
-
-        # Seed initial target from current pose so the robot doesn't jump.
-        initial_pose = self._robot.current_pose.end_effector_pose
-        self._reference_handle.set(initial_pose)
-
-        # Seed gains handle so the RT loop has a target from the start.
-        self._gains_handle.set(
-            translational_stiffness, rotational_stiffness, nullspace_stiffness
-        )
 
         kwargs = {
             "translational_stiffness": translational_stiffness,
@@ -111,15 +100,17 @@ class CartesianImpedanceTracker:
             "joint_limit_stiffness": joint_limit_stiffness,
             "joint_limit_damping": joint_limit_damping,
             "joint_limit_max_torque": joint_limit_max_torque,
-            "gains_handle": self._gains_handle,
             "gains_time_constant": gains_time_constant,
         }
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        motion = CartesianImpedanceTrackingMotion(
-            reference_handle=self._reference_handle, **kwargs
-        )
-        self._robot.move(motion, asynchronous=True)
+        self._motion = CartesianImpedanceTrackingMotion(**kwargs)
+
+        # Seed initial target from current pose so the robot doesn't jump.
+        initial_pose = self._robot.current_pose.end_effector_pose
+        self._motion.reference = CartesianReference(target=initial_pose)
+
+        self._robot.move(self._motion, asynchronous=True)
 
     # --- tick ---
 
@@ -157,10 +148,12 @@ class CartesianImpedanceTracker:
         acceleration: Optional[TwistAcceleration] = None,
     ) -> None:
         """Update the Cartesian target pose and optional twist/acceleration feedforward."""
-        if twist is not None or acceleration is not None:
-            self._reference_handle.set(pose, twist, acceleration)
-        else:
-            self._reference_handle.set(pose)
+        kwargs = {"target": pose}
+        if twist is not None:
+            kwargs["target_twist"] = twist
+        if acceleration is not None:
+            kwargs["target_acceleration"] = acceleration
+        self._motion.reference = CartesianReference(**kwargs)
 
     def set_gains(
         self,
@@ -173,23 +166,23 @@ class CartesianImpedanceTracker:
 
         Only the provided gains are changed; omitted gains keep their current target values.
         """
-        current = self._gains_handle.get() if self._gains_handle.has_gains else None
+        current = self._motion.gains
         ts = (
             translational_stiffness
             if translational_stiffness is not None
-            else (current.translational_stiffness if current else 500.0)
+            else current.translational_stiffness
         )
         rs = (
             rotational_stiffness
             if rotational_stiffness is not None
-            else (current.rotational_stiffness if current else 50.0)
+            else current.rotational_stiffness
         )
         ns = (
             nullspace_stiffness
             if nullspace_stiffness is not None
-            else (current.nullspace_stiffness if current else 0.0)
+            else current.nullspace_stiffness
         )
-        self._gains_handle.set(ts, rs, ns)
+        self._motion.gains = CartesianImpedanceGains(ts, rs, ns)
 
     # --- state ---
 
@@ -234,17 +227,10 @@ class CartesianImpedanceTracker:
                 return
             raise
 
-    # --- escape hatches ---
-
     @property
-    def reference_handle(self) -> CartesianReferenceHandle:
-        """The underlying reference handle, for direct access from tight loops or C++ interop."""
-        return self._reference_handle
-
-    @property
-    def gains_handle(self) -> CartesianImpedanceGainsHandle:
-        """The underlying gains handle, for direct access from tight loops or C++ interop."""
-        return self._gains_handle
+    def motion(self) -> CartesianImpedanceTrackingMotion:
+        """The underlying tracking motion instance."""
+        return self._motion
 
     # --- context manager ---
 
@@ -298,16 +284,10 @@ class JointImpedanceTracker:
         period: Optional[float] = None,
     ):
         self._robot = robot
-        self._reference_handle = JointReferenceHandle()
-        self._gains_handle = JointImpedanceGainsHandle()
         self._period = period
         self._tick_count = 0
         self._t_start = _time.perf_counter()
         self._t_next = self._t_start
-
-        # Seed initial target from current joint positions.
-        q = self._robot.current_joint_positions
-        self._reference_handle.set(q)
 
         # Seed gains handle with initial values. When damping is omitted, use
         # critical damping for unit inertia so zero stiffness implies zero damping.
@@ -319,7 +299,6 @@ class JointImpedanceTracker:
             if damping is not None
             else _default_joint_damping(stiffness_init)
         )
-        self._gains_handle.set(stiffness_init, damping_init)
 
         kwargs = {
             "stiffness": stiffness_init,
@@ -337,15 +316,17 @@ class JointImpedanceTracker:
             "joint_limit_stiffness": joint_limit_stiffness,
             "joint_limit_damping": joint_limit_damping,
             "joint_limit_max_torque": joint_limit_max_torque,
-            "gains_handle": self._gains_handle,
             "gains_time_constant": gains_time_constant,
         }
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        motion = JointImpedanceTrackingMotion(
-            reference_handle=self._reference_handle, **kwargs
-        )
-        self._robot.move(motion, asynchronous=True)
+        self._motion = JointImpedanceTrackingMotion(**kwargs)
+
+        # Seed initial target from current joint positions.
+        q = self._robot.current_joint_positions
+        self._motion.reference = JointReference(q=q)
+
+        self._robot.move(self._motion, asynchronous=True)
 
     # --- tick ---
 
@@ -382,7 +363,12 @@ class JointImpedanceTracker:
         tau_ff: Optional[np.ndarray] = None,
     ) -> None:
         """Update the joint target position, optional velocity, and optional feedforward torque."""
-        self._reference_handle.set(q, dq, tau_ff)
+        kwargs = {"q": q}
+        if dq is not None:
+            kwargs["dq"] = dq
+        if tau_ff is not None:
+            kwargs["tau_ff"] = tau_ff
+        self._motion.reference = JointReference(**kwargs)
 
     def set_gains(
         self,
@@ -396,25 +382,21 @@ class JointImpedanceTracker:
         the critical damping heuristic 2*sqrt(stiffness). Otherwise, omitted
         gains keep their current target values.
         """
-        current = self._gains_handle.get() if self._gains_handle.has_gains else None
+        current = self._motion.gains
         k = _as_joint_gain(
             "stiffness",
-            (
-                stiffness
-                if stiffness is not None
-                else (current.stiffness if current else _DEFAULT_JOINT_STIFFNESS)
-            ),
+            (stiffness if stiffness is not None else current.stiffness),
         )
         d = (
             _as_joint_gain("damping", damping)
             if damping is not None
             else (
                 _default_joint_damping(k)
-                if stiffness is not None or current is None
+                if stiffness is not None
                 else _as_joint_gain("damping", current.damping)
             )
         )
-        self._gains_handle.set(k, d)
+        self._motion.gains = JointImpedanceGains(k, d)
 
     # --- state ---
 
@@ -451,15 +433,10 @@ class JointImpedanceTracker:
                 return
             raise
 
-    # --- escape hatches ---
-
     @property
-    def reference_handle(self) -> JointReferenceHandle:
-        return self._reference_handle
-
-    @property
-    def gains_handle(self) -> JointImpedanceGainsHandle:
-        return self._gains_handle
+    def motion(self) -> JointImpedanceTrackingMotion:
+        """The underlying tracking motion instance."""
+        return self._motion
 
     # --- context manager ---
 
