@@ -39,6 +39,7 @@ jobs:
       manylinux-version: ${{ matrix.manylinux-version }}
       dev-build-number: ${{ needs.get-build-info.outputs.build-number }}
       dev-commit-hash: ${{ needs.get-build-info.outputs.commit-hash }}
+      libfranka-version-label: ${{ matrix.libfranka-version }}
 
   publish:
     needs: [build, get-versions, get-build-info]
@@ -54,10 +55,8 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           pattern: wheels___*
-          path: artifacts/
-
-      - name: Merge wheels
-        uses: ./.github/actions/merge-wheels
+          path: wheels/
+          merge-multiple: true
 
       - name: Update dev release
         env:
@@ -65,6 +64,7 @@ jobs:
         run: |
           IFS=. read -r major minor patch < VERSION
           wheel_version="${major}.${minor}.$((patch + 1)).dev${{ needs.get-build-info.outputs.build-number }}+g${{ needs.get-build-info.outputs.commit-hash }}"
+          pages_url="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}"
           gh release delete dev --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag || true
           gh release create dev \
             --repo "$GITHUB_REPOSITORY" \
@@ -73,5 +73,15 @@ jobs:
             --title "Development build" \
             --notes "Automatic build of the latest \`master\` (${GITHUB_SHA}).
 
-          Wheel version: \`${wheel_version}\`. Wheels are provided for all supported libfranka versions." \
-            output/libfranka_*_wheels.zip
+          Wheel version: \`${wheel_version}.libfranka.<libfranka version>\`, where \`<libfranka version>\` is the libfranka version the wheel was built against. Wheels are provided for all supported libfranka versions and can be installed via the [package index](${pages_url}/whl/):
+
+          \`\`\`bash
+          pip install --pre franky-control --extra-index-url ${pages_url}/whl/libfranka-<libfranka version>/
+          \`\`\`" \
+            wheels/*.whl
+
+  update-package-index:
+    needs: publish
+    permissions:
+      contents: write
+    uses: ./.github/workflows/simple_index.yml
