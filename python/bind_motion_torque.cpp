@@ -235,11 +235,6 @@ If target_acceleration is provided, it is interpreted as the desired end-effecto
       .def_readwrite("safety", &CartesianImpedanceBase::Params::safety)
       .def_readwrite("friction", &CartesianImpedanceBase::Params::friction);
 
-  py::class_<ExponentialImpedanceMotion::Params, CartesianImpedanceBase::Params>(m, "ExponentialImpedanceParams")
-      .def(py::init<>())
-      .def_readwrite("target_type", &ExponentialImpedanceMotion::Params::target_type)
-      .def_readwrite("exponential_decay", &ExponentialImpedanceMotion::Params::exponential_decay);
-
   py::class_<CartesianImpedanceMotion::Params, CartesianImpedanceBase::Params>(m, "CartesianImpedanceMotionParams")
       .def(py::init<>())
       .def_readwrite("target_type", &CartesianImpedanceMotion::Params::target_type)
@@ -398,80 +393,6 @@ interpolates toward them with the given time constant, allowing smooth runtime s
       .def_property_readonly("target", &JointImpedanceTrackingMotion::target)
       .def_property_readonly("target_velocity", &JointImpedanceTrackingMotion::target_velocity)
       .def_property_readonly("params", [](const JointImpedanceTrackingMotion &m) { return m.params(); });
-
-  py::class_<ExponentialImpedanceMotion, CartesianImpedanceBase, std::shared_ptr<ExponentialImpedanceMotion>>(
-      m, "ExponentialImpedanceMotion")
-      .def(
-          py::init<>([](const Affine &target,
-                        ReferenceType target_type,
-                        double translational_stiffness,
-                        double rotational_stiffness,
-                        std::optional<std::array<std::optional<double>, 6>>
-                            force_constraints,
-                        std::optional<Vector7d>
-                            nullspace_target,
-                        double nullspace_stiffness,
-                        double max_delta_tau,
-                        std::optional<Vector7d>
-                            lower_joint_limits,
-                        std::optional<Vector7d>
-                            upper_joint_limits,
-                        double joint_limit_activation_distance,
-                        double joint_limit_stiffness,
-                        double joint_limit_damping,
-                        double joint_limit_max_torque,
-                        const Eigen::Vector3d &translational_error_clip,
-                        const Eigen::Vector3d &rotational_error_clip,
-                        double exponential_decay,
-                        std::optional<FrictionCompensationParams>
-                            friction) {
-            auto base_params = makeCartesianImpedanceParams(
-                translational_stiffness,
-                rotational_stiffness,
-                force_constraints,
-                nullspace_target,
-                nullspace_stiffness,
-                max_delta_tau,
-                lower_joint_limits,
-                upper_joint_limits,
-                joint_limit_activation_distance,
-                joint_limit_stiffness,
-                joint_limit_damping,
-                joint_limit_max_torque,
-                translational_error_clip,
-                rotational_error_clip,
-                friction);
-            auto params = ExponentialImpedanceMotion::Params{};
-            static_cast<CartesianImpedanceBase::Params &>(params) = base_params;
-            params.target_type = target_type;
-            params.exponential_decay = exponential_decay;
-            return std::make_shared<ExponentialImpedanceMotion>(target, params);
-          }),
-          R"doc(Construct an exponential Cartesian impedance motion toward a fixed target pose.
-
-Cartesian damping is chosen internally as critically damped with respect to the requested stiffness.
-
-The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order.)doc",
-          "target"_a,
-          py::arg_v("target_type", ReferenceType::kAbsolute, "_franky.ReferenceType.Absolute"),
-          "translational_stiffness"_a = 500,
-          "rotational_stiffness"_a = 50,
-          "force_constraints"_a = std::nullopt,
-          "nullspace_target"_a = std::nullopt,
-          "nullspace_stiffness"_a = 0.0,
-          "max_delta_tau"_a = 1.0,
-          "lower_joint_limits"_a = std::nullopt,
-          "upper_joint_limits"_a = std::nullopt,
-          "joint_limit_activation_distance"_a = 0.1,
-          "joint_limit_stiffness"_a = 4.0,
-          "joint_limit_damping"_a = 1.0,
-          "joint_limit_max_torque"_a = 5.0,
-          "translational_error_clip"_a = Eigen::Vector3d::Constant(0.10),
-          "rotational_error_clip"_a = Eigen::Vector3d::Constant(0.25),
-          "exponential_decay"_a = 0.005,
-          "friction"_a = std::nullopt)
-      .def_property_readonly("target", &ExponentialImpedanceMotion::target)
-      .def_property_readonly("params", [](const ExponentialImpedanceMotion &m) { return m.params(); });
 
   py::class_<CartesianImpedanceMotion, CartesianImpedanceBase, std::shared_ptr<CartesianImpedanceMotion>>(
       m, "CartesianImpedanceMotion")
