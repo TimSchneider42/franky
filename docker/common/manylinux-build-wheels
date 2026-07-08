@@ -11,6 +11,11 @@ TOOLSET_ENABLE=$(ls /opt/rh/gcc-toolset-*/enable 2>/dev/null | sort -V | tail -1
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 . "${SCRIPT_DIR}/dependency_versions"
 
+# Allow overriding the Python versions to build for
+if [ -n "${PYBIN_VERSIONS}" ]; then
+  PYBIN_SUPPORTED_VERSIONS="${PYBIN_VERSIONS}"
+fi
+
 CODE_DIR="${1:-$(pwd)}"
 
 # Log python versions

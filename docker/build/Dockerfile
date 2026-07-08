@@ -8,8 +8,6 @@ RUN yum -y install zip fmt-devel openssl-devel mysql-devel postgresql-devel boos
 ADD docker/common/ /tmp/common/
 ARG LIBFRANKA_VERSION
 RUN /tmp/common/install-dependencies
-
-ARG PYBIN_SUPPORTED_VERSIONS="cp3(7m|8|9|10|11|12|13|14)"
 RUN /tmp/common/manylinux-setup-pip
 
 # Set working directory
@@ -27,5 +25,4 @@ ADD docker/build/run-tests /usr/bin/
 RUN rm -rf /tmp/common
 
 # Preserve arguments for runtime
-ENV PYBIN_SUPPORTED_VERSIONS=${PYBIN_SUPPORTED_VERSIONS}
 ENV LIBFRANKA_VERSION=${LIBFRANKA_VERSION}
