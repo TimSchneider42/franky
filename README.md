@@ -50,7 +50,7 @@ If you do not have a robot at hand, you can also try the [simulation](doc/tutori
 - **Control your Franka robot directly from Python in just a few lines!**
   No more endless hours setting up ROS, juggling packages, or untangling dependencies. Just `pip install` — no ROS at all.
 
-- **[Four control modes](doc/tutorial.md#motion-types)**: [Cartesian position](doc/tutorial.md#cartesian-position-control), [Cartesian velocity](doc/tutorial.md#cartesian-velocity-control), [Joint position](doc/tutorial.md#joint-position-control), [Joint velocity](doc/tutorial.md#joint-velocity-control)
+- **[Multiple control modes](doc/tutorial.md#motion-types)**: [Cartesian position](doc/tutorial.md#cartesian-position-control), [Cartesian velocity](doc/tutorial.md#cartesian-velocity-control), [Joint position](doc/tutorial.md#joint-position-control), [Joint velocity](doc/tutorial.md#joint-velocity-control), and [Impedance control](doc/tutorial.md#impedance-control)
   franky uses [Ruckig](https://github.com/pantor/ruckig) to generate smooth, time-optimal trajectories while respecting velocity, acceleration, and jerk limits.
 
 - **[Real-time control from Python and C++](doc/tutorial.md#real-time-motions)**
