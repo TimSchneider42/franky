@@ -1,13 +1,14 @@
 var searchData=
 [
-  ['measure_0',['Measure',['../classfranky_1_1_measure.html',1,'franky']]],
-  ['model_1',['Model',['../classfranky_1_1_model.html',1,'franky']]],
-  ['motion_2',['Motion',['../classfranky_1_1_motion.html',1,'franky']]],
-  ['motion_3c_20franka_3a_3acartesianpose_20_3e_3',['Motion&lt; franka::CartesianPose &gt;',['../classfranky_1_1_motion.html',1,'franky']]],
-  ['motion_3c_20franka_3a_3acartesianvelocities_20_3e_4',['Motion&lt; franka::CartesianVelocities &gt;',['../classfranky_1_1_motion.html',1,'franky']]],
-  ['motion_3c_20franka_3a_3ajointpositions_20_3e_5',['Motion&lt; franka::JointPositions &gt;',['../classfranky_1_1_motion.html',1,'franky']]],
-  ['motion_3c_20franka_3a_3ajointvelocities_20_3e_6',['Motion&lt; franka::JointVelocities &gt;',['../classfranky_1_1_motion.html',1,'franky']]],
-  ['motion_3c_20franka_3a_3atorques_20_3e_7',['Motion&lt; franka::Torques &gt;',['../classfranky_1_1_motion.html',1,'franky']]],
-  ['motiongenerator_8',['MotionGenerator',['../classfranky_1_1_motion_generator.html',1,'franky']]],
-  ['motionplannerexception_9',['MotionPlannerException',['../structfranky_1_1_motion_planner_exception.html',1,'franky']]]
+  ['jointimpedancebase_0',['JointImpedanceBase',['../classfranky_1_1_joint_impedance_base.html',1,'franky']]],
+  ['jointimpedancegains_1',['JointImpedanceGains',['../structfranky_1_1_joint_impedance_gains.html',1,'franky']]],
+  ['jointimpedancemotion_2',['JointImpedanceMotion',['../classfranky_1_1_joint_impedance_motion.html',1,'franky']]],
+  ['jointimpedanceparams_3',['JointImpedanceParams',['../structfranky_1_1_joint_impedance_params.html',1,'franky']]],
+  ['jointimpedancetrackingmotion_4',['JointImpedanceTrackingMotion',['../classfranky_1_1_joint_impedance_tracking_motion.html',1,'franky']]],
+  ['jointmotion_5',['JointMotion',['../classfranky_1_1_joint_motion.html',1,'franky']]],
+  ['jointreference_6',['JointReference',['../structfranky_1_1_joint_reference.html',1,'franky']]],
+  ['jointstate_7',['JointState',['../classfranky_1_1_joint_state.html',1,'franky']]],
+  ['jointvelocitymotion_8',['JointVelocityMotion',['../classfranky_1_1_joint_velocity_motion.html',1,'franky']]],
+  ['jointvelocitywaypointmotion_9',['JointVelocityWaypointMotion',['../classfranky_1_1_joint_velocity_waypoint_motion.html',1,'franky']]],
+  ['jointwaypointmotion_10',['JointWaypointMotion',['../classfranky_1_1_joint_waypoint_motion.html',1,'franky']]]
 ];
