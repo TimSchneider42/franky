@@ -55,10 +55,10 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
    */
   struct Params {
     /** The translational stiffness in [10, 3000] N/m. */
-    double translational_stiffness{2000};
+    double translational_stiffness{500};
 
     /** The rotational stiffness in [1, 300] Nm/rad. */
-    double rotational_stiffness{200};
+    double rotational_stiffness{50};
 
     /**
      * Maximum absolute Cartesian position error [m] used by the task-space controller.

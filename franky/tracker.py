@@ -62,8 +62,8 @@ class CartesianImpedanceTracker:
         self,
         robot: Robot,
         *,
-        translational_stiffness: float = 2000.0,
-        rotational_stiffness: float = 200.0,
+        translational_stiffness: float = 500.0,
+        rotational_stiffness: float = 50.0,
         translational_error_clip: Optional[np.ndarray] = None,
         rotational_error_clip: Optional[np.ndarray] = None,
         nullspace_target: Optional[np.ndarray] = None,
@@ -177,12 +177,12 @@ class CartesianImpedanceTracker:
         ts = (
             translational_stiffness
             if translational_stiffness is not None
-            else (current.translational_stiffness if current else 2000.0)
+            else (current.translational_stiffness if current else 500.0)
         )
         rs = (
             rotational_stiffness
             if rotational_stiffness is not None
-            else (current.rotational_stiffness if current else 200.0)
+            else (current.rotational_stiffness if current else 50.0)
         )
         ns = (
             nullspace_stiffness

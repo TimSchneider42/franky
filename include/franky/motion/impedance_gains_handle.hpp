@@ -33,8 +33,8 @@ struct CartesianImpedanceGains {
     validate();
   }
 
-  double translational_stiffness{2000.0};
-  double rotational_stiffness{200.0};
+  double translational_stiffness{500.0};
+  double rotational_stiffness{50.0};
   double nullspace_stiffness{0.0};
 
   /** @brief Throw std::invalid_argument if any gain is negative or non-finite. */

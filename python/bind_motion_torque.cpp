@@ -98,8 +98,8 @@ void bind_motion_torque(py::module &m) {
   py::class_<CartesianImpedanceGains>(m, "CartesianImpedanceGains")
       .def(
           py::init<double, double, double>(),
-          "translational_stiffness"_a = 2000.0,
-          "rotational_stiffness"_a = 200.0,
+          "translational_stiffness"_a = 500.0,
+          "rotational_stiffness"_a = 50.0,
           "nullspace_stiffness"_a = 0.0)
       .def_readwrite("translational_stiffness", &CartesianImpedanceGains::translational_stiffness)
       .def_readwrite("rotational_stiffness", &CartesianImpedanceGains::rotational_stiffness)
@@ -454,8 +454,8 @@ Cartesian damping is chosen internally as critically damped with respect to the 
 The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order.)doc",
           "target"_a,
           py::arg_v("target_type", ReferenceType::kAbsolute, "_franky.ReferenceType.Absolute"),
-          "translational_stiffness"_a = 2000,
-          "rotational_stiffness"_a = 200,
+          "translational_stiffness"_a = 500,
+          "rotational_stiffness"_a = 50,
           "force_constraints"_a = std::nullopt,
           "nullspace_target"_a = std::nullopt,
           "nullspace_stiffness"_a = 0.0,
@@ -532,8 +532,8 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
           "target"_a,
           "duration"_a,
           py::arg_v("target_type", ReferenceType::kAbsolute, "_franky.ReferenceType.Absolute"),
-          "translational_stiffness"_a = 2000,
-          "rotational_stiffness"_a = 200,
+          "translational_stiffness"_a = 500,
+          "rotational_stiffness"_a = 50,
           "force_constraints"_a = std::nullopt,
           "nullspace_target"_a = std::nullopt,
           "nullspace_stiffness"_a = 0.0,
@@ -613,8 +613,8 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
 If gains_handle is provided, the controller reads target gains from it each cycle and exponentially
 interpolates toward them with the given time constant, allowing smooth runtime stiffness changes.)doc",
           "reference_handle"_a,
-          "translational_stiffness"_a = 2000,
-          "rotational_stiffness"_a = 200,
+          "translational_stiffness"_a = 500,
+          "rotational_stiffness"_a = 50,
           "force_constraints"_a = std::nullopt,
           "nullspace_target"_a = std::nullopt,
           "nullspace_stiffness"_a = 0.0,
