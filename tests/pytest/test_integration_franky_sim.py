@@ -227,6 +227,159 @@ def test_cartesian_velocity_control():
 
 
 # ---------------------------------------------------------------------------
+# Test 5 - Joint impedance control
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.timeout(20)
+def test_joint_impedance_motion():
+    """
+    Use JointImpedanceMotion to drive all 7 joints to a target configuration.
+    Runs asynchronously and is manually stopped since it does not finish automatically.
+    """
+    target = [-0.1, 0.1, 0.1, -1.5, 0.1, 1.6, 0.8]
+    with sim_server_context() as server:
+        robot = make_robot(server.robot_servers[0].hostname)
+        robot.move(franky.JointImpedanceMotion(target), asynchronous=True)
+
+        import time
+
+        time.sleep(1.0)
+
+        robot.stop()
+        try:
+            robot.join_motion()
+        except franky.ControlException as e:
+            if "Move command preempted" not in str(e):
+                raise
+
+        q_actual = list(robot.current_joint_state.position)
+        np.testing.assert_allclose(
+            q_actual,
+            target,
+            atol=JOINT_ATOL,
+            err_msg="Joint positions out of tolerance for JointImpedanceMotion",
+        )
+
+
+# ---------------------------------------------------------------------------
+# Test 6 - Cartesian impedance control
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.timeout(20)
+def test_cartesian_impedance_motion():
+    """
+    Move the end-effector to an absolute Cartesian target using CartesianImpedanceMotion.
+    Runs asynchronously and is manually stopped since it does not finish automatically.
+    """
+    offset = np.array([0.05, 0.05, 0.0])
+    with sim_server_context() as server:
+        robot = make_robot(server.robot_servers[0].hostname)
+        initial_pose = robot.current_cartesian_state.pose.end_effector_pose
+        initial_translation = np.array(initial_pose.translation).flatten()
+
+        target_translation = initial_translation + offset
+        target_matrix = initial_pose.matrix.copy()
+        target_matrix[:3, 3] = target_translation
+
+        robot.move(
+            franky.CartesianImpedanceMotion(franky.Affine(target_matrix)),
+            asynchronous=True,
+        )
+
+        import time
+
+        time.sleep(1.0)
+
+        robot.stop()
+        try:
+            robot.join_motion()
+        except franky.ControlException as e:
+            if "Move command preempted" not in str(e):
+                raise
+
+        actual_translation = np.array(
+            robot.current_cartesian_state.pose.end_effector_pose.translation
+        ).flatten()
+        np.testing.assert_allclose(
+            actual_translation,
+            target_translation,
+            atol=CART_ATOL,
+            err_msg="Position out of tolerance for CartesianImpedanceMotion",
+        )
+
+
+# ---------------------------------------------------------------------------
+# Test 7 - Joint impedance tracker
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.timeout(20)
+def test_joint_impedance_tracker():
+    """
+    Use JointImpedanceTracker to dynamically drive joints to a target configuration.
+    """
+    target = [-0.1, 0.1, 0.1, -1.5, 0.1, 1.6, 0.8]
+    with sim_server_context() as server:
+        robot = make_robot(server.robot_servers[0].hostname)
+        with franky.JointImpedanceTracker(robot, period=0.01) as tracker:
+            tracker.set_target(target)
+
+            # Tick a few times and wait for it to settle
+            for _ in range(100):
+                if not tracker.tick():
+                    break
+
+        q_actual = list(robot.current_joint_state.position)
+        np.testing.assert_allclose(
+            q_actual,
+            target,
+            atol=JOINT_ATOL,
+            err_msg="Joint positions out of tolerance for JointImpedanceTracker",
+        )
+
+
+# ---------------------------------------------------------------------------
+# Test 8 - Cartesian impedance tracker
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.timeout(20)
+def test_cartesian_impedance_tracker():
+    """
+    Move the end-effector to an absolute Cartesian target using CartesianImpedanceTracker.
+    """
+    offset = np.array([0.05, -0.05, 0.0])
+    with sim_server_context() as server:
+        robot = make_robot(server.robot_servers[0].hostname)
+        initial_pose = robot.current_cartesian_state.pose.end_effector_pose
+        initial_translation = np.array(initial_pose.translation).flatten()
+
+        target_translation = initial_translation + offset
+        target_matrix = initial_pose.matrix.copy()
+        target_matrix[:3, 3] = target_translation
+
+        with franky.CartesianImpedanceTracker(robot, period=0.01) as tracker:
+            tracker.set_target(franky.Affine(target_matrix))
+
+            # Tick a few times and wait for it to settle
+            for _ in range(100):
+                if not tracker.tick():
+                    break
+
+        actual_translation = np.array(
+            robot.current_cartesian_state.pose.end_effector_pose.translation
+        ).flatten()
+        np.testing.assert_allclose(
+            actual_translation,
+            target_translation,
+            atol=CART_ATOL,
+            err_msg="Position out of tolerance for CartesianImpedanceTracker",
+        )
+
+
+# ---------------------------------------------------------------------------
 # Gripper helpers
 # ---------------------------------------------------------------------------
 
