@@ -133,10 +133,10 @@ def generate_index(wheels, libfranka_versions, output_dir):
         set(libfranka_versions) | set(wheels), key=version_sort_key, reverse=True
     )
 
-    landing_lines = ["<h1>franky package index</h1>", "<ul>"]
+    landing_lines = ["<h1>franky package index</h1>"]
     for libfranka_version in all_versions:
         sub_index = f"libfranka-{libfranka_version}"
-        landing_lines.append(f'<li><a href="{sub_index}/">{sub_index}</a></li>')
+        landing_lines.append(f'<a href="{sub_index}/">{sub_index}</a><br>')
         projects = wheels.get(libfranka_version, {"franky-control": {}})
 
         write_page(
@@ -160,13 +160,6 @@ def generate_index(wheels, libfranka_versions, output_dir):
                 f"{project} wheels for libfranka {libfranka_version}",
                 file_lines,
             )
-    landing_lines.append("</ul>")
-    landing_lines.append(
-        "<p>Install franky for a specific libfranka version with</p>"
-        "<pre>pip install franky-control --extra-index-url "
-        "https://timschneider42.github.io/franky/whl/libfranka-&lt;version&gt;/</pre>"
-        "<p>Add <code>--pre</code> to install the latest development build.</p>"
-    )
     write_page(output_dir / "index.html", "franky package index", landing_lines)
 
 
