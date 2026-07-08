@@ -4,9 +4,9 @@
 #include <memory>
 #include <optional>
 
-#include "franky/motion/double_buffered_handle.hpp"
 #include "franky/motion/impedance_gains_handle.hpp"
 #include "franky/motion/joint_impedance_base.hpp"
+#include "franky/motion/wait_free_triple_buffer.hpp"
 
 namespace franky {
 
@@ -17,7 +17,7 @@ namespace franky {
  * JointImpedanceTrackingMotion is running. The motion reads the latest valid
  * reference each control cycle without needing to replace the motion object.
  */
-using JointReferenceHandle = DoubleBufferedHandle<JointReference>;
+using JointReferenceHandle = WaitFreeTripleBuffer<JointReference>;
 
 /**
  * @brief Client-side joint impedance controller with a dynamic online reference.

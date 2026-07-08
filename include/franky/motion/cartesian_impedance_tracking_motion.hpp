@@ -5,8 +5,8 @@
 #include <optional>
 
 #include "franky/motion/cartesian_impedance_base.hpp"
-#include "franky/motion/double_buffered_handle.hpp"
 #include "franky/motion/impedance_gains_handle.hpp"
+#include "franky/motion/wait_free_triple_buffer.hpp"
 
 namespace franky {
 
@@ -18,7 +18,7 @@ namespace franky {
  * valid reference each control cycle without needing to replace the motion
  * object.
  */
-using CartesianReferenceHandle = DoubleBufferedHandle<CartesianReference>;
+using CartesianReferenceHandle = WaitFreeTripleBuffer<CartesianReference>;
 
 /**
  * @brief Cartesian impedance tracking motion.

@@ -5,8 +5,8 @@
 #include <cmath>
 #include <optional>
 
-#include "franky/motion/double_buffered_handle.hpp"
 #include "franky/motion/torque_control_utils.hpp"
+#include "franky/motion/wait_free_triple_buffer.hpp"
 #include "franky/types.hpp"
 
 namespace franky {
@@ -52,7 +52,7 @@ struct CartesianImpedanceGains {
  * target gains each cycle and exponentially interpolates toward them, so
  * stiffness changes are smooth rather than instantaneous.
  */
-using CartesianImpedanceGainsHandle = DoubleBufferedHandle<CartesianImpedanceGains>;
+using CartesianImpedanceGainsHandle = WaitFreeTripleBuffer<CartesianImpedanceGains>;
 
 /**
  * @brief Target gains for a joint impedance controller.
@@ -83,6 +83,6 @@ struct JointImpedanceGains {
 /**
  * @brief Double-buffered handle for updating joint impedance gains online.
  */
-using JointImpedanceGainsHandle = DoubleBufferedHandle<JointImpedanceGains>;
+using JointImpedanceGainsHandle = WaitFreeTripleBuffer<JointImpedanceGains>;
 
 }  // namespace franky
