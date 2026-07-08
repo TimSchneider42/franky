@@ -1,27 +1,14 @@
 #pragma once
 
-#include <array>
-#include <atomic>
 #include <functional>
 #include <memory>
+#include <optional>
 
 #include "franky/motion/double_buffered_handle.hpp"
 #include "franky/motion/impedance_gains_handle.hpp"
-#include "franky/motion/joint_impedance_motion.hpp"
+#include "franky/motion/joint_impedance_base.hpp"
 
 namespace franky {
-
-/**
- * @brief Dynamic joint-space reference for JointImpedanceTrackingMotion.
- *
- * The impedance controller tracks the joint position and velocity reference and
- * adds the optional per-cycle feedforward torque term to the commanded torques.
- */
-struct JointReference {
-  Vector7d q{Vector7d::Zero()};
-  Vector7d dq{Vector7d::Zero()};
-  Vector7d tau_ff{Vector7d::Zero()};
-};
 
 /**
  * @brief Double-buffered handle for updating a JointReference online.

@@ -2,45 +2,38 @@
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
-#include <map>
-
-#include "franky/motion/cartesian_impedance_base.hpp"
 
 namespace franky {
 
-CartesianImpedanceMotion::CartesianImpedanceMotion(const Affine &target, franka::Duration duration)
-    : CartesianImpedanceMotion(target, duration, Params()) {}
+CartesianImpedanceMotion::CartesianImpedanceMotion(const Affine &target) : CartesianImpedanceMotion(target, Params()) {}
+
+CartesianImpedanceMotion::CartesianImpedanceMotion(const Affine &target, const Params &params)
+    : CartesianImpedanceMotion(target, Twist(), params) {}
+
+CartesianImpedanceMotion::CartesianImpedanceMotion(const Affine &target, const Twist &target_twist)
+    : CartesianImpedanceMotion(target, target_twist, Params()) {}
 
 CartesianImpedanceMotion::CartesianImpedanceMotion(
-    const Affine &target, franka::Duration duration, const CartesianImpedanceMotion::Params &params)
-    : duration_(duration), params_(params), CartesianImpedanceBase(target, params) {}
+    const Affine &target, const Twist &target_twist, const CartesianImpedanceMotion::Params &params)
+    : CartesianImpedanceBase(target, params), original_target_(target), target_twist_(target_twist), params_(params) {}
 
 void CartesianImpedanceMotion::initImpl(
     const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) {
-  if (params_.target_type == ReferenceType::kRelative)
-    setAbsoluteTarget(Affine(Eigen::Matrix4d::Map(robot_state.O_T_EE.data())) * target());
-  CartesianImpedanceBase::initImpl(robot_state, previous_command);
-  initial_pose_ = Affine(Eigen::Matrix4d::Map(robot_state.O_T_EE_c.data()));
+  if (params_.target_type == ReferenceType::kRelative) {
+    target_ = Affine(Eigen::Matrix4d::Map(robot_state.O_T_EE.data())) * original_target_;
+  } else {
+    target_ = original_target_;
+  }
 }
 
-std::tuple<CartesianReference, bool> CartesianImpedanceMotion::update(
-    const RobotState &robot_state, franka::Duration time_step, franka::Duration time, franka::Duration /*abs_time*/) {
-  double transition_parameter = time / duration_;
-  Affine intermediate_goal;
-  bool done;
-  if (transition_parameter <= 1.0) {  // [ms] to [s]
-    Eigen::Quaterniond q_start(initial_pose_.rotation());
-    Eigen::Quaterniond q_end(target().rotation());
-    auto init_trans = initial_pose_.translation();
-    auto trans = init_trans + transition_parameter * (target().translation() - init_trans);
-    auto rot = q_start.slerp(transition_parameter, q_end);
-    intermediate_goal.fromPositionOrientationScale(trans, rot, Eigen::Vector3d::Ones());
-    done = false;
-  } else if (params_.return_when_finished && transition_parameter > params_.finish_wait_factor) {
-    done = true;
-    intermediate_goal = target();
-  }
-  return {CartesianReference{intermediate_goal, std::nullopt}, done};
+franka::Torques CartesianImpedanceMotion::nextCommandImpl(
+    const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time,
+    const std::optional<franka::Torques> &previous_command) {
+  CartesianReference reference;
+  reference.target = target_;
+  reference.target_twist = target_twist_;
+  const double dt = time_step.toSec();
+  return computeCommand(robot_state, reference, dt);
 }
 
 }  // namespace franky

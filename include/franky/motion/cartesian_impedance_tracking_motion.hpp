@@ -1,9 +1,8 @@
 #pragma once
 
-#include <array>
-#include <atomic>
 #include <functional>
 #include <memory>
+#include <optional>
 
 #include "franky/motion/cartesian_impedance_base.hpp"
 #include "franky/motion/double_buffered_handle.hpp"
@@ -45,14 +44,13 @@ class CartesianImpedanceTrackingMotion : public CartesianImpedanceBase {
 
  protected:
   void initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) override;
-  std::tuple<CartesianReference, bool> update(
-      const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time,
-      franka::Duration abs_time) override;
+  franka::Torques nextCommandImpl(
+      const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time,
+      const std::optional<franka::Torques> &previous_command) override;
 
  private:
   std::shared_ptr<CartesianReferenceHandle> reference_handle_;
   ReferenceCallback reference_callback_;
-  Affine target_;
   std::optional<Twist> target_twist_;
   std::optional<TwistAcceleration> target_acceleration_;
 };

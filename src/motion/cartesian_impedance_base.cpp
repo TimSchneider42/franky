@@ -2,14 +2,12 @@
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
-#include <algorithm>
-#include <map>
+#include <Eigen/SVD>
+#include <cmath>
 #include <utility>
 
 #include "franky/model.hpp"
-#include "franky/motion/motion.hpp"
 #include "franky/motion/torque_control_utils.hpp"
-#include "franky/robot_pose.hpp"
 
 namespace franky {
 
@@ -41,14 +39,14 @@ Eigen::Matrix<double, 6, 7> pseudoInverse(const Eigen::Matrix<double, 7, 6> &mat
 CartesianImpedanceBase::CartesianImpedanceBase(
     Affine target, const CartesianImpedanceBase::Params &params,
     std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle, double gains_time_constant)
-    : target_(std::move(target)),
+    : Motion<franka::Torques>(),
+      target_(std::move(target)),
       params_(params),
       gains_handle_(std::move(gains_handle)),
       gains_time_constant_(gains_time_constant),
       current_translational_stiffness_(params.translational_stiffness),
       current_rotational_stiffness_(params.rotational_stiffness),
-      current_nullspace_stiffness_(params.nullspace_stiffness),
-      Motion<franka::Torques>() {
+      current_nullspace_stiffness_(params.nullspace_stiffness) {
   params_.validate();
   rebuildStiffnessDamping();
 }
@@ -64,23 +62,11 @@ void CartesianImpedanceBase::rebuildStiffnessDamping() {
   damping.bottomRightCorner(3, 3) << rotational_damping * Eigen::MatrixXd::Identity(3, 3);
 }
 
-void CartesianImpedanceBase::initImpl(
-    const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) {
-  auto robot_pose = Affine(Eigen::Matrix4d::Map(robot_state.O_T_EE.data()));
-  intermediate_target_ = robot_pose;
-  absolute_target_ = target_;
-}
-
-franka::Torques CartesianImpedanceBase::nextCommandImpl(
-    const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time,
-    const std::optional<franka::Torques> &previous_command) {
-  auto [reference, finish] = update(robot_state, time_step, rel_time, abs_time);
-  intermediate_target_ = reference.target;
-
+franka::Torques CartesianImpedanceBase::computeCommand(
+    const RobotState &robot_state, const CartesianReference &reference, double dt) {
   // If a gains handle is present, interpolate toward the target gains.
   if (gains_handle_ && gains_handle_->hasValue()) {
     const auto target_gains = gains_handle_->get();
-    const double dt = time_step.toSec();
     const double alpha = 1.0 - std::exp(-dt / gains_time_constant_);
     current_translational_stiffness_ +=
         alpha * (target_gains.translational_stiffness - current_translational_stiffness_);
@@ -97,10 +83,10 @@ franka::Torques CartesianImpedanceBase::nextCommandImpl(
   Eigen::Quaterniond orientation(transform.rotation());
 
   Eigen::Matrix<double, 6, 1> error;
-  error.head(3) << robot_state.O_T_EE.translation() - intermediate_target_.translation();
+  error.head(3) << robot_state.O_T_EE.translation() - reference.target.translation();
   error.head(3) = error.head(3).cwiseMax(-params_.translational_error_clip).cwiseMin(params_.translational_error_clip);
 
-  Eigen::Quaterniond quat(intermediate_target_.rotation());
+  Eigen::Quaterniond quat(reference.target.rotation());
   if (quat.coeffs().dot(orientation.coeffs()) < 0.0) {
     orientation.coeffs() << -orientation.coeffs();
   }
@@ -156,10 +142,7 @@ franka::Torques CartesianImpedanceBase::nextCommandImpl(
   std::array<double, 7> tau_d_array{};
   Eigen::VectorXd::Map(&tau_d_array[0], 7) = tau_d;
 
-  auto output = franka::Torques(tau_d_array);
-  if (finish) output = franka::MotionFinished(output);
-
-  return output;
+  return franka::Torques(tau_d_array);
 }
 
 }  // namespace franky

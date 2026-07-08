@@ -1,21 +1,23 @@
 #pragma once
 
-#include <Eigen/Core>
-#include <Eigen/Geometry>
-#include <map>
 #include <optional>
 
 #include "franky/motion/cartesian_impedance_base.hpp"
 #include "franky/motion/reference_type.hpp"
+#include "franky/twist.hpp"
 
 namespace franky {
 
 /**
  * @brief Cartesian impedance motion.
  *
- * This motion is a implements a cartesian impedance controller on the client
- * side and does not use Franka's internal impedance controller. Instead, it
- * uses Franka's internal torque controller and calculates the torques itself.
+ * This motion implements a cartesian impedance controller on the client side
+ * and does not use Franka's internal impedance controller. Instead, it uses
+ * Franka's internal torque controller and calculates the torques itself.
+ *
+ * Analogous to JointImpedanceMotion, this motion regulates toward a fixed
+ * target pose (and optional target twist) and does not terminate on its own.
+ * It runs until it is preempted or stopped.
  */
 class CartesianImpedanceMotion : public CartesianImpedanceBase {
  public:
@@ -26,46 +28,49 @@ class CartesianImpedanceMotion : public CartesianImpedanceBase {
   struct Params : public CartesianImpedanceBase::Params {
     /** The type of the target reference (relative or absolute). */
     ReferenceType target_type{ReferenceType::kAbsolute};
-
-    /** Whether to end the motion when the target is reached or keep holding the
-     * last target. */
-    bool return_when_finished{true};
-    /**
-     * How long to wait after the motion has finished. This factor gets
-     * multiplied with the duration of the motion to obtain the total motion
-     * duration. After the motion duration has expired, the motion will hold the
-     * target until the total motion duration is reached. E.g. a factor of 1.2
-     * will hold the target for 20% longer than the motion duration.
-     */
-    double finish_wait_factor{1.2};
   };
 
   /**
    * @param target The target pose.
-   * @param duration The duration of the motion in [s].
    */
-  explicit CartesianImpedanceMotion(const Affine &target, franka::Duration duration);
+  explicit CartesianImpedanceMotion(const Affine &target);
 
   /**
    * @param target The target pose.
-   * @param duration The duration of the motion in [s].
    * @param params Parameters for the motion.
    */
-  explicit CartesianImpedanceMotion(const Affine &target, franka::Duration duration, const Params &params);
+  explicit CartesianImpedanceMotion(const Affine &target, const Params &params);
 
-  [[nodiscard]] franka::Duration duration() const { return duration_; }
+  /**
+   * @param target The target pose.
+   * @param target_twist The target twist in the base frame. The damping term
+   * acts on twist error rather than resisting all motion toward zero.
+   */
+  CartesianImpedanceMotion(const Affine &target, const Twist &target_twist);
+
+  /**
+   * @param target The target pose.
+   * @param target_twist The target twist in the base frame. The damping term
+   * acts on twist error rather than resisting all motion toward zero.
+   * @param params Parameters for the motion.
+   */
+  CartesianImpedanceMotion(const Affine &target, const Twist &target_twist, const Params &params);
+
+  [[nodiscard]] const Twist &target_twist() const { return target_twist_; }
   [[nodiscard]] const Params &params() const { return params_; }
 
  protected:
   void initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) override;
 
-  std::tuple<CartesianReference, bool> update(
-      const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time,
-      franka::Duration abs_time) override;
+  franka::Torques nextCommandImpl(
+      const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time,
+      const std::optional<franka::Torques> &previous_command) override;
 
  private:
-  Affine initial_pose_;
-  franka::Duration duration_;
+  /** The target pose as passed to the constructor, before any relative-target
+   * resolution at motion start. */
+  Affine original_target_;
+  Twist target_twist_;
   Params params_;
 };
 

@@ -726,11 +726,10 @@ discontinuity errors from abrupt torque steps.
 Cartesian impedance follows the same split:
 
 ```python
-from franky import Affine, CartesianImpedanceMotion, Duration, ReferenceType
+from franky import Affine, CartesianImpedanceMotion, ReferenceType
 
 motion = CartesianImpedanceMotion(
     target=Affine([0.45, 0.0, 0.35]),
-    duration=Duration(1500),
     target_type=ReferenceType.Absolute,
     translational_stiffness=1200.0,
     rotational_stiffness=80.0,

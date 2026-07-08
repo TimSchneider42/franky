@@ -1,17 +1,13 @@
 #pragma once
 
 #include <Eigen/Core>
-#include <Eigen/Geometry>
-#include <Eigen/SVD>
 #include <array>
-#include <map>
 #include <memory>
 #include <optional>
 
 #include "franky/motion/impedance_gains_handle.hpp"
 #include "franky/motion/motion.hpp"
 #include "franky/motion/torque_control_utils.hpp"
-#include "franky/robot_pose.hpp"
 #include "franky/twist.hpp"
 #include "franky/twist_acceleration.hpp"
 
@@ -44,9 +40,11 @@ struct CartesianReference {
 /**
  * @brief Base class for client-side cartesian impedance motions.
  *
- * This motion is implements a cartesian impedance controller on the client
- * side and does not use Franka's internal impedance controller. Instead, it
- * uses Franka's internal torque controller and calculates the torques itself.
+ * This class computes joint torques from a task-space spring-damper law with
+ * optional nullspace posture control and model compensation. It does not use
+ * Franka's internal impedance controller. Instead, it uses Franka's internal
+ * torque controller and calculates the torques itself. Subclasses implement
+ * nextCommandImpl and call computeCommand with their current reference.
  */
 class CartesianImpedanceBase : public Motion<franka::Torques> {
  public:
@@ -107,6 +105,9 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
     }
   };
 
+  [[nodiscard]] const Affine &target() const { return target_; }
+
+ protected:
   /**
    * @param target The target pose.
    * @param params Parameters for the motion.
@@ -120,33 +121,16 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
       Affine target, const Params &params, std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle = nullptr,
       double gains_time_constant = 0.1);
 
-  [[nodiscard]] inline Affine target() const { return absolute_target_; }
-
- protected:
-  void initImpl(const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) override;
-
-  franka::Torques nextCommandImpl(
-      const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time, franka::Duration abs_time,
-      const std::optional<franka::Torques> &previous_command) override;
-
-  [[nodiscard]] inline Affine intermediate_target() const { return intermediate_target_; }
+  [[nodiscard]] franka::Torques computeCommand(
+      const RobotState &robot_state, const CartesianReference &reference, double dt);
 
   [[nodiscard]] inline const Params &base_params() const { return params_; }
 
-  inline void setAbsoluteTarget(const Affine &target) {
-    target_ = target;
-    absolute_target_ = target;
-  }
-
-  virtual std::tuple<CartesianReference, bool> update(
-      const RobotState &robot_state, franka::Duration time_step, franka::Duration rel_time,
-      franka::Duration abs_time) = 0;
+  Affine target_;
 
  private:
   void rebuildStiffnessDamping();
 
-  Affine absolute_target_;
-  Affine target_;
   Params params_;
 
   std::shared_ptr<CartesianImpedanceGainsHandle> gains_handle_;
@@ -156,9 +140,6 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
   double current_nullspace_stiffness_;
 
   Eigen::Matrix<double, 6, 6> stiffness, damping;
-  Affine intermediate_target_;
-
-  std::unique_ptr<franka::Model> model_;
 };
 
 using ImpedanceMotion = CartesianImpedanceBase;

@@ -237,9 +237,7 @@ If target_acceleration is provided, it is interpreted as the desired end-effecto
 
   py::class_<CartesianImpedanceMotion::Params, CartesianImpedanceBase::Params>(m, "CartesianImpedanceMotionParams")
       .def(py::init<>())
-      .def_readwrite("target_type", &CartesianImpedanceMotion::Params::target_type)
-      .def_readwrite("return_when_finished", &CartesianImpedanceMotion::Params::return_when_finished)
-      .def_readwrite("finish_wait_factor", &CartesianImpedanceMotion::Params::finish_wait_factor);
+      .def_readwrite("target_type", &CartesianImpedanceMotion::Params::target_type);
 
   py::class_<JointImpedanceMotion, Motion<franka::Torques>, std::shared_ptr<JointImpedanceMotion>>(
       m, "JointImpedanceMotion")
@@ -398,7 +396,8 @@ interpolates toward them with the given time constant, allowing smooth runtime s
       m, "CartesianImpedanceMotion")
       .def(
           py::init<>([](const Affine &target,
-                        franka::Duration duration,
+                        std::optional<Twist>
+                            target_twist,
                         ReferenceType target_type,
                         double translational_stiffness,
                         double rotational_stiffness,
@@ -418,8 +417,6 @@ interpolates toward them with the given time constant, allowing smooth runtime s
                         double joint_limit_max_torque,
                         const Eigen::Vector3d &translational_error_clip,
                         const Eigen::Vector3d &rotational_error_clip,
-                        bool return_when_finished,
-                        double finish_wait_factor,
                         std::optional<FrictionCompensationParams>
                             friction) {
             auto base_params = makeCartesianImpedanceParams(
@@ -441,17 +438,22 @@ interpolates toward them with the given time constant, allowing smooth runtime s
             auto params = CartesianImpedanceMotion::Params{};
             static_cast<CartesianImpedanceBase::Params &>(params) = base_params;
             params.target_type = target_type;
-            params.return_when_finished = return_when_finished;
-            params.finish_wait_factor = finish_wait_factor;
-            return std::make_shared<CartesianImpedanceMotion>(target, duration, params);
+            if (target_twist.has_value()) {
+              return std::make_shared<CartesianImpedanceMotion>(target, target_twist.value(), params);
+            }
+            return std::make_shared<CartesianImpedanceMotion>(target, params);
           }),
-          R"doc(Construct a Cartesian impedance motion that interpolates to a fixed target pose over the given duration.
+          R"doc(Construct a Cartesian impedance motion that regulates toward a fixed target pose.
+
+Like JointImpedanceMotion, this motion does not finish on its own; it keeps regulating toward the target until it is preempted or stopped.
+
+If target_twist is provided, it is interpreted as the desired end-effector twist in the base frame and the damping term acts on twist error rather than damping all motion toward zero.
 
 Cartesian damping is chosen internally as critically damped with respect to the requested stiffness.
 
 The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order.)doc",
           "target"_a,
-          "duration"_a,
+          "target_twist"_a = std::nullopt,
           py::arg_v("target_type", ReferenceType::kAbsolute, "_franky.ReferenceType.Absolute"),
           "translational_stiffness"_a = 500,
           "rotational_stiffness"_a = 50,
@@ -467,11 +469,9 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
           "joint_limit_max_torque"_a = 5.0,
           "translational_error_clip"_a = Eigen::Vector3d::Constant(0.10),
           "rotational_error_clip"_a = Eigen::Vector3d::Constant(0.25),
-          "return_when_finished"_a = true,
-          "finish_wait_factor"_a = 1.2,
           "friction"_a = std::nullopt)
       .def_property_readonly("target", &CartesianImpedanceMotion::target)
-      .def_property_readonly("duration", &CartesianImpedanceMotion::duration)
+      .def_property_readonly("target_twist", &CartesianImpedanceMotion::target_twist)
       .def_property_readonly("params", [](const CartesianImpedanceMotion &m) { return m.params(); });
 
   py::class_<
