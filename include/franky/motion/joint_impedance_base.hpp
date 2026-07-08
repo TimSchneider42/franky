@@ -4,8 +4,8 @@
 
 #include "franky/motion/motion.hpp"
 #include "franky/motion/torque_control_utils.hpp"
-#include "franky/motion/wait_free_triple_buffer.hpp"
 #include "franky/types.hpp"
+#include "franky/wait_free_triple_buffer.hpp"
 
 namespace franky {
 

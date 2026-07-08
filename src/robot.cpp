@@ -22,6 +22,7 @@ Robot::Robot(const std::string &fci_hostname, const Params &params)
     : fci_hostname_(fci_hostname),
       params_(params),
       control_mutex_(std::make_shared<std::mutex>()),
+      relative_dynamics_factor_handle_(params.relative_dynamics_factor),
       translation_velocity_limit(LIMIT_INIT("translational velocity", 3.0, 1.7)),
       rotation_velocity_limit(LIMIT_INIT("rotational velocity", 2.5, 2.5)),
       elbow_velocity_limit(LIMIT_INIT("elbow velocity", 2.62, 2.1750)),
@@ -120,14 +121,12 @@ std::optional<ControlSignalType> Robot::current_control_signal_type() {
   return CartesianPose;
 }
 
-RelativeDynamicsFactor Robot::relative_dynamics_factor() {
-  std::unique_lock lock(*control_mutex_);
-  return params_.relative_dynamics_factor;
-}
+RelativeDynamicsFactor Robot::relative_dynamics_factor() { return relative_dynamics_factor_handle_.getLastWritten(); }
+
+RelativeDynamicsFactor Robot::relative_dynamics_factor_rt() { return relative_dynamics_factor_handle_.get(); }
 
 void Robot::setRelativeDynamicsFactor(const RelativeDynamicsFactor &relative_dynamics_factor) {
-  std::unique_lock lock(*control_mutex_);
-  params_.relative_dynamics_factor = relative_dynamics_factor;
+  relative_dynamics_factor_handle_.set(relative_dynamics_factor);
 }
 
 }  // namespace franky

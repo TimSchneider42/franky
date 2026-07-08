@@ -5,7 +5,7 @@
 #include <optional>
 
 #include "franky/motion/cartesian_impedance_base.hpp"
-#include "franky/motion/wait_free_triple_buffer.hpp"
+#include "franky/wait_free_triple_buffer.hpp"
 
 namespace franky {
 

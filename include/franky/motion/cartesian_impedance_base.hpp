@@ -7,9 +7,9 @@
 
 #include "franky/motion/motion.hpp"
 #include "franky/motion/torque_control_utils.hpp"
-#include "franky/motion/wait_free_triple_buffer.hpp"
 #include "franky/twist.hpp"
 #include "franky/twist_acceleration.hpp"
+#include "franky/wait_free_triple_buffer.hpp"
 
 namespace franky {
 

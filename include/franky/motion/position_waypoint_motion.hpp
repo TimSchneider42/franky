@@ -54,7 +54,7 @@ class PositionWaypointMotion : public WaypointMotion<ControlSignalType, Position
     auto [vel_lim, acc_lim, jerk_lim] = getAbsoluteInputLimits();
 
     auto relative_dynamics_factor =
-        waypoint.relative_dynamics_factor * relative_dynamics_factor_ * this->robot()->relative_dynamics_factor();
+        waypoint.relative_dynamics_factor * relative_dynamics_factor_ * this->robot()->relative_dynamics_factor_rt();
 
     input_parameter.max_velocity = toStdD<7>(relative_dynamics_factor.velocity() * vel_lim);
     input_parameter.max_acceleration = toStdD<7>(relative_dynamics_factor.acceleration() * acc_lim);

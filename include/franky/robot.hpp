@@ -25,6 +25,7 @@
 #include "franky/robot_velocity.hpp"
 #include "franky/types.hpp"
 #include "franky/util.hpp"
+#include "franky/wait_free_triple_buffer.hpp"
 
 namespace franky {
 
@@ -280,6 +281,12 @@ class Robot : public franka::Robot {
   [[nodiscard]] RelativeDynamicsFactor relative_dynamics_factor();
 
   /**
+   * @brief Returns the current global relative dynamics factor of the robot (Real-Time safe).
+   * @return The current relative dynamics factor of the robot.
+   */
+  [[nodiscard]] RelativeDynamicsFactor relative_dynamics_factor_rt();
+
+  /**
    * @brief Sets the global relative dynamics factor of the robot.
    * @param relative_dynamics_factor The relative dynamics factor to set.
    */
@@ -478,6 +485,7 @@ class Robot : public franka::Robot {
   std::thread control_thread_;
   MotionGeneratorVariant motion_generator_{std::nullopt};
   bool motion_generator_running_{false};
+  WaitFreeTripleBuffer<RelativeDynamicsFactor> relative_dynamics_factor_handle_;
 
   [[nodiscard]] bool is_in_control_unsafe() const;
 
