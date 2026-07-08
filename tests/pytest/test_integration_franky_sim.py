@@ -48,6 +48,7 @@ def make_robot(hostname: str) -> franky.Robot:
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.timeout(20)
 def test_joint_position_control():
     """
     Use JointWaypointMotion to drive all 7 joints through four different
@@ -82,6 +83,7 @@ def test_joint_position_control():
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.timeout(20)
 def test_joint_velocity_control():
     """
     Apply four sequential joint-velocity phases.  Each phase exercises all
@@ -127,6 +129,7 @@ def test_joint_velocity_control():
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.timeout(20)
 def test_cartesian_position_control():
     """
     Move the end-effector to six absolute Cartesian targets that offset the
@@ -176,6 +179,7 @@ def test_cartesian_position_control():
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.timeout(20)
 def test_cartesian_velocity_control():
     """
     Apply six sequential Cartesian velocity phases covering all three
@@ -239,6 +243,7 @@ def make_gripper(hostname: str) -> franky.Gripper:
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.timeout(20)
 def test_gripper_homing():
     """
     Home the gripper and verify that it opens to its maximum width.
@@ -272,6 +277,7 @@ def test_gripper_homing():
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.timeout(20)
 def test_gripper_move():
     """
     Move the gripper through several target widths and verify the position
@@ -300,6 +306,7 @@ def test_gripper_move():
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.timeout(20)
 def test_gripper_grasp_success():
     """
     Grasp at an achievable width with generous epsilon.  With no physical object
@@ -320,6 +327,7 @@ def test_gripper_grasp_success():
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.timeout(20)
 def test_gripper_grasp_failure():
     """
     Grasp at a width slightly above the physical maximum (0.08 m).  The gripper
@@ -341,6 +349,7 @@ def test_gripper_grasp_failure():
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.timeout(20)
 def test_gripper_stop():
     """
     Issue stop on an idle gripper; the server should reply with kSuccess and

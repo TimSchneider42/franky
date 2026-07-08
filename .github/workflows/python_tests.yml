@@ -71,7 +71,7 @@ jobs:
           source ".venv_${{ matrix.python-dir }}/bin/activate"
 
           pip install -q unpacked/dist/franky_control-*-${{ matrix.python-dir }}-*.whl
-          pip install -q pytest pytest-cov franky-sim
+          pip install -q pytest pytest-cov pytest-timeout franky-sim
           pytest tests/pytest/
 
           deactivate

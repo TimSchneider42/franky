@@ -213,6 +213,7 @@ def make_v1(monkeypatch, routes: Optional[Dict[tuple, Any]] = None):
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.timeout(20)
 def test_encode_password_known_value():
     assert desk._encode_password(USER, PASSWORD) == (
         "MTU3LDE3MiwyNDksMTEyLDE3MiwxMTcsMTk0LDE1NSwyMjEsNjcsMTQ3LDEyMCwyNTQsOCwxMjIs\n"
@@ -225,6 +226,7 @@ def test_encode_password_known_value():
 _parse_pilot_button_payload = desk.BaseDesk._BaseDesk__parse_pilot_button_payload
 
 
+@pytest.mark.timeout(20)
 def test_parse_pilot_button_payload_parses_events():
     events = _parse_pilot_button_payload('{"circle": true, "cross": false}')
     assert events == [
@@ -233,11 +235,13 @@ def test_parse_pilot_button_payload_parses_events():
     ]
 
 
+@pytest.mark.timeout(20)
 def test_parse_pilot_button_payload_ignores_non_object():
     assert _parse_pilot_button_payload("[1, 2, 3]") == []
     assert _parse_pilot_button_payload('"heartbeat"') == []
 
 
+@pytest.mark.timeout(20)
 def test_parse_pilot_button_payload_unknown_button_raises():
     with pytest.raises(ValueError):
         _parse_pilot_button_payload('{"not-a-button": true}')
