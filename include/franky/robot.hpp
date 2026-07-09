@@ -477,7 +477,10 @@ class Robot : public franka::Robot {
   //! The robot's hostname / IP address
   std::string fci_hostname_;
   Params params_;
-  RobotState current_state_;
+  // Written by the real-time thread while in control and by user threads (under
+  // control_mutex_) otherwise; control_mutex_ synchronizes the writer handover.
+  WaitFreeTripleBuffer<RobotState> state_buffer_;
+  // Serializes user-side readers of state_buffer_. Never taken by the real-time thread.
   std::mutex state_mutex_;
   std::shared_ptr<std::mutex> control_mutex_;
   std::condition_variable control_finished_condition_;
@@ -604,8 +607,7 @@ class Robot : public franka::Robot {
         auto motion_generator = &std::get<MotionGenerator<ControlSignalType>>(motion_generator_);
         motion_generator->registerUpdateCallback(
             [this](const RobotState &robot_state, franka::Duration duration, franka::Duration time) {
-              std::lock_guard lock(state_mutex_);
-              current_state_ = robot_state;
+              state_buffer_.set(robot_state);
             });
         motion_generator_running_ = true;
         control_thread_ = std::thread([this, control_func_executor, motion_generator]() {

@@ -42,7 +42,6 @@ Robot::Robot(const std::string &fci_hostname, const Params &params)
           "joint_jerk", toEigenD<7>({5000.0, 5000.0, 5000.0, 5000.0, 5000.0, 5000.0, 5000.0}),
           toEigenD<7>({7500.0, 3750.0, 5000.0, 6250.0, 7500.0, 10000.0, 10000.0}))),
       franka::Robot(fci_hostname, params.realtime_config) {
-  patchMutexRT(state_mutex_);
   patchMutexRT(*control_mutex_);
   model_ = std::make_shared<const Model>(loadModel());
 #ifdef FRANKA_0_15
@@ -64,10 +63,10 @@ RobotState Robot::state() {
     std::lock_guard control_lock(*control_mutex_);
     if (!is_in_control_unsafe()) {
       readOnce();  // For some reason, calling this for the first time returns old data. So call it twice.
-      current_state_ = RobotState::from_franka(readOnce());
+      state_buffer_.set(RobotState::from_franka(readOnce()));
     }
   }
-  return current_state_;
+  return state_buffer_.get();
 }
 
 void Robot::setCollisionBehavior(const ScalarOrArray<7> &torque_threshold, const ScalarOrArray<6> &force_threshold) {
