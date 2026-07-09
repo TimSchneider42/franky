@@ -427,6 +427,23 @@ The Coulomb term uses a smooth sign approximation controlled by
 `friction_velocity_epsilon` (default `0.03 rad/s`). Either or both terms can
 be omitted; unset terms default to zero.
 
+Joint impedance can additionally be shaped in Cartesian space. Passing
+`cartesian_stiffness` (a 6-vector `[x, y, z, rx, ry, rz]` at the end effector,
+expressed in the base frame) adds `J^T diag(cartesian_stiffness) J` on top of
+the joint-space stiffness each cycle, with `cartesian_damping` handled likewise
+(critical damping when omitted). This is useful to stay compliant about a joint
+posture while stiffening a specific Cartesian direction:
+
+```python
+with JointImpedanceTracker(
+    robot,
+    stiffness=[20.0] * 7,
+    cartesian_stiffness=[800.0, 800.0, 0.0, 0.0, 0.0, 0.0],  # stiff in x/y only
+    period=0.01,
+) as tracker:
+    ...
+```
+
 Both trackers support updating impedance gains at runtime via `set_gains()`.
 Changes are smoothed in the RT loop using exponential interpolation, so abrupt
 stiffness steps are avoided automatically.
@@ -480,19 +497,73 @@ When a `period` is configured, `tracker.tick()` maintains that loop rate using
 body. `tracker.elapsed_time` and `tracker.tick_count` are available for
 time-based target generation.
 
-Cartesian damping is chosen internally as critically damped with respect to
-the requested stiffness.
+By default, Cartesian damping is chosen internally as critically damped with
+respect to the requested stiffness. When that is not enough — high-stiffness
+configurations often need more — the damping can be set explicitly through
+`CartesianImpedanceGains`, either isotropically or per axis:
+
+```python
+from franky import CartesianImpedanceGains
+
+# Isotropic stiffness with explicit (over-)damping:
+tracker.motion.set_gains(
+    CartesianImpedanceGains.isotropic(
+        1200.0, 80.0, translational_damping=140.0, rotational_damping=18.0
+    )
+)
+
+# Or fully anisotropic diagonal gains, ordered [x, y, z, rx, ry, rz]:
+tracker.motion.set_gains(
+    CartesianImpedanceGains.diagonal(
+        [1200, 1200, 1200, 80, 80, 80],
+        [140, 140, 140, 18, 18, 18],
+    )
+)
+```
 
 Cartesian impedance motions also support an optional secondary posture
 objective through `nullspace_target` and `nullspace_stiffness`. When enabled,
 the controller adds a joint-space posture term projected into the Jacobian
 nullspace, so it biases the redundant arm posture without changing the
-Cartesian task to first order.
+Cartesian task to first order. The posture gains can be retuned online by
+passing `nullspace_stiffness` to `CartesianImpedanceTracker.set_gains`, or by
+writing a `NullspaceGains` object through `tracker.motion.set_nullspace_gains`.
+Further nullspace objectives (such as manipulability maximization) and fully
+custom `nullspace_tasks` are available through the C++ API.
 
 `CartesianImpedanceTracker` also accepts `translational_error_clip` and
 `rotational_error_clip` (each a 3-vector in m and rad respectively) to hard-clip
 the pose error fed into the spring law, which can prevent large torque spikes
 when the reference jumps.
+
+#### Ending a torque motion
+
+Unlike the trajectory-based motions, impedance (torque) motions never signal
+completion on their own, and `Robot.stop()` preempts the control loop with a
+`ControlException` rather than ramping down. To end a torque loop cleanly, use
+`TorqueStopMotion`. It blends the last commanded torque into a zero-stiffness
+joint-damping law — so it yields to the arm's current pose instead of snapping
+to a target — brings the arm to rest, and then finishes. Enqueue it to preempt a
+running impedance motion:
+
+```python
+from franky import TorqueStopMotion
+
+robot.move(TorqueStopMotion())
+```
+
+or attach it as a reaction so the arm damps out automatically once a condition is
+met (as with any reaction, the reaction motion must use the same control mode, so
+it must itself be a torque motion):
+
+```python
+from franky import Measure, Reaction, TorqueStopMotion
+
+motion.add_reaction(Reaction(Measure.FORCE_Z > 20.0, TorqueStopMotion()))
+```
+
+`TorqueStopMotion` also finishes after `max_duration` regardless of velocity, so
+a sustained external push can never make the stop hang.
 
 ### Relative Dynamics Factors
 
