@@ -410,9 +410,9 @@ interpolates toward them with the given time constant, allowing smooth runtime s
       .def_property_readonly("params", [](const JointImpedanceTrackingMotion &m) { return m.params(); })
       .def(
           "get_reference",
-          [](const JointImpedanceTrackingMotion &m) { return m.getReference().value_or(JointReference{}); },
-          "Get a copy of the last commanded joint reference. Mutating the returned object has no effect on the "
-          "motion; pass it to set_reference to apply changes.")
+          [](const JointImpedanceTrackingMotion &m) { return m.getReference(); },
+          "Get a copy of the last commanded joint reference, or None if no reference has been set yet. Mutating the "
+          "returned object has no effect on the motion; pass it to set_reference to apply changes.")
       .def(
           "set_reference",
           &JointImpedanceTrackingMotion::setReference,
@@ -572,9 +572,9 @@ interpolates toward them with the given time constant, allowing smooth runtime s
       .def_property_readonly("params", [](const CartesianImpedanceTrackingMotion &m) { return m.params(); })
       .def(
           "get_reference",
-          [](const CartesianImpedanceTrackingMotion &m) { return m.getReference().value_or(CartesianReference{}); },
-          "Get a copy of the last commanded Cartesian reference. Mutating the returned object has no effect on the "
-          "motion; pass it to set_reference to apply changes.")
+          [](const CartesianImpedanceTrackingMotion &m) { return m.getReference(); },
+          "Get a copy of the last commanded Cartesian reference, or None if no reference has been set yet. Mutating "
+          "the returned object has no effect on the motion; pass it to set_reference to apply changes.")
       .def(
           "set_reference",
           &CartesianImpedanceTrackingMotion::setReference,
