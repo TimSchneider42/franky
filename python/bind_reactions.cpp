@@ -24,15 +24,19 @@ void mkMotionAndReactionClasses(py::module_ &m, const std::string &control_signa
       .def(
           "register_callback",
           [](Motion<ControlSignalType> &motion, const typename Motion<ControlSignalType>::CallbackType &callback) {
-            motion.registerCallback([callback](
+            // The Python-backed std::function is wrapped in a shared_ptr so that the real-time
+            // thread only ever copies the pointer: copying the function itself acquires the GIL
+            // (pybind11 guards the py::object refcount) and allocates.
+            auto callback_ptr = std::make_shared<const typename Motion<ControlSignalType>::CallbackType>(callback);
+            motion.registerCallback([callback_ptr](
                                         const RobotState &robot_state,
                                         franka::Duration time_step,
                                         franka::Duration rel_time,
                                         franka::Duration abs_time,
                                         const ControlSignalType &control_signal) {
-              callback_executor.add([callback, robot_state, time_step, rel_time, abs_time, control_signal]() {
+              callback_executor.add([callback_ptr, robot_state, time_step, rel_time, abs_time, control_signal]() {
                 try {
-                  callback(robot_state, time_step, rel_time, abs_time, control_signal);
+                  (*callback_ptr)(robot_state, time_step, rel_time, abs_time, control_signal);
                 } catch (const py::error_already_set &e) {
                   std::cerr << "Error in callback: " << std::endl;
                   py::gil_scoped_acquire gil_acquire;
@@ -52,11 +56,15 @@ void mkMotionAndReactionClasses(py::module_ &m, const std::string &control_signa
           "register_callback",
           [](Reaction<ControlSignalType> &reaction,
              const std::function<void(const RobotState &, franka::Duration, franka::Duration)> &callback) {
+            // See the motion callback above for why the callback is wrapped in a shared_ptr.
+            auto callback_ptr =
+                std::make_shared<const std::function<void(const RobotState &, franka::Duration, franka::Duration)>>(
+                    callback);
             reaction.registerCallback(
-                [callback](const RobotState &robot_state, franka::Duration rel_time, franka::Duration abs_time) {
-                  callback_executor.add([callback, robot_state, rel_time, abs_time]() {
+                [callback_ptr](const RobotState &robot_state, franka::Duration rel_time, franka::Duration abs_time) {
+                  callback_executor.add([callback_ptr, robot_state, rel_time, abs_time]() {
                     try {
-                      callback(robot_state, rel_time, abs_time);
+                      (*callback_ptr)(robot_state, rel_time, abs_time);
                     } catch (const py::error_already_set &e) {
                       py::gil_scoped_acquire gil_acquire;
                       std::cerr << "Error in callback: ";
