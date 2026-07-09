@@ -20,6 +20,16 @@ inline void validateNonNegativeFinite(double value, const char *name) {
 }
 
 /**
+ * @brief Throw std::invalid_argument if any element of values is non-finite.
+ */
+template <typename Derived>
+inline void validateFinite(const Eigen::MatrixBase<Derived> &values, const char *name) {
+  if (!values.allFinite()) {
+    throw std::invalid_argument(std::string(name) + " must contain only finite values");
+  }
+}
+
+/**
  * @brief Throw std::invalid_argument if any element of values is negative or non-finite.
  */
 inline void validateNonNegativeFinite(const Vector7d &values, const char *name) {

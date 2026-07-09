@@ -35,6 +35,13 @@ struct CartesianReference {
    * wrench Lambda(q) * target_acceleration before mapping through J^T.
    */
   std::optional<TwistAcceleration> target_acceleration{};
+
+  /** @brief Throw std::invalid_argument if any value is non-finite. */
+  void validate() const {
+    validateFinite(target.matrix(), "target");
+    if (target_twist.has_value()) validateFinite(target_twist->vector_repr(), "target_twist");
+    if (target_acceleration.has_value()) validateFinite(target_acceleration->vector_repr(), "target_acceleration");
+  }
 };
 
 struct CartesianImpedanceGains {

@@ -27,6 +27,13 @@ struct JointReference {
   Vector7d q{Vector7d::Zero()};
   Vector7d dq{Vector7d::Zero()};
   Vector7d tau_ff{Vector7d::Zero()};
+
+  /** @brief Throw std::invalid_argument if any value is non-finite. */
+  void validate() const {
+    validateFinite(q, "q");
+    validateFinite(dq, "dq");
+    validateFinite(tau_ff, "tau_ff");
+  }
 };
 
 struct JointImpedanceGains {

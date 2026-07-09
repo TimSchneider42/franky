@@ -35,7 +35,10 @@ class CartesianImpedanceTrackingMotion : public CartesianImpedanceBase {
   explicit CartesianImpedanceTrackingMotion(
       ReferenceCallback reference_callback, const Params &params = Params{}, double gains_time_constant = 0.1);
 
-  void setReference(const CartesianReference &reference) { reference_handle_.set(reference); }
+  void setReference(const CartesianReference &reference) {
+    reference.validate();
+    reference_handle_.set(reference);
+  }
   [[nodiscard]] std::optional<CartesianReference> getReference() const { return reference_handle_.getLastWritten(); }
 
   [[nodiscard]] const Params &params() const { return base_params(); }

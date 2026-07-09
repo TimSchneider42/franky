@@ -33,7 +33,10 @@ class JointImpedanceTrackingMotion : public JointImpedanceBase {
   explicit JointImpedanceTrackingMotion(
       ReferenceCallback reference_callback, const Params &params = Params{}, double gains_time_constant = 0.1);
 
-  void setReference(const JointReference &reference) { reference_handle_.set(reference); }
+  void setReference(const JointReference &reference) {
+    reference.validate();
+    reference_handle_.set(reference);
+  }
   [[nodiscard]] std::optional<JointReference> getReference() const { return reference_handle_.getLastWritten(); }
 
  protected:
