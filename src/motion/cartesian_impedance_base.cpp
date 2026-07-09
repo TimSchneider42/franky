@@ -218,13 +218,13 @@ franka::Torques CartesianImpedanceBase::computeCommand(
   Vector7d coriolis = model->coriolis(robot_state);
   Jacobian jacobian = model->zeroJacobian(franka::Frame::kEndEffector, robot_state);
 
-  Eigen::Quaterniond orientation(robot_state.O_T_EE.rotation());
+  Eigen::Quaterniond orientation(robot_state.O_T_EE.linear());
 
   Eigen::Matrix<double, 6, 1> error;
   error.head(3) << robot_state.O_T_EE.translation() - reference.target.translation();
   error.head(3) = error.head(3).cwiseMax(-params_.translational_error_clip).cwiseMin(params_.translational_error_clip);
 
-  Eigen::Quaterniond quat(reference.target.rotation());
+  Eigen::Quaterniond quat(reference.target.linear());
   if (quat.coeffs().dot(orientation.coeffs()) < 0.0) {
     orientation.coeffs() << -orientation.coeffs();
   }
