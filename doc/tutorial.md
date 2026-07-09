@@ -359,6 +359,19 @@ control cycle, for example for manual guidance, teleoperation, or virtual
 fixtures. In Python, the recommended interface for these use cases is
 `JointImpedanceTracker` or `CartesianImpedanceTracker`.
 
+When using the tracking motions directly, references and gains are updated at
+runtime through `set_reference()` and `set_gains()`, which validate their
+inputs and forward them to the control loop. The corresponding
+`get_reference()` and `get_gains()` methods return copies of the last
+commanded values, so mutating a returned object has no effect until it is
+passed back to the setter:
+
+```python
+gains = motion.get_gains()
+gains.stiffness = [100.0] * 7
+motion.set_gains(gains)
+```
+
 Joint-space impedance can be used either as a fixed posture controller
 
 ```python

@@ -108,7 +108,7 @@ class CartesianImpedanceTracker:
 
         # Seed initial target from current pose so the robot doesn't jump.
         initial_pose = self._robot.current_pose.end_effector_pose
-        self._motion.reference = CartesianReference(target=initial_pose)
+        self._motion.set_reference(CartesianReference(target=initial_pose))
 
         self._robot.move(self._motion, asynchronous=True)
 
@@ -153,7 +153,7 @@ class CartesianImpedanceTracker:
             kwargs["target_twist"] = twist
         if acceleration is not None:
             kwargs["target_acceleration"] = acceleration
-        self._motion.reference = CartesianReference(**kwargs)
+        self._motion.set_reference(CartesianReference(**kwargs))
 
     def set_gains(
         self,
@@ -166,7 +166,7 @@ class CartesianImpedanceTracker:
 
         Only the provided gains are changed; omitted gains keep their current target values.
         """
-        current = self._motion.gains
+        current = self._motion.get_gains()
         ts = (
             translational_stiffness
             if translational_stiffness is not None
@@ -182,7 +182,7 @@ class CartesianImpedanceTracker:
             if nullspace_stiffness is not None
             else current.nullspace_stiffness
         )
-        self._motion.gains = CartesianImpedanceGains(ts, rs, ns)
+        self._motion.set_gains(CartesianImpedanceGains(ts, rs, ns))
 
     # --- state ---
 
@@ -324,7 +324,7 @@ class JointImpedanceTracker:
 
         # Seed initial target from current joint positions.
         q = self._robot.current_joint_positions
-        self._motion.reference = JointReference(q=q)
+        self._motion.set_reference(JointReference(q=q))
 
         self._robot.move(self._motion, asynchronous=True)
 
@@ -368,7 +368,7 @@ class JointImpedanceTracker:
             kwargs["dq"] = dq
         if tau_ff is not None:
             kwargs["tau_ff"] = tau_ff
-        self._motion.reference = JointReference(**kwargs)
+        self._motion.set_reference(JointReference(**kwargs))
 
     def set_gains(
         self,
@@ -382,7 +382,7 @@ class JointImpedanceTracker:
         the critical damping heuristic 2*sqrt(stiffness). Otherwise, omitted
         gains keep their current target values.
         """
-        current = self._motion.gains
+        current = self._motion.get_gains()
         k = _as_joint_gain(
             "stiffness",
             (stiffness if stiffness is not None else current.stiffness),
@@ -396,7 +396,7 @@ class JointImpedanceTracker:
                 else _as_joint_gain("damping", current.damping)
             )
         )
-        self._motion.gains = JointImpedanceGains(k, d)
+        self._motion.set_gains(JointImpedanceGains(k, d))
 
     # --- state ---
 

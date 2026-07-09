@@ -96,27 +96,9 @@ void bind_motion_torque(py::module &m) {
           "translational_stiffness"_a = 500.0,
           "rotational_stiffness"_a = 50.0,
           "nullspace_stiffness"_a = 0.0)
-      .def(
-          "replace",
-          [](const CartesianImpedanceGains &self, py::kwargs kwargs) {
-            CartesianImpedanceGains res = self;
-            for (auto item : kwargs) {
-              std::string key = py::cast<std::string>(item.first);
-              if (key == "translational_stiffness")
-                res.translational_stiffness = py::cast<double>(item.second);
-              else if (key == "rotational_stiffness")
-                res.rotational_stiffness = py::cast<double>(item.second);
-              else if (key == "nullspace_stiffness")
-                res.nullspace_stiffness = py::cast<double>(item.second);
-              else
-                throw py::value_error("Unknown keyword argument: " + key);
-            }
-            res.validate();
-            return res;
-          })
-      .def_readonly("translational_stiffness", &CartesianImpedanceGains::translational_stiffness)
-      .def_readonly("rotational_stiffness", &CartesianImpedanceGains::rotational_stiffness)
-      .def_readonly("nullspace_stiffness", &CartesianImpedanceGains::nullspace_stiffness);
+      .def_readwrite("translational_stiffness", &CartesianImpedanceGains::translational_stiffness)
+      .def_readwrite("rotational_stiffness", &CartesianImpedanceGains::rotational_stiffness)
+      .def_readwrite("nullspace_stiffness", &CartesianImpedanceGains::nullspace_stiffness);
 
   py::class_<CartesianReference>(m, "CartesianReference")
       .def(
@@ -129,50 +111,17 @@ void bind_motion_torque(py::module &m) {
           "target"_a = Affine::Identity(),
           "target_twist"_a = std::nullopt,
           "target_acceleration"_a = std::nullopt)
-      .def(
-          "replace",
-          [](const CartesianReference &self, py::kwargs kwargs) {
-            CartesianReference res = self;
-            for (auto item : kwargs) {
-              std::string key = py::cast<std::string>(item.first);
-              if (key == "target")
-                res.target = py::cast<Affine>(item.second);
-              else if (key == "target_twist")
-                res.target_twist = py::cast<std::optional<Twist>>(item.second);
-              else if (key == "target_acceleration")
-                res.target_acceleration = py::cast<std::optional<TwistAcceleration>>(item.second);
-              else
-                throw py::value_error("Unknown keyword argument: " + key);
-            }
-            return res;
-          })
-      .def_readonly("target", &CartesianReference::target)
-      .def_readonly("target_twist", &CartesianReference::target_twist)
-      .def_readonly("target_acceleration", &CartesianReference::target_acceleration);
+      .def_readwrite("target", &CartesianReference::target)
+      .def_readwrite("target_twist", &CartesianReference::target_twist)
+      .def_readwrite("target_acceleration", &CartesianReference::target_acceleration);
 
   py::class_<JointImpedanceGains>(m, "JointImpedanceGains")
       .def(
           py::init<const std::optional<Vector7d> &, const std::optional<Vector7d> &>(),
           "stiffness"_a = std::nullopt,
           "damping"_a = std::nullopt)
-      .def(
-          "replace",
-          [](const JointImpedanceGains &self, py::kwargs kwargs) {
-            JointImpedanceGains res = self;
-            for (auto item : kwargs) {
-              std::string key = py::cast<std::string>(item.first);
-              if (key == "stiffness")
-                res.stiffness = py::cast<Vector7d>(item.second);
-              else if (key == "damping")
-                res.damping = py::cast<Vector7d>(item.second);
-              else
-                throw py::value_error("Unknown keyword argument: " + key);
-            }
-            res.validate();
-            return res;
-          })
-      .def_readonly("stiffness", &JointImpedanceGains::stiffness)
-      .def_readonly("damping", &JointImpedanceGains::damping);
+      .def_readwrite("stiffness", &JointImpedanceGains::stiffness)
+      .def_readwrite("damping", &JointImpedanceGains::damping);
 
   py::class_<JointReference>(m, "JointReference")
       .def(
@@ -186,35 +135,32 @@ void bind_motion_torque(py::module &m) {
           "q"_a = std::nullopt,
           "dq"_a = std::nullopt,
           "tau_ff"_a = std::nullopt)
-      .def(
-          "replace",
-          [](const JointReference &self, py::kwargs kwargs) {
-            JointReference res = self;
-            for (auto item : kwargs) {
-              std::string key = py::cast<std::string>(item.first);
-              if (key == "q")
-                res.q = py::cast<Vector7d>(item.second);
-              else if (key == "dq")
-                res.dq = py::cast<Vector7d>(item.second);
-              else if (key == "tau_ff")
-                res.tau_ff = py::cast<Vector7d>(item.second);
-              else
-                throw py::value_error("Unknown keyword argument: " + key);
-            }
-            return res;
-          })
-      .def_readonly("q", &JointReference::q)
-      .def_readonly("dq", &JointReference::dq)
-      .def_readonly("tau_ff", &JointReference::tau_ff);
+      .def_readwrite("q", &JointReference::q)
+      .def_readwrite("dq", &JointReference::dq)
+      .def_readwrite("tau_ff", &JointReference::tau_ff);
 
   auto cartesian_impedance_base =
       py::class_<CartesianImpedanceBase, Motion<franka::Torques>, std::shared_ptr<CartesianImpedanceBase>>(
           m, "CartesianImpedanceBase")
-          .def_property("gains", &CartesianImpedanceBase::getGains, &CartesianImpedanceBase::setGains);
+          .def(
+              "get_gains", &CartesianImpedanceBase::getGains,
+              "Get a copy of the current target impedance gains. Mutating the returned object has no effect on the "
+              "motion; pass it to set_gains to apply changes.")
+          .def(
+              "set_gains", &CartesianImpedanceBase::setGains, "gains"_a,
+              "Set the target impedance gains. The gains are validated and then smoothed in the control loop via "
+              "exponential interpolation.");
   m.attr("ImpedanceMotion") = cartesian_impedance_base;
 
   py::class_<JointImpedanceBase, Motion<franka::Torques>, std::shared_ptr<JointImpedanceBase>>(m, "JointImpedanceBase")
-      .def_property("gains", &JointImpedanceBase::getGains, &JointImpedanceBase::setGains);
+      .def(
+          "get_gains", &JointImpedanceBase::getGains,
+          "Get a copy of the current target impedance gains. Mutating the returned object has no effect on the "
+          "motion; pass it to set_gains to apply changes.")
+      .def(
+          "set_gains", &JointImpedanceBase::setGains, "gains"_a,
+          "Set the target impedance gains. The gains are validated and then smoothed in the control loop via "
+          "exponential interpolation.");
 
   // Params classes — bind before the motion classes that use them.
 
@@ -412,10 +358,15 @@ interpolates toward them with the given time constant, allowing smooth runtime s
       .def_property_readonly("target", &JointImpedanceTrackingMotion::target)
       .def_property_readonly("target_velocity", &JointImpedanceTrackingMotion::target_velocity)
       .def_property_readonly("params", [](const JointImpedanceTrackingMotion &m) { return m.params(); })
-      .def_property(
-          "reference",
+      .def(
+          "get_reference",
           [](const JointImpedanceTrackingMotion &m) { return m.getReference().value_or(JointReference{}); },
-          &JointImpedanceTrackingMotion::setReference);
+          "Get a copy of the last commanded joint reference. Mutating the returned object has no effect on the "
+          "motion; pass it to set_reference to apply changes.")
+      .def(
+          "set_reference", &JointImpedanceTrackingMotion::setReference, "reference"_a,
+          "Set the joint reference tracked by the controller. The reference is validated and picked up by the "
+          "control loop in the next cycle.");
 
   py::class_<CartesianImpedanceMotion, CartesianImpedanceBase, std::shared_ptr<CartesianImpedanceMotion>>(
       m, "CartesianImpedanceMotion")
@@ -567,8 +518,13 @@ interpolates toward them with the given time constant, allowing smooth runtime s
           "gains_time_constant"_a = 0.1,
           "friction"_a = std::nullopt)
       .def_property_readonly("params", [](const CartesianImpedanceTrackingMotion &m) { return m.params(); })
-      .def_property(
-          "reference",
+      .def(
+          "get_reference",
           [](const CartesianImpedanceTrackingMotion &m) { return m.getReference().value_or(CartesianReference{}); },
-          &CartesianImpedanceTrackingMotion::setReference);
+          "Get a copy of the last commanded Cartesian reference. Mutating the returned object has no effect on the "
+          "motion; pass it to set_reference to apply changes.")
+      .def(
+          "set_reference", &CartesianImpedanceTrackingMotion::setReference, "reference"_a,
+          "Set the Cartesian reference tracked by the controller. The reference is validated and picked up by the "
+          "control loop in the next cycle.");
 }
