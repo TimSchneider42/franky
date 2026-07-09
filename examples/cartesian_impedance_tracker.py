@@ -57,5 +57,8 @@ if __name__ == "__main__":
             signed_distance = float(np.dot(position - origin, direction))
             projected = origin + signed_distance * direction
             desired_linear_velocity = (projected - previous_projected) / 0.001
-            tracker.set_target(Affine(projected, orientation))
+            tracker.set_target(
+                Affine(projected, orientation),
+                Twist(desired_linear_velocity, [0.0, 0.0, 0.0]),
+            )
             previous_projected = projected
