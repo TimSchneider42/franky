@@ -75,6 +75,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structfranky_1_1_joint_reference-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">franky::JointReference Struct Reference</div></div>
@@ -86,6 +87,12 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="joint__impedance__base_8hpp_source.html">joint_impedance_base.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a9c4dced1a5f841209d848ae2e634ee81" id="r_a9c4dced1a5f841209d848ae2e634ee81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_joint_reference.html#a9c4dced1a5f841209d848ae2e634ee81">validate</a> () <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a></td></tr>
+<tr class="memdesc:a9c4dced1a5f841209d848ae2e634ee81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Throw std::invalid_argument if any value is non-finite.  <br /></td></tr>
+<tr class="separator:a9c4dced1a5f841209d848ae2e634ee81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a7c08ef34a8f14afccea98dd4cb48bc7a" id="r_a7c08ef34a8f14afccea98dd4cb48bc7a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_joint_reference.html#a7c08ef34a8f14afccea98dd4cb48bc7a">q</a> {Vector7d::Zero()}</td></tr>
@@ -98,7 +105,35 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Joint-space reference for joint impedance motions. </p>
 <p>The impedance controller tracks the joint position and velocity reference and adds the optional per-cycle feedforward torque term to the commanded torques. </p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9c4dced1a5f841209d848ae2e634ee81" name="a9c4dced1a5f841209d848ae2e634ee81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c4dced1a5f841209d848ae2e634ee81">&#9670;&#160;</a></span>validate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a> franky::JointReference::validate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Throw std::invalid_argument if any value is non-finite. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
 <a id="a15998ceb85c31357571fa1cb34835381" name="a15998ceb85c31357571fa1cb34835381"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a15998ceb85c31357571fa1cb34835381">&#9670;&#160;</a></span>dq</h2>
 
