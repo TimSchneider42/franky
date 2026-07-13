@@ -12,8 +12,6 @@ namespace franky {
  */
 class Twist {
  public:
-  Twist(const Twist &twist) = default;
-
   /**
    * @param linear_velocity The linear velocity in [m/s].
    * @param angular_velocity The angular velocity in [rad/s].

@@ -13,8 +13,6 @@ namespace franky {
  */
 class TwistAcceleration {
  public:
-  TwistAcceleration(const TwistAcceleration &twist_acceleration_acceleration) = default;
-
   /**
    * @param linear_acceleration The linear acceleration in [m/s^2].
    * @param angular_acceleration The angular acceleration in [rad/s^2].
