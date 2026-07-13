@@ -110,22 +110,36 @@ struct PostureTask {
   PostureTask() = default;
 
   PostureTask(
+      const Vector7d &target, const Vector7d &stiffness, std::optional<Vector7d> damping = std::nullopt,
+      std::optional<double> max_torque = std::nullopt)
+      : target(target), stiffness(stiffness), damping(std::move(damping)), max_torque(max_torque) {}
+
+  /** Convenience constructor applying the same scalar gains to all joints. */
+  PostureTask(
       const Vector7d &target, double stiffness, std::optional<double> damping = std::nullopt,
       std::optional<double> max_torque = std::nullopt)
-      : target(target), stiffness(stiffness), damping(damping), max_torque(max_torque) {}
+      : target(target), stiffness(Vector7d::Constant(stiffness)), max_torque(max_torque) {
+    if (damping.has_value()) this->damping = Vector7d::Constant(*damping);
+  }
 
   /** Preferred joint posture [rad]. */
   Vector7d target{Vector7d::Zero()};
 
-  /** Posture stiffness in [Nm/rad]. */
-  double stiffness{0.0};
+  /**
+   * Per-joint posture stiffness in [Nm/rad].
+   *
+   * A joint with zero stiffness is not pushed by this task. Note that the
+   * task torque is projected into the Jacobian nullspace, so pushing a single
+   * joint still moves all joints that participate in the self-motion.
+   */
+  Vector7d stiffness{Vector7d::Zero()};
 
   /**
-   * Posture damping in [Nms/rad].
+   * Per-joint posture damping in [Nms/rad].
    *
-   * If unset, the controller uses critical damping, 2*sqrt(stiffness).
+   * If unset, the controller uses critical damping, 2*sqrt(stiffness), per joint.
    */
-  std::optional<double> damping{std::nullopt};
+  std::optional<Vector7d> damping{std::nullopt};
 
   /** Per-joint absolute torque clamp for this task [Nm]. Unset means no clamp. */
   std::optional<double> max_torque{std::nullopt};
@@ -156,8 +170,8 @@ using NullspaceTask = std::variant<PostureTask, ManipulabilityTask>;
  * @brief Runtime-adjustable gains for a nullspace task.
  */
 struct NullspaceGains {
-  double posture_stiffness{0.0};
-  std::optional<double> posture_damping{std::nullopt};
+  Vector7d posture_stiffness{Vector7d::Zero()};
+  std::optional<Vector7d> posture_damping{std::nullopt};
   std::optional<double> posture_max_torque{std::nullopt};
 
   double manipulability_gain{0.0};

@@ -525,9 +525,15 @@ Cartesian impedance motions also support an optional secondary posture
 objective through `nullspace_target` and `nullspace_stiffness`. When enabled,
 the controller adds a joint-space posture term projected into the Jacobian
 nullspace, so it biases the redundant arm posture without changing the
-Cartesian task to first order. The posture gains can be retuned online by
-passing `nullspace_stiffness` to `CartesianImpedanceTracker.set_gains`, or by
-writing a `NullspaceGains` object through `tracker.motion.set_nullspace_gains`.
+Cartesian task to first order. `nullspace_stiffness` accepts either a single
+scalar applied to all joints or a per-joint 7-vector, so individual joints can
+be weighted differently or excluded (zero stiffness) from the posture
+objective. Keep in mind that the projection spreads the resulting torque over
+all joints participating in the self-motion: pushing a single joint biases the
+whole null-space posture rather than moving that joint alone. The posture
+gains can be retuned online by passing `nullspace_stiffness` (scalar or
+7-vector) to `CartesianImpedanceTracker.set_gains`, or by writing a
+`NullspaceGains` object through `tracker.motion.set_nullspace_gains`.
 Further nullspace objectives (such as manipulability maximization) and fully
 custom `nullspace_tasks` are available through the C++ API.
 

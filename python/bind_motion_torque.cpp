@@ -66,10 +66,18 @@ JointImpedanceParams makeJointImpedanceParams(
   return params;
 }
 
+// Per-joint gains may be given as a scalar (applied to all joints) or a 7-vector.
+using JointGain = std::variant<double, Vector7d>;
+
+Vector7d broadcastJointGain(const JointGain &value) {
+  if (std::holds_alternative<double>(value)) return Vector7d::Constant(std::get<double>(value));
+  return std::get<Vector7d>(value);
+}
+
 CartesianImpedanceBase::Params makeCartesianImpedanceParams(
     double translational_stiffness, double rotational_stiffness,
     const std::optional<std::array<std::optional<double>, 6>> &force_constraints,
-    const std::optional<Vector7d> &nullspace_target, double nullspace_stiffness, double max_delta_tau,
+    const std::optional<Vector7d> &nullspace_target, const JointGain &nullspace_stiffness, double max_delta_tau,
     const std::optional<Vector7d> &lower_joint_limits, const std::optional<Vector7d> &upper_joint_limits,
     double joint_limit_activation_distance, double joint_limit_stiffness, double joint_limit_damping,
     double joint_limit_max_torque, const Eigen::Vector3d &translational_error_clip,
@@ -79,7 +87,7 @@ CartesianImpedanceBase::Params makeCartesianImpedanceParams(
   params.translational_error_clip = translational_error_clip;
   params.rotational_error_clip = rotational_error_clip;
   if (nullspace_target.has_value()) {
-    params.nullspace_tasks.emplace_back(PostureTask{*nullspace_target, nullspace_stiffness});
+    params.nullspace_tasks.emplace_back(PostureTask(*nullspace_target, broadcastJointGain(nullspace_stiffness)));
   }
   params.safety.max_delta_tau = max_delta_tau;
   params.safety.joint_limit_activation_distance = joint_limit_activation_distance;
@@ -116,8 +124,23 @@ void bind_motion_torque(py::module &m) {
 
   py::class_<NullspaceGains>(m, "NullspaceGains")
       .def(py::init<>())
-      .def_readwrite("posture_stiffness", &NullspaceGains::posture_stiffness)
-      .def_readwrite("posture_damping", &NullspaceGains::posture_damping)
+      .def_property(
+          "posture_stiffness",
+          [](const NullspaceGains &gains) { return gains.posture_stiffness; },
+          [](NullspaceGains &gains, const JointGain &value) { gains.posture_stiffness = broadcastJointGain(value); },
+          "Per-joint posture stiffness [Nm/rad]. Accepts a scalar (applied to all joints) or a 7-vector.")
+      .def_property(
+          "posture_damping",
+          [](const NullspaceGains &gains) { return gains.posture_damping; },
+          [](NullspaceGains &gains, const std::optional<JointGain> &value) {
+            if (value.has_value()) {
+              gains.posture_damping = broadcastJointGain(*value);
+            } else {
+              gains.posture_damping = std::nullopt;
+            }
+          },
+          "Per-joint posture damping [Nms/rad]. Accepts a scalar (applied to all joints), a 7-vector, or None for "
+          "critical damping.")
       .def_readwrite("posture_max_torque", &NullspaceGains::posture_max_torque)
       .def_readwrite("manipulability_gain", &NullspaceGains::manipulability_gain)
       .def_readwrite("manipulability_damping", &NullspaceGains::manipulability_damping)
@@ -433,7 +456,7 @@ interpolates toward them with the given time constant, allowing smooth runtime s
                             force_constraints,
                         std::optional<Vector7d>
                             nullspace_target,
-                        double nullspace_stiffness,
+                        const JointGain &nullspace_stiffness,
                         double max_delta_tau,
                         std::optional<Vector7d>
                             lower_joint_limits,
@@ -479,7 +502,7 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
 
 Cartesian damping is chosen internally as critically damped with respect to the requested stiffness.
 
-The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order.)doc",
+The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order. nullspace_stiffness accepts a scalar (applied to all joints) or a per-joint 7-vector; joints with zero stiffness are not pushed by the posture objective.)doc",
           "target"_a,
           "target_twist"_a = std::nullopt,
           py::arg_v("target_type", ReferenceType::kAbsolute, "_franky.ReferenceType.Absolute"),
@@ -513,7 +536,7 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
                             force_constraints,
                         std::optional<Vector7d>
                             nullspace_target,
-                        double nullspace_stiffness,
+                        const JointGain &nullspace_stiffness,
                         double max_delta_tau,
                         std::optional<Vector7d>
                             lower_joint_limits,
@@ -549,7 +572,7 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
           R"doc(Construct a dynamic Cartesian impedance tracking controller.
 
 Cartesian damping is chosen internally as critically damped with respect to the requested stiffness.
-The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order.
+The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order. nullspace_stiffness accepts a scalar (applied to all joints) or a per-joint 7-vector; joints with zero stiffness are not pushed by the posture objective.
 
 The controller reads target gains each cycle and exponentially
 interpolates toward them with the given time constant, allowing smooth runtime stiffness changes.)doc",

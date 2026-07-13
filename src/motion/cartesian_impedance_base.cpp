@@ -49,6 +49,12 @@ double approach(double current, double target, double alpha) {
   return std::abs(next - target) <= kSettleTolerance ? target : next;
 }
 
+Vector7d approach(const Vector7d &current, const Vector7d &target, double alpha) {
+  Vector7d next;
+  for (int i = 0; i < 7; ++i) next[i] = approach(current[i], target[i], alpha);
+  return next;
+}
+
 Eigen::Matrix<double, 6, 6> computeTaskSpaceInertia(const Jacobian &jacobian, const Eigen::Matrix<double, 7, 7> &mass) {
   const Eigen::Matrix<double, 7, 6> mass_inv_jacobian_transpose = mass.ldlt().solve(jacobian.transpose());
   const Eigen::Matrix<double, 6, 6> task_mass_inv = jacobian * mass_inv_jacobian_transpose;
@@ -144,10 +150,10 @@ ManipulabilityTask applyGains(ManipulabilityTask task, const NullspaceGains &g) 
 }
 
 Vector7d computeTaskTorque(const PostureTask &task, const RobotState &robot_state) {
-  const double stiffness = task.stiffness;
-  if (stiffness <= 0.0) return Vector7d::Zero();
-  const double damping = task.damping.value_or(2.0 * std::sqrt(stiffness));
-  return clampTorque(stiffness * (task.target - robot_state.q) - damping * robot_state.dq, task.max_torque);
+  if ((task.stiffness.array() <= 0.0).all()) return Vector7d::Zero();
+  const Vector7d damping = task.damping.value_or(2.0 * task.stiffness.cwiseMax(0.0).cwiseSqrt());
+  return clampTorque(
+      task.stiffness.cwiseProduct(task.target - robot_state.q) - damping.cwiseProduct(robot_state.dq), task.max_torque);
 }
 
 Vector7d computeTaskTorque(
@@ -201,7 +207,7 @@ franka::Torques CartesianImpedanceBase::computeCommand(
   const auto target_nullspace_gains = nullspace_gains_handle_.get();
   auto &cur = current_nullspace_gains_;
   cur.posture_stiffness = approach(cur.posture_stiffness, target_nullspace_gains.posture_stiffness, alpha);
-  const double posture_critical = 2.0 * std::sqrt(cur.posture_stiffness);
+  const Vector7d posture_critical = 2.0 * cur.posture_stiffness.cwiseMax(0.0).cwiseSqrt();
   cur.posture_damping = approach(
       cur.posture_damping.value_or(posture_critical),
       target_nullspace_gains.posture_damping.value_or(posture_critical),

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import time as _time
-from typing import Optional
+from typing import Optional, Union
 
 import numpy as np
 
@@ -67,7 +67,7 @@ class CartesianImpedanceTracker:
         translational_error_clip: Optional[np.ndarray] = None,
         rotational_error_clip: Optional[np.ndarray] = None,
         nullspace_target: Optional[np.ndarray] = None,
-        nullspace_stiffness: float = 0.0,
+        nullspace_stiffness: Union[float, np.ndarray] = 0.0,
         friction: Optional[FrictionCompensationParams] = None,
         max_delta_tau: float = 1.0,
         lower_joint_limits: Optional[np.ndarray] = None,
@@ -160,13 +160,14 @@ class CartesianImpedanceTracker:
         *,
         translational_stiffness: Optional[float] = None,
         rotational_stiffness: Optional[float] = None,
-        nullspace_stiffness: Optional[float] = None,
+        nullspace_stiffness: Optional[Union[float, np.ndarray]] = None,
     ) -> None:
         """Update impedance gains. Smoothed in the RT loop via exponential interpolation.
 
         Omitted components keep their current target value. A named stiffness overwrites its
         3x3 block isotropically; damping is preserved (use ``motion.set_gains`` for
-        anisotropic or explicit-damping gains).
+        anisotropic or explicit-damping gains). ``nullspace_stiffness`` accepts a scalar
+        (applied to all joints) or a per-joint 7-vector.
         """
         current = self._motion.get_gains()
         # Preserve the full stiffness matrix (anisotropy) and damping; overwrite only named blocks.
