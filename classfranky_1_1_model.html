@@ -105,10 +105,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a0f6a1b55c860153af5bb7e8a4a18c00d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the pose of a frame relative to the base frame.  <br /></td></tr>
 <tr class="separator:a0f6a1b55c860153af5bb7e8a4a18c00d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2473ad35c5b1cd9f89c80293ac84b434" id="r_a2473ad35c5b1cd9f89c80293ac84b434"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#ab6d5b94e45f9e74b0a3195f76408bc8b">Jacobian</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_model.html#a2473ad35c5b1cd9f89c80293ac84b434">bodyJacobian</a> (franka::Frame <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">frame</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="structfranky_1_1_robot_state.html">RobotState</a> &amp;state) <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a></td></tr>
-<tr class="memdesc:a2473ad35c5b1cd9f89c80293ac84b434"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the body Jacobian in base frame.  <br /></td></tr>
+<tr class="memdesc:a2473ad35c5b1cd9f89c80293ac84b434"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the body Jacobian in the given frame.  <br /></td></tr>
 <tr class="separator:a2473ad35c5b1cd9f89c80293ac84b434"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a133d08b266c51a524c529b35bbe7cdfd" id="r_a133d08b266c51a524c529b35bbe7cdfd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#ab6d5b94e45f9e74b0a3195f76408bc8b">Jacobian</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_model.html#a133d08b266c51a524c529b35bbe7cdfd">bodyJacobian</a> (franka::Frame <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">frame</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;q, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;F_T_EE, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;EE_T_K) <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a></td></tr>
-<tr class="memdesc:a133d08b266c51a524c529b35bbe7cdfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the body Jacobian in base frame.  <br /></td></tr>
+<tr class="memdesc:a133d08b266c51a524c529b35bbe7cdfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the body Jacobian in the given frame.  <br /></td></tr>
 <tr class="separator:a133d08b266c51a524c529b35bbe7cdfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5c6a7ac820f5e4df98525e3a9acda81" id="r_ad5c6a7ac820f5e4df98525e3a9acda81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#ab6d5b94e45f9e74b0a3195f76408bc8b">Jacobian</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_model.html#ad5c6a7ac820f5e4df98525e3a9acda81">zeroJacobian</a> (franka::Frame <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">frame</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="structfranky_1_1_robot_state.html">RobotState</a> &amp;state) <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a></td></tr>
 <tr class="memdesc:ad5c6a7ac820f5e4df98525e3a9acda81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the zero Jacobian in base frame.  <br /></td></tr>
@@ -253,7 +253,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Calculates the body Jacobian in base frame. </p>
+<p>Calculates the body Jacobian in the given frame. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">frame</td><td>The frame for which the Jacobian is computed. </td></tr>
@@ -303,7 +303,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Calculates the body Jacobian in base frame. </p>
+<p>Calculates the body Jacobian in the given frame. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">frame</td><td>The frame for which the Jacobian is computed. </td></tr>
