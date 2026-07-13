@@ -89,13 +89,13 @@ void bind_reactions(py::module &m) {
           "__and__", [](const Condition &condition, bool constant) { return condition && constant; }, py::is_operator())
       .def(
           "__rand__",
-          [](bool constant, const Condition &condition) { return constant && condition; },
+          [](const Condition &condition, bool constant) { return constant && condition; },
           py::is_operator())
       .def("__or__", py::overload_cast<const Condition &, const Condition &>(&operator||), py::is_operator())
       .def(
           "__or__", [](const Condition &condition, bool constant) { return condition || constant; }, py::is_operator())
       .def(
-          "__ror__", [](bool constant, const Condition &condition) { return constant || condition; }, py::is_operator())
+          "__ror__", [](const Condition &condition, bool constant) { return constant || condition; }, py::is_operator())
       .def("__repr__", &Condition::repr);
   py::implicitly_convertible<bool, Condition>();
 
