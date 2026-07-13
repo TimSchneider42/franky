@@ -122,6 +122,25 @@ void bind_motion_torque(py::module &m) {
       .def_readwrite("stiffness", &CartesianImpedanceGains::stiffness)
       .def_readwrite("damping", &CartesianImpedanceGains::damping);
 
+  py::class_<PostureTask>(m, "PostureTask")
+      .def(
+          py::init<const Vector7d &, double, std::optional<double>, std::optional<double>>(),
+          "target"_a,
+          "stiffness"_a,
+          "damping"_a = std::nullopt,
+          "max_torque"_a = std::nullopt)
+      .def_readwrite("target", &PostureTask::target)
+      .def_readwrite("stiffness", &PostureTask::stiffness)
+      .def_readwrite("damping", &PostureTask::damping)
+      .def_readwrite("max_torque", &PostureTask::max_torque);
+
+  py::class_<ManipulabilityTask>(m, "ManipulabilityTask")
+      .def(
+          py::init<double, double, std::optional<double>>(), "gain"_a, "damping"_a = 0.0, "max_torque"_a = std::nullopt)
+      .def_readwrite("gain", &ManipulabilityTask::gain)
+      .def_readwrite("damping", &ManipulabilityTask::damping)
+      .def_readwrite("max_torque", &ManipulabilityTask::max_torque);
+
   py::class_<NullspaceGains>(m, "NullspaceGains")
       .def(py::init<>())
       .def_property(
