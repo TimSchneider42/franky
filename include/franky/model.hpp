@@ -49,7 +49,7 @@ class Model {
   [[nodiscard]] Affine pose(franka::Frame frame, const Vector7d &q, const Affine &F_T_EE, const Affine &EE_T_K) const;
 
   /**
-   * @brief Calculates the body Jacobian in base frame.
+   * @brief Calculates the body Jacobian in the given frame.
    *
    * @param frame The frame for which the Jacobian is computed.
    * @param state The current robot state.
@@ -58,7 +58,7 @@ class Model {
   [[nodiscard]] Jacobian bodyJacobian(franka::Frame frame, const RobotState &state) const;
 
   /**
-   * @brief Calculates the body Jacobian in base frame.
+   * @brief Calculates the body Jacobian in the given frame.
    *
    * @param frame The frame for which the Jacobian is computed.
    * @param q Robot joint angles [rad].
