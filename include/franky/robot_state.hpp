@@ -13,6 +13,23 @@
 namespace franky {
 
 /**
+ * @brief franka::Errors with noexcept copy and assignment.
+ *
+ * franka::Errors only holds booleans, so copying it cannot throw, but libfranka does not mark its
+ * special members noexcept. This wrapper does, keeping RobotState nothrow move constructible so it
+ * can be captured in real-time queued callbacks (see RTFunctionQueue).
+ */
+struct Errors : public franka::Errors {
+  Errors() noexcept : franka::Errors() {}
+  Errors(const franka::Errors &other) noexcept : franka::Errors(other) {}
+  Errors(const Errors &other) noexcept : franka::Errors(other) {}
+  Errors &operator=(const Errors &other) noexcept {
+    franka::Errors::operator=(other);
+    return *this;
+  }
+};
+
+/**
  * @brief Full state of the robot
  *
  * This class contains all fields of franka::RobotState and some additional
@@ -344,12 +361,12 @@ struct RobotState {
   /**
    * Current error state.
    */
-  franka::Errors current_errors{};
+  Errors current_errors{};
 
   /**
    * Contains the errors that aborted the previous motion.
    */
-  franka::Errors last_motion_errors{};
+  Errors last_motion_errors{};
 
   /**
    * Percentage of the last 100 control commands that were successfully received

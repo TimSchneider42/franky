@@ -502,6 +502,71 @@ def test_cartesian_impedance_tracker():
 
 
 # ---------------------------------------------------------------------------
+# Test 9 – Motion callbacks
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.timeout(60)
+def test_motion_callback_fires_every_time_step():
+    """
+    Register a motion callback and verify it is invoked once per control step
+    of the 1 kHz control loop: a ~5 s motion must produce around 5000
+    invocations, in order, with consecutive rel_time values spaced by exactly
+    the reported time_step (i.e. no invocation was skipped or dropped).
+    """
+    hold_ms = 5000
+
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
+
+        records = []  # (rel_time [ms], time_step [ms]) per invocation
+
+        def cb(robot_state, time_step, rel_time, abs_time, control_signal):
+            records.append((rel_time.to_msec(), time_step.to_msec()))
+
+        motion = franky.JointVelocityWaypointMotion(
+            [
+                franky.JointVelocityWaypoint(
+                    [0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                    hold_target_duration=franky.Duration(hold_ms),
+                )
+            ]
+        )
+        motion.register_callback(cb)
+        robot.move(motion)
+
+        # Callbacks are queued and run on a separate thread, so they may still
+        # be executing after move() returns; wait until the count settles.
+        import time
+
+        prev_count = -1
+        while len(records) != prev_count:
+            prev_count = len(records)
+            time.sleep(0.5)
+
+        # One invocation per 1 ms control step: ~5000 for the 5 s hold, plus
+        # some slack for the velocity ramp-up/down phases.
+        assert hold_ms <= len(records) <= hold_ms + 1000, (
+            f"Expected roughly {hold_ms} callback invocations "
+            f"(one per 1 kHz control step), got {len(records)}"
+        )
+
+        rel_times = np.array([r for r, _ in records])
+        time_steps = np.array([s for _, s in records])
+
+        # In order, and no step skipped: each invocation must advance rel_time
+        # by exactly the time_step it reported.
+        deltas = np.diff(rel_times)
+        assert (deltas > 0).all(), "Callback invocations arrived out of order"
+        np.testing.assert_array_equal(
+            deltas,
+            time_steps[1:],
+            err_msg="rel_time gaps do not match the reported time steps: "
+            "some callback invocations were skipped or dropped",
+        )
+
+
+# ---------------------------------------------------------------------------
 # Gripper helpers
 # ---------------------------------------------------------------------------
 

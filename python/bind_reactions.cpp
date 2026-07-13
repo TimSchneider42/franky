@@ -34,7 +34,14 @@ void mkMotionAndReactionClasses(py::module_ &m, const std::string &control_signa
                                         franka::Duration rel_time,
                                         franka::Duration abs_time,
                                         const ControlSignalType &control_signal) {
-              callback_executor.add([callback_ptr, robot_state, time_step, rel_time, abs_time, control_signal]() {
+              // Init-captures: capturing the const-ref parameters by name would create const
+              // members, making the closure copy instead of move into the queue's slot.
+              callback_executor.add([callback_ptr,
+                                     robot_state = robot_state,
+                                     time_step,
+                                     rel_time,
+                                     abs_time,
+                                     control_signal = control_signal]() {
                 try {
                   (*callback_ptr)(robot_state, time_step, rel_time, abs_time, control_signal);
                 } catch (const py::error_already_set &e) {
@@ -62,7 +69,8 @@ void mkMotionAndReactionClasses(py::module_ &m, const std::string &control_signa
                     callback);
             reaction.registerCallback(
                 [callback_ptr](const RobotState &robot_state, franka::Duration rel_time, franka::Duration abs_time) {
-                  callback_executor.add([callback_ptr, robot_state, rel_time, abs_time]() {
+                  // See the motion callback above for why robot_state is an init-capture.
+                  callback_executor.add([callback_ptr, robot_state = robot_state, rel_time, abs_time]() {
                     try {
                       (*callback_ptr)(robot_state, rel_time, abs_time);
                     } catch (const py::error_already_set &e) {

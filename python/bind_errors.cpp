@@ -38,22 +38,24 @@ using namespace franky;
 #define NUM_ERRORS 37
 #endif
 
-#define ADD_ERROR(unused, name) errors.def_property_readonly(#name, [](const franka::Errors &e) { return e.name; });
+#define ADD_ERROR(unused, name) errors.def_property_readonly(#name, [](const franky::Errors &e) { return e.name; });
 #define UNPACK_ERRORS_INNER(tuple, itr, name) , tuple[itr + 1].cast<bool>()
-#define UNPACK_ERRORS_1(tuple, name0, ...)                                                                 \
-  franka::Errors {                                                                                         \
-    std::array<bool, NUM_ERRORS> { tuple[0].cast<bool>() MAP_C1(UNPACK_ERRORS_INNER, tuple, __VA_ARGS__) } \
+#define UNPACK_ERRORS_1(tuple, name0, ...)                                                                   \
+  franky::Errors {                                                                                           \
+    franka::Errors {                                                                                         \
+      std::array<bool, NUM_ERRORS> { tuple[0].cast<bool>() MAP_C1(UNPACK_ERRORS_INNER, tuple, __VA_ARGS__) } \
+    }                                                                                                        \
   }
 #define UNPACK_ERRORS(tuple, ...) UNPACK_ERRORS_1(tuple, __VA_ARGS__)
 
 void bind_errors(py::module &m) {
-  py::class_<franka::Errors> errors(m, "Errors");
+  py::class_<franky::Errors> errors(m, "Errors");
   errors.def(py::init<>());
   MAP(ADD_ERROR, ERRORS)
-  errors.def("__repr__", [](const franka::Errors &errors) { return std::string(errors); });
+  errors.def("__repr__", [](const franky::Errors &errors) { return std::string(errors); });
   errors.def(
       py::pickle(
-          [](const franka::Errors &errors) {  // __getstate__
+          [](const franky::Errors &errors) {  // __getstate__
             return PACK_TUPLE(errors, ERRORS);
           },
           [](const py::tuple &t) {  // __setstate__
