@@ -143,8 +143,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a05ed2a4f6dbcd406f9298a7c8e4e76c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a callback that is called in every step of the motion.  <br /></td></tr>
 <tr class="separator:a05ed2a4f6dbcd406f9298a7c8e4e76c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3780f86a0c58bdfb959e4d9bb65179d6" id="r_a3780f86a0c58bdfb959e4d9bb65179d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#a3780f86a0c58bdfb959e4d9bb65179d6">init</a> (<a class="el" href="classfranky_1_1_robot.html">Robot</a> *<a class="el" href="classfranky_1_1_motion.html#a4a279dafcbb7ae10605f58d27a3a368f">robot</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="structfranky_1_1_robot_state.html">RobotState</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">robot_state</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> std::optional&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">previous_command</a>)</td></tr>
-<tr class="memdesc:a3780f86a0c58bdfb959e4d9bb65179d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the motion.  <br /></td></tr>
+<tr class="memdesc:a3780f86a0c58bdfb959e4d9bb65179d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the motion. Motions can only be started once; this function throws a <a class="el" href="structfranky_1_1_motion_reuse_exception.html" title="Exception thrown when a motion is started more than once.">MotionReuseException</a> on any subsequent call.  <br /></td></tr>
 <tr class="separator:a3780f86a0c58bdfb959e4d9bb65179d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42b6fe033ddffb1b4ea91b6a1387d7a6" id="r_a42b6fe033ddffb1b4ea91b6a1387d7a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#a42b6fe033ddffb1b4ea91b6a1387d7a6">has_started</a> () <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a></td></tr>
+<tr class="memdesc:a42b6fe033ddffb1b4ea91b6a1387d7a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether this motion has already been started. Started motions cannot be started again.  <br /></td></tr>
+<tr class="separator:a42b6fe033ddffb1b4ea91b6a1387d7a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc04c5fe350635cf36bc1e459736ddb7" id="r_abc04c5fe350635cf36bc1e459736ddb7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#abc04c5fe350635cf36bc1e459736ddb7">nextCommand</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="structfranky_1_1_robot_state.html">RobotState</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">robot_state</a>, franka::Duration <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">time_step</a>, franka::Duration <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">rel_time</a>, franka::Duration <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">abs_time</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> std::optional&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">previous_command</a>)</td></tr>
 <tr class="memdesc:abc04c5fe350635cf36bc1e459736ddb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the next command of the motion.  <br /></td></tr>
 <tr class="separator:abc04c5fe350635cf36bc1e459736ddb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -348,6 +351,35 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
 
 </div>
 </div>
+<a id="a42b6fe033ddffb1b4ea91b6a1387d7a6" name="a42b6fe033ddffb1b4ea91b6a1387d7a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42b6fe033ddffb1b4ea91b6a1387d7a6">&#9670;&#160;</a></span>has_started()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">bool</a> <a class="el" href="classfranky_1_1_motion.html">franky::Motion</a>&lt; <a class="el" href="namespacefranky.html#a9a12fea9c3341e3437af837efe8ebaac">ControlSignalType</a> &gt;::has_started </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Whether this motion has already been started. Started motions cannot be started again. </p>
+
+</div>
+</div>
 <a id="a3780f86a0c58bdfb959e4d9bb65179d6" name="a3780f86a0c58bdfb959e4d9bb65179d6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3780f86a0c58bdfb959e4d9bb65179d6">&#9670;&#160;</a></span>init()</h2>
 
@@ -382,7 +414,7 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
       </table>
 </div><div class="memdoc">
 
-<p>Initialize the motion. </p>
+<p>Initialize the motion. Motions can only be started once; this function throws a <a class="el" href="structfranky_1_1_motion_reuse_exception.html" title="Exception thrown when a motion is started more than once.">MotionReuseException</a> on any subsequent call. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">robot</td><td>The robot instance. </td></tr>

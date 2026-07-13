@@ -10,5 +10,6 @@ var searchData=
   ['motion_3c_20franka_3a_3ajointvelocities_20_3e_7',['Motion&lt; franka::JointVelocities &gt;',['../classfranky_1_1_motion.html',1,'franky']]],
   ['motion_3c_20franka_3a_3atorques_20_3e_8',['Motion&lt; franka::Torques &gt;',['../classfranky_1_1_motion.html',1,'franky']]],
   ['motiongenerator_9',['MotionGenerator',['../classfranky_1_1_motion_generator.html',1,'franky']]],
-  ['motionplannerexception_10',['MotionPlannerException',['../structfranky_1_1_motion_planner_exception.html',1,'franky']]]
+  ['motionplannerexception_10',['MotionPlannerException',['../structfranky_1_1_motion_planner_exception.html',1,'franky']]],
+  ['motionreuseexception_11',['MotionReuseException',['../structfranky_1_1_motion_reuse_exception.html',1,'franky']]]
 ];
