@@ -28,10 +28,10 @@ CART_ATOL = 0.025  # m   – how close the Cartesian position must be to the tar
 def sim_server_context():
     """Start a Genesis simulation + protocol server and tear it down afterwards."""
     with MujocoSimulator() as sim:
-        sim.add_robot()
+        robot = sim.add_robot()
         with SimulationServer(sim) as server:
             server.run_async()
-            yield server
+            yield robot
 
 
 def make_robot(hostname: str) -> franky.Robot:
@@ -64,8 +64,8 @@ def test_joint_position_control():
         [-0.2, -0.3, 0.2, -1.3, 0.3, 2.0, 1.0],
     ]
 
-    with sim_server_context() as server:
-        robot = make_robot(server.robot_servers[0].hostname)
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
 
         for i, waypoint in enumerate(waypoints):
             robot.move(franky.JointWaypointMotion([franky.JointWaypoint(waypoint)]))
@@ -100,8 +100,8 @@ def test_joint_velocity_control():
         ([-0.1, 0.1, -0.1, 0.1, -0.1, 0.1, -0.1], "D – alternating reversed"),
     ]
 
-    with sim_server_context() as server:
-        robot = make_robot(server.robot_servers[0].hostname)
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
 
         for velocities, label in phases:
             q_before = np.array(robot.current_joint_state.position)
@@ -146,8 +146,8 @@ def test_cartesian_position_control():
         (np.array([0.00, 0.00, -0.04]), "z-"),
     ]
 
-    with sim_server_context() as server:
-        robot = make_robot(server.robot_servers[0].hostname)
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
 
         initial_pose = robot.current_cartesian_state.pose.end_effector_pose
         initial_translation = np.array(initial_pose.translation).flatten()
@@ -197,8 +197,8 @@ def test_cartesian_velocity_control():
         ([0.00, 0.00, -0.02], "z-"),
     ]
 
-    with sim_server_context() as server:
-        robot = make_robot(server.robot_servers[0].hostname)
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
 
         for vel_xyz, label in phases:
             pos_before = np.array(
@@ -238,8 +238,8 @@ def test_joint_impedance_motion():
     Runs asynchronously and is manually stopped since it does not finish automatically.
     """
     target = [-0.1, 0.1, 0.1, -1.5, 0.1, 1.6, 0.8]
-    with sim_server_context() as server:
-        robot = make_robot(server.robot_servers[0].hostname)
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
         robot.move(franky.JointImpedanceMotion(target), asynchronous=True)
 
         import time
@@ -274,8 +274,8 @@ def test_cartesian_impedance_motion():
     Runs asynchronously and is manually stopped since it does not finish automatically.
     """
     offset = np.array([0.05, 0.05, 0.0])
-    with sim_server_context() as server:
-        robot = make_robot(server.robot_servers[0].hostname)
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
         initial_pose = robot.current_cartesian_state.pose.end_effector_pose
         initial_translation = np.array(initial_pose.translation).flatten()
 
@@ -443,8 +443,8 @@ def test_joint_impedance_tracker():
     Use JointImpedanceTracker to dynamically drive joints to a target configuration.
     """
     target = [-0.1, 0.1, 0.1, -1.5, 0.1, 1.6, 0.8]
-    with sim_server_context() as server:
-        robot = make_robot(server.robot_servers[0].hostname)
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
         with franky.JointImpedanceTracker(robot, period=0.01) as tracker:
             tracker.set_target(target)
 
@@ -473,8 +473,8 @@ def test_cartesian_impedance_tracker():
     Move the end-effector to an absolute Cartesian target using CartesianImpedanceTracker.
     """
     offset = np.array([0.05, -0.05, 0.0])
-    with sim_server_context() as server:
-        robot = make_robot(server.robot_servers[0].hostname)
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
         initial_pose = robot.current_cartesian_state.pose.end_effector_pose
         initial_translation = np.array(initial_pose.translation).flatten()
 
@@ -523,8 +523,8 @@ def test_gripper_homing():
     """
     Home the gripper and verify that it opens to its maximum width.
     """
-    with sim_server_context() as server:
-        gripper = make_gripper(server.robot_servers[0].hostname)
+    with sim_server_context() as robot_server:
+        gripper = make_gripper(robot_server.hostname)
         initial_width = gripper.width
         result = gripper.homing()
         assert result, "Gripper homing should return True"
@@ -560,8 +560,8 @@ def test_gripper_move():
     """
     target_widths = [0.08, 0.04, 0.01, 0.06, 0.0]
 
-    with sim_server_context() as server:
-        gripper = make_gripper(server.robot_servers[0].hostname)
+    with sim_server_context() as robot_server:
+        gripper = make_gripper(robot_server.hostname)
         for target_width in target_widths:
             result = gripper.move(target_width, 0.05)
             assert result, f"Gripper move to {target_width:.3f} m should return True"
@@ -588,8 +588,8 @@ def test_gripper_grasp_success():
     blocking the gripper, it reaches the commanded width and the epsilon check
     should succeed.
     """
-    with sim_server_context() as server:
-        gripper = make_gripper(server.robot_servers[0].hostname)
+    with sim_server_context() as robot_server:
+        gripper = make_gripper(robot_server.hostname)
         gripper.move(0.08, 0.05)  # start fully open
 
         result = gripper.grasp(0.04, 0.02, 10.0, epsilon_inner=0.02, epsilon_outer=0.02)
@@ -610,8 +610,8 @@ def test_gripper_grasp_failure():
     commanded 0.09 m does not cover 0.08 m, so the server returns failure and
     franky raises CommandException.
     """
-    with sim_server_context() as server:
-        gripper = make_gripper(server.robot_servers[0].hostname)
+    with sim_server_context() as robot_server:
+        gripper = make_gripper(robot_server.hostname)
         # Commanded 0.09 m, physical limit is 0.08 m:
         # in_range = 0.09 - 0.005 <= 0.08 <= 0.09 + 0.005  →  0.085 <= 0.08  →  False
         with pytest.raises(franky.CommandException):
@@ -630,8 +630,8 @@ def test_gripper_stop():
     Issue stop on an idle gripper; the server should reply with kSuccess and
     franky should return True.
     """
-    with sim_server_context() as server:
-        gripper = make_gripper(server.robot_servers[0].hostname)
+    with sim_server_context() as robot_server:
+        gripper = make_gripper(robot_server.hostname)
         gripper.homing()
         result = gripper.stop()
         assert result, "Gripper stop should return True"
