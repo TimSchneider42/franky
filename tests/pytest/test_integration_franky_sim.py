@@ -311,6 +311,128 @@ def test_cartesian_impedance_motion():
 
 
 # ---------------------------------------------------------------------------
+# Test 6b - Cartesian impedance null-space posture task
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.timeout(30)
+def test_cartesian_impedance_nullspace_posture():
+    """
+    Exercise the null-space posture task of the Cartesian impedance controller.
+
+    The end-effector is commanded to hold its current pose while a secondary
+    posture objective (nullspace_target) pulls the joints toward a different
+    configuration.  The FR3 has 7 DoF and the Cartesian task constrains 6, so
+    the controller can only move the arm along its one-dimensional self-motion
+    manifold: the joints must get measurably closer to the null-space target
+    while the end-effector pose remains unchanged.
+
+    At the initial configuration [0, 0, 0, -1.57, 0, 1.57, 0.785] joint 2 is
+    zero, so the axes of joints 1 and 3 are collinear and the self-motion is
+    exactly their counter-rotation: the null-space direction is
+    (-1, 0, 1, 0, 0, 0, 0)/sqrt(2).  The posture offsets below have a component
+    in that direction, so they are reachable without moving the end-effector.
+    (An offset with equal components on joints 1 and 3 would be orthogonal to
+    the null space and produce zero projected torque.)
+
+    Phase 1 uses a per-joint stiffness vector to push just joint 1 toward a
+    target: with stiffness on only one joint, the projected torque vanishes
+    exactly when that joint reaches its target, so it must converge there
+    (joint 3 counter-rotates as the null-space byproduct).  Phase 2 uses a
+    single scalar stiffness with a target offset lying entirely in the null
+    space, which must be reached in all joints.
+    """
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
+
+        initial_pose = robot.current_cartesian_state.pose.end_effector_pose
+        initial_translation = np.array(initial_pose.translation).flatten()
+
+        def ns_control(nullspace_target: np.ndarray, nullspace_stiffness):
+            motion = franky.CartesianImpedanceMotion(
+                franky.Affine(initial_pose.matrix),
+                nullspace_target=nullspace_target,
+                nullspace_stiffness=nullspace_stiffness,
+            )
+            # Scalars are broadcast to per-joint gains; readback is a 7-vector.
+            np.testing.assert_allclose(
+                motion.get_nullspace_gains().posture_stiffness,
+                np.broadcast_to(nullspace_stiffness, 7),
+            )
+
+            robot.move(motion, asynchronous=True)
+
+            import time
+
+            time.sleep(3.0)
+
+            robot.stop()
+            try:
+                robot.join_motion()
+            except franky.ControlException as e:
+                if "Move command preempted" not in str(e):
+                    raise
+
+            actual_translation = np.array(
+                robot.current_cartesian_state.pose.end_effector_pose.translation
+            ).flatten()
+
+            # Primary task: the end-effector must not have been disturbed.
+            np.testing.assert_allclose(
+                actual_translation,
+                initial_translation,
+                atol=CART_ATOL,
+                err_msg="Null-space posture task disturbed the end-effector position",
+            )
+
+        # Phase 1: push just joint 1 toward a target via a per-joint stiffness
+        # vector (all other joints have zero stiffness).  Joint 1 must reach
+        # its target exactly; joint 3 counter-rotates as the null-space
+        # byproduct.
+        q_initial = np.array(robot.current_joint_state.position)
+        nullspace_target = q_initial.copy()
+        nullspace_target[0] += 0.1
+        ns_control(nullspace_target, np.array([100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]))
+        q_final = np.array(robot.current_joint_state.position)
+
+        np.testing.assert_allclose(
+            q_final[0],
+            nullspace_target[0],
+            atol=0.05,
+            err_msg="Target joint 1 did not converge to its null-space target",
+        )
+
+        # Phase 2: move the joints along the null-space direction toward a
+        # target configuration using a single scalar stiffness.
+        q_initial = np.array(robot.current_joint_state.position)
+        nullspace_offset = np.array([0.4, 0.0, -0.4, 0.0, 0.0, 0.0, 0.0])
+        nullspace_target = q_initial + nullspace_offset
+        ns_control(nullspace_target, 20.0)
+        q_final = np.array(robot.current_joint_state.position)
+
+        # Secondary task: the joints must have moved toward the posture target
+        # along the null space.  The target is exactly reachable, so require
+        # most of the distance to be covered (PD control leaves some residual).
+        dist_initial = np.linalg.norm(q_initial - nullspace_target)
+        dist_final = np.linalg.norm(q_final - nullspace_target)
+        assert dist_final < 0.5 * dist_initial, (
+            f"Joints did not approach the null-space target: "
+            f"|q - target| went from {dist_initial:.4f} to {dist_final:.4f}"
+        )
+
+        # The motion must be the expected self-motion: joint 1 forward,
+        # joint 3 backward.
+        assert q_final[0] > q_initial[0] + 0.1, (
+            f"Joint 1 did not rotate toward the null-space target "
+            f"(Δq = {q_final[0] - q_initial[0]:.4f})"
+        )
+        assert q_final[2] < q_initial[2] - 0.1, (
+            f"Joint 3 did not rotate toward the null-space target "
+            f"(Δq = {q_final[2] - q_initial[2]:.4f})"
+        )
+
+
+# ---------------------------------------------------------------------------
 # Test 7 - Joint impedance tracker
 # ---------------------------------------------------------------------------
 
