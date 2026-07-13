@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hold_5ftarget_5fduration_0',['hold_target_duration',['../structfranky_1_1_waypoint.html#a2c1e5c63e3a7447b4699a546e49ed009',1,'franky::Waypoint']]]
+  ['gain_0',['gain',['../structfranky_1_1_manipulability_task.html#ae25a0f3ad7ed4fca10242a6b0eeb4b1b',1,'franky::ManipulabilityTask']]]
 ];

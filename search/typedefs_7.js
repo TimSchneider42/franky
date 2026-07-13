@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['vector6d_0',['Vector6d',['../namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb',1,'franky']]],
-  ['vector7d_1',['Vector7d',['../namespacefranky.html#a4c36e6539a78f808bf759142dec935c4',1,'franky']]],
-  ['velocitywaypoint_2',['VelocityWaypoint',['../namespacefranky.html#a7af3aea8bf2e7bc0f366814328c1fb32',1,'franky']]]
+  ['referencecallback_0',['referencecallback',['../classfranky_1_1_cartesian_impedance_tracking_motion.html#a1450e46be2d4d808933dce82eac16dcf',1,'franky::CartesianImpedanceTrackingMotion::ReferenceCallback'],['../classfranky_1_1_joint_impedance_tracking_motion.html#a67cc67064d2dfb8a7d4bbfa37efb6fd0',1,'franky::JointImpedanceTrackingMotion::ReferenceCallback']]]
 ];

@@ -75,7 +75,8 @@ $(function() {
 <h3><a id="index_c" name="index_c"></a>- c -</h3><ul>
 <li>cartesian_collision&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#a7a4b2dc3fd3c5bd534b77c7ff2c44a6d">franky::RobotState</a></li>
 <li>cartesian_contact&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#a4ea218cbe444c02ba65c9e2f2d9fb9f0">franky::RobotState</a></li>
-<li>compensate_coriolis&#160;:&#160;<a class="el" href="structfranky_1_1_joint_impedance_params.html#a52ee599019fcecb061c6e8ec6bcc9cbf">franky::JointImpedanceParams</a></li>
+<li>cartesian_gains&#160;:&#160;<a class="el" href="structfranky_1_1_joint_impedance_params.html#adb7c5d0cd36c975464ddbdf22cc00c2b">franky::JointImpedanceParams</a></li>
+<li>compensate_coriolis&#160;:&#160;<a class="el" href="structfranky_1_1_joint_impedance_params.html#a52ee599019fcecb061c6e8ec6bcc9cbf">franky::JointImpedanceParams</a>, <a class="el" href="structfranky_1_1_torque_stop_params.html#a05633c28474ed1783c03e645c090d9d0">franky::TorqueStopParams</a></li>
 <li>constant_torque_offset&#160;:&#160;<a class="el" href="structfranky_1_1_joint_impedance_params.html#abc6ae9079e37ec656a5faca7416d635a">franky::JointImpedanceParams</a></li>
 <li>control_command_success_rate&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#a9f615eac9283d889c0b4dfe2a4ecc5c5">franky::RobotState</a></li>
 <li>control_rate&#160;:&#160;<a class="el" href="classfranky_1_1_robot.html#a3155de462f5590cc67b2874acf846f53">franky::Robot</a></li>
@@ -86,7 +87,7 @@ $(function() {
 
 
 <h3><a id="index_d" name="index_d"></a>- d -</h3><ul>
-<li>damping&#160;:&#160;<a class="el" href="structfranky_1_1_joint_impedance_gains.html#a2191a8b5820ec1cdf1d5ff5e3811e2fc">franky::JointImpedanceGains</a>, <a class="el" href="structfranky_1_1_joint_impedance_params.html#ac6f0943da6bd28892293bdd02918b1dc">franky::JointImpedanceParams</a></li>
+<li>damping&#160;:&#160;<a class="el" href="structfranky_1_1_cartesian_impedance_base_1_1_params.html#a035bec61dcbb82edd997384712b21bef">franky::CartesianImpedanceBase::Params</a>, <a class="el" href="structfranky_1_1_cartesian_impedance_gains.html#a32aa27fb518f8e9f71064083304b4fd8">franky::CartesianImpedanceGains</a>, <a class="el" href="structfranky_1_1_joint_impedance_gains.html#a2191a8b5820ec1cdf1d5ff5e3811e2fc">franky::JointImpedanceGains</a>, <a class="el" href="structfranky_1_1_joint_impedance_params.html#ac6f0943da6bd28892293bdd02918b1dc">franky::JointImpedanceParams</a>, <a class="el" href="structfranky_1_1_manipulability_task.html#afb184fcec02b3289e3d9a2dd2128f6d9">franky::ManipulabilityTask</a>, <a class="el" href="structfranky_1_1_posture_task.html#a9b2a0b6466a0eb0a48c9f8a0327a95dd">franky::PostureTask</a>, <a class="el" href="structfranky_1_1_torque_stop_params.html#af22543d79b652af487541d7406967534">franky::TorqueStopParams</a></li>
 <li>ddelbow_c&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#ab6996c44d6d0b34e03cec086d6d16519">franky::RobotState</a></li>
 <li>ddelbow_est&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#ade3beb0d2a00728a316b43c1a6c15229">franky::RobotState</a></li>
 <li>ddq_d&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#aadf8644c962475b364279719d4d4109f">franky::RobotState</a></li>
@@ -113,6 +114,7 @@ $(function() {
 <li>elbow_d&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#aa7c69937e5e9837d62b490dcc8aa255f">franky::RobotState</a></li>
 <li>elbow_jerk_limit&#160;:&#160;<a class="el" href="classfranky_1_1_robot.html#a87e2193710fe1cc287a21729bba88106">franky::Robot</a></li>
 <li>elbow_velocity_limit&#160;:&#160;<a class="el" href="classfranky_1_1_robot.html#a823551f59caa0f025f1d6af381e38471">franky::Robot</a></li>
+<li>error_clip&#160;:&#160;<a class="el" href="structfranky_1_1_joint_impedance_params.html#a7b593843288f717e85d5202b388cbe81">franky::JointImpedanceParams</a></li>
 </ul>
 
 
@@ -123,6 +125,11 @@ $(function() {
 <li>F_x_Ctotal&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#a3706cdbd18abaad5acae4b6420c6679c">franky::RobotState</a></li>
 <li>force_constraints&#160;:&#160;<a class="el" href="structfranky_1_1_cartesian_impedance_base_1_1_params.html#a000aa7056937b283851c3bdddd673f66">franky::CartesianImpedanceBase::Params</a></li>
 <li>friction&#160;:&#160;<a class="el" href="structfranky_1_1_cartesian_impedance_base_1_1_params.html#a5c7cbb8bbe1450bae3cf2475871be198">franky::CartesianImpedanceBase::Params</a>, <a class="el" href="structfranky_1_1_joint_impedance_params.html#a885df1b2c73bc0a67c03fdaef7565ce7">franky::JointImpedanceParams</a></li>
+</ul>
+
+
+<h3><a id="index_g" name="index_g"></a>- g -</h3><ul>
+<li>gain&#160;:&#160;<a class="el" href="structfranky_1_1_manipulability_task.html#ae25a0f3ad7ed4fca10242a6b0eeb4b1b">franky::ManipulabilityTask</a></li>
 </ul>
 
 
@@ -176,17 +183,20 @@ $(function() {
 <li>m_ee&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#aa5104cf1e290f362c032dd3099191bd8">franky::RobotState</a></li>
 <li>m_load&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#ac7f17c8d7d1bb49658c872904caa8233">franky::RobotState</a></li>
 <li>m_total&#160;:&#160;<a class="el" href="structfranky_1_1_robot_state.html#a8e8ddca4a286bfb33aa94bfbafc7666d">franky::RobotState</a></li>
+<li>manipulability_damping&#160;:&#160;<a class="el" href="structfranky_1_1_nullspace_gains.html#a533b43aa8bb6b5f2c41607a8fa3e5b4a">franky::NullspaceGains</a></li>
+<li>manipulability_gain&#160;:&#160;<a class="el" href="structfranky_1_1_nullspace_gains.html#a52c57c83d3753a0c26495d4b61c3e68f">franky::NullspaceGains</a></li>
+<li>manipulability_max_torque&#160;:&#160;<a class="el" href="structfranky_1_1_nullspace_gains.html#ab61645291718ffea84a1f86ae1f7a69a">franky::NullspaceGains</a></li>
 <li>max&#160;:&#160;<a class="el" href="classfranky_1_1_dynamics_limit.html#a8ad7788915e12262221aa983c0588d62">franky::DynamicsLimit&lt; LimitType &gt;</a></li>
-<li>max_delta_tau&#160;:&#160;<a class="el" href="structfranky_1_1_torque_safety_params.html#a7b7d3c7d9f1e26a6e23a5403dcbaf8bf">franky::TorqueSafetyParams</a></li>
-<li>max_torque&#160;:&#160;<a class="el" href="structfranky_1_1_friction_compensation_params.html#a2c8b5ce500dc1b7f0cad9892af2adf1f">franky::FrictionCompensationParams</a></li>
+<li>max_delta_tau&#160;:&#160;<a class="el" href="structfranky_1_1_torque_safety_params.html#a7b7d3c7d9f1e26a6e23a5403dcbaf8bf">franky::TorqueSafetyParams</a>, <a class="el" href="structfranky_1_1_torque_stop_params.html#a6b8b726bffa20c3c4bd294c250053af2">franky::TorqueStopParams</a></li>
+<li>max_duration&#160;:&#160;<a class="el" href="structfranky_1_1_torque_stop_params.html#a834c65631445ae7d8cff2c0202824d58">franky::TorqueStopParams</a></li>
+<li>max_torque&#160;:&#160;<a class="el" href="structfranky_1_1_friction_compensation_params.html#a2c8b5ce500dc1b7f0cad9892af2adf1f">franky::FrictionCompensationParams</a>, <a class="el" href="structfranky_1_1_manipulability_task.html#ad0aa5fdc62198e068759d5b0e8f78dda">franky::ManipulabilityTask</a>, <a class="el" href="structfranky_1_1_posture_task.html#ae87e834b004a660bc10bfb7d2a0c781c">franky::PostureTask</a></li>
 <li>max_total_duration&#160;:&#160;<a class="el" href="structfranky_1_1_waypoint.html#a2a1eae68a4e9d3b9c54a0ff1fd6c9bb2">franky::Waypoint&lt; TargetType &gt;</a></li>
 <li>minimum_time&#160;:&#160;<a class="el" href="structfranky_1_1_waypoint.html#ae1532c5f277153a041d626ce4666d382">franky::Waypoint&lt; TargetType &gt;</a></li>
 </ul>
 
 
 <h3><a id="index_n" name="index_n"></a>- n -</h3><ul>
-<li>nullspace_stiffness&#160;:&#160;<a class="el" href="structfranky_1_1_cartesian_impedance_base_1_1_params.html#a7d142713f820ce4b1e76a9c9f9753091">franky::CartesianImpedanceBase::Params</a>, <a class="el" href="structfranky_1_1_cartesian_impedance_gains.html#a84718f54791137c6e45f88501e379815">franky::CartesianImpedanceGains</a></li>
-<li>nullspace_target&#160;:&#160;<a class="el" href="structfranky_1_1_cartesian_impedance_base_1_1_params.html#a10e8f86263fd7209084d8c3c52df1aac">franky::CartesianImpedanceBase::Params</a></li>
+<li>nullspace_tasks&#160;:&#160;<a class="el" href="structfranky_1_1_cartesian_impedance_base_1_1_params.html#a7a876c31cda0c2a961b7b43dd09525c7">franky::CartesianImpedanceBase::Params</a></li>
 </ul>
 
 
@@ -205,6 +215,9 @@ $(function() {
 
 <h3><a id="index_p" name="index_p"></a>- p -</h3><ul>
 <li>params_&#160;:&#160;<a class="el" href="classfranky_1_1_joint_impedance_base.html#a67a1706d88e636f114f4e5a8ba817370">franky::JointImpedanceBase</a></li>
+<li>posture_damping&#160;:&#160;<a class="el" href="structfranky_1_1_nullspace_gains.html#a42ac435856b58ba1257eefcd7c0ce97e">franky::NullspaceGains</a></li>
+<li>posture_max_torque&#160;:&#160;<a class="el" href="structfranky_1_1_nullspace_gains.html#a0eba8cc9f753208f01eed4405b7a6c8a">franky::NullspaceGains</a></li>
+<li>posture_stiffness&#160;:&#160;<a class="el" href="structfranky_1_1_nullspace_gains.html#a3c5399003e974023110e83111cb2af79">franky::NullspaceGains</a></li>
 </ul>
 
 
@@ -216,6 +229,7 @@ $(function() {
 
 
 <h3><a id="index_r" name="index_r"></a>- r -</h3><ul>
+<li>ramp_duration&#160;:&#160;<a class="el" href="structfranky_1_1_torque_stop_params.html#a9025c1c0d0f6c97dff36b2fe7b994d7e">franky::TorqueStopParams</a></li>
 <li>REACTION_RECURSION_LIMIT&#160;:&#160;<a class="el" href="classfranky_1_1_motion_generator.html#a2dceaaa3e924424fc57f68b5e1955712">franky::MotionGenerator&lt; ControlSignalType &gt;</a></li>
 <li>realtime_config&#160;:&#160;<a class="el" href="structfranky_1_1_robot_1_1_params.html#a7c8199f22e083645746aa47020c97d56">franky::Robot::Params</a></li>
 <li>reference_type&#160;:&#160;<a class="el" href="structfranky_1_1_position_waypoint.html#ac5dee69cb4ee3ab71a80cd54244ad220">franky::PositionWaypoint&lt; TargetType &gt;</a></li>
@@ -225,18 +239,17 @@ $(function() {
 <li>rotation_jerk_limit&#160;:&#160;<a class="el" href="classfranky_1_1_robot.html#ace7d9414a2e80b4a6c760578ebd382d3">franky::Robot</a></li>
 <li>rotation_velocity_limit&#160;:&#160;<a class="el" href="classfranky_1_1_robot.html#a83a0166687db4309de4f9cd7b76eb723">franky::Robot</a></li>
 <li>rotational_error_clip&#160;:&#160;<a class="el" href="structfranky_1_1_cartesian_impedance_base_1_1_params.html#a83ed9902dd55d87eabfd490e4d4818f1">franky::CartesianImpedanceBase::Params</a></li>
-<li>rotational_stiffness&#160;:&#160;<a class="el" href="structfranky_1_1_cartesian_impedance_base_1_1_params.html#a24ab1e8c4db64fab0b8f46379d77e26d">franky::CartesianImpedanceBase::Params</a>, <a class="el" href="structfranky_1_1_cartesian_impedance_gains.html#af4a21aab03d1fc88a1d8d0d54bd53008">franky::CartesianImpedanceGains</a></li>
 </ul>
 
 
 <h3><a id="index_s" name="index_s"></a>- s -</h3><ul>
 <li>safety&#160;:&#160;<a class="el" href="structfranky_1_1_cartesian_impedance_base_1_1_params.html#a4c81d4da9d7d1feffbeb3bb071c05e65">franky::CartesianImpedanceBase::Params</a>, <a class="el" href="structfranky_1_1_joint_impedance_params.html#aee2c4ac2f746b4567395fbfe56fc0da1">franky::JointImpedanceParams</a></li>
-<li>stiffness&#160;:&#160;<a class="el" href="structfranky_1_1_joint_impedance_gains.html#a4436f1359e36dc8129767371ee8b2966">franky::JointImpedanceGains</a>, <a class="el" href="structfranky_1_1_joint_impedance_params.html#ab0e9132e2ca488f83583319efd1e6db7">franky::JointImpedanceParams</a></li>
+<li>stiffness&#160;:&#160;<a class="el" href="structfranky_1_1_cartesian_impedance_base_1_1_params.html#a8ea5ff37832b27a6c1f251febbc7ef81">franky::CartesianImpedanceBase::Params</a>, <a class="el" href="structfranky_1_1_cartesian_impedance_gains.html#a4d85151cd1c9c5ca9631b588bb204d52">franky::CartesianImpedanceGains</a>, <a class="el" href="structfranky_1_1_joint_impedance_gains.html#a4436f1359e36dc8129767371ee8b2966">franky::JointImpedanceGains</a>, <a class="el" href="structfranky_1_1_joint_impedance_params.html#ab0e9132e2ca488f83583319efd1e6db7">franky::JointImpedanceParams</a>, <a class="el" href="structfranky_1_1_posture_task.html#aeb53b7661308030cc6c2082ef9b6b282">franky::PostureTask</a></li>
 </ul>
 
 
 <h3><a id="index_t" name="index_t"></a>- t -</h3><ul>
-<li>target&#160;:&#160;<a class="el" href="structfranky_1_1_cartesian_reference.html#a5293a063f3724d78f3db81c8a95e7147">franky::CartesianReference</a>, <a class="el" href="structfranky_1_1_waypoint.html#a857fb8417fc17ff5e171494b1d398355">franky::Waypoint&lt; TargetType &gt;</a></li>
+<li>target&#160;:&#160;<a class="el" href="structfranky_1_1_cartesian_reference.html#a5293a063f3724d78f3db81c8a95e7147">franky::CartesianReference</a>, <a class="el" href="structfranky_1_1_posture_task.html#a125e4d1037730e1b4699a9f84fff89bb">franky::PostureTask</a>, <a class="el" href="structfranky_1_1_waypoint.html#a857fb8417fc17ff5e171494b1d398355">franky::Waypoint&lt; TargetType &gt;</a></li>
 <li>target_&#160;:&#160;<a class="el" href="classfranky_1_1_cartesian_impedance_base.html#aa63e8aaf20c6b428e1df863012d75b46">franky::CartesianImpedanceBase</a>, <a class="el" href="classfranky_1_1_joint_impedance_base.html#a4280ccdaa748f559abacd867b3842db9">franky::JointImpedanceBase</a></li>
 <li>target_acceleration&#160;:&#160;<a class="el" href="structfranky_1_1_cartesian_reference.html#a2de1ad3cc39fff92e4158b7364da95f3">franky::CartesianReference</a></li>
 <li>target_twist&#160;:&#160;<a class="el" href="structfranky_1_1_cartesian_reference.html#a9e115300d98cd397b77d013e7ab8ace1">franky::CartesianReference</a></li>
@@ -252,7 +265,6 @@ $(function() {
 <li>translation_jerk_limit&#160;:&#160;<a class="el" href="classfranky_1_1_robot.html#a676d0b273cc01dd02fa536ce07992a73">franky::Robot</a></li>
 <li>translation_velocity_limit&#160;:&#160;<a class="el" href="classfranky_1_1_robot.html#a7165eb847d474a244c6fba5b595cd84b">franky::Robot</a></li>
 <li>translational_error_clip&#160;:&#160;<a class="el" href="structfranky_1_1_cartesian_impedance_base_1_1_params.html#a05d3d447fd6f1127c0dc6d40d183c0ff">franky::CartesianImpedanceBase::Params</a></li>
-<li>translational_stiffness&#160;:&#160;<a class="el" href="structfranky_1_1_cartesian_impedance_base_1_1_params.html#ad7c036ed35bbd4da4fea4c92a781efed">franky::CartesianImpedanceBase::Params</a>, <a class="el" href="structfranky_1_1_cartesian_impedance_gains.html#a4bb397cdcfdf9cc07283a41c13bbb4df">franky::CartesianImpedanceGains</a></li>
 </ul>
 
 
@@ -262,7 +274,7 @@ $(function() {
 
 
 <h3><a id="index_v" name="index_v"></a>- v -</h3><ul>
-<li>velocity_epsilon&#160;:&#160;<a class="el" href="structfranky_1_1_friction_compensation_params.html#a904264a8164b03170dee2abfbcff6eaf">franky::FrictionCompensationParams</a></li>
+<li>velocity_epsilon&#160;:&#160;<a class="el" href="structfranky_1_1_friction_compensation_params.html#a904264a8164b03170dee2abfbcff6eaf">franky::FrictionCompensationParams</a>, <a class="el" href="structfranky_1_1_torque_stop_params.html#aa356c8e8468900f380a24dcaf2813e17">franky::TorqueStopParams</a></li>
 <li>viscous&#160;:&#160;<a class="el" href="structfranky_1_1_friction_compensation_params.html#a5d0d90ef4c4f88021c8aa529ed57a827">franky::FrictionCompensationParams</a></li>
 </ul>
 </div><!-- contents -->

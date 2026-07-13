@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['q_0',['q',['../structfranky_1_1_joint_reference.html#a7c08ef34a8f14afccea98dd4cb48bc7a',1,'franky::JointReference::q'],['../structfranky_1_1_robot_state.html#adcba9f6e06d0161ee6ec2bb904e2f1cd',1,'franky::RobotState::q']]],
-  ['q_5fd_1',['q_d',['../structfranky_1_1_robot_state.html#aae25b9bee828132b2db5a669855bf16a',1,'franky::RobotState']]],
-  ['q_5fest_2',['q_est',['../structfranky_1_1_robot_state.html#a34a1ba1681f87b6f35061f9595eba3f6',1,'franky::RobotState']]]
+  ['params_5f_0',['params_',['../classfranky_1_1_joint_impedance_base.html#a67a1706d88e636f114f4e5a8ba817370',1,'franky::JointImpedanceBase']]],
+  ['posture_5fdamping_1',['posture_damping',['../structfranky_1_1_nullspace_gains.html#a42ac435856b58ba1257eefcd7c0ce97e',1,'franky::NullspaceGains']]],
+  ['posture_5fmax_5ftorque_2',['posture_max_torque',['../structfranky_1_1_nullspace_gains.html#a0eba8cc9f753208f01eed4405b7a6c8a',1,'franky::NullspaceGains']]],
+  ['posture_5fstiffness_3',['posture_stiffness',['../structfranky_1_1_nullspace_gains.html#a3c5399003e974023110e83111cb2af79',1,'franky::NullspaceGains']]]
 ];

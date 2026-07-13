@@ -99,6 +99,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:ab0e9132e2ca488f83583319efd1e6db7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6f0943da6bd28892293bdd02918b1dc" id="r_ac6f0943da6bd28892293bdd02918b1dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_joint_impedance_params.html#ac6f0943da6bd28892293bdd02918b1dc">damping</a> {<a class="el" href="namespacefranky.html#aff6dd8d5ecb3f23f21576f7da3301482">defaultJointImpedanceDamping</a>()}</td></tr>
 <tr class="separator:ac6f0943da6bd28892293bdd02918b1dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b593843288f717e85d5202b388cbe81" id="r_a7b593843288f717e85d5202b388cbe81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_joint_impedance_params.html#a7b593843288f717e85d5202b388cbe81">error_clip</a> {Vector7d::Constant(0.5)}</td></tr>
+<tr class="separator:a7b593843288f717e85d5202b388cbe81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc6ae9079e37ec656a5faca7416d635a" id="r_abc6ae9079e37ec656a5faca7416d635a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_joint_impedance_params.html#abc6ae9079e37ec656a5faca7416d635a">constant_torque_offset</a> {Vector7d::Zero()}</td></tr>
 <tr class="separator:abc6ae9079e37ec656a5faca7416d635a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52ee599019fcecb061c6e8ec6bcc9cbf" id="r_a52ee599019fcecb061c6e8ec6bcc9cbf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_joint_impedance_params.html#a52ee599019fcecb061c6e8ec6bcc9cbf">compensate_coriolis</a> {<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">true</a>}</td></tr>
@@ -107,6 +109,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:aee2c4ac2f746b4567395fbfe56fc0da1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a885df1b2c73bc0a67c03fdaef7565ce7" id="r_a885df1b2c73bc0a67c03fdaef7565ce7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structfranky_1_1_friction_compensation_params.html">FrictionCompensationParams</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_joint_impedance_params.html#a885df1b2c73bc0a67c03fdaef7565ce7">friction</a> {}</td></tr>
 <tr class="separator:a885df1b2c73bc0a67c03fdaef7565ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb7c5d0cd36c975464ddbdf22cc00c2b" id="r_adb7c5d0cd36c975464ddbdf22cc00c2b"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="structfranky_1_1_cartesian_impedance_gains.html">CartesianImpedanceGains</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_joint_impedance_params.html#adb7c5d0cd36c975464ddbdf22cc00c2b">cartesian_gains</a> {std::nullopt}</td></tr>
+<tr class="separator:adb7c5d0cd36c975464ddbdf22cc00c2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Parameters for joint impedance motions. </p>
@@ -139,6 +143,21 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="adb7c5d0cd36c975464ddbdf22cc00c2b" name="adb7c5d0cd36c975464ddbdf22cc00c2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb7c5d0cd36c975464ddbdf22cc00c2b">&#9670;&#160;</a></span>cartesian_gains</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;<a class="el" href="structfranky_1_1_cartesian_impedance_gains.html">CartesianImpedanceGains</a>&gt; franky::JointImpedanceParams::cartesian_gains {std::nullopt}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Optional Cartesian-space stiffness/damping projected through the current Jacobian. </p>
+
+</div>
+</div>
 <a id="a52ee599019fcecb061c6e8ec6bcc9cbf" name="a52ee599019fcecb061c6e8ec6bcc9cbf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a52ee599019fcecb061c6e8ec6bcc9cbf">&#9670;&#160;</a></span>compensate_coriolis</h2>
 
@@ -181,6 +200,21 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Joint damping gains in [Nms/rad]. </p>
+
+</div>
+</div>
+<a id="a7b593843288f717e85d5202b388cbe81" name="a7b593843288f717e85d5202b388cbe81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b593843288f717e85d5202b388cbe81">&#9670;&#160;</a></span>error_clip</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> franky::JointImpedanceParams::error_clip {Vector7d::Constant(0.5)}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Maximum absolute joint position error [rad] used by the joint-space controller. </p>
 
 </div>
 </div>

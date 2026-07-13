@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['i_5fee_0',['I_ee',['../structfranky_1_1_robot_state.html#a9646c969429e0853722837c950820f44',1,'franky::RobotState']]],
-  ['i_5fload_1',['I_load',['../structfranky_1_1_robot_state.html#ad8590b96b51241bea2620dcc482c0f9a',1,'franky::RobotState']]],
-  ['i_5ftotal_2',['I_total',['../structfranky_1_1_robot_state.html#a627a19dfeb245fe9929b5dba0de4516b',1,'franky::RobotState']]]
+  ['hold_5ftarget_5fduration_0',['hold_target_duration',['../structfranky_1_1_waypoint.html#a2c1e5c63e3a7447b4699a546e49ed009',1,'franky::Waypoint']]]
 ];

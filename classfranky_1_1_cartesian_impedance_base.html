@@ -114,6 +114,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:add99efa03351f2b04a3fa9f878abb16e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac42b6052cf6416fd220f6d9d3c65446e" id="r_ac42b6052cf6416fd220f6d9d3c65446e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structfranky_1_1_cartesian_impedance_gains.html">CartesianImpedanceGains</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_cartesian_impedance_base.html#ac42b6052cf6416fd220f6d9d3c65446e">getGains</a> () <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a></td></tr>
 <tr class="separator:ac42b6052cf6416fd220f6d9d3c65446e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa02dfc11985414d21e6042c18563981b" id="r_aa02dfc11985414d21e6042c18563981b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_cartesian_impedance_base.html#aa02dfc11985414d21e6042c18563981b">setNullspaceGains</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="structfranky_1_1_nullspace_gains.html">NullspaceGains</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">gains</a>)</td></tr>
+<tr class="separator:aa02dfc11985414d21e6042c18563981b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1205e52681aabef20c359a57d1a418f" id="r_af1205e52681aabef20c359a57d1a418f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structfranky_1_1_nullspace_gains.html">NullspaceGains</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_cartesian_impedance_base.html#af1205e52681aabef20c359a57d1a418f">getNullspaceGains</a> () <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a></td></tr>
+<tr class="separator:af1205e52681aabef20c359a57d1a418f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classfranky_1_1_motion"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classfranky_1_1_motion')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classfranky_1_1_motion.html">franky::Motion&lt; franka::Torques &gt;</a></td></tr>
 <tr class="memitem:aa6d72b7a606055fc444bf2da0c463d16 inherit pub_methods_classfranky_1_1_motion" id="r_aa6d72b7a606055fc444bf2da0c463d16"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_motion.html#aa6d72b7a606055fc444bf2da0c463d16">~Motion</a> ()=default</td></tr>
 <tr class="separator:aa6d72b7a606055fc444bf2da0c463d16 inherit pub_methods_classfranky_1_1_motion"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -170,7 +174,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for client-side cartesian impedance motions. </p>
-<p>This class computes joint torques from a task-space spring-damper law with optional nullspace posture control and model compensation. It does not use Franka's internal impedance controller. Instead, it uses Franka's internal torque controller and calculates the torques itself. Subclasses implement nextCommandImpl and call computeCommand with their current reference. </p>
+<p>This motion implements a cartesian impedance controller on the client side and does not use Franka's internal impedance controller. Instead, it uses Franka's internal torque controller and calculates the torques itself. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a2411ac48cbf0fca41e6e77d6588dbd87" name="a2411ac48cbf0fca41e6e77d6588dbd87"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2411ac48cbf0fca41e6e77d6588dbd87">&#9670;&#160;</a></span>CartesianImpedanceBase()</h2>
@@ -315,6 +319,31 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="af1205e52681aabef20c359a57d1a418f" name="af1205e52681aabef20c359a57d1a418f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1205e52681aabef20c359a57d1a418f">&#9670;&#160;</a></span>getNullspaceGains()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structfranky_1_1_nullspace_gains.html">NullspaceGains</a> franky::CartesianImpedanceBase::getNullspaceGains </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="add99efa03351f2b04a3fa9f878abb16e" name="add99efa03351f2b04a3fa9f878abb16e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#add99efa03351f2b04a3fa9f878abb16e">&#9670;&#160;</a></span>setGains()</h2>
 
@@ -328,6 +357,32 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a> franky::CartesianImpedanceBase::setGains </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="structfranky_1_1_cartesian_impedance_gains.html">CartesianImpedanceGains</a> &amp;&#160;</td>
+          <td class="paramname"><em>gains</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa02dfc11985414d21e6042c18563981b" name="aa02dfc11985414d21e6042c18563981b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa02dfc11985414d21e6042c18563981b">&#9670;&#160;</a></span>setNullspaceGains()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a> franky::CartesianImpedanceBase::setNullspaceGains </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="structfranky_1_1_nullspace_gains.html">NullspaceGains</a> &amp;&#160;</td>
           <td class="paramname"><em>gains</em></td><td>)</td>
           <td></td>
         </tr>
