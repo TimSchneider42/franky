@@ -40,6 +40,16 @@ struct InvalidMotionTypeException : std::runtime_error {
 };
 
 /**
+ * @brief Exception thrown when a motion is started more than once.
+ *
+ * Motions maintain internal state, hence they must not be reused. Create a new
+ * motion instance for every execution instead.
+ */
+struct MotionReuseException : std::runtime_error {
+  using std::runtime_error::runtime_error;
+};
+
+/**
  * @brief A class representing a Franka robot.
  *
  * This class extends the franka::Robot class and adds additional functionality
@@ -589,6 +599,12 @@ class Robot : public franka::Robot {
       const std::function<void(const ControlFunc<ControlSignalType> &)> &control_func_executor, bool async) {
     if (motion == nullptr) {
       throw std::invalid_argument("The motion must not be null.");
+    }
+    // Fail-fast check in the user thread; the authoritative lock-free check is in Motion::init.
+    if (motion->has_started()) {
+      throw MotionReuseException(
+          "This motion object has already been started before. Motions cannot be reused; create a new motion "
+          "instance instead.");
     }
     {  // Do not remove brace, it is needed to scope the lock
       std::unique_lock lock(*control_mutex_);

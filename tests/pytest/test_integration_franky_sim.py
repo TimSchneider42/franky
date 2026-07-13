@@ -513,3 +513,42 @@ def test_gripper_stop():
         gripper.homing()
         result = gripper.stop()
         assert result, "Gripper stop should return True"
+
+
+# ---------------------------------------------------------------------------
+# Test 10 – Motion reuse is rejected
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.timeout(20)
+def test_motion_reuse_raises():
+    """
+    Motions maintain internal state and must not be executed more than once.
+    Reusing a motion object should raise MotionReuseException, both for
+    synchronous moves and when preempting an asynchronous motion.
+    """
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
+
+        motion = franky.JointWaypointMotion(
+            [franky.JointWaypoint([-0.1, 0.1, 0.1, -1.5, 0.1, 1.6, 0.8])]
+        )
+        robot.move(motion)
+        with pytest.raises(franky.MotionReuseException):
+            robot.move(motion)
+
+        # Reuse as a preempting motion of an asynchronous move must also fail.
+        async_motion = franky.JointWaypointMotion(
+            [franky.JointWaypoint([0.1, -0.1, -0.1, -1.6, -0.1, 1.5, 0.7])]
+        )
+        robot.move(async_motion, asynchronous=True)
+        with pytest.raises(franky.MotionReuseException):
+            robot.move(motion, asynchronous=True)
+        robot.join_motion()
+
+        # A fresh motion instance still works after the failed attempts.
+        robot.move(
+            franky.JointWaypointMotion(
+                [franky.JointWaypoint([0.0, 0.0, 0.0, -1.57, 0.0, 1.57, 0.785])]
+            )
+        )

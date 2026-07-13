@@ -1,5 +1,6 @@
 #pragma once
 
+#include <atomic>
 #include <list>
 #include <mutex>
 
@@ -59,12 +60,19 @@ class Motion {
   void registerCallback(CallbackType callback);
 
   /**
-   * @brief Initialize the motion.
+   * @brief Initialize the motion. Motions can only be started once; this
+   * function throws a MotionReuseException on any subsequent call.
    * @param robot The robot instance.
    * @param robot_state The current robot state.
    * @param previous_command The previous command.
    */
   void init(Robot *robot, const RobotState &robot_state, const std::optional<ControlSignalType> &previous_command);
+
+  /**
+   * @brief Whether this motion has already been started. Started motions
+   * cannot be started again.
+   */
+  [[nodiscard]] bool has_started() const { return started_.load(); }
 
   /**
    * @brief Get the next command of the motion.
@@ -106,6 +114,7 @@ class Motion {
   std::mutex callback_mutex_;
   std::vector<CallbackType> callbacks_;
   Robot *robot_;
+  std::atomic<bool> started_{false};
 };
 
 }  // namespace franky

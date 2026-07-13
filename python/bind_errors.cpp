@@ -71,6 +71,7 @@ void bind_errors(py::module &m) {
   py::register_exception<franka::ProtocolException>(m, "ProtocolException");
   py::register_exception<franka::RealtimeException>(m, "RealtimeException");
   py::register_exception<InvalidMotionTypeException>(m, "InvalidMotionTypeException");
+  py::register_exception<MotionReuseException>(m, "MotionReuseException");
   py::register_exception<ReactionRecursionException>(m, "ReactionRecursionException");
   py::register_exception<GripperException>(m, "GripperException");
 }

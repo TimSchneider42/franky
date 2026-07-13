@@ -600,6 +600,10 @@ robot.move(m_jp1)
 robot.move(m_jp2, relative_dynamics_factor=0.8)
 ```
 
+Note that motion objects are single-use: they maintain internal state, so once a motion has been started, passing it
+to `move` again (or returning it from a reaction) raises a `MotionReuseException`.
+Create a new motion instance for every execution instead.
+
 ### Motion Callbacks
 
 All motions support callbacks, which will be invoked in every control step at 1kHz.
@@ -616,8 +620,9 @@ def cb(
     print(f"At time {abs_time}, the target joint positions were {control_signal.q}")
 
 
-m_jp1.register_callback(cb)
-robot.move(m_jp1)
+m_cb = JointMotion([-0.3, 0.1, 0.3, -1.4, 0.1, 1.8, 0.7])
+m_cb.register_callback(cb)
+robot.move(m_cb)
 ```
 
 Note that in Python, these callbacks are not executed in the control thread since they would otherwise block it.

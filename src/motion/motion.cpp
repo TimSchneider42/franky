@@ -49,6 +49,13 @@ std::vector<std::shared_ptr<Reaction<ControlSignalType>>> Motion<ControlSignalTy
 template <typename ControlSignalType>
 void Motion<ControlSignalType>::init(
     Robot *robot, const RobotState &robot_state, const std::optional<ControlSignalType> &previous_command) {
+  // This check runs in the real-time thread, hence it must be lock-free.
+  static_assert(std::atomic<bool>::is_always_lock_free);
+  if (started_.exchange(true, std::memory_order_relaxed)) {
+    throw MotionReuseException(
+        "This motion object has already been started before. Motions cannot be reused; create a new motion "
+        "instance instead.");
+  }
   robot_ = robot;
   initImpl(robot_state, previous_command);
 }
