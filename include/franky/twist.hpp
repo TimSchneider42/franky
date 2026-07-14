@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Eigen/Core>
+#include <type_traits>
 
 #include "franky/types.hpp"
 #include "franky/util.hpp"
@@ -57,7 +58,8 @@ class Twist {
    * @param rotation The rotation to apply.
    * @return The twist after the transformation.
    */
-  template <typename RotationMatrixType>
+  template <
+      typename RotationMatrixType, std::enable_if_t<!std::is_arithmetic_v<std::decay_t<RotationMatrixType>>, int> = 0>
   [[nodiscard]] Twist transformWith(const RotationMatrixType &rotation) const {
     return Twist{rotation * linear_velocity_, rotation * angular_velocity_};
   }
@@ -99,7 +101,8 @@ class Twist {
 
 inline Twist operator*(const Affine &affine, const Twist &twist) { return twist.transformWith(affine); }
 
-template <typename RotationMatrixType>
+template <
+    typename RotationMatrixType, std::enable_if_t<!std::is_arithmetic_v<std::decay_t<RotationMatrixType>>, int> = 0>
 Twist operator*(const RotationMatrixType &rotation, const Twist &twist) {
   return twist.transformWith(rotation);
 }

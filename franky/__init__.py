@@ -1,5 +1,7 @@
 """franky: a high-level control library for Franka robots."""
 
+from ._franky import *
+
 from .robot import Robot
 from .desk import (
     Desk,
@@ -23,4 +25,3 @@ from .reaction import (
 )
 from .motion import Motion
 from .tracker import CartesianImpedanceTracker, JointImpedanceTracker
-from ._franky import *

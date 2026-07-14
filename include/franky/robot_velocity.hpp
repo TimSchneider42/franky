@@ -4,6 +4,7 @@
 
 #include <Eigen/Core>
 #include <optional>
+#include <type_traits>
 
 #include "franky/elbow_state.hpp"
 #include "franky/twist.hpp"
@@ -88,7 +89,8 @@ class RobotVelocity {
    * @param rotation The rotation to apply.
    * @return The velocity after the transformation.
    */
-  template <typename RotationMatrixType>
+  template <
+      typename RotationMatrixType, std::enable_if_t<!std::is_arithmetic_v<std::decay_t<RotationMatrixType>>, int> = 0>
   [[nodiscard]] inline RobotVelocity transform(const RotationMatrixType &rotation) const {
     return {rotation * end_effector_twist_, elbow_velocity_};
   }
@@ -141,7 +143,8 @@ inline RobotVelocity operator*(const Affine &affine, const RobotVelocity &robot_
   return robot_velocity.transform(affine);
 }
 
-template <typename RotationMatrixType>
+template <
+    typename RotationMatrixType, std::enable_if_t<!std::is_arithmetic_v<std::decay_t<RotationMatrixType>>, int> = 0>
 inline RobotVelocity operator*(const RotationMatrixType &rotation, const RobotVelocity &robot_velocity) {
   return robot_velocity.transform(rotation);
 }

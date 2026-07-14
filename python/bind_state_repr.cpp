@@ -257,7 +257,7 @@ void bind_state_repr(py::module &m) {
               },
               [](const py::tuple &t) {  // __setstate__
                 if (t.size() != 2) throw std::runtime_error("Invalid state!");
-                return RobotVelocity(t[0].cast<Twist>(), t[1].cast<double>());
+                return RobotVelocity(t[0].cast<Twist>(), t[1].cast<std::optional<double>>());
               }));
   py::implicitly_convertible<Twist, RobotVelocity>();
 
@@ -319,38 +319,47 @@ void bind_state_repr(py::module &m) {
 
   py::class_<franka::Torques>(m, "Torques", DOC(franka, Torques))
       .def_readonly("tau_J", &franka::Torques::tau_J, DOC(franka, Torques, tau_J))
+      .def_readonly("motion_finished", &franka::Torques::motion_finished)
       .def(
           py::pickle(
               [](const franka::Torques &torques) {  // __getstate__
-                return py::make_tuple(torques.tau_J);
+                return py::make_tuple(torques.tau_J, torques.motion_finished);
               },
               [](const py::tuple &t) {  // __setstate__
-                if (t.size() != 1) throw std::runtime_error("Invalid state!");
-                return franka::Torques(t[0].cast<std::array<double, 7>>());
+                if (t.size() != 1 && t.size() != 2) throw std::runtime_error("Invalid state!");
+                franka::Torques torques(t[0].cast<std::array<double, 7>>());
+                if (t.size() == 2) torques.motion_finished = t[1].cast<bool>();
+                return torques;
               }));
 
   py::class_<franka::JointVelocities>(m, "JointVelocities", DOC(franka, JointVelocities))
       .def_readonly("dq", &franka::JointVelocities::dq, DOC(franka, JointVelocities, dq))
+      .def_readonly("motion_finished", &franka::JointVelocities::motion_finished)
       .def(
           py::pickle(
               [](const franka::JointVelocities &velocities) {  // __getstate__
-                return py::make_tuple(velocities.dq);
+                return py::make_tuple(velocities.dq, velocities.motion_finished);
               },
               [](const py::tuple &t) {  // __setstate__
-                if (t.size() != 1) throw std::runtime_error("Invalid state!");
-                return franka::JointVelocities(t[0].cast<std::array<double, 7>>());
+                if (t.size() != 1 && t.size() != 2) throw std::runtime_error("Invalid state!");
+                franka::JointVelocities velocities(t[0].cast<std::array<double, 7>>());
+                if (t.size() == 2) velocities.motion_finished = t[1].cast<bool>();
+                return velocities;
               }));
 
   py::class_<franka::JointPositions>(m, "JointPositions", DOC(franka, JointPositions))
       .def_readonly("q", &franka::JointPositions::q, DOC(franka, JointPositions, q))
+      .def_readonly("motion_finished", &franka::JointPositions::motion_finished)
       .def(
           py::pickle(
               [](const franka::JointPositions &positions) {  // __getstate__
-                return py::make_tuple(positions.q);
+                return py::make_tuple(positions.q, positions.motion_finished);
               },
               [](const py::tuple &t) {  // __setstate__
-                if (t.size() != 1) throw std::runtime_error("Invalid state!");
-                return franka::JointPositions(t[0].cast<std::array<double, 7>>());
+                if (t.size() != 1 && t.size() != 2) throw std::runtime_error("Invalid state!");
+                franka::JointPositions positions(t[0].cast<std::array<double, 7>>());
+                if (t.size() == 2) positions.motion_finished = t[1].cast<bool>();
+                return positions;
               }));
 
   py::class_<franka::CartesianVelocities>(m, "CartesianVelocities", DOC(franka, CartesianVelocities))
@@ -365,26 +374,39 @@ void bind_state_repr(py::module &m) {
           "- ``elbow[0]``: Position of the 3rd joint [rad].\n"
           "- ``elbow[1]``: Flip direction of the elbow (4th joint): +1 if the 4th joint is above, 0 if it is at, "
           "and -1 if it is below :math:`\\alpha = -0.467` rad.")
+      .def_readonly("motion_finished", &franka::CartesianVelocities::motion_finished)
       .def(
           py::pickle(
               [](const franka::CartesianVelocities &velocities) {  // __getstate__
-                return py::make_tuple(velocities.O_dP_EE, velocities.elbow);
+                py::object elbow = velocities.hasElbow() ? py::cast(velocities.elbow) : py::none();
+                return py::make_tuple(velocities.O_dP_EE, elbow, velocities.motion_finished);
               },
               [](const py::tuple &t) {  // __setstate__
-                if (t.size() != 2) throw std::runtime_error("Invalid state!");
-                return franka::CartesianVelocities(
-                    t[0].cast<std::array<double, 6>>(), t[1].cast<std::array<double, 2>>());
+                if (t.size() != 2 && t.size() != 3) throw std::runtime_error("Invalid state!");
+                auto velocities = t[1].is_none()
+                                      ? franka::CartesianVelocities(t[0].cast<std::array<double, 6>>())
+                                      : franka::CartesianVelocities(
+                                            t[0].cast<std::array<double, 6>>(), t[1].cast<std::array<double, 2>>());
+                if (t.size() == 3) velocities.motion_finished = t[2].cast<bool>();
+                return velocities;
               }));
 
   py::class_<franka::CartesianPose>(m, "CartesianPose", DOC(franka, CartesianPose))
       .def_readonly("O_T_EE", &franka::CartesianPose::O_T_EE, DOC(franka, CartesianPose, O_T_EE))
+      .def_readonly("motion_finished", &franka::CartesianPose::motion_finished)
       .def(
           py::pickle(
               [](const franka::CartesianPose &pose) {  // __getstate__
-                return py::make_tuple(pose.O_T_EE, pose.elbow);
+                py::object elbow = pose.hasElbow() ? py::cast(pose.elbow) : py::none();
+                return py::make_tuple(pose.O_T_EE, elbow, pose.motion_finished);
               },
               [](const py::tuple &t) {  // __setstate__
-                if (t.size() != 2) throw std::runtime_error("Invalid state!");
-                return franka::CartesianPose(t[0].cast<std::array<double, 16>>(), t[1].cast<std::array<double, 2>>());
+                if (t.size() != 2 && t.size() != 3) throw std::runtime_error("Invalid state!");
+                auto pose = t[1].is_none()
+                                ? franka::CartesianPose(t[0].cast<std::array<double, 16>>())
+                                : franka::CartesianPose(
+                                      t[0].cast<std::array<double, 16>>(), t[1].cast<std::array<double, 2>>());
+                if (t.size() == 3) pose.motion_finished = t[2].cast<bool>();
+                return pose;
               }));
 }

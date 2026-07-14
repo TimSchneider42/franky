@@ -19,19 +19,12 @@ void robotMove(
   robot.move(motion, true, limit_rate, cutoff_frequency);
   if (!async) {
     auto future = std::async(std::launch::async, (bool (Robot::*)())&Robot::joinMotion, &robot);
-    // Check if python wants to terminate every 100 ms
-    bool python_terminating = false;
-    while (future.wait_for(std::chrono::milliseconds(100)) == std::future_status::timeout) {
-      {
-        py::gil_scoped_acquire gil_acquire;
-        python_terminating = Py_IsInitialized() && PyErr_CheckSignals() == -1;
-      }
-      if (python_terminating) {
-        robot.stop();
-        future.wait();
-        py::gil_scoped_acquire gil_acquire;
-        throw py::error_already_set();
-      }
+    try {
+      waitForFutureInterruptibly(future);
+    } catch (const py::error_already_set &) {
+      robot.stop();
+      future.wait();
+      throw;
     }
     future.get();
   }
@@ -65,7 +58,7 @@ void bind_robot(py::module &m) {
       .def("__repr__", strFromStream<DynamicsLimit<Vector7d>>)
       .def_property_readonly(
           "max",
-          [](const DynamicsLimit<Vector7d> &dynamics_limit) { return Vector7d::Map(dynamics_limit.max.data()); },
+          [](const DynamicsLimit<Vector7d> &dynamics_limit) { return Vector7d(dynamics_limit.max); },
           DOC(franky, DynamicsLimit, max))
       .def_readonly("desc", &DynamicsLimit<Vector7d>::desc, DOC(franky, DynamicsLimit, desc));
 
@@ -142,7 +135,7 @@ void bind_robot(py::module &m) {
           DOC(franky, Gripper, state))
       .def_property_readonly(
           "server_version",
-          reinterpret_cast<uint16_t (Gripper::*)()>(&Gripper::serverVersion),
+          [](const Gripper &gripper) { return static_cast<uint16_t>(gripper.serverVersion()); },
           DOC(franka, Gripper, serverVersion))
       .def_property_readonly(
           "width",
@@ -280,10 +273,14 @@ Args:
       .def(
           "join_motion",
           [](Robot &robot, std::optional<double> timeout) {
-            if (timeout.has_value())
-              return robot.joinMotion<double, std::ratio<1>>(
-                  std::chrono::duration<double, std::ratio<1>>(timeout.value()));
-            return robot.joinMotion();
+            try {
+              return interruptibleWait(
+                  [&robot](const auto &wait_duration) { return robot.joinMotion(wait_duration); }, timeout);
+            } catch (const py::error_already_set &) {
+              robot.stop();
+              robot.joinMotion();
+              throw;
+            }
           },
           "timeout"_a = std::nullopt,
           py::call_guard<py::gil_scoped_release>(),

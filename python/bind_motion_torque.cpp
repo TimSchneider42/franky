@@ -549,7 +549,7 @@ interpolates toward them with the given time constant, allowing smooth runtime s
       .def(
           "get_reference",
           [](const JointImpedanceTrackingMotion &m) { return m.getReference(); },
-          "Get a copy of the last commanded joint reference, or None if no reference has been set yet. Mutating the "
+          "Get a copy of the last published joint reference, or None if no reference has been set yet. Mutating the "
           "returned object has no effect on the motion; pass it to set_reference to apply changes.")
       .def(
           "set_reference",
@@ -719,7 +719,7 @@ interpolates toward them with the given time constant, allowing smooth runtime s
       .def(
           "get_reference",
           [](const CartesianImpedanceTrackingMotion &m) { return m.getReference(); },
-          "Get a copy of the last commanded Cartesian reference, or None if no reference has been set yet. Mutating "
+          "Get a copy of the last published Cartesian reference, or None if no reference has been set yet. Mutating "
           "the returned object has no effect on the motion; pass it to set_reference to apply changes.")
       .def(
           "set_reference",

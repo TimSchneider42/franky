@@ -23,8 +23,28 @@ void bind_misc(py::module &m) {
       .def(py::self -= py::self)
       .def(py::self * uint64_t())
       .def(py::self *= uint64_t())
-      .def(py::self / uint64_t())
-      .def(py::self /= uint64_t())
+      .def(
+          "__truediv__",
+          [](const franka::Duration &duration, uint64_t divisor) {
+            if (divisor == 0) {
+              PyErr_SetString(PyExc_ZeroDivisionError, "division by zero");
+              throw py::error_already_set();
+            }
+            return duration / divisor;
+          },
+          py::is_operator())
+      .def(
+          "__itruediv__",
+          [](franka::Duration &duration, uint64_t divisor) -> franka::Duration & {
+            if (divisor == 0) {
+              PyErr_SetString(PyExc_ZeroDivisionError, "division by zero");
+              throw py::error_already_set();
+            }
+            duration /= divisor;
+            return duration;
+          },
+          py::return_value_policy::reference_internal,
+          py::is_operator())
       .def("__repr__", strFromStream<franka::Duration>)
       .def(
           py::pickle(
@@ -66,10 +86,7 @@ void bind_misc(py::module &m) {
       .def(
           "wait",
           [](const std::shared_future<bool> &future, std::optional<double> timeout) {
-            if (timeout.has_value())
-              return future.wait_for(std::chrono::duration<double>(timeout.value())) == std::future_status::ready;
-            future.wait();
-            return true;
+            return waitForFutureInterruptibly(future, timeout);
           },
           "timeout"_a = std::nullopt,
           py::call_guard<py::gil_scoped_release>(),
@@ -80,7 +97,10 @@ void bind_misc(py::module &m) {
           "    True if the result became available before the timeout expired, False otherwise.")
       .def(
           "get",
-          &std::shared_future<bool>::get,
+          [](const std::shared_future<bool> &future) {
+            waitForFutureInterruptibly(future);
+            return future.get();
+          },
           py::call_guard<py::gil_scoped_release>(),
           "Wait for the result and return it. Blocks until the result is available.");
 }
