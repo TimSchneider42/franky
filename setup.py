@@ -8,7 +8,6 @@ from pathlib import Path
 
 from setuptools import setup, Extension, find_packages
 from setuptools.command.build_ext import build_ext
-from distutils.version import LooseVersion
 
 with (Path(__file__).resolve().parent / "README.md").open() as readme_file:
     long_description = readme_file.read()
@@ -38,10 +37,14 @@ class CMakeBuild(build_ext):
                 + ", ".join(e.name for e in self.extensions)
             )
 
-        cmake_version = LooseVersion(
-            re.search(r"version\s*([\d.]+)", out.decode()).group(1)
+        cmake_version = tuple(
+            int(component)
+            for component in re.search(r"version\s*([\d.]+)", out.decode())
+            .group(1)
+            .split(".")
         )
-        if cmake_version < LooseVersion("3.10.0"):
+        cmake_version += (0,) * (3 - len(cmake_version))
+        if cmake_version < (3, 10, 0):
             raise RuntimeError("CMake >= 3.10.0 is required")
 
         build_type = os.environ.get("BUILD_TYPE", "Release")
