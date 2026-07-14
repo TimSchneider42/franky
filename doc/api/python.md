@@ -159,6 +159,8 @@ See the [Impedance Control](../guide/impedance-control.md) chapter of the guide 
    CartesianImpedanceParams
    CartesianImpedanceMotionParams
    NullspaceGains
+   PostureTask
+   ManipulabilityTask
    FrictionCompensationParams
    TorqueSafetyParams
    TorqueStopMotion
