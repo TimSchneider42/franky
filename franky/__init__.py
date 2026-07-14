@@ -1,3 +1,5 @@
+"""franky: a high-level control library for Franka robots."""
+
 from .robot import Robot
 from .desk import (
     Desk,

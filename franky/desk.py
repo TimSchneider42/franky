@@ -20,10 +20,12 @@ logger = logging.getLogger(__name__)
 
 
 class DeskError(Exception):
-    pass
+    """Base class for errors raised by the Desk classes."""
 
 
 class FrankaAPIError(DeskError):
+    """Raised when the Franka web API returns an error response."""
+
     def __init__(
         self,
         path: str,
@@ -42,7 +44,7 @@ class FrankaAPIError(DeskError):
 
 
 class TakeControlTimeoutError(DeskError):
-    pass
+    """Raised when control over the robot could not be obtained within the timeout."""
 
 
 class PilotButton(Enum):
@@ -58,11 +60,15 @@ class PilotButton(Enum):
 
 
 class OperatingMode(Enum):
+    """Operating mode of the robot as reported by Franka Desk."""
+
     EXECUTION = "Execution"
     PROGRAMMING = "Programming"
 
 
 class BrakeState(Enum):
+    """State of the robot's joint brakes."""
+
     LOCKED = "Locked"
     UNLOCKED = "Unlocked"
 
@@ -92,6 +98,18 @@ def _encode_password(user: str, password: str) -> str:
 
 
 class BaseDesk(ABC):
+    """Base class for sessions with the Franka Desk web interface.
+
+    The Desk classes allow controlling robot functions that are otherwise only available through
+    the Franka Desk web interface, such as unlocking the brakes, enabling the FCI, or reacting to
+    Pilot button presses.
+
+    Args:
+        hostname: Hostname or IP address of the robot.
+        username: Username to log into Franka Desk.
+        password: Password to log into Franka Desk.
+    """
+
     def __init__(self, hostname: str, username: str, password: str):
         super().__init__()
         self.__hostname = hostname
@@ -103,6 +121,14 @@ class BaseDesk(ABC):
         self.__control_token_id = None
 
     def open(self, timeout: float = 30.0):
+        """Open the connection to Franka Desk and log in.
+
+        Instead of calling this method directly, the session can also be used as a context
+        manager.
+
+        Args:
+            timeout: Connection timeout [s].
+        """
         if self.is_open:
             raise RuntimeError("Session is already open.")
         self.__client = HTTPSConnection(
@@ -111,6 +137,7 @@ class BaseDesk(ABC):
         self.__client.connect()
 
     def close(self):
+        """Release control if held, and close the connection to Franka Desk."""
         if not self.is_open:
             raise RuntimeError("Session is not open.")
         self._close_pilot_button_socket()
@@ -120,12 +147,27 @@ class BaseDesk(ABC):
         self.__client = None
 
     def take_control(self, wait_timeout: float = 30.0, force: bool = False):
+        """Obtain exclusive control over the robot.
+
+        Control is required for all operations that change the state of the robot, such as
+        unlocking the brakes or enabling the FCI.
+
+        Args:
+            wait_timeout: Maximum time to wait for control to be granted [s].
+            force: Whether to take control even if another user currently holds it. Depending on
+                the API version, forcibly taking control may require pressing a physical button
+                on the robot within the timeout.
+
+        Raises:
+            TakeControlTimeoutError: If control was not granted within the timeout.
+        """
         if not self.has_control:
             self.__control_token_id, self.__control_token = self._take_control(
                 wait_timeout=wait_timeout, force=force
             )
 
     def release_control(self):
+        """Release control over the robot, allowing other users to take it."""
         if self.__control_token is not None:
             self._release_control()
         self.__control_token = None
@@ -140,6 +182,24 @@ class BaseDesk(ABC):
         method: Literal["GET", "POST", "DELETE"] = "POST",
         response_encoding: Optional[Literal["json", "text"]] = None,
     ) -> Any:
+        """Send a request to the Franka web API and parse the response.
+
+        Args:
+            path: Path of the API endpoint, e.g. "/api/system".
+            headers: Additional HTTP headers. Overrides the content-type header derived from
+                content_encoding if set.
+            content: Request payload, encoded according to content_encoding.
+            content_encoding: How to encode the payload.
+            method: HTTP method to use.
+            response_encoding: How to decode the response. If None, it is derived from the
+                response content type.
+
+        Returns:
+            The parsed response, or None if the response is empty.
+
+        Raises:
+            FrankaAPIError: If the API returns an error response.
+        """
         return self.__parse_response(
             *self.__request(
                 path,
@@ -160,6 +220,11 @@ class BaseDesk(ABC):
         method: Literal["GET", "POST", "DELETE"] = "POST",
         response_encoding: Optional[Literal["json", "text"]] = None,
     ) -> Any:
+        """Send a request that requires control over the robot to the Franka web API.
+
+        Same as send_api_request, but includes the control token in the request. Requires
+        take_control to have been called first.
+        """
         return self.__parse_response(
             *self.__request_with_control(
                 path,
@@ -178,6 +243,7 @@ class BaseDesk(ABC):
         body: Optional[Any] = None,
         method: Literal["GET", "POST", "DELETE"] = "POST",
     ) -> bytes:
+        """Send a request with a raw body to the Franka web API and return the raw response."""
         return self.__request(path, headers, body, method)[0]
 
     def send_raw_control_api_request(
@@ -187,6 +253,11 @@ class BaseDesk(ABC):
         body: Optional[Any] = None,
         method: Literal["GET", "POST", "DELETE"] = "POST",
     ) -> bytes:
+        """Send a raw request that requires control over the robot to the Franka web API.
+
+        Same as send_raw_api_request, but includes the control token in the request. Requires
+        take_control to have been called first.
+        """
         return self.__request_with_control(path, headers, body, method)[0]
 
     def __request(
@@ -293,23 +364,24 @@ class BaseDesk(ABC):
 
     @abstractmethod
     def enable_fci(self):
-        pass
+        """Enable the Franka Control Interface (FCI). Requires control over the robot."""
 
     @abstractmethod
     def unlock_brakes(self):
-        pass
+        """Unlock the joint brakes. Requires control over the robot."""
 
     @abstractmethod
     def lock_brakes(self):
-        pass
+        """Lock the joint brakes. Requires control over the robot."""
 
     @abstractmethod
     def set_mode_execution(self):
-        pass
+        """Set the operating mode to Execution. Requires control over the robot."""
 
     @abstractmethod
     def execute_self_test(self):
-        pass
+        """Execute the safety self-test and wait for it to finish. Requires control over the
+        robot."""
 
     def _send_raw_api_request(
         self,
@@ -423,48 +495,59 @@ class BaseDesk(ABC):
 
     @property
     def is_open(self) -> bool:
+        """Whether the session is currently open."""
         return self.__client is not None
 
     @property
     def hostname(self) -> str:
+        """Hostname or IP address of the robot."""
         return self.__hostname
 
     @property
     def username(self) -> str:
+        """Username used to log into Franka Desk."""
         return self.__username
 
     @property
     def password(self) -> str:
+        """Password used to log into Franka Desk."""
         return self.__password
 
     @property
     def control_token(self) -> str | None:
+        """The current control token, or None if this session does not hold control."""
         return self.__control_token
 
     @property
     def control_token_id(self) -> str | None:
+        """The ID of the current control token, or None if this session does not hold control."""
         return self.__control_token_id
 
     @property
     def client(self) -> HTTPSConnection:
+        """The underlying HTTPS connection to the robot."""
         return self.__client
 
     @property
     def has_control(self):
+        """Whether this session currently holds control over the robot."""
         if self.__control_token_id is not None:
             return self._get_has_control()
         return False
 
     @property
     def system_status(self) -> dict[str, Any]:
+        """The system status as reported by the Franka web API."""
         return self._get_system_status()
 
     @property
     def operating_mode(self) -> OperatingMode:
+        """The current operating mode of the robot."""
         return self._get_operating_mode()
 
     @property
     def brake_state(self) -> BrakeState:
+        """The current state of the joint brakes."""
         return self._get_brake_state()
 
 
@@ -581,6 +664,11 @@ class DeskWebSession(BaseDesk):
         )
 
     def start_task(self, task: str):
+        """Start a task on Franka Desk.
+
+        Args:
+            task: ID of the task to start.
+        """
         self.send_api_request(
             "/desk/api/execution",
             content={"id": task},
@@ -600,6 +688,7 @@ class DeskWebSession(BaseDesk):
         )
 
     def set_mode_programming(self):
+        """Set the operating mode to Programming. Requires control over the robot."""
         self.send_control_api_request(
             "/desk/api/operating-mode/programming",
             content_encoding="x-www-form-urlencoded",
@@ -631,6 +720,7 @@ class DeskWebSession(BaseDesk):
 
     @property
     def token(self) -> str:
+        """The authentication token of this session."""
         return self.__token
 
 
@@ -704,9 +794,11 @@ class Desk(BaseDesk):
         self.send_control_api_request("/api/fci:activate")
 
     def disable_fci(self):
+        """Disable the Franka Control Interface (FCI). Requires control over the robot."""
         self.send_control_api_request("/api/fci:deactivate")
 
     def get_fci_status(self) -> str:
+        """Return the current status of the Franka Control Interface (FCI)."""
         return self.send_api_request("/api/fci", method="GET")["status"]
 
     def unlock_brakes(self):

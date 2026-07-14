@@ -8,6 +8,9 @@ from ._franky import (
     BaseTorqueMotion,
 )
 
+#: Union of the base motion types of all control signal types (Cartesian pose, Cartesian
+#: velocity, joint position, joint velocity, and torque control). Every motion franky provides is
+#: an instance of one of these base types.
 Motion = Union[
     BaseCartesianPoseMotion,
     BaseCartesianVelocityMotion,

@@ -426,10 +426,12 @@ class JointImpedanceTracker:
 
     @property
     def state(self):
+        """The current robot state from this control session."""
         return self._robot.state
 
     @property
     def is_running(self) -> bool:
+        """Whether the tracking controller is still active."""
         return self._robot.is_in_control
 
     @property
