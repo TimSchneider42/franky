@@ -65,21 +65,24 @@ void bind_errors(py::module &m) {
             return UNPACK_ERRORS(t, ERRORS);
           }));
 
-  py::register_exception<franka::Exception>(m, "Exception").attr("__doc__") = DOC(franka, Exception);
-  py::register_exception<franka::CommandException>(m, "CommandException").attr("__doc__") =
+  auto franka_exception = py::register_exception<franka::Exception>(m, "Exception");
+  franka_exception.attr("__doc__") = DOC(franka, Exception);
+  py::register_exception<franka::CommandException>(m, "CommandException", franka_exception.ptr()).attr("__doc__") =
       DOC(franka, CommandException);
-  py::register_exception<franka::ControlException>(m, "ControlException").attr("__doc__") =
+  py::register_exception<franka::ControlException>(m, "ControlException", franka_exception.ptr()).attr("__doc__") =
       DOC(franka, ControlException);
-  py::register_exception<franka::IncompatibleVersionException>(m, "IncompatibleVersionException").attr("__doc__") =
-      DOC(franka, IncompatibleVersionException);
-  py::register_exception<franka::InvalidOperationException>(m, "InvalidOperationException").attr("__doc__") =
-      DOC(franka, InvalidOperationException);
-  py::register_exception<franka::ModelException>(m, "ModelException").attr("__doc__") = DOC(franka, ModelException);
-  py::register_exception<franka::NetworkException>(m, "NetworkException").attr("__doc__") =
+  py::register_exception<franka::IncompatibleVersionException>(
+      m, "IncompatibleVersionException", franka_exception.ptr())
+      .attr("__doc__") = DOC(franka, IncompatibleVersionException);
+  py::register_exception<franka::InvalidOperationException>(m, "InvalidOperationException", franka_exception.ptr())
+      .attr("__doc__") = DOC(franka, InvalidOperationException);
+  py::register_exception<franka::ModelException>(m, "ModelException", franka_exception.ptr()).attr("__doc__") =
+      DOC(franka, ModelException);
+  py::register_exception<franka::NetworkException>(m, "NetworkException", franka_exception.ptr()).attr("__doc__") =
       DOC(franka, NetworkException);
-  py::register_exception<franka::ProtocolException>(m, "ProtocolException").attr("__doc__") =
+  py::register_exception<franka::ProtocolException>(m, "ProtocolException", franka_exception.ptr()).attr("__doc__") =
       DOC(franka, ProtocolException);
-  py::register_exception<franka::RealtimeException>(m, "RealtimeException").attr("__doc__") =
+  py::register_exception<franka::RealtimeException>(m, "RealtimeException", franka_exception.ptr()).attr("__doc__") =
       DOC(franka, RealtimeException);
   py::register_exception<InvalidMotionTypeException>(m, "InvalidMotionTypeException").attr("__doc__") =
       DOC(franky, InvalidMotionTypeException);
