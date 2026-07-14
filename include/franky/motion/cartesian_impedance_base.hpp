@@ -287,7 +287,8 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
      * Nullspace objectives.
      *
      * Each task contributes a joint-space torque that is summed and projected
-     * into the Jacobian nullspace.
+     * into the Jacobian nullspace. At most one task of each concrete type is
+     * supported because runtime-adjustable gains are shared by task type.
      */
     std::vector<NullspaceTask> nullspace_tasks{};
 

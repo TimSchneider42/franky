@@ -13,7 +13,7 @@
 namespace franky {
 
 /**
- * @brief Exception thrown when the reaction recursion limit (8) is reached.
+ * @brief Exception thrown when the reaction recursion limit (16) is reached.
  */
 struct ReactionRecursionException : public std::runtime_error {
   using std::runtime_error::runtime_error;

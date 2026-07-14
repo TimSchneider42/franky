@@ -9,7 +9,7 @@
 namespace franky {
 
 /**
- * @brief Double-buffered handle for updating a JointReference online.
+ * @brief Handle for updating a JointReference online.
  *
  * This handle is intended to be written from a user thread while a single
  * JointImpedanceTrackingMotion is running. The motion reads the latest valid
