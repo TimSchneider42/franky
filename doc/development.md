@@ -64,9 +64,12 @@ franky is currently tested against the following versions
 
 ## Building the Documentation
 
-The documentation is built with [Sphinx](https://www.sphinx-doc.org/):
+The documentation is built with [Sphinx](https://www.sphinx-doc.org/).
+Generating the Python API reference requires franky to be importable, so install it (e.g. a wheel or a source build)
+first:
 
 ```bash
+pip install franky-control  # or: pip install .
 pip install -r doc/requirements.txt
 VERSION=$(cat VERSION) sphinx-build -b html doc doc/_build/html
 ```

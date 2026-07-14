@@ -11,7 +11,16 @@ version = release = (ROOT_DIR / "VERSION").read_text().strip()
 extensions = [
     "myst_parser",
     "sphinx_copybutton",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.napoleon",
 ]
+
+# Generating the Python API reference requires the franky module (including the compiled
+# _franky extension) to be importable, e.g. by installing a franky-control wheel.
+autosummary_generate = True
+autodoc_member_order = "groupwise"
+templates_path = ["_templates"]
 
 myst_enable_extensions = [
     "colon_fence",

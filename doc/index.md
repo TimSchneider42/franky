@@ -35,6 +35,13 @@ guide/index
 ```
 
 ```{toctree}
+:caption: API Reference
+:maxdepth: 1
+
+api/python
+```
+
+```{toctree}
 :caption: Development
 :maxdepth: 1
 
