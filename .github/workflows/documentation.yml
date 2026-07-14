@@ -1,6 +1,6 @@
 name: Documentation
 
-# Builds the documentation with C++ API reference and deploys it to
+# Builds the Sphinx site with the Python and C++ API references and deploys it to
 # <pages-url>/release/ (master) or <pages-url>/dev/ (dev). The Python API reference is
 # generated from the docstrings of the built franky module, so a wheel is built first.
 
@@ -14,7 +14,18 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  build-wheel:
+    if: github.ref_name == 'master' || github.ref_name == 'dev'
+    uses: ./.github/workflows/build_wheels.yml
+    with:
+      # The wheel is only used to generate the Python API reference, so a single build
+      # configuration matching the Python version used below suffices
+      libfranka-version: 0.21.2
+      manylinux-version: manylinux_2_28_x86_64
+      python-versions: cp312-cp312
+
   build-deploy:
+    needs: build-wheel
     runs-on: ubuntu-latest
     # Serialize all deployments to gh-pages (shared with the package index workflow)
     # to avoid push races
@@ -26,6 +37,32 @@ jobs:
       env:
         dependency_packages: doxygen
       run: sudo apt-get update && sudo apt-get -y install ${dependency_packages}
+
+    - uses: actions/setup-python@v6
+      with:
+        python-version: "3.12"
+
+    - name: get wheel
+      uses: actions/download-artifact@v8
+      with:
+        pattern: wheels___*
+        path: wheels/
+        merge-multiple: true
+
+    - name: install franky and Sphinx
+      run: |
+        pip install wheels/franky_control-*.whl
+        pip install -r doc/requirements.txt
+
+    - name: build website
+      # On dev, FRANKY_DOCS_ANNOUNCEMENT displays a banner marking the documentation
+      # as the development version
+      run: |
+        if [ "${GITHUB_REF_NAME}" = dev ]; then
+          pages_url="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}"
+          export FRANKY_DOCS_ANNOUNCEMENT="This is the documentation of the development version of franky. The documentation of the latest release can be found <a href=\"${pages_url}/master/\">here</a>."
+        fi
+        VERSION=$(cat VERSION) sphinx-build -W --keep-going -b html doc doc/_build/html
 
     - name: build C++ API reference
       run: cd doc && mkdir -p _build/html/cpp && VERSION=$(cat ../VERSION) doxygen ./Doxyfile  # outputs to doc/_build/html/cpp
@@ -43,7 +80,7 @@ jobs:
     - name: deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        folder: ./doc/_build/html/cpp
+        folder: ./doc/_build/html/
         # Uses format() instead of '+' for string concatenation
         target-folder: ${{ github.ref_name == 'master' && '.' || format('branches/{0}', github.ref_name) }}
         # Cleans the target-folder only if the branch is NOT master
