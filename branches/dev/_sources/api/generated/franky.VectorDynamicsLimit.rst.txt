@@ -1,0 +1,11 @@
+﻿franky.VectorDynamicsLimit
+==========================
+
+.. currentmodule:: franky
+
+.. autoclass:: VectorDynamicsLimit
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

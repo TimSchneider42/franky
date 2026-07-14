@@ -1,0 +1,11 @@
+﻿franky.CartesianState
+=====================
+
+.. currentmodule:: franky
+
+.. autoclass:: CartesianState
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

@@ -1,0 +1,11 @@
+﻿franky.CartesianVelocityReaction
+================================
+
+.. currentmodule:: franky
+
+.. autoclass:: CartesianVelocityReaction
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

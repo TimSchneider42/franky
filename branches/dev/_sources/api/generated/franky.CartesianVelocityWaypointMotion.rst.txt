@@ -1,0 +1,11 @@
+﻿franky.CartesianVelocityWaypointMotion
+======================================
+
+.. currentmodule:: franky
+
+.. autoclass:: CartesianVelocityWaypointMotion
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

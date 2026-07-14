@@ -1,0 +1,2463 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
+        <link rel="prefetch" href="_static/logo.svg" as="image">
+
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - franky 1.1.4</title>
+<link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+<div class="announcement">
+  <aside class="announcement-content">
+     This is the documentation of the development version of franky. The documentation of the latest release can be found <a href="https://TimSchneider42.github.io/franky/master/">here</a>. 
+  </aside>
+</div>
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">franky 1.1.4</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">franky 1.1.4</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting-started/installation.html">⚙️ Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started/docker.html">🐋 Using Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started/faq.html">❓ FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guide</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="guide/index.html">📚 Guide</a><input aria-label="Toggle navigation of 📚 Guide" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide/geometry.html">🧮 Geometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/robot.html">🤖 Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/motion-types.html">🏃‍♂️ Motion Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/impedance-control.html">🫨 Impedance Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/executing-motions.html">🎬 Executing Motions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/reactions.html">⚡ Real-Time Reactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/realtime-motions.html">⏱️ Real-Time Motions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/gripper.html">👌 Gripper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/desk.html">🖳 Accessing the Web Interface API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/simulation.html">🖥️ Simulating the Robot</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/python.html">🐍 Python API</a><input aria-label="Toggle navigation of 🐍 Python API" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Robot.html">franky.Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Model.html">franky.Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Frame.html">franky.Frame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.RobotState.html">franky.RobotState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Errors.html">franky.Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.RobotMode.html">franky.RobotMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.RealtimeConfig.html">franky.RealtimeConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.ControllerMode.html">franky.ControllerMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.ControlSignalType.html">franky.ControlSignalType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Duration.html">franky.Duration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.RelativeDynamicsFactor.html">franky.RelativeDynamicsFactor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.DoubleDynamicsLimit.html">franky.DoubleDynamicsLimit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.VectorDynamicsLimit.html">franky.VectorDynamicsLimit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Affine.html">franky.Affine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Twist.html">franky.Twist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.TwistAcceleration.html">franky.TwistAcceleration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.RobotPose.html">franky.RobotPose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.RobotVelocity.html">franky.RobotVelocity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.ElbowState.html">franky.ElbowState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.FlipDirection.html">franky.FlipDirection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianState.html">franky.CartesianState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianPose.html">franky.CartesianPose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianVelocities.html">franky.CartesianVelocities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointState.html">franky.JointState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointPositions.html">franky.JointPositions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointVelocities.html">franky.JointVelocities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Torques.html">franky.Torques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.ReferenceType.html">franky.ReferenceType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianReference.html">franky.CartesianReference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointReference.html">franky.JointReference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Motion.html">franky.Motion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointMotion.html">franky.JointMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointWaypointMotion.html">franky.JointWaypointMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointWaypoint.html">franky.JointWaypoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointStopMotion.html">franky.JointStopMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.BaseJointPositionMotion.html">franky.BaseJointPositionMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointVelocityMotion.html">franky.JointVelocityMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointVelocityWaypointMotion.html">franky.JointVelocityWaypointMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointVelocityWaypoint.html">franky.JointVelocityWaypoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointVelocityStopMotion.html">franky.JointVelocityStopMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.BaseJointVelocityMotion.html">franky.BaseJointVelocityMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianMotion.html">franky.CartesianMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianWaypointMotion.html">franky.CartesianWaypointMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianWaypoint.html">franky.CartesianWaypoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianStopMotion.html">franky.CartesianStopMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.BaseCartesianPoseMotion.html">franky.BaseCartesianPoseMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianVelocityMotion.html">franky.CartesianVelocityMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianVelocityWaypointMotion.html">franky.CartesianVelocityWaypointMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianVelocityWaypoint.html">franky.CartesianVelocityWaypoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianVelocityStopMotion.html">franky.CartesianVelocityStopMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.BaseCartesianVelocityMotion.html">franky.BaseCartesianVelocityMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.BaseTorqueMotion.html">franky.BaseTorqueMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.ImpedanceMotion.html">franky.ImpedanceMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointImpedanceBase.html">franky.JointImpedanceBase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointImpedanceMotion.html">franky.JointImpedanceMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointImpedanceTrackingMotion.html">franky.JointImpedanceTrackingMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointImpedanceTracker.html">franky.JointImpedanceTracker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointImpedanceGains.html">franky.JointImpedanceGains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointImpedanceParams.html">franky.JointImpedanceParams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianImpedanceBase.html">franky.CartesianImpedanceBase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianImpedanceMotion.html">franky.CartesianImpedanceMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianImpedanceTrackingMotion.html">franky.CartesianImpedanceTrackingMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianImpedanceTracker.html">franky.CartesianImpedanceTracker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianImpedanceGains.html">franky.CartesianImpedanceGains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianImpedanceParams.html">franky.CartesianImpedanceParams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianImpedanceMotionParams.html">franky.CartesianImpedanceMotionParams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.NullspaceGains.html">franky.NullspaceGains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.PostureTask.html">franky.PostureTask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.ManipulabilityTask.html">franky.ManipulabilityTask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.FrictionCompensationParams.html">franky.FrictionCompensationParams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.TorqueSafetyParams.html">franky.TorqueSafetyParams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.TorqueStopMotion.html">franky.TorqueStopMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.TorqueStopParams.html">franky.TorqueStopParams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Reaction.html">franky.Reaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Condition.html">franky.Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Measure.html">franky.Measure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.TorqueReaction.html">franky.TorqueReaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointPositionReaction.html">franky.JointPositionReaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.JointVelocityReaction.html">franky.JointVelocityReaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianPoseReaction.html">franky.CartesianPoseReaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianVelocityReaction.html">franky.CartesianVelocityReaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Gripper.html">franky.Gripper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.GripperState.html">franky.GripperState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.BoolFuture.html">franky.BoolFuture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Desk.html">franky.Desk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.DeskWebSession.html">franky.DeskWebSession</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.BaseDesk.html">franky.BaseDesk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.PilotButton.html">franky.PilotButton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.PilotButtonEvent.html">franky.PilotButtonEvent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.BrakeState.html">franky.BrakeState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.OperatingMode.html">franky.OperatingMode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Exception.html">franky.Exception</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CommandException.html">franky.CommandException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.ControlException.html">franky.ControlException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.GripperException.html">franky.GripperException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.IncompatibleVersionException.html">franky.IncompatibleVersionException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.InvalidMotionTypeException.html">franky.InvalidMotionTypeException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.InvalidOperationException.html">franky.InvalidOperationException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.ModelException.html">franky.ModelException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.MotionReuseException.html">franky.MotionReuseException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.NetworkException.html">franky.NetworkException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.ProtocolException.html">franky.ProtocolException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.ReactionRecursionException.html">franky.ReactionRecursionException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.RealtimeException.html">franky.RealtimeException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.DeskError.html">franky.DeskError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.FrankaAPIError.html">franky.FrankaAPIError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.TakeControlTimeoutError.html">franky.TakeControlTimeoutError</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/cpp.html">⚙️ C++ API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="development.html">🛠️ Development</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          
+<section class="genindex-section">
+  <h1 id="index">Index</h1>
+  <div class="genindex-jumpbox"><a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#J"><strong>J</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a> | <a href="#Z"><strong>Z</strong></a></div>
+</section>
+<section id="_" class="genindex-section">
+  <h2>_</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.Affine.html#franky.Affine.__init__">__init__() (franky.Affine method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.BaseCartesianPoseMotion.html#franky.BaseCartesianPoseMotion.__init__">(franky.BaseCartesianPoseMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.BaseCartesianVelocityMotion.html#franky.BaseCartesianVelocityMotion.__init__">(franky.BaseCartesianVelocityMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.__init__">(franky.BaseDesk method)</a>
+</li>
+          <li><a href="api/generated/franky.BaseJointPositionMotion.html#franky.BaseJointPositionMotion.__init__">(franky.BaseJointPositionMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.BaseJointVelocityMotion.html#franky.BaseJointVelocityMotion.__init__">(franky.BaseJointVelocityMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.BaseTorqueMotion.html#franky.BaseTorqueMotion.__init__">(franky.BaseTorqueMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.BoolFuture.html#franky.BoolFuture.__init__">(franky.BoolFuture method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceBase.html#franky.CartesianImpedanceBase.__init__">(franky.CartesianImpedanceBase method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceGains.html#franky.CartesianImpedanceGains.__init__">(franky.CartesianImpedanceGains method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceMotion.html#franky.CartesianImpedanceMotion.__init__">(franky.CartesianImpedanceMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams.__init__">(franky.CartesianImpedanceMotionParams method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.__init__">(franky.CartesianImpedanceParams method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceTracker.html#franky.CartesianImpedanceTracker.__init__">(franky.CartesianImpedanceTracker method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceTrackingMotion.html#franky.CartesianImpedanceTrackingMotion.__init__">(franky.CartesianImpedanceTrackingMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianMotion.html#franky.CartesianMotion.__init__">(franky.CartesianMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianPose.html#franky.CartesianPose.__init__">(franky.CartesianPose method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianPoseReaction.html#franky.CartesianPoseReaction.__init__">(franky.CartesianPoseReaction method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianReference.html#franky.CartesianReference.__init__">(franky.CartesianReference method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianState.html#franky.CartesianState.__init__">(franky.CartesianState method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianStopMotion.html#franky.CartesianStopMotion.__init__">(franky.CartesianStopMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocities.html#franky.CartesianVelocities.__init__">(franky.CartesianVelocities method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityMotion.html#franky.CartesianVelocityMotion.__init__">(franky.CartesianVelocityMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityReaction.html#franky.CartesianVelocityReaction.__init__">(franky.CartesianVelocityReaction method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityStopMotion.html#franky.CartesianVelocityStopMotion.__init__">(franky.CartesianVelocityStopMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityWaypoint.html#franky.CartesianVelocityWaypoint.__init__">(franky.CartesianVelocityWaypoint method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityWaypointMotion.html#franky.CartesianVelocityWaypointMotion.__init__">(franky.CartesianVelocityWaypointMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianWaypoint.html#franky.CartesianWaypoint.__init__">(franky.CartesianWaypoint method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianWaypointMotion.html#franky.CartesianWaypointMotion.__init__">(franky.CartesianWaypointMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.Condition.html#franky.Condition.__init__">(franky.Condition method)</a>
+</li>
+          <li><a href="api/generated/franky.ControllerMode.html#franky.ControllerMode.__init__">(franky.ControllerMode method)</a>
+</li>
+          <li><a href="api/generated/franky.ControlSignalType.html#franky.ControlSignalType.__init__">(franky.ControlSignalType method)</a>
+</li>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.__init__">(franky.Desk method)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.__init__">(franky.DeskWebSession method)</a>
+</li>
+          <li><a href="api/generated/franky.DoubleDynamicsLimit.html#franky.DoubleDynamicsLimit.__init__">(franky.DoubleDynamicsLimit method)</a>
+</li>
+          <li><a href="api/generated/franky.Duration.html#franky.Duration.__init__">(franky.Duration method)</a>
+</li>
+          <li><a href="api/generated/franky.ElbowState.html#franky.ElbowState.__init__">(franky.ElbowState method)</a>
+</li>
+          <li><a href="api/generated/franky.Errors.html#franky.Errors.__init__">(franky.Errors method)</a>
+</li>
+          <li><a href="api/generated/franky.FlipDirection.html#franky.FlipDirection.__init__">(franky.FlipDirection method)</a>
+</li>
+          <li><a href="api/generated/franky.Frame.html#franky.Frame.__init__">(franky.Frame method)</a>
+</li>
+          <li><a href="api/generated/franky.FrictionCompensationParams.html#franky.FrictionCompensationParams.__init__">(franky.FrictionCompensationParams method)</a>
+</li>
+          <li><a href="api/generated/franky.Gripper.html#franky.Gripper.__init__">(franky.Gripper method)</a>
+</li>
+          <li><a href="api/generated/franky.GripperState.html#franky.GripperState.__init__">(franky.GripperState method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceBase.html#franky.JointImpedanceBase.__init__">(franky.JointImpedanceBase method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceGains.html#franky.JointImpedanceGains.__init__">(franky.JointImpedanceGains method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceMotion.html#franky.JointImpedanceMotion.__init__">(franky.JointImpedanceMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceParams.html#franky.JointImpedanceParams.__init__">(franky.JointImpedanceParams method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceTracker.html#franky.JointImpedanceTracker.__init__">(franky.JointImpedanceTracker method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceTrackingMotion.html#franky.JointImpedanceTrackingMotion.__init__">(franky.JointImpedanceTrackingMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointMotion.html#franky.JointMotion.__init__">(franky.JointMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointPositionReaction.html#franky.JointPositionReaction.__init__">(franky.JointPositionReaction method)</a>
+</li>
+          <li><a href="api/generated/franky.JointPositions.html#franky.JointPositions.__init__">(franky.JointPositions method)</a>
+</li>
+          <li><a href="api/generated/franky.JointReference.html#franky.JointReference.__init__">(franky.JointReference method)</a>
+</li>
+          <li><a href="api/generated/franky.JointState.html#franky.JointState.__init__">(franky.JointState method)</a>
+</li>
+          <li><a href="api/generated/franky.JointStopMotion.html#franky.JointStopMotion.__init__">(franky.JointStopMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocities.html#franky.JointVelocities.__init__">(franky.JointVelocities method)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityMotion.html#franky.JointVelocityMotion.__init__">(franky.JointVelocityMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityReaction.html#franky.JointVelocityReaction.__init__">(franky.JointVelocityReaction method)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityStopMotion.html#franky.JointVelocityStopMotion.__init__">(franky.JointVelocityStopMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityWaypoint.html#franky.JointVelocityWaypoint.__init__">(franky.JointVelocityWaypoint method)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityWaypointMotion.html#franky.JointVelocityWaypointMotion.__init__">(franky.JointVelocityWaypointMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointWaypoint.html#franky.JointWaypoint.__init__">(franky.JointWaypoint method)</a>
+</li>
+          <li><a href="api/generated/franky.JointWaypointMotion.html#franky.JointWaypointMotion.__init__">(franky.JointWaypointMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.ManipulabilityTask.html#franky.ManipulabilityTask.__init__">(franky.ManipulabilityTask method)</a>
+</li>
+          <li><a href="api/generated/franky.Measure.html#franky.Measure.__init__">(franky.Measure method)</a>
+</li>
+          <li><a href="api/generated/franky.Model.html#franky.Model.__init__">(franky.Model method)</a>
+</li>
+          <li><a href="api/generated/franky.NullspaceGains.html#franky.NullspaceGains.__init__">(franky.NullspaceGains method)</a>
+</li>
+          <li><a href="api/generated/franky.PilotButtonEvent.html#franky.PilotButtonEvent.__init__">(franky.PilotButtonEvent method)</a>
+</li>
+          <li><a href="api/generated/franky.PostureTask.html#franky.PostureTask.__init__">(franky.PostureTask method)</a>
+</li>
+          <li><a href="api/generated/franky.RealtimeConfig.html#franky.RealtimeConfig.__init__">(franky.RealtimeConfig method)</a>
+</li>
+          <li><a href="api/generated/franky.ReferenceType.html#franky.ReferenceType.__init__">(franky.ReferenceType method)</a>
+</li>
+          <li><a href="api/generated/franky.RelativeDynamicsFactor.html#franky.RelativeDynamicsFactor.__init__">(franky.RelativeDynamicsFactor method)</a>
+</li>
+          <li><a href="api/generated/franky.Robot.html#franky.Robot.__init__">(franky.Robot method)</a>
+</li>
+          <li><a href="api/generated/franky.RobotMode.html#franky.RobotMode.__init__">(franky.RobotMode method)</a>
+</li>
+          <li><a href="api/generated/franky.RobotPose.html#franky.RobotPose.__init__">(franky.RobotPose method)</a>
+</li>
+          <li><a href="api/generated/franky.RobotState.html#franky.RobotState.__init__">(franky.RobotState method)</a>
+</li>
+          <li><a href="api/generated/franky.RobotVelocity.html#franky.RobotVelocity.__init__">(franky.RobotVelocity method)</a>
+</li>
+          <li><a href="api/generated/franky.TorqueReaction.html#franky.TorqueReaction.__init__">(franky.TorqueReaction method)</a>
+</li>
+          <li><a href="api/generated/franky.Torques.html#franky.Torques.__init__">(franky.Torques method)</a>
+</li>
+          <li><a href="api/generated/franky.TorqueSafetyParams.html#franky.TorqueSafetyParams.__init__">(franky.TorqueSafetyParams method)</a>
+</li>
+          <li><a href="api/generated/franky.TorqueStopMotion.html#franky.TorqueStopMotion.__init__">(franky.TorqueStopMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.TorqueStopParams.html#franky.TorqueStopParams.__init__">(franky.TorqueStopParams method)</a>
+</li>
+          <li><a href="api/generated/franky.Twist.html#franky.Twist.__init__">(franky.Twist method)</a>
+</li>
+          <li><a href="api/generated/franky.TwistAcceleration.html#franky.TwistAcceleration.__init__">(franky.TwistAcceleration method)</a>
+</li>
+          <li><a href="api/generated/franky.VectorDynamicsLimit.html#franky.VectorDynamicsLimit.__init__">(franky.VectorDynamicsLimit method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="A" class="genindex-section">
+  <h2>A</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.Measure.html#franky.Measure.ABS_TIME">ABS_TIME (franky.Measure attribute)</a>
+</li>
+        <li><a href="api/generated/franky.ReferenceType.html#franky.ReferenceType.Absolute">Absolute (franky.ReferenceType attribute)</a>
+</li>
+        <li><a href="api/generated/franky.RelativeDynamicsFactor.html#franky.RelativeDynamicsFactor.acceleration">acceleration (franky.RelativeDynamicsFactor property)</a>
+</li>
+        <li><a href="api/generated/franky.BaseCartesianPoseMotion.html#franky.BaseCartesianPoseMotion.add_reaction">add_reaction() (franky.BaseCartesianPoseMotion method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.BaseCartesianVelocityMotion.html#franky.BaseCartesianVelocityMotion.add_reaction">(franky.BaseCartesianVelocityMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.BaseJointPositionMotion.html#franky.BaseJointPositionMotion.add_reaction">(franky.BaseJointPositionMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.BaseJointVelocityMotion.html#franky.BaseJointVelocityMotion.add_reaction">(franky.BaseJointVelocityMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.BaseTorqueMotion.html#franky.BaseTorqueMotion.add_reaction">(franky.BaseTorqueMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceBase.html#franky.CartesianImpedanceBase.add_reaction">(franky.CartesianImpedanceBase method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceMotion.html#franky.CartesianImpedanceMotion.add_reaction">(franky.CartesianImpedanceMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceTrackingMotion.html#franky.CartesianImpedanceTrackingMotion.add_reaction">(franky.CartesianImpedanceTrackingMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianMotion.html#franky.CartesianMotion.add_reaction">(franky.CartesianMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianStopMotion.html#franky.CartesianStopMotion.add_reaction">(franky.CartesianStopMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityMotion.html#franky.CartesianVelocityMotion.add_reaction">(franky.CartesianVelocityMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityStopMotion.html#franky.CartesianVelocityStopMotion.add_reaction">(franky.CartesianVelocityStopMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityWaypointMotion.html#franky.CartesianVelocityWaypointMotion.add_reaction">(franky.CartesianVelocityWaypointMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianWaypointMotion.html#franky.CartesianWaypointMotion.add_reaction">(franky.CartesianWaypointMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceBase.html#franky.JointImpedanceBase.add_reaction">(franky.JointImpedanceBase method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceMotion.html#franky.JointImpedanceMotion.add_reaction">(franky.JointImpedanceMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceTrackingMotion.html#franky.JointImpedanceTrackingMotion.add_reaction">(franky.JointImpedanceTrackingMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointMotion.html#franky.JointMotion.add_reaction">(franky.JointMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointStopMotion.html#franky.JointStopMotion.add_reaction">(franky.JointStopMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityMotion.html#franky.JointVelocityMotion.add_reaction">(franky.JointVelocityMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityStopMotion.html#franky.JointVelocityStopMotion.add_reaction">(franky.JointVelocityStopMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityWaypointMotion.html#franky.JointVelocityWaypointMotion.add_reaction">(franky.JointVelocityWaypointMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointWaypointMotion.html#franky.JointWaypointMotion.add_reaction">(franky.JointWaypointMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.TorqueStopMotion.html#franky.TorqueStopMotion.add_reaction">(franky.TorqueStopMotion method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.Affine.html#franky.Affine">Affine (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.Twist.html#franky.Twist.angular">angular (franky.Twist property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.TwistAcceleration.html#franky.TwistAcceleration.angular">(franky.TwistAcceleration property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.RobotMode.html#franky.RobotMode.AutomaticErrorRecovery">AutomaticErrorRecovery (franky.RobotMode attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="B" class="genindex-section">
+  <h2>B</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.base_acceleration_initialization_timeout">base_acceleration_initialization_timeout (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.base_acceleration_invalid_reading">base_acceleration_invalid_reading (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.BaseCartesianPoseMotion.html#franky.BaseCartesianPoseMotion">BaseCartesianPoseMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.BaseCartesianVelocityMotion.html#franky.BaseCartesianVelocityMotion">BaseCartesianVelocityMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk">BaseDesk (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.BaseJointPositionMotion.html#franky.BaseJointPositionMotion">BaseJointPositionMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.BaseJointVelocityMotion.html#franky.BaseJointVelocityMotion">BaseJointVelocityMotion (class in franky)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.BaseTorqueMotion.html#franky.BaseTorqueMotion">BaseTorqueMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.Model.html#franky.Model.body_jacobian">body_jacobian() (franky.Model method)</a>
+</li>
+        <li><a href="api/generated/franky.BoolFuture.html#franky.BoolFuture">BoolFuture (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.brake_state">brake_state (franky.BaseDesk property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.brake_state">(franky.Desk property)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.brake_state">(franky.DeskWebSession property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.BrakeState.html#franky.BrakeState">BrakeState (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.PilotButtonEvent.html#franky.PilotButtonEvent.button">button (franky.PilotButtonEvent attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="C" class="genindex-section">
+  <h2>C</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.cartesian_collision">cartesian_collision (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.cartesian_contact">cartesian_contact (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.JointImpedanceParams.html#franky.JointImpedanceParams.cartesian_gains">cartesian_gains (franky.JointImpedanceParams property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.cartesian_motion_generator_acceleration_discontinuity">cartesian_motion_generator_acceleration_discontinuity (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.cartesian_motion_generator_elbow_limit_violation">cartesian_motion_generator_elbow_limit_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.cartesian_motion_generator_elbow_sign_inconsistent">cartesian_motion_generator_elbow_sign_inconsistent (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.cartesian_motion_generator_joint_acceleration_discontinuity">cartesian_motion_generator_joint_acceleration_discontinuity (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.cartesian_motion_generator_joint_position_limits_violation">cartesian_motion_generator_joint_position_limits_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.cartesian_motion_generator_joint_velocity_discontinuity">cartesian_motion_generator_joint_velocity_discontinuity (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.cartesian_motion_generator_joint_velocity_limits_violation">cartesian_motion_generator_joint_velocity_limits_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.cartesian_motion_generator_start_elbow_invalid">cartesian_motion_generator_start_elbow_invalid (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.cartesian_motion_generator_velocity_discontinuity">cartesian_motion_generator_velocity_discontinuity (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.cartesian_motion_generator_velocity_limits_violation">cartesian_motion_generator_velocity_limits_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.cartesian_position_limits_violation">cartesian_position_limits_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.cartesian_position_motion_generator_invalid_frame">cartesian_position_motion_generator_invalid_frame (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.cartesian_position_motion_generator_start_pose_invalid">cartesian_position_motion_generator_start_pose_invalid (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.cartesian_reflex">cartesian_reflex (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.cartesian_spline_motion_generator_violation">cartesian_spline_motion_generator_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.cartesian_velocity_profile_safety_violation">cartesian_velocity_profile_safety_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.cartesian_velocity_violation">cartesian_velocity_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.ControllerMode.html#franky.ControllerMode.CartesianImpedance">CartesianImpedance (franky.ControllerMode attribute)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceBase.html#franky.CartesianImpedanceBase">CartesianImpedanceBase (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceGains.html#franky.CartesianImpedanceGains">CartesianImpedanceGains (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceMotion.html#franky.CartesianImpedanceMotion">CartesianImpedanceMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams">CartesianImpedanceMotionParams (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams">CartesianImpedanceParams (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceTracker.html#franky.CartesianImpedanceTracker">CartesianImpedanceTracker (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceTrackingMotion.html#franky.CartesianImpedanceTrackingMotion">CartesianImpedanceTrackingMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianMotion.html#franky.CartesianMotion">CartesianMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianPose.html#franky.CartesianPose">CartesianPose (class in franky)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.ControlSignalType.html#franky.ControlSignalType.CartesianPose">(franky.ControlSignalType attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.CartesianPoseReaction.html#franky.CartesianPoseReaction">CartesianPoseReaction (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianReference.html#franky.CartesianReference">CartesianReference (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianState.html#franky.CartesianState">CartesianState (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianStopMotion.html#franky.CartesianStopMotion">CartesianStopMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianVelocities.html#franky.CartesianVelocities">CartesianVelocities (class in franky)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.ControlSignalType.html#franky.ControlSignalType.CartesianVelocities">(franky.ControlSignalType attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.CartesianVelocityMotion.html#franky.CartesianVelocityMotion">CartesianVelocityMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianVelocityReaction.html#franky.CartesianVelocityReaction">CartesianVelocityReaction (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianVelocityStopMotion.html#franky.CartesianVelocityStopMotion">CartesianVelocityStopMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianVelocityWaypoint.html#franky.CartesianVelocityWaypoint">CartesianVelocityWaypoint (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianVelocityWaypointMotion.html#franky.CartesianVelocityWaypointMotion">CartesianVelocityWaypointMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianWaypoint.html#franky.CartesianWaypoint">CartesianWaypoint (class in franky)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.CartesianWaypointMotion.html#franky.CartesianWaypointMotion">CartesianWaypointMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianState.html#franky.CartesianState.change_end_effector_frame">change_end_effector_frame() (franky.CartesianState method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.RobotPose.html#franky.RobotPose.change_end_effector_frame">(franky.RobotPose method)</a>
+</li>
+          <li><a href="api/generated/franky.RobotVelocity.html#franky.RobotVelocity.change_end_effector_frame">(franky.RobotVelocity method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.PilotButton.html#franky.PilotButton.CHECK">CHECK (franky.PilotButton attribute)</a>
+</li>
+        <li><a href="api/generated/franky.PilotButton.html#franky.PilotButton.CIRCLE">CIRCLE (franky.PilotButton attribute)</a>
+</li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.client">client (franky.BaseDesk property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.client">(franky.Desk property)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.client">(franky.DeskWebSession property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.close">close() (franky.BaseDesk method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.close">(franky.Desk method)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.close">(franky.DeskWebSession method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.CommandException.html#franky.CommandException">CommandException</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.communication_constraints_violation">communication_constraints_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.JointImpedanceParams.html#franky.JointImpedanceParams.compensate_coriolis">compensate_coriolis (franky.JointImpedanceParams property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.TorqueStopParams.html#franky.TorqueStopParams.compensate_coriolis">(franky.TorqueStopParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Condition.html#franky.Condition">Condition (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointImpedanceParams.html#franky.JointImpedanceParams.constant_torque_offset">constant_torque_offset (franky.JointImpedanceParams property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.control_command_success_rate">control_command_success_rate (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.control_rate">control_rate (franky.Robot attribute)</a>
+</li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.control_token">control_token (franky.BaseDesk property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.control_token">(franky.Desk property)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.control_token">(franky.DeskWebSession property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.control_token_id">control_token_id (franky.BaseDesk property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.control_token_id">(franky.Desk property)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.control_token_id">(franky.DeskWebSession property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.ControlException.html#franky.ControlException">ControlException</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.controller_torque_discontinuity">controller_torque_discontinuity (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.ControllerMode.html#franky.ControllerMode">ControllerMode (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.ControlSignalType.html#franky.ControlSignalType">ControlSignalType (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.Model.html#franky.Model.coriolis">coriolis() (franky.Model method)</a>
+</li>
+        <li><a href="api/generated/franky.FrictionCompensationParams.html#franky.FrictionCompensationParams.coulomb">coulomb (franky.FrictionCompensationParams property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.create_web_session">create_web_session() (franky.Robot method)</a>
+</li>
+        <li><a href="api/generated/franky.PilotButton.html#franky.PilotButton.CROSS">CROSS (franky.PilotButton attribute)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.current_cartesian_state">current_cartesian_state (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.current_cartesian_velocity">current_cartesian_velocity (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.current_control_signal_type">current_control_signal_type (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.current_errors">current_errors (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.current_joint_positions">current_joint_positions (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.current_joint_state">current_joint_state (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.current_joint_velocities">current_joint_velocities (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceTracker.html#franky.CartesianImpedanceTracker.current_pose">current_pose (franky.CartesianImpedanceTracker property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Robot.html#franky.Robot.current_pose">(franky.Robot property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="D" class="genindex-section">
+  <h2>D</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.CartesianImpedanceGains.html#franky.CartesianImpedanceGains.damping">damping (franky.CartesianImpedanceGains property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams.damping">(franky.CartesianImpedanceMotionParams property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.damping">(franky.CartesianImpedanceParams property)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceGains.html#franky.JointImpedanceGains.damping">(franky.JointImpedanceGains property)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceParams.html#franky.JointImpedanceParams.damping">(franky.JointImpedanceParams property)</a>
+</li>
+          <li><a href="api/generated/franky.ManipulabilityTask.html#franky.ManipulabilityTask.damping">(franky.ManipulabilityTask property)</a>
+</li>
+          <li><a href="api/generated/franky.PostureTask.html#franky.PostureTask.damping">(franky.PostureTask property)</a>
+</li>
+          <li><a href="api/generated/franky.TorqueStopParams.html#franky.TorqueStopParams.damping">(franky.TorqueStopParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.ddelbow_c">ddelbow_c (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.ddelbow_est">ddelbow_est (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.ddq_d">ddq_d (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.ddq_est">ddq_est (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.degrees_of_freedom">degrees_of_freedom (franky.Robot attribute)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.delbow_c">delbow_c (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.delbow_est">delbow_est (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.DoubleDynamicsLimit.html#franky.DoubleDynamicsLimit.desc">desc (franky.DoubleDynamicsLimit property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.VectorDynamicsLimit.html#franky.VectorDynamicsLimit.desc">(franky.VectorDynamicsLimit property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.Desk.html#franky.Desk">Desk (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.DeskError.html#franky.DeskError">DeskError</a>
+</li>
+        <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession">DeskWebSession (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceGains.html#franky.CartesianImpedanceGains.diagonal">diagonal() (franky.CartesianImpedanceGains static method)</a>
+</li>
+        <li><a href="api/generated/franky.Desk.html#franky.Desk.disable_fci">disable_fci() (franky.Desk method)</a>
+</li>
+        <li><a href="api/generated/franky.DoubleDynamicsLimit.html#franky.DoubleDynamicsLimit">DoubleDynamicsLimit (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.PilotButton.html#franky.PilotButton.DOWN">DOWN (franky.PilotButton attribute)</a>
+</li>
+        <li><a href="api/generated/franky.JointReference.html#franky.JointReference.dq">dq (franky.JointReference property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.JointVelocities.html#franky.JointVelocities.dq">(franky.JointVelocities property)</a>
+</li>
+          <li><a href="api/generated/franky.RobotState.html#franky.RobotState.dq">(franky.RobotState property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.dq_d">dq_d (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.dq_est">dq_est (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.dtau_J">dtau_J (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.dtheta">dtheta (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.Duration.html#franky.Duration">Duration (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianVelocityMotion.html#franky.CartesianVelocityMotion.duration">duration (franky.CartesianVelocityMotion property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.JointVelocityMotion.html#franky.JointVelocityMotion.duration">(franky.JointVelocityMotion property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="E" class="genindex-section">
+  <h2>E</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.CartesianMotion.html#franky.CartesianMotion.ee_frame">ee_frame (franky.CartesianMotion property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianVelocityMotion.html#franky.CartesianVelocityMotion.ee_frame">(franky.CartesianVelocityMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityWaypointMotion.html#franky.CartesianVelocityWaypointMotion.ee_frame">(franky.CartesianVelocityWaypointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianWaypointMotion.html#franky.CartesianWaypointMotion.ee_frame">(franky.CartesianWaypointMotion property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.EE_T_K">EE_T_K (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceTracker.html#franky.CartesianImpedanceTracker.elapsed_time">elapsed_time (franky.CartesianImpedanceTracker property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.JointImpedanceTracker.html#franky.JointImpedanceTracker.elapsed_time">(franky.JointImpedanceTracker property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.CartesianVelocities.html#franky.CartesianVelocities.elbow">elbow (franky.CartesianVelocities property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.RobotState.html#franky.RobotState.elbow">(franky.RobotState property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.elbow_acceleration_limit">elbow_acceleration_limit (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.elbow_c">elbow_c (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.elbow_d">elbow_d (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.elbow_jerk_limit">elbow_jerk_limit (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotPose.html#franky.RobotPose.elbow_state">elbow_state (franky.RobotPose property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotVelocity.html#franky.RobotVelocity.elbow_velocity">elbow_velocity (franky.RobotVelocity property)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.elbow_velocity_limit">elbow_velocity_limit (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.ElbowState.html#franky.ElbowState">ElbowState (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.enable_fci">enable_fci() (franky.BaseDesk method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.enable_fci">(franky.Desk method)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.enable_fci">(franky.DeskWebSession method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.RobotPose.html#franky.RobotPose.end_effector_pose">end_effector_pose (franky.RobotPose property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotVelocity.html#franky.RobotVelocity.end_effector_twist">end_effector_twist (franky.RobotVelocity property)</a>
+</li>
+        <li><a href="api/generated/franky.Frame.html#franky.Frame.EndEffector">EndEffector (franky.Frame attribute)</a>
+</li>
+        <li><a href="api/generated/franky.RealtimeConfig.html#franky.RealtimeConfig.Enforce">Enforce (franky.RealtimeConfig attribute)</a>
+</li>
+        <li><a href="api/generated/franky.JointImpedanceParams.html#franky.JointImpedanceParams.error_clip">error_clip (franky.JointImpedanceParams property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors">Errors (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.Exception.html#franky.Exception">Exception</a>
+</li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.execute_self_test">execute_self_test() (franky.BaseDesk method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.execute_self_test">(franky.Desk method)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.execute_self_test">(franky.DeskWebSession method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.OperatingMode.html#franky.OperatingMode.EXECUTION">EXECUTION (franky.OperatingMode attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="F" class="genindex-section">
+  <h2>F</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.F_T_EE">F_T_EE (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.F_T_NE">F_T_NE (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.F_x_Cee">F_x_Cee (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.F_x_Cload">F_x_Cload (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.F_x_Ctotal">F_x_Ctotal (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.fci_hostname">fci_hostname (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.Frame.html#franky.Frame.Flange">Flange (franky.Frame attribute)</a>
+</li>
+        <li><a href="api/generated/franky.FlipDirection.html#franky.FlipDirection">FlipDirection (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams.force_constraints">force_constraints (franky.CartesianImpedanceMotionParams property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.force_constraints">(franky.CartesianImpedanceParams property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.force_control_safety_violation">force_control_safety_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.force_controller_desired_force_tolerance_violation">force_controller_desired_force_tolerance_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Measure.html#franky.Measure.FORCE_X">FORCE_X (franky.Measure attribute)</a>
+</li>
+        <li><a href="api/generated/franky.Measure.html#franky.Measure.FORCE_Y">FORCE_Y (franky.Measure attribute)</a>
+</li>
+        <li><a href="api/generated/franky.Measure.html#franky.Measure.FORCE_Z">FORCE_Z (franky.Measure attribute)</a>
+</li>
+        <li><a href="api/generated/franky.Frame.html#franky.Frame">Frame (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.FrankaAPIError.html#franky.FrankaAPIError">FrankaAPIError</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams.friction">friction (franky.CartesianImpedanceMotionParams property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.friction">(franky.CartesianImpedanceParams property)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceParams.html#franky.JointImpedanceParams.friction">(franky.JointImpedanceParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.FrictionCompensationParams.html#franky.FrictionCompensationParams">FrictionCompensationParams (class in franky)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="G" class="genindex-section">
+  <h2>G</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.ManipulabilityTask.html#franky.ManipulabilityTask.gain">gain (franky.ManipulabilityTask property)</a>
+</li>
+        <li><a href="api/generated/franky.BoolFuture.html#franky.BoolFuture.get">get() (franky.BoolFuture method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.DoubleDynamicsLimit.html#franky.DoubleDynamicsLimit.get">(franky.DoubleDynamicsLimit method)</a>
+</li>
+          <li><a href="api/generated/franky.VectorDynamicsLimit.html#franky.VectorDynamicsLimit.get">(franky.VectorDynamicsLimit method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.JointImpedanceBase.html#franky.JointImpedanceBase.get_cartesian_gains">get_cartesian_gains() (franky.JointImpedanceBase method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.JointImpedanceMotion.html#franky.JointImpedanceMotion.get_cartesian_gains">(franky.JointImpedanceMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceTrackingMotion.html#franky.JointImpedanceTrackingMotion.get_cartesian_gains">(franky.JointImpedanceTrackingMotion method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Desk.html#franky.Desk.get_fci_status">get_fci_status() (franky.Desk method)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceBase.html#franky.CartesianImpedanceBase.get_gains">get_gains() (franky.CartesianImpedanceBase method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceMotion.html#franky.CartesianImpedanceMotion.get_gains">(franky.CartesianImpedanceMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceTrackingMotion.html#franky.CartesianImpedanceTrackingMotion.get_gains">(franky.CartesianImpedanceTrackingMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceBase.html#franky.JointImpedanceBase.get_gains">(franky.JointImpedanceBase method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceMotion.html#franky.JointImpedanceMotion.get_gains">(franky.JointImpedanceMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceTrackingMotion.html#franky.JointImpedanceTrackingMotion.get_gains">(franky.JointImpedanceTrackingMotion method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.CartesianImpedanceBase.html#franky.CartesianImpedanceBase.get_nullspace_gains">get_nullspace_gains() (franky.CartesianImpedanceBase method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceMotion.html#franky.CartesianImpedanceMotion.get_nullspace_gains">(franky.CartesianImpedanceMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceTrackingMotion.html#franky.CartesianImpedanceTrackingMotion.get_nullspace_gains">(franky.CartesianImpedanceTrackingMotion method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Desk.html#franky.Desk.get_recovery_status">get_recovery_status() (franky.Desk method)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceTrackingMotion.html#franky.CartesianImpedanceTrackingMotion.get_reference">get_reference() (franky.CartesianImpedanceTrackingMotion method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.JointImpedanceTrackingMotion.html#franky.JointImpedanceTrackingMotion.get_reference">(franky.JointImpedanceTrackingMotion method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Gripper.html#franky.Gripper.grasp">grasp() (franky.Gripper method)</a>
+</li>
+        <li><a href="api/generated/franky.Gripper.html#franky.Gripper.grasp_async">grasp_async() (franky.Gripper method)</a>
+</li>
+        <li><a href="api/generated/franky.Model.html#franky.Model.gravity">gravity() (franky.Model method)</a>
+</li>
+        <li><a href="api/generated/franky.Gripper.html#franky.Gripper">Gripper (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.GripperException.html#franky.GripperException">GripperException</a>
+</li>
+        <li><a href="api/generated/franky.GripperState.html#franky.GripperState">GripperState (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.RobotMode.html#franky.RobotMode.Guiding">Guiding (franky.RobotMode attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="H" class="genindex-section">
+  <h2>H</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.has_control">has_control (franky.BaseDesk property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.has_control">(franky.Desk property)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.has_control">(franky.DeskWebSession property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.has_errors">has_errors (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianVelocityWaypoint.html#franky.CartesianVelocityWaypoint.hold_target_duration">hold_target_duration (franky.CartesianVelocityWaypoint property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianWaypoint.html#franky.CartesianWaypoint.hold_target_duration">(franky.CartesianWaypoint property)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityWaypoint.html#franky.JointVelocityWaypoint.hold_target_duration">(franky.JointVelocityWaypoint property)</a>
+</li>
+          <li><a href="api/generated/franky.JointWaypoint.html#franky.JointWaypoint.hold_target_duration">(franky.JointWaypoint property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.Gripper.html#franky.Gripper.homing">homing() (franky.Gripper method)</a>
+</li>
+        <li><a href="api/generated/franky.Gripper.html#franky.Gripper.homing_async">homing_async() (franky.Gripper method)</a>
+</li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.hostname">hostname (franky.BaseDesk property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.hostname">(franky.Desk property)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.hostname">(franky.DeskWebSession property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="I" class="genindex-section">
+  <h2>I</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.I_ee">I_ee (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.I_load">I_load (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.I_total">I_total (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotMode.html#franky.RobotMode.Idle">Idle (franky.RobotMode attribute)</a>
+</li>
+        <li><a href="api/generated/franky.RealtimeConfig.html#franky.RealtimeConfig.Ignore">Ignore (franky.RealtimeConfig attribute)</a>
+</li>
+        <li><a href="api/generated/franky.ImpedanceMotion.html#franky.ImpedanceMotion">ImpedanceMotion (in module franky)</a>
+</li>
+        <li><a href="api/generated/franky.IncompatibleVersionException.html#franky.IncompatibleVersionException">IncompatibleVersionException</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.instability_detected">instability_detected (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.InvalidMotionTypeException.html#franky.InvalidMotionTypeException">InvalidMotionTypeException</a>
+</li>
+        <li><a href="api/generated/franky.InvalidOperationException.html#franky.InvalidOperationException">InvalidOperationException</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.Affine.html#franky.Affine.inverse">inverse (franky.Affine property)</a>
+</li>
+        <li><a href="api/generated/franky.Gripper.html#franky.Gripper.is_grasped">is_grasped (franky.Gripper property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.GripperState.html#franky.GripperState.is_grasped">(franky.GripperState property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.is_in_control">is_in_control (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.is_open">is_open (franky.BaseDesk property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.is_open">(franky.Desk property)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.is_open">(franky.DeskWebSession property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.CartesianImpedanceTracker.html#franky.CartesianImpedanceTracker.is_running">is_running (franky.CartesianImpedanceTracker property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.JointImpedanceTracker.html#franky.JointImpedanceTracker.is_running">(franky.JointImpedanceTracker property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.CartesianImpedanceGains.html#franky.CartesianImpedanceGains.isotropic">isotropic() (franky.CartesianImpedanceGains static method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="J" class="genindex-section">
+  <h2>J</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.RelativeDynamicsFactor.html#franky.RelativeDynamicsFactor.jerk">jerk (franky.RelativeDynamicsFactor property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.join_motion">join_motion() (franky.Robot method)</a>
+</li>
+        <li><a href="api/generated/franky.Frame.html#franky.Frame.Joint1">Joint1 (franky.Frame attribute)</a>
+</li>
+        <li><a href="api/generated/franky.Frame.html#franky.Frame.Joint2">Joint2 (franky.Frame attribute)</a>
+</li>
+        <li><a href="api/generated/franky.Frame.html#franky.Frame.Joint3">Joint3 (franky.Frame attribute)</a>
+</li>
+        <li><a href="api/generated/franky.Frame.html#franky.Frame.Joint4">Joint4 (franky.Frame attribute)</a>
+</li>
+        <li><a href="api/generated/franky.Frame.html#franky.Frame.Joint5">Joint5 (franky.Frame attribute)</a>
+</li>
+        <li><a href="api/generated/franky.Frame.html#franky.Frame.Joint6">Joint6 (franky.Frame attribute)</a>
+</li>
+        <li><a href="api/generated/franky.Frame.html#franky.Frame.Joint7">Joint7 (franky.Frame attribute)</a>
+</li>
+        <li><a href="api/generated/franky.ElbowState.html#franky.ElbowState.joint_3_pos">joint_3_pos (franky.ElbowState property)</a>
+</li>
+        <li><a href="api/generated/franky.ElbowState.html#franky.ElbowState.joint_4_flip">joint_4_flip (franky.ElbowState property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.joint_acceleration_limit">joint_acceleration_limit (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.joint_collision">joint_collision (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.joint_contact">joint_contact (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.joint_jerk_limit">joint_jerk_limit (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.TorqueSafetyParams.html#franky.TorqueSafetyParams.joint_limit_activation_distance">joint_limit_activation_distance (franky.TorqueSafetyParams property)</a>
+</li>
+        <li><a href="api/generated/franky.TorqueSafetyParams.html#franky.TorqueSafetyParams.joint_limit_damping">joint_limit_damping (franky.TorqueSafetyParams property)</a>
+</li>
+        <li><a href="api/generated/franky.TorqueSafetyParams.html#franky.TorqueSafetyParams.joint_limit_max_torque">joint_limit_max_torque (franky.TorqueSafetyParams property)</a>
+</li>
+        <li><a href="api/generated/franky.TorqueSafetyParams.html#franky.TorqueSafetyParams.joint_limit_stiffness">joint_limit_stiffness (franky.TorqueSafetyParams property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.joint_motion_generator_acceleration_discontinuity">joint_motion_generator_acceleration_discontinuity (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.joint_motion_generator_position_limits_violation">joint_motion_generator_position_limits_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.joint_motion_generator_velocity_discontinuity">joint_motion_generator_velocity_discontinuity (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.joint_motion_generator_velocity_limits_violation">joint_motion_generator_velocity_limits_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.joint_move_in_wrong_direction">joint_move_in_wrong_direction (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.joint_p2p_insufficient_torque_for_planning">joint_p2p_insufficient_torque_for_planning (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.joint_position_limits_violation">joint_position_limits_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.joint_position_motion_generator_start_pose_invalid">joint_position_motion_generator_start_pose_invalid (franky.Errors property)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.joint_reflex">joint_reflex (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.joint_velocity_limit">joint_velocity_limit (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.joint_velocity_violation">joint_velocity_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.joint_via_motion_generator_planning_joint_limit_violation">joint_via_motion_generator_planning_joint_limit_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.ControllerMode.html#franky.ControllerMode.JointImpedance">JointImpedance (franky.ControllerMode attribute)</a>
+</li>
+        <li><a href="api/generated/franky.JointImpedanceBase.html#franky.JointImpedanceBase">JointImpedanceBase (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointImpedanceGains.html#franky.JointImpedanceGains">JointImpedanceGains (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointImpedanceMotion.html#franky.JointImpedanceMotion">JointImpedanceMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointImpedanceParams.html#franky.JointImpedanceParams">JointImpedanceParams (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointImpedanceTracker.html#franky.JointImpedanceTracker">JointImpedanceTracker (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointImpedanceTrackingMotion.html#franky.JointImpedanceTrackingMotion">JointImpedanceTrackingMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointMotion.html#franky.JointMotion">JointMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointPositionReaction.html#franky.JointPositionReaction">JointPositionReaction (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointPositions.html#franky.JointPositions">JointPositions (class in franky)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.ControlSignalType.html#franky.ControlSignalType.JointPositions">(franky.ControlSignalType attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.JointReference.html#franky.JointReference">JointReference (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointState.html#franky.JointState">JointState (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointStopMotion.html#franky.JointStopMotion">JointStopMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointVelocities.html#franky.JointVelocities">JointVelocities (class in franky)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.ControlSignalType.html#franky.ControlSignalType.JointVelocities">(franky.ControlSignalType attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.JointVelocityMotion.html#franky.JointVelocityMotion">JointVelocityMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointVelocityReaction.html#franky.JointVelocityReaction">JointVelocityReaction (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointVelocityStopMotion.html#franky.JointVelocityStopMotion">JointVelocityStopMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointVelocityWaypoint.html#franky.JointVelocityWaypoint">JointVelocityWaypoint (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointVelocityWaypointMotion.html#franky.JointVelocityWaypointMotion">JointVelocityWaypointMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointWaypoint.html#franky.JointWaypoint">JointWaypoint (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.JointWaypointMotion.html#franky.JointWaypointMotion">JointWaypointMotion (class in franky)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="K" class="genindex-section">
+  <h2>K</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.K_F_ext_hat_K">K_F_ext_hat_K (franky.RobotState property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="L" class="genindex-section">
+  <h2>L</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.last_motion_errors">last_motion_errors (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.PilotButton.html#franky.PilotButton.LEFT">LEFT (franky.PilotButton attribute)</a>
+</li>
+        <li><a href="api/generated/franky.Twist.html#franky.Twist.linear">linear (franky.Twist property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.TwistAcceleration.html#franky.TwistAcceleration.linear">(franky.TwistAcceleration property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.lock_brakes">lock_brakes() (franky.BaseDesk method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.lock_brakes">(franky.Desk method)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.lock_brakes">(franky.DeskWebSession method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.BrakeState.html#franky.BrakeState.LOCKED">LOCKED (franky.BrakeState attribute)</a>
+</li>
+        <li><a href="api/generated/franky.TorqueSafetyParams.html#franky.TorqueSafetyParams.lower_joint_limits">lower_joint_limits (franky.TorqueSafetyParams property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="M" class="genindex-section">
+  <h2>M</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.m_ee">m_ee (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.m_load">m_load (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.m_total">m_total (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.NullspaceGains.html#franky.NullspaceGains.manipulability_damping">manipulability_damping (franky.NullspaceGains property)</a>
+</li>
+        <li><a href="api/generated/franky.NullspaceGains.html#franky.NullspaceGains.manipulability_gain">manipulability_gain (franky.NullspaceGains property)</a>
+</li>
+        <li><a href="api/generated/franky.NullspaceGains.html#franky.NullspaceGains.manipulability_max_torque">manipulability_max_torque (franky.NullspaceGains property)</a>
+</li>
+        <li><a href="api/generated/franky.ManipulabilityTask.html#franky.ManipulabilityTask">ManipulabilityTask (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.Model.html#franky.Model.mass">mass() (franky.Model method)</a>
+</li>
+        <li><a href="api/generated/franky.Affine.html#franky.Affine.matrix">matrix (franky.Affine property)</a>
+</li>
+        <li><a href="api/generated/franky.DoubleDynamicsLimit.html#franky.DoubleDynamicsLimit.max">max (franky.DoubleDynamicsLimit property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.VectorDynamicsLimit.html#franky.VectorDynamicsLimit.max">(franky.VectorDynamicsLimit property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.TorqueSafetyParams.html#franky.TorqueSafetyParams.max_delta_tau">max_delta_tau (franky.TorqueSafetyParams property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.TorqueStopParams.html#franky.TorqueStopParams.max_delta_tau">(franky.TorqueStopParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.TorqueStopParams.html#franky.TorqueStopParams.max_duration">max_duration (franky.TorqueStopParams property)</a>
+</li>
+        <li><a href="api/generated/franky.RelativeDynamicsFactor.html#franky.RelativeDynamicsFactor.MAX_DYNAMICS">MAX_DYNAMICS (franky.RelativeDynamicsFactor attribute)</a>
+</li>
+        <li><a href="api/generated/franky.RelativeDynamicsFactor.html#franky.RelativeDynamicsFactor.max_dynamics">max_dynamics (franky.RelativeDynamicsFactor property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.max_goal_pose_deviation_violation">max_goal_pose_deviation_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.max_path_pose_deviation_violation">max_path_pose_deviation_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.FrictionCompensationParams.html#franky.FrictionCompensationParams.max_torque">max_torque (franky.FrictionCompensationParams property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.ManipulabilityTask.html#franky.ManipulabilityTask.max_torque">(franky.ManipulabilityTask property)</a>
+</li>
+          <li><a href="api/generated/franky.PostureTask.html#franky.PostureTask.max_torque">(franky.PostureTask property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.CartesianVelocityWaypoint.html#franky.CartesianVelocityWaypoint.max_total_duration">max_total_duration (franky.CartesianVelocityWaypoint property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianWaypoint.html#franky.CartesianWaypoint.max_total_duration">(franky.CartesianWaypoint property)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityWaypoint.html#franky.JointVelocityWaypoint.max_total_duration">(franky.JointVelocityWaypoint property)</a>
+</li>
+          <li><a href="api/generated/franky.JointWaypoint.html#franky.JointWaypoint.max_total_duration">(franky.JointWaypoint property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.Gripper.html#franky.Gripper.max_width">max_width (franky.Gripper property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.GripperState.html#franky.GripperState.max_width">(franky.GripperState property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Measure.html#franky.Measure">Measure (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianVelocityWaypoint.html#franky.CartesianVelocityWaypoint.minimum_time">minimum_time (franky.CartesianVelocityWaypoint property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianWaypoint.html#franky.CartesianWaypoint.minimum_time">(franky.CartesianWaypoint property)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityWaypoint.html#franky.JointVelocityWaypoint.minimum_time">(franky.JointVelocityWaypoint property)</a>
+</li>
+          <li><a href="api/generated/franky.JointWaypoint.html#franky.JointWaypoint.minimum_time">(franky.JointWaypoint property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Model.html#franky.Model">Model (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.model">model (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.model_urdf">model_urdf (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.ModelException.html#franky.ModelException">ModelException</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceTracker.html#franky.CartesianImpedanceTracker.motion">motion (franky.CartesianImpedanceTracker property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.JointImpedanceTracker.html#franky.JointImpedanceTracker.motion">(franky.JointImpedanceTracker property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Motion.html#franky.Motion">Motion (in module franky)</a>
+</li>
+        <li><a href="api/generated/franky.MotionReuseException.html#franky.MotionReuseException">MotionReuseException</a>
+</li>
+        <li><a href="api/generated/franky.RobotMode.html#franky.RobotMode.Move">Move (franky.RobotMode attribute)</a>
+</li>
+        <li><a href="api/generated/franky.Gripper.html#franky.Gripper.move">move() (franky.Gripper method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Robot.html#franky.Robot.move">(franky.Robot method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Gripper.html#franky.Gripper.move_async">move_async() (franky.Gripper method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="N" class="genindex-section">
+  <h2>N</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.NE_T_EE">NE_T_EE (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.FlipDirection.html#franky.FlipDirection.Negative">Negative (franky.FlipDirection attribute)</a>
+</li>
+        <li><a href="api/generated/franky.NetworkException.html#franky.NetworkException">NetworkException</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.FlipDirection.html#franky.FlipDirection.Neutral">Neutral (franky.FlipDirection attribute)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams.nullspace_tasks">nullspace_tasks (franky.CartesianImpedanceMotionParams property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.nullspace_tasks">(franky.CartesianImpedanceParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.NullspaceGains.html#franky.NullspaceGains">NullspaceGains (class in franky)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="O" class="genindex-section">
+  <h2>O</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.O_ddP_EE_c">O_ddP_EE_c (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.O_ddP_EE_est">O_ddP_EE_est (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.O_ddP_O">O_ddP_O (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianVelocities.html#franky.CartesianVelocities.O_dP_EE">O_dP_EE (franky.CartesianVelocities property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.O_dP_EE_c">O_dP_EE_c (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.O_dP_EE_d">O_dP_EE_d (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.O_dP_EE_est">O_dP_EE_est (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.O_F_ext_hat_K">O_F_ext_hat_K (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianPose.html#franky.CartesianPose.O_T_EE">O_T_EE (franky.CartesianPose property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.RobotState.html#franky.RobotState.O_T_EE">(franky.RobotState property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.O_T_EE_c">O_T_EE_c (franky.RobotState property)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.O_T_EE_d">O_T_EE_d (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.open">open() (franky.BaseDesk method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.open">(franky.Desk method)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.open">(franky.DeskWebSession method)</a>
+</li>
+          <li><a href="api/generated/franky.Gripper.html#franky.Gripper.open">(franky.Gripper method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Gripper.html#franky.Gripper.open_async">open_async() (franky.Gripper method)</a>
+</li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.operating_mode">operating_mode (franky.BaseDesk property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.operating_mode">(franky.Desk property)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.operating_mode">(franky.DeskWebSession property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.OperatingMode.html#franky.OperatingMode">OperatingMode (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.RobotMode.html#franky.RobotMode.Other">Other (franky.RobotMode attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="P" class="genindex-section">
+  <h2>P</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.CartesianImpedanceMotion.html#franky.CartesianImpedanceMotion.params">params (franky.CartesianImpedanceMotion property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceTrackingMotion.html#franky.CartesianImpedanceTrackingMotion.params">(franky.CartesianImpedanceTrackingMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceMotion.html#franky.JointImpedanceMotion.params">(franky.JointImpedanceMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceTrackingMotion.html#franky.JointImpedanceTrackingMotion.params">(franky.JointImpedanceTrackingMotion property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.password">password (franky.BaseDesk property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.password">(franky.Desk property)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.password">(franky.DeskWebSession property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.PilotButton.html#franky.PilotButton">PilotButton (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.PilotButtonEvent.html#franky.PilotButtonEvent">PilotButtonEvent (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.poll_buttons">poll_buttons() (franky.BaseDesk method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.poll_buttons">(franky.Desk method)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.poll_buttons">(franky.DeskWebSession method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.poll_motion">poll_motion() (franky.Robot method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.CartesianState.html#franky.CartesianState.pose">pose (franky.CartesianState property)</a>
+</li>
+        <li><a href="api/generated/franky.Model.html#franky.Model.pose">pose() (franky.Model method)</a>
+</li>
+        <li><a href="api/generated/franky.JointState.html#franky.JointState.position">position (franky.JointState property)</a>
+</li>
+        <li><a href="api/generated/franky.FlipDirection.html#franky.FlipDirection.Positive">Positive (franky.FlipDirection attribute)</a>
+</li>
+        <li><a href="api/generated/franky.NullspaceGains.html#franky.NullspaceGains.posture_damping">posture_damping (franky.NullspaceGains property)</a>
+</li>
+        <li><a href="api/generated/franky.NullspaceGains.html#franky.NullspaceGains.posture_max_torque">posture_max_torque (franky.NullspaceGains property)</a>
+</li>
+        <li><a href="api/generated/franky.NullspaceGains.html#franky.NullspaceGains.posture_stiffness">posture_stiffness (franky.NullspaceGains property)</a>
+</li>
+        <li><a href="api/generated/franky.PostureTask.html#franky.PostureTask">PostureTask (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.power_limit_violation">power_limit_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.PilotButtonEvent.html#franky.PilotButtonEvent.pressed">pressed (franky.PilotButtonEvent attribute)</a>
+</li>
+        <li><a href="api/generated/franky.OperatingMode.html#franky.OperatingMode.PROGRAMMING">PROGRAMMING (franky.OperatingMode attribute)</a>
+</li>
+        <li><a href="api/generated/franky.Twist.html#franky.Twist.propagate_through_link">propagate_through_link() (franky.Twist method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.TwistAcceleration.html#franky.TwistAcceleration.propagate_through_link">(franky.TwistAcceleration method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.ProtocolException.html#franky.ProtocolException">ProtocolException</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Q" class="genindex-section">
+  <h2>Q</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.JointPositions.html#franky.JointPositions.q">q (franky.JointPositions property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.JointReference.html#franky.JointReference.q">(franky.JointReference property)</a>
+</li>
+          <li><a href="api/generated/franky.RobotState.html#franky.RobotState.q">(franky.RobotState property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.q_d">q_d (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.q_est">q_est (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.Affine.html#franky.Affine.quaternion">quaternion (franky.Affine property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="R" class="genindex-section">
+  <h2>R</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.TorqueStopParams.html#franky.TorqueStopParams.ramp_duration">ramp_duration (franky.TorqueStopParams property)</a>
+</li>
+        <li><a href="api/generated/franky.Reaction.html#franky.Reaction">Reaction (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.ReactionRecursionException.html#franky.ReactionRecursionException">ReactionRecursionException</a>
+</li>
+        <li><a href="api/generated/franky.BaseCartesianPoseMotion.html#franky.BaseCartesianPoseMotion.reactions">reactions (franky.BaseCartesianPoseMotion property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.BaseCartesianVelocityMotion.html#franky.BaseCartesianVelocityMotion.reactions">(franky.BaseCartesianVelocityMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.BaseJointPositionMotion.html#franky.BaseJointPositionMotion.reactions">(franky.BaseJointPositionMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.BaseJointVelocityMotion.html#franky.BaseJointVelocityMotion.reactions">(franky.BaseJointVelocityMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.BaseTorqueMotion.html#franky.BaseTorqueMotion.reactions">(franky.BaseTorqueMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceBase.html#franky.CartesianImpedanceBase.reactions">(franky.CartesianImpedanceBase property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceMotion.html#franky.CartesianImpedanceMotion.reactions">(franky.CartesianImpedanceMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceTrackingMotion.html#franky.CartesianImpedanceTrackingMotion.reactions">(franky.CartesianImpedanceTrackingMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianMotion.html#franky.CartesianMotion.reactions">(franky.CartesianMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianStopMotion.html#franky.CartesianStopMotion.reactions">(franky.CartesianStopMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityMotion.html#franky.CartesianVelocityMotion.reactions">(franky.CartesianVelocityMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityStopMotion.html#franky.CartesianVelocityStopMotion.reactions">(franky.CartesianVelocityStopMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityWaypointMotion.html#franky.CartesianVelocityWaypointMotion.reactions">(franky.CartesianVelocityWaypointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianWaypointMotion.html#franky.CartesianWaypointMotion.reactions">(franky.CartesianWaypointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceBase.html#franky.JointImpedanceBase.reactions">(franky.JointImpedanceBase property)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceMotion.html#franky.JointImpedanceMotion.reactions">(franky.JointImpedanceMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceTrackingMotion.html#franky.JointImpedanceTrackingMotion.reactions">(franky.JointImpedanceTrackingMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointMotion.html#franky.JointMotion.reactions">(franky.JointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointStopMotion.html#franky.JointStopMotion.reactions">(franky.JointStopMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityMotion.html#franky.JointVelocityMotion.reactions">(franky.JointVelocityMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityStopMotion.html#franky.JointVelocityStopMotion.reactions">(franky.JointVelocityStopMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityWaypointMotion.html#franky.JointVelocityWaypointMotion.reactions">(franky.JointVelocityWaypointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointWaypointMotion.html#franky.JointWaypointMotion.reactions">(franky.JointWaypointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.TorqueStopMotion.html#franky.TorqueStopMotion.reactions">(franky.TorqueStopMotion property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.RealtimeConfig.html#franky.RealtimeConfig">RealtimeConfig (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.RealtimeException.html#franky.RealtimeException">RealtimeException</a>
+</li>
+        <li><a href="api/generated/franky.Desk.html#franky.Desk.reboot">reboot() (franky.Desk method)</a>
+</li>
+        <li><a href="api/generated/franky.Desk.html#franky.Desk.recover">recover() (franky.Desk method)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.recover_from_errors">recover_from_errors() (franky.Robot method)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianMotion.html#franky.CartesianMotion.reference_type">reference_type (franky.CartesianMotion property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianWaypoint.html#franky.CartesianWaypoint.reference_type">(franky.CartesianWaypoint property)</a>
+</li>
+          <li><a href="api/generated/franky.JointMotion.html#franky.JointMotion.reference_type">(franky.JointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointWaypoint.html#franky.JointWaypoint.reference_type">(franky.JointWaypoint property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.ReferenceType.html#franky.ReferenceType">ReferenceType (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.RobotMode.html#franky.RobotMode.Reflex">Reflex (franky.RobotMode attribute)</a>
+</li>
+        <li><a href="api/generated/franky.BaseCartesianPoseMotion.html#franky.BaseCartesianPoseMotion.register_callback">register_callback() (franky.BaseCartesianPoseMotion method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.BaseCartesianVelocityMotion.html#franky.BaseCartesianVelocityMotion.register_callback">(franky.BaseCartesianVelocityMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.BaseJointPositionMotion.html#franky.BaseJointPositionMotion.register_callback">(franky.BaseJointPositionMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.BaseJointVelocityMotion.html#franky.BaseJointVelocityMotion.register_callback">(franky.BaseJointVelocityMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.BaseTorqueMotion.html#franky.BaseTorqueMotion.register_callback">(franky.BaseTorqueMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceBase.html#franky.CartesianImpedanceBase.register_callback">(franky.CartesianImpedanceBase method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceMotion.html#franky.CartesianImpedanceMotion.register_callback">(franky.CartesianImpedanceMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceTrackingMotion.html#franky.CartesianImpedanceTrackingMotion.register_callback">(franky.CartesianImpedanceTrackingMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianMotion.html#franky.CartesianMotion.register_callback">(franky.CartesianMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianPoseReaction.html#franky.CartesianPoseReaction.register_callback">(franky.CartesianPoseReaction method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianStopMotion.html#franky.CartesianStopMotion.register_callback">(franky.CartesianStopMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityMotion.html#franky.CartesianVelocityMotion.register_callback">(franky.CartesianVelocityMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityReaction.html#franky.CartesianVelocityReaction.register_callback">(franky.CartesianVelocityReaction method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityStopMotion.html#franky.CartesianVelocityStopMotion.register_callback">(franky.CartesianVelocityStopMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityWaypointMotion.html#franky.CartesianVelocityWaypointMotion.register_callback">(franky.CartesianVelocityWaypointMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianWaypointMotion.html#franky.CartesianWaypointMotion.register_callback">(franky.CartesianWaypointMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceBase.html#franky.JointImpedanceBase.register_callback">(franky.JointImpedanceBase method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceMotion.html#franky.JointImpedanceMotion.register_callback">(franky.JointImpedanceMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceTrackingMotion.html#franky.JointImpedanceTrackingMotion.register_callback">(franky.JointImpedanceTrackingMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointMotion.html#franky.JointMotion.register_callback">(franky.JointMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointPositionReaction.html#franky.JointPositionReaction.register_callback">(franky.JointPositionReaction method)</a>
+</li>
+          <li><a href="api/generated/franky.JointStopMotion.html#franky.JointStopMotion.register_callback">(franky.JointStopMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityMotion.html#franky.JointVelocityMotion.register_callback">(franky.JointVelocityMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityReaction.html#franky.JointVelocityReaction.register_callback">(franky.JointVelocityReaction method)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityStopMotion.html#franky.JointVelocityStopMotion.register_callback">(franky.JointVelocityStopMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityWaypointMotion.html#franky.JointVelocityWaypointMotion.register_callback">(franky.JointVelocityWaypointMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointWaypointMotion.html#franky.JointWaypointMotion.register_callback">(franky.JointWaypointMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.TorqueReaction.html#franky.TorqueReaction.register_callback">(franky.TorqueReaction method)</a>
+</li>
+          <li><a href="api/generated/franky.TorqueStopMotion.html#franky.TorqueStopMotion.register_callback">(franky.TorqueStopMotion method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.Measure.html#franky.Measure.REL_TIME">REL_TIME (franky.Measure attribute)</a>
+</li>
+        <li><a href="api/generated/franky.ReferenceType.html#franky.ReferenceType.Relative">Relative (franky.ReferenceType attribute)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianMotion.html#franky.CartesianMotion.relative_dynamics_factor">relative_dynamics_factor (franky.CartesianMotion property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianStopMotion.html#franky.CartesianStopMotion.relative_dynamics_factor">(franky.CartesianStopMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityMotion.html#franky.CartesianVelocityMotion.relative_dynamics_factor">(franky.CartesianVelocityMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityStopMotion.html#franky.CartesianVelocityStopMotion.relative_dynamics_factor">(franky.CartesianVelocityStopMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityWaypoint.html#franky.CartesianVelocityWaypoint.relative_dynamics_factor">(franky.CartesianVelocityWaypoint property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityWaypointMotion.html#franky.CartesianVelocityWaypointMotion.relative_dynamics_factor">(franky.CartesianVelocityWaypointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianWaypoint.html#franky.CartesianWaypoint.relative_dynamics_factor">(franky.CartesianWaypoint property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianWaypointMotion.html#franky.CartesianWaypointMotion.relative_dynamics_factor">(franky.CartesianWaypointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointMotion.html#franky.JointMotion.relative_dynamics_factor">(franky.JointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointStopMotion.html#franky.JointStopMotion.relative_dynamics_factor">(franky.JointStopMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityMotion.html#franky.JointVelocityMotion.relative_dynamics_factor">(franky.JointVelocityMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityStopMotion.html#franky.JointVelocityStopMotion.relative_dynamics_factor">(franky.JointVelocityStopMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityWaypoint.html#franky.JointVelocityWaypoint.relative_dynamics_factor">(franky.JointVelocityWaypoint property)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityWaypointMotion.html#franky.JointVelocityWaypointMotion.relative_dynamics_factor">(franky.JointVelocityWaypointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointWaypoint.html#franky.JointWaypoint.relative_dynamics_factor">(franky.JointWaypoint property)</a>
+</li>
+          <li><a href="api/generated/franky.JointWaypointMotion.html#franky.JointWaypointMotion.relative_dynamics_factor">(franky.JointWaypointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.Robot.html#franky.Robot.relative_dynamics_factor">(franky.Robot property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.RelativeDynamicsFactor.html#franky.RelativeDynamicsFactor">RelativeDynamicsFactor (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.release_control">release_control() (franky.BaseDesk method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.release_control">(franky.Desk method)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.release_control">(franky.DeskWebSession method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.CartesianMotion.html#franky.CartesianMotion.return_when_finished">return_when_finished (franky.CartesianMotion property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianWaypointMotion.html#franky.CartesianWaypointMotion.return_when_finished">(franky.CartesianWaypointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointMotion.html#franky.JointMotion.return_when_finished">(franky.JointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointWaypointMotion.html#franky.JointWaypointMotion.return_when_finished">(franky.JointWaypointMotion property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.PilotButton.html#franky.PilotButton.RIGHT">RIGHT (franky.PilotButton attribute)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot">Robot (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.robot_mode">robot_mode (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotMode.html#franky.RobotMode">RobotMode (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.RobotPose.html#franky.RobotPose">RobotPose (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState">RobotState (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.RobotVelocity.html#franky.RobotVelocity">RobotVelocity (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.rotation_acceleration_limit">rotation_acceleration_limit (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.rotation_jerk_limit">rotation_jerk_limit (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.rotation_velocity_limit">rotation_velocity_limit (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams.rotational_error_clip">rotational_error_clip (franky.CartesianImpedanceMotionParams property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.rotational_error_clip">(franky.CartesianImpedanceParams property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="S" class="genindex-section">
+  <h2>S</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams.safety">safety (franky.CartesianImpedanceMotionParams property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.safety">(franky.CartesianImpedanceParams property)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceParams.html#franky.JointImpedanceParams.safety">(franky.JointImpedanceParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.self_collision_avoidance_violation">self_collision_avoidance_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.send_api_request">send_api_request() (franky.BaseDesk method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.send_api_request">(franky.Desk method)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.send_api_request">(franky.DeskWebSession method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.send_control_api_request">send_control_api_request() (franky.BaseDesk method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.send_control_api_request">(franky.Desk method)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.send_control_api_request">(franky.DeskWebSession method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.send_raw_api_request">send_raw_api_request() (franky.BaseDesk method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.send_raw_api_request">(franky.Desk method)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.send_raw_api_request">(franky.DeskWebSession method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.send_raw_control_api_request">send_raw_control_api_request() (franky.BaseDesk method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.send_raw_control_api_request">(franky.Desk method)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.send_raw_control_api_request">(franky.DeskWebSession method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Gripper.html#franky.Gripper.server_version">server_version (franky.Gripper property)</a>
+</li>
+        <li><a href="api/generated/franky.DoubleDynamicsLimit.html#franky.DoubleDynamicsLimit.set">set() (franky.DoubleDynamicsLimit method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.VectorDynamicsLimit.html#franky.VectorDynamicsLimit.set">(franky.VectorDynamicsLimit method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.JointImpedanceBase.html#franky.JointImpedanceBase.set_cartesian_gains">set_cartesian_gains() (franky.JointImpedanceBase method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.JointImpedanceMotion.html#franky.JointImpedanceMotion.set_cartesian_gains">(franky.JointImpedanceMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceTrackingMotion.html#franky.JointImpedanceTrackingMotion.set_cartesian_gains">(franky.JointImpedanceTrackingMotion method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.set_cartesian_impedance">set_cartesian_impedance() (franky.Robot method)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.set_collision_behavior">set_collision_behavior() (franky.Robot method)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.set_ee">set_ee() (franky.Robot method)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceBase.html#franky.CartesianImpedanceBase.set_gains">set_gains() (franky.CartesianImpedanceBase method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceMotion.html#franky.CartesianImpedanceMotion.set_gains">(franky.CartesianImpedanceMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceTracker.html#franky.CartesianImpedanceTracker.set_gains">(franky.CartesianImpedanceTracker method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceTrackingMotion.html#franky.CartesianImpedanceTrackingMotion.set_gains">(franky.CartesianImpedanceTrackingMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceBase.html#franky.JointImpedanceBase.set_gains">(franky.JointImpedanceBase method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceMotion.html#franky.JointImpedanceMotion.set_gains">(franky.JointImpedanceMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceTracker.html#franky.JointImpedanceTracker.set_gains">(franky.JointImpedanceTracker method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceTrackingMotion.html#franky.JointImpedanceTrackingMotion.set_gains">(franky.JointImpedanceTrackingMotion method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.set_guiding_mode">set_guiding_mode() (franky.Robot method)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.set_joint_impedance">set_joint_impedance() (franky.Robot method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.set_k">set_k() (franky.Robot method)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.set_load">set_load() (franky.Robot method)</a>
+</li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.set_mode_execution">set_mode_execution() (franky.BaseDesk method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.set_mode_execution">(franky.Desk method)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.set_mode_execution">(franky.DeskWebSession method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.set_mode_programming">set_mode_programming() (franky.DeskWebSession method)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceBase.html#franky.CartesianImpedanceBase.set_nullspace_gains">set_nullspace_gains() (franky.CartesianImpedanceBase method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceMotion.html#franky.CartesianImpedanceMotion.set_nullspace_gains">(franky.CartesianImpedanceMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceTrackingMotion.html#franky.CartesianImpedanceTrackingMotion.set_nullspace_gains">(franky.CartesianImpedanceTrackingMotion method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.CartesianImpedanceTrackingMotion.html#franky.CartesianImpedanceTrackingMotion.set_reference">set_reference() (franky.CartesianImpedanceTrackingMotion method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.JointImpedanceTrackingMotion.html#franky.JointImpedanceTrackingMotion.set_reference">(franky.JointImpedanceTrackingMotion method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.CartesianImpedanceTracker.html#franky.CartesianImpedanceTracker.set_target">set_target() (franky.CartesianImpedanceTracker method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.JointImpedanceTracker.html#franky.JointImpedanceTracker.set_target">(franky.JointImpedanceTracker method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Desk.html#franky.Desk.shutdown">shutdown() (franky.Desk method)</a>
+</li>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.start_elbow_sign_inconsistent">start_elbow_sign_inconsistent (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.start_task">start_task() (franky.DeskWebSession method)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceTracker.html#franky.CartesianImpedanceTracker.state">state (franky.CartesianImpedanceTracker property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Gripper.html#franky.Gripper.state">(franky.Gripper property)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceTracker.html#franky.JointImpedanceTracker.state">(franky.JointImpedanceTracker property)</a>
+</li>
+          <li><a href="api/generated/franky.Robot.html#franky.Robot.state">(franky.Robot property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.CartesianImpedanceGains.html#franky.CartesianImpedanceGains.stiffness">stiffness (franky.CartesianImpedanceGains property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams.stiffness">(franky.CartesianImpedanceMotionParams property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.stiffness">(franky.CartesianImpedanceParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Frame.html#franky.Frame.Stiffness">Stiffness (franky.Frame attribute)</a>
+</li>
+        <li><a href="api/generated/franky.JointImpedanceGains.html#franky.JointImpedanceGains.stiffness">stiffness (franky.JointImpedanceGains property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.JointImpedanceParams.html#franky.JointImpedanceParams.stiffness">(franky.JointImpedanceParams property)</a>
+</li>
+          <li><a href="api/generated/franky.PostureTask.html#franky.PostureTask.stiffness">(franky.PostureTask property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.CartesianImpedanceTracker.html#franky.CartesianImpedanceTracker.stop">stop() (franky.CartesianImpedanceTracker method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Gripper.html#franky.Gripper.stop">(franky.Gripper method)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceTracker.html#franky.JointImpedanceTracker.stop">(franky.JointImpedanceTracker method)</a>
+</li>
+          <li><a href="api/generated/franky.Robot.html#franky.Robot.stop">(franky.Robot method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Gripper.html#franky.Gripper.stop_async">stop_async() (franky.Gripper method)</a>
+</li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.system_status">system_status (franky.BaseDesk property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.system_status">(franky.Desk property)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.system_status">(franky.DeskWebSession property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="T" class="genindex-section">
+  <h2>T</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.take_control">take_control() (franky.BaseDesk method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.take_control">(franky.Desk method)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.take_control">(franky.DeskWebSession method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.TakeControlTimeoutError.html#franky.TakeControlTimeoutError">TakeControlTimeoutError</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceMotion.html#franky.CartesianImpedanceMotion.target">target (franky.CartesianImpedanceMotion property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianMotion.html#franky.CartesianMotion.target">(franky.CartesianMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianReference.html#franky.CartesianReference.target">(franky.CartesianReference property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityMotion.html#franky.CartesianVelocityMotion.target">(franky.CartesianVelocityMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityWaypoint.html#franky.CartesianVelocityWaypoint.target">(franky.CartesianVelocityWaypoint property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianWaypoint.html#franky.CartesianWaypoint.target">(franky.CartesianWaypoint property)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceMotion.html#franky.JointImpedanceMotion.target">(franky.JointImpedanceMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceTrackingMotion.html#franky.JointImpedanceTrackingMotion.target">(franky.JointImpedanceTrackingMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointMotion.html#franky.JointMotion.target">(franky.JointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityMotion.html#franky.JointVelocityMotion.target">(franky.JointVelocityMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityWaypoint.html#franky.JointVelocityWaypoint.target">(franky.JointVelocityWaypoint property)</a>
+</li>
+          <li><a href="api/generated/franky.JointWaypoint.html#franky.JointWaypoint.target">(franky.JointWaypoint property)</a>
+</li>
+          <li><a href="api/generated/franky.PostureTask.html#franky.PostureTask.target">(franky.PostureTask property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.CartesianReference.html#franky.CartesianReference.target_acceleration">target_acceleration (franky.CartesianReference property)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceMotion.html#franky.CartesianImpedanceMotion.target_twist">target_twist (franky.CartesianImpedanceMotion property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianReference.html#franky.CartesianReference.target_twist">(franky.CartesianReference property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams.target_type">target_type (franky.CartesianImpedanceMotionParams property)</a>
+</li>
+        <li><a href="api/generated/franky.JointImpedanceMotion.html#franky.JointImpedanceMotion.target_velocity">target_velocity (franky.JointImpedanceMotion property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.JointImpedanceTrackingMotion.html#franky.JointImpedanceTrackingMotion.target_velocity">(franky.JointImpedanceTrackingMotion property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.tau_ext_hat_filtered">tau_ext_hat_filtered (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.JointReference.html#franky.JointReference.tau_ff">tau_ff (franky.JointReference property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.tau_J">tau_J (franky.RobotState property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Torques.html#franky.Torques.tau_J">(franky.Torques property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.tau_J_d">tau_J_d (franky.RobotState property)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.tau_j_range_violation">tau_j_range_violation (franky.Errors property)</a>
+</li>
+        <li><a href="api/generated/franky.GripperState.html#franky.GripperState.temperature">temperature (franky.GripperState property)</a>
+</li>
+        <li><a href="api/generated/franky.RobotState.html#franky.RobotState.theta">theta (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceTracker.html#franky.CartesianImpedanceTracker.tick">tick() (franky.CartesianImpedanceTracker method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.JointImpedanceTracker.html#franky.JointImpedanceTracker.tick">(franky.JointImpedanceTracker method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.CartesianImpedanceTracker.html#franky.CartesianImpedanceTracker.tick_count">tick_count (franky.CartesianImpedanceTracker property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.JointImpedanceTracker.html#franky.JointImpedanceTracker.tick_count">(franky.JointImpedanceTracker property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.GripperState.html#franky.GripperState.time">time (franky.GripperState property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.RobotState.html#franky.RobotState.time">(franky.RobotState property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Duration.html#franky.Duration.to_msec">to_msec() (franky.Duration method)</a>
+</li>
+        <li><a href="api/generated/franky.Duration.html#franky.Duration.to_sec">to_sec() (franky.Duration method)</a>
+</li>
+        <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.token">token (franky.DeskWebSession property)</a>
+</li>
+        <li><a href="api/generated/franky.TorqueReaction.html#franky.TorqueReaction">TorqueReaction (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.Torques.html#franky.Torques">Torques (class in franky)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.ControlSignalType.html#franky.ControlSignalType.Torques">(franky.ControlSignalType attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.TorqueSafetyParams.html#franky.TorqueSafetyParams">TorqueSafetyParams (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.TorqueStopMotion.html#franky.TorqueStopMotion">TorqueStopMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.TorqueStopParams.html#franky.TorqueStopParams">TorqueStopParams (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianState.html#franky.CartesianState.transform_with">transform_with() (franky.CartesianState method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Twist.html#franky.Twist.transform_with">(franky.Twist method)</a>
+</li>
+          <li><a href="api/generated/franky.TwistAcceleration.html#franky.TwistAcceleration.transform_with">(franky.TwistAcceleration method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Affine.html#franky.Affine.translation">translation (franky.Affine property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.translation_acceleration_limit">translation_acceleration_limit (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.translation_jerk_limit">translation_jerk_limit (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.Robot.html#franky.Robot.translation_velocity_limit">translation_velocity_limit (franky.Robot property)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams.translational_error_clip">translational_error_clip (franky.CartesianImpedanceMotionParams property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.translational_error_clip">(franky.CartesianImpedanceParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.Twist.html#franky.Twist">Twist (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.TwistAcceleration.html#franky.TwistAcceleration">TwistAcceleration (class in franky)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="U" class="genindex-section">
+  <h2>U</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.unlock_brakes">unlock_brakes() (franky.BaseDesk method)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.unlock_brakes">(franky.Desk method)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.unlock_brakes">(franky.DeskWebSession method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.BrakeState.html#franky.BrakeState.UNLOCKED">UNLOCKED (franky.BrakeState attribute)</a>
+</li>
+        <li><a href="api/generated/franky.PilotButton.html#franky.PilotButton.UP">UP (franky.PilotButton attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.TorqueSafetyParams.html#franky.TorqueSafetyParams.upper_joint_limits">upper_joint_limits (franky.TorqueSafetyParams property)</a>
+</li>
+        <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.username">username (franky.BaseDesk property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.Desk.html#franky.Desk.username">(franky.Desk property)</a>
+</li>
+          <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession.username">(franky.DeskWebSession property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.RobotMode.html#franky.RobotMode.UserStopped">UserStopped (franky.RobotMode attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="V" class="genindex-section">
+  <h2>V</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.ControllerMode.html#franky.ControllerMode.value">value (franky.ControllerMode property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.ControlSignalType.html#franky.ControlSignalType.value">(franky.ControlSignalType property)</a>
+</li>
+          <li><a href="api/generated/franky.FlipDirection.html#franky.FlipDirection.value">(franky.FlipDirection property)</a>
+</li>
+          <li><a href="api/generated/franky.Frame.html#franky.Frame.value">(franky.Frame property)</a>
+</li>
+          <li><a href="api/generated/franky.RealtimeConfig.html#franky.RealtimeConfig.value">(franky.RealtimeConfig property)</a>
+</li>
+          <li><a href="api/generated/franky.ReferenceType.html#franky.ReferenceType.value">(franky.ReferenceType property)</a>
+</li>
+          <li><a href="api/generated/franky.RobotMode.html#franky.RobotMode.value">(franky.RobotMode property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.VectorDynamicsLimit.html#franky.VectorDynamicsLimit">VectorDynamicsLimit (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianState.html#franky.CartesianState.velocity">velocity (franky.CartesianState property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.JointState.html#franky.JointState.velocity">(franky.JointState property)</a>
+</li>
+          <li><a href="api/generated/franky.RelativeDynamicsFactor.html#franky.RelativeDynamicsFactor.velocity">(franky.RelativeDynamicsFactor property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.FrictionCompensationParams.html#franky.FrictionCompensationParams.velocity_epsilon">velocity_epsilon (franky.FrictionCompensationParams property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.TorqueStopParams.html#franky.TorqueStopParams.velocity_epsilon">(franky.TorqueStopParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.FrictionCompensationParams.html#franky.FrictionCompensationParams.viscous">viscous (franky.FrictionCompensationParams property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="W" class="genindex-section">
+  <h2>W</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.BoolFuture.html#franky.BoolFuture.wait">wait() (franky.BoolFuture method)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianMotion.html#franky.CartesianMotion.waypoints">waypoints (franky.CartesianMotion property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianVelocityMotion.html#franky.CartesianVelocityMotion.waypoints">(franky.CartesianVelocityMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianVelocityWaypointMotion.html#franky.CartesianVelocityWaypointMotion.waypoints">(franky.CartesianVelocityWaypointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.CartesianWaypointMotion.html#franky.CartesianWaypointMotion.waypoints">(franky.CartesianWaypointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointMotion.html#franky.JointMotion.waypoints">(franky.JointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityMotion.html#franky.JointVelocityMotion.waypoints">(franky.JointVelocityMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointVelocityWaypointMotion.html#franky.JointVelocityWaypointMotion.waypoints">(franky.JointVelocityWaypointMotion property)</a>
+</li>
+          <li><a href="api/generated/franky.JointWaypointMotion.html#franky.JointWaypointMotion.waypoints">(franky.JointWaypointMotion property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.Gripper.html#franky.Gripper.width">width (franky.Gripper property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.GripperState.html#franky.GripperState.width">(franky.GripperState property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/generated/franky.RobotPose.html#franky.RobotPose.with_elbow_state">with_elbow_state() (franky.RobotPose method)</a>
+</li>
+        <li><a href="api/generated/franky.RobotVelocity.html#franky.RobotVelocity.with_elbow_velocity">with_elbow_velocity() (franky.RobotVelocity method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Z" class="genindex-section">
+  <h2>Z</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.Model.html#franky.Model.zero_jacobian">zero_jacobian() (franky.Model method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, Tim Schneider
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=00f267c6"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

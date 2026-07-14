@@ -1,0 +1,6 @@
+﻿franky.NetworkException
+=======================
+
+.. currentmodule:: franky
+
+.. autoexception:: NetworkException

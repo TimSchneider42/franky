@@ -1,0 +1,11 @@
+﻿franky.BaseCartesianVelocityMotion
+==================================
+
+.. currentmodule:: franky
+
+.. autoclass:: BaseCartesianVelocityMotion
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

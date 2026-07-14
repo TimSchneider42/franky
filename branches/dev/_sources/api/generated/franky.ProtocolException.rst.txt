@@ -1,0 +1,6 @@
+﻿franky.ProtocolException
+========================
+
+.. currentmodule:: franky
+
+.. autoexception:: ProtocolException

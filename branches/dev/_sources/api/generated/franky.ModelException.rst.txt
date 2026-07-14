@@ -1,0 +1,6 @@
+﻿franky.ModelException
+=====================
+
+.. currentmodule:: franky
+
+.. autoexception:: ModelException

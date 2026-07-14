@@ -1,0 +1,6 @@
+﻿franky.IncompatibleVersionException
+===================================
+
+.. currentmodule:: franky
+
+.. autoexception:: IncompatibleVersionException

@@ -1,0 +1,11 @@
+﻿franky.DeskWebSession
+=====================
+
+.. currentmodule:: franky
+
+.. autoclass:: DeskWebSession
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

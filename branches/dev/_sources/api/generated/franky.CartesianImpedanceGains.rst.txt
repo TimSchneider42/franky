@@ -1,0 +1,11 @@
+﻿franky.CartesianImpedanceGains
+==============================
+
+.. currentmodule:: franky
+
+.. autoclass:: CartesianImpedanceGains
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

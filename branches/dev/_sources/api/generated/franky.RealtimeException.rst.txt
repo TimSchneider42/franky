@@ -1,0 +1,6 @@
+﻿franky.RealtimeException
+========================
+
+.. currentmodule:: franky
+
+.. autoexception:: RealtimeException

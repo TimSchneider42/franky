@@ -1,0 +1,6 @@
+﻿franky.GripperException
+=======================
+
+.. currentmodule:: franky
+
+.. autoexception:: GripperException

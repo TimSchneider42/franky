@@ -1,0 +1,6 @@
+﻿franky.InvalidOperationException
+================================
+
+.. currentmodule:: franky
+
+.. autoexception:: InvalidOperationException

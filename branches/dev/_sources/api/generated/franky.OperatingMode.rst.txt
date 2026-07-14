@@ -1,0 +1,11 @@
+﻿franky.OperatingMode
+====================
+
+.. currentmodule:: franky
+
+.. autoclass:: OperatingMode
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

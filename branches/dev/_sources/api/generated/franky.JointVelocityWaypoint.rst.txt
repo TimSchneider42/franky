@@ -1,0 +1,11 @@
+﻿franky.JointVelocityWaypoint
+============================
+
+.. currentmodule:: franky
+
+.. autoclass:: JointVelocityWaypoint
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

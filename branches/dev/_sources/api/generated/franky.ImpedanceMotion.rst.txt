@@ -1,0 +1,11 @@
+﻿franky.ImpedanceMotion
+======================
+
+.. currentmodule:: franky
+
+.. autoclass:: ImpedanceMotion
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

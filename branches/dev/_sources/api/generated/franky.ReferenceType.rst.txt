@@ -1,0 +1,11 @@
+﻿franky.ReferenceType
+====================
+
+.. currentmodule:: franky
+
+.. autoclass:: ReferenceType
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

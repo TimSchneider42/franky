@@ -1,0 +1,11 @@
+﻿franky.CartesianReference
+=========================
+
+.. currentmodule:: franky
+
+.. autoclass:: CartesianReference
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

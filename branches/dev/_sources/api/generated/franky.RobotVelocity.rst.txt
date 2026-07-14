@@ -1,0 +1,11 @@
+﻿franky.RobotVelocity
+====================
+
+.. currentmodule:: franky
+
+.. autoclass:: RobotVelocity
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

@@ -1,0 +1,6 @@
+﻿franky.ReactionRecursionException
+=================================
+
+.. currentmodule:: franky
+
+.. autoexception:: ReactionRecursionException

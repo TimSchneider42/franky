@@ -1,0 +1,11 @@
+﻿franky.TwistAcceleration
+========================
+
+.. currentmodule:: franky
+
+.. autoclass:: TwistAcceleration
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__
