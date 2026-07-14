@@ -1,9 +1,17 @@
 name: Documentation
 
+# Builds the documentation with C++ API reference and deploys it to
+# <pages-url>/release/ (master) or <pages-url>/dev/ (dev). The Python API reference is
+# generated from the docstrings of the built franky module, so a wheel is built first.
+
 on:
   push:
-    branches:
-    - master
+    branches: [master, dev]
+  workflow_dispatch:
+
+concurrency:
+  group: documentation-${{ github.ref_name }}
+  cancel-in-progress: true
 
 jobs:
   build-deploy:
@@ -19,18 +27,24 @@ jobs:
         dependency_packages: doxygen
       run: sudo apt-get update && sudo apt-get -y install ${dependency_packages}
 
-    - name: build
-      run: cd doc && VERSION=$(cat ../VERSION) doxygen ./Doxyfile
+    - name: build C++ API reference
+      run: cd doc && mkdir -p _build/html/cpp && VERSION=$(cat ../VERSION) doxygen ./Doxyfile  # outputs to doc/_build/html/cpp
 
-    # The deployment below replaces the entire gh-pages root, so it must include the
-    # package index
-    - name: generate package index
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: python3 tools/generate_simple_index.py --output doc/html/whl
+    - name: deploy root files
+      if: github.ref_name == 'master'
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: ./doc/html
+        clean: true
+        clean-exclude: |
+          branches
+          whl
 
     - name: deploy
-      uses: peaceiris/actions-gh-pages@v4
+      uses: JamesIves/github-pages-deploy-action@v4
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./doc/html
+        folder: ./doc/_build/html/cpp
+        # Uses format() instead of '+' for string concatenation
+        target-folder: ${{ github.ref_name == 'master' && '.' || format('branches/{0}', github.ref_name) }}
+        # Cleans the target-folder only if the branch is NOT master
+        clean: ${{ github.ref_name != 'master' }}
