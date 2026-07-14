@@ -30,9 +30,9 @@ var searchData=
   ['translation_5fjerk_5flimit_27',['translation_jerk_limit',['../classfranky_1_1_robot.html#a676d0b273cc01dd02fa536ce07992a73',1,'franky::Robot']]],
   ['translation_5fvelocity_5flimit_28',['translation_velocity_limit',['../classfranky_1_1_robot.html#a7165eb847d474a244c6fba5b595cd84b',1,'franky::Robot']]],
   ['translational_5ferror_5fclip_29',['translational_error_clip',['../structfranky_1_1_cartesian_impedance_base_1_1_params.html#a05d3d447fd6f1127c0dc6d40d183c0ff',1,'franky::CartesianImpedanceBase::Params']]],
-  ['twist_30',['twist',['../classfranky_1_1_twist.html#a9c27d104e1b1ede05906e1a4b8260aa2',1,'franky::Twist::Twist()'],['../classfranky_1_1_twist.html',1,'franky::Twist'],['../classfranky_1_1_twist.html#acc5436a6628d7685aacf10d56e915126',1,'franky::Twist::Twist()']]],
+  ['twist_30',['twist',['../classfranky_1_1_twist.html#a9c27d104e1b1ede05906e1a4b8260aa2',1,'franky::Twist::Twist()'],['../classfranky_1_1_twist.html',1,'franky::Twist']]],
   ['twist_2ehpp_31',['twist.hpp',['../twist_8hpp.html',1,'']]],
   ['twist_5facceleration_2ehpp_32',['twist_acceleration.hpp',['../twist__acceleration_8hpp.html',1,'']]],
-  ['twistacceleration_33',['twistacceleration',['../classfranky_1_1_twist_acceleration.html',1,'franky::TwistAcceleration'],['../classfranky_1_1_twist_acceleration.html#a12807e75c0b6f39208d1822dbdf2eb28',1,'franky::TwistAcceleration::TwistAcceleration(Eigen::Vector3d linear_acceleration=Eigen::Vector3d::Zero(), Eigen::Vector3d angular_acceleration=Eigen::Vector3d::Zero())'],['../classfranky_1_1_twist_acceleration.html#a99508b6c2741d8f18acca43e538beecb',1,'franky::TwistAcceleration::TwistAcceleration(const TwistAcceleration &amp;twist_acceleration_acceleration)=default']]],
+  ['twistacceleration_33',['twistacceleration',['../classfranky_1_1_twist_acceleration.html',1,'franky::TwistAcceleration'],['../classfranky_1_1_twist_acceleration.html#a12807e75c0b6f39208d1822dbdf2eb28',1,'franky::TwistAcceleration::TwistAcceleration()']]],
   ['types_2ehpp_34',['types.hpp',['../types_8hpp.html',1,'']]]
 ];

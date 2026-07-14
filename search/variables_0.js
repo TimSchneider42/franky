@@ -9,5 +9,5 @@ var searchData=
   ['control_5frate_6',['control_rate',['../classfranky_1_1_robot.html#a3155de462f5590cc67b2874acf846f53',1,'franky::Robot']]],
   ['controller_5fmode_7',['controller_mode',['../structfranky_1_1_robot_1_1_params.html#a598cc77f3116a601bac482ddc4c74083',1,'franky::Robot::Params']]],
   ['coulomb_8',['coulomb',['../structfranky_1_1_friction_compensation_params.html#ae1b1d9ad079faa92b4766719dcff6453',1,'franky::FrictionCompensationParams']]],
-  ['current_5ferrors_9',['current_errors',['../structfranky_1_1_robot_state.html#af874b62c9e403d0c2e581aab20bebb4d',1,'franky::RobotState']]]
+  ['current_5ferrors_9',['current_errors',['../structfranky_1_1_robot_state.html#ad52d3936c9984cd7d331620964a8ac53',1,'franky::RobotState']]]
 ];

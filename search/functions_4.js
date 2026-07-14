@@ -8,7 +8,8 @@ var searchData=
   ['end_5feffector_5ftwist_5',['end_effector_twist',['../classfranky_1_1_robot_velocity.html#addf40a07374fd18d74d84c7027291b2b',1,'franky::RobotVelocity']]],
   ['ensureeigen_6',['ensureEigen',['../namespacefranky.html#a4af8de05472061175cee07678cddc6c3',1,'franky']]],
   ['ensurestd_7',['ensureStd',['../namespacefranky.html#acf0fc6eb90d96155c7700e17d783b101',1,'franky']]],
-  ['expand_8',['expand',['../namespacefranky.html#ae5cfa5596da548550897b01e9e1bd14b',1,'franky']]],
-  ['expandeigen_9',['expandEigen',['../namespacefranky.html#ad661aa664ba35fe438aec340c76bc913',1,'franky']]],
-  ['extrapolatemotion_10',['extrapolatemotion',['../classfranky_1_1_position_waypoint_motion.html#a345e479ffc4f38dba2a1128805108e19',1,'franky::PositionWaypointMotion::extrapolateMotion()'],['../classfranky_1_1_velocity_waypoint_motion.html#aca3cabe4405f7132c4001388d248cc67',1,'franky::VelocityWaypointMotion::extrapolateMotion()'],['../classfranky_1_1_waypoint_motion.html#a24a6f06d1ca935764c37aa044d191750',1,'franky::WaypointMotion::extrapolateMotion()']]]
+  ['errors_8',['errors',['../structfranky_1_1_errors.html#a38ddf9dacb0386e85e65608660d1bad9',1,'franky::Errors::Errors() noexcept'],['../structfranky_1_1_errors.html#a819dc85d97f106dd824a0433d677aa13',1,'franky::Errors::Errors(const Errors &amp;other) noexcept'],['../structfranky_1_1_errors.html#ada6b35aad3eec1601be2a06891daa9c3',1,'franky::Errors::Errors(const franka::Errors &amp;other) noexcept']]],
+  ['expand_9',['expand',['../namespacefranky.html#ae5cfa5596da548550897b01e9e1bd14b',1,'franky']]],
+  ['expandeigen_10',['expandEigen',['../namespacefranky.html#ad661aa664ba35fe438aec340c76bc913',1,'franky']]],
+  ['extrapolatemotion_11',['extrapolatemotion',['../classfranky_1_1_position_waypoint_motion.html#a345e479ffc4f38dba2a1128805108e19',1,'franky::PositionWaypointMotion::extrapolateMotion()'],['../classfranky_1_1_velocity_waypoint_motion.html#aca3cabe4405f7132c4001388d248cc67',1,'franky::VelocityWaypointMotion::extrapolateMotion()'],['../classfranky_1_1_waypoint_motion.html#a24a6f06d1ca935764c37aa044d191750',1,'franky::WaypointMotion::extrapolateMotion()']]]
 ];

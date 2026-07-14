@@ -54,7 +54,7 @@ var searchData=
   ['coriolis_51',['coriolis',['../classfranky_1_1_model.html#a6a405f52d262f0dbc744190646e7cf17',1,'franky::Model::coriolis(const Vector7d &amp;q, const Vector7d &amp;dq, const Eigen::Matrix3d &amp;I_total, double m_total, const Eigen::Vector3d &amp;F_x_Ctotal) const'],['../classfranky_1_1_model.html#ab71c9e3f23f6963568f2bb42397d1599',1,'franky::Model::coriolis(const RobotState &amp;state) const']]],
   ['coulomb_52',['coulomb',['../structfranky_1_1_friction_compensation_params.html#ae1b1d9ad079faa92b4766719dcff6453',1,'franky::FrictionCompensationParams']]],
   ['current_5fcontrol_5fsignal_5ftype_53',['current_control_signal_type',['../classfranky_1_1_robot.html#a15b55042954d0bec0f2190abf2c8bb59',1,'franky::Robot']]],
-  ['current_5ferrors_54',['current_errors',['../structfranky_1_1_robot_state.html#af874b62c9e403d0c2e581aab20bebb4d',1,'franky::RobotState']]],
+  ['current_5ferrors_54',['current_errors',['../structfranky_1_1_robot_state.html#ad52d3936c9984cd7d331620964a8ac53',1,'franky::RobotState']]],
   ['currentcartesianstate_55',['currentCartesianState',['../classfranky_1_1_robot.html#a4d2595f5969257dd18dce4997d59f7cd',1,'franky::Robot']]],
   ['currentcartesianvelocity_56',['currentCartesianVelocity',['../classfranky_1_1_robot.html#acb900ba5048aa792f4c16150703d8a6b',1,'franky::Robot']]],
   ['currentjointpositions_57',['currentJointPositions',['../classfranky_1_1_robot.html#a4aae0b9dbfe4d88615810d1743c43646',1,'franky::Robot']]],
