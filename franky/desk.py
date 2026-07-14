@@ -304,10 +304,6 @@ class BaseDesk(ABC):
         pass
 
     @abstractmethod
-    def set_mode_programming(self):
-        pass
-
-    @abstractmethod
     def set_mode_execution(self):
         pass
 
@@ -718,12 +714,6 @@ class Desk(BaseDesk):
 
     def lock_brakes(self):
         self.send_control_api_request("/api/arm/joints:lock")
-
-    def set_mode_programming(self):
-        self.send_control_api_request(
-            "/api/system/operating-mode:change",
-            content={"desiredOperatingMode": "Programming"},
-        )
 
     def set_mode_execution(self):
         self.send_control_api_request(

@@ -629,11 +629,6 @@ class TestDesk:
             ("unlock_brakes", "/api/arm/joints:unlock", None),
             ("lock_brakes", "/api/arm/joints:lock", None),
             (
-                "set_mode_programming",
-                "/api/system/operating-mode:change",
-                {"desiredOperatingMode": "Programming"},
-            ),
-            (
                 "set_mode_execution",
                 "/api/system/operating-mode:change",
                 {"desiredOperatingMode": "Execution"},
