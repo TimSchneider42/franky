@@ -78,7 +78,10 @@ franka::CartesianVelocities CartesianVelocityWaypointMotion::getControlSignal(
 void CartesianVelocityWaypointMotion::setNewWaypoint(
     const RobotState &robot_state, const std::optional<franka::CartesianVelocities> &previous_command,
     const VelocityWaypoint<RobotVelocity> &new_waypoint, ruckig::InputParameter<7> &input_parameter) {
-  auto new_target_transformed = new_waypoint.target.changeEndEffectorFrame(ee_frame_.inverse().translation());
+  // The target twist is anchored at ee_frame, while libfranka expects it at the
+  // configured end effector. Express that frame-to-EE offset in world coordinates.
+  const Eigen::Vector3d frame_to_ee_world = -robot_state.O_T_EE.linear() * ee_frame_.translation();
+  auto new_target_transformed = new_waypoint.target.changeEndEffectorFrame(frame_to_ee_world);
   // This is a bit of an oversimplification, as the angular velocities don't
   // work like linear velocities (but we pretend they do here). However, it is
   // probably good enough here.
