@@ -67,15 +67,9 @@ jobs:
     - name: build C++ API reference
       run: cd doc && mkdir -p _build/html/cpp && VERSION=$(cat ../VERSION) doxygen ./Doxyfile  # outputs to doc/_build/html/cpp
 
-    - name: deploy root files
+    - name: prepare root files
       if: github.ref_name == 'master'
-      uses: JamesIves/github-pages-deploy-action@v4
-      with:
-        folder: ./doc/html
-        clean: true
-        clean-exclude: |
-          branches
-          whl
+      run: cp -r ./doc/html/* ./doc/_build/html/
 
     - name: deploy
       uses: JamesIves/github-pages-deploy-action@v4
@@ -83,5 +77,7 @@ jobs:
         folder: ./doc/_build/html/
         # Uses format() instead of '+' for string concatenation
         target-folder: ${{ github.ref_name == 'master' && '.' || format('branches/{0}', github.ref_name) }}
-        # Cleans the target-folder only if the branch is NOT master
-        clean: ${{ github.ref_name != 'master' }}
+        clean: true
+        clean-exclude: |
+          branches
+          whl
