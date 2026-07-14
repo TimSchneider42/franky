@@ -44,8 +44,8 @@ class CMakeBuild(build_ext):
             .split(".")
         )
         cmake_version += (0,) * (3 - len(cmake_version))
-        if cmake_version < (3, 10, 0):
-            raise RuntimeError("CMake >= 3.10.0 is required")
+        if cmake_version < (3, 11, 0):
+            raise RuntimeError("CMake >= 3.11.0 is required")
 
         build_type = os.environ.get("BUILD_TYPE", "Release")
         build_args = ["--config", build_type]
@@ -68,6 +68,10 @@ class CMakeBuild(build_ext):
             dest = ext_dir / prebuilt_lib.name
             shutil.copy2(prebuilt_lib, dest)
             cmake_args.append("-DFRANKY_PREBUILT_LIB={}".format(dest))
+        else:
+            # This is a CMake cache variable, so explicitly clear a prebuilt
+            # path left by an earlier build in the same build directory.
+            cmake_args.append("-DFRANKY_PREBUILT_LIB=")
 
         Path(self.build_temp).mkdir(exist_ok=True, parents=True)
 
