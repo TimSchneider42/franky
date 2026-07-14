@@ -28,7 +28,7 @@ void CartesianVelocityWaypointMotion::initWaypointMotion(
     ruckig::InputParameter<7> &input_parameter) {
   RobotVelocity current_velocity;
   if (previous_command.has_value()) {
-    current_velocity = RobotVelocity(previous_command.value());
+    current_velocity = RobotVelocity(previous_command.value()).withElbowVelocity(robot_state.delbow_c);
   } else {
     current_velocity = RobotVelocity(robot_state.O_dP_EE_c, robot_state.delbow_c);
   }
@@ -40,7 +40,7 @@ void CartesianVelocityWaypointMotion::initWaypointMotion(
   input_parameter.current_velocity = toStdD<7>(initial_acceleration_with_elbow);
   input_parameter.current_acceleration = toStdD<7>(Vector7d::Zero());
 
-  if (previous_command.has_value())
+  if (previous_command.has_value() && previous_command->hasElbow())
     last_elbow_pos_ = previous_command.value().elbow[0];
   else
     last_elbow_pos_ = robot_state.elbow_c.joint_3_pos();
@@ -63,7 +63,7 @@ franka::CartesianVelocities CartesianVelocityWaypointMotion::getControlSignal(
                              0.5 * current_elbow_acc * std::pow(time_step_s, 2) +
                              1.0 / 6.0 * elbow_jerk * std::pow(time_step_s, 3);
 
-    last_elbow_vel_ = input_parameter.current_position[0];
+    last_elbow_vel_ = current_elbow_vel;
     last_elbow_pos_ = current_elbow_pos;
     auto current_elbow_flip = robot_state.elbow.joint_4_flip();
     if (previous_command.has_value() && previous_command->hasElbow()) {
@@ -84,7 +84,16 @@ void CartesianVelocityWaypointMotion::setNewWaypoint(
   // probably good enough here.
   input_parameter.target_position = toStdD<7>(new_target_transformed.vector_repr());
   input_parameter.target_velocity = toStdD<7>(Vector7d::Zero());
-  input_parameter.enabled = {true, true, true, true, true, true, new_target_transformed.elbow_velocity().has_value()};
+  const bool had_elbow = input_parameter.enabled[6];
+  const bool has_elbow = new_target_transformed.elbow_velocity().has_value();
+  if (has_elbow && !had_elbow) {
+    input_parameter.current_position[6] = robot_state.delbow_c;
+    input_parameter.current_velocity[6] = robot_state.ddelbow_c;
+    input_parameter.current_acceleration[6] = 0.0;
+    last_elbow_pos_ = robot_state.elbow_c.joint_3_pos();
+    last_elbow_vel_ = robot_state.delbow_c;
+  }
+  input_parameter.enabled = {true, true, true, true, true, true, has_elbow};
 }
 
 std::tuple<Vector7d, Vector7d, Vector7d> CartesianVelocityWaypointMotion::getAbsoluteInputLimits() const {

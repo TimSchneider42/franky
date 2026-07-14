@@ -21,6 +21,9 @@ void CartesianWaypointMotion::initWaypointMotion(
   RobotPose robot_pose;
   if (previous_command.has_value()) {
     robot_pose = RobotPose(previous_command.value());
+    if (!robot_pose.elbow_state().has_value()) {
+      robot_pose = robot_pose.withElbowState(ElbowState(robot_state.elbow_c));
+    }
   } else {
     robot_pose = RobotPose(robot_state.O_T_EE_c, robot_state.elbow_c);
   }
@@ -57,6 +60,9 @@ void CartesianWaypointMotion::setNewWaypoint(
 
   // We first convert the current state into the frame of the current pose
   RobotPose current_pose_old_ref_frame(toEigenD<7>(input_parameter.current_position), !waypoint_has_elbow);
+  if (!waypoint_has_elbow) {
+    current_pose_old_ref_frame = current_pose_old_ref_frame.withElbowState(ElbowState(robot_state.elbow_c));
+  }
   Affine new_ref_to_old_ref = current_pose_old_ref_frame.end_effector_pose();
   ref_frame_ = ref_frame_ * new_ref_to_old_ref;
   auto rot = new_ref_to_old_ref.inverse().rotation();
@@ -89,8 +95,8 @@ void CartesianWaypointMotion::setNewWaypoint(
   auto waypoint_pose = new_waypoint.target.pose();
 
   auto prev_target_robot_pose = target_state_.pose();
-  if (!waypoint_pose.elbow_state().has_value()) {
-    prev_target_robot_pose = prev_target_robot_pose.withElbowState(ElbowState(robot_state.elbow));
+  if (!prev_target_robot_pose.elbow_state().has_value()) {
+    prev_target_robot_pose = prev_target_robot_pose.withElbowState(ElbowState(robot_state.elbow_c));
   }
 
   std::optional<ElbowState> new_elbow;

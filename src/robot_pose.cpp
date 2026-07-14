@@ -29,7 +29,9 @@ RobotPose::RobotPose(const Vector6d &vector_repr, std::optional<ElbowState> elbo
               Eigen::Vector3d::Ones())) {}
 
 RobotPose::RobotPose(const franka::CartesianPose &franka_pose)
-    : RobotPose(Affine(Eigen::Matrix4d::Map(franka_pose.O_T_EE.data())), ElbowState(franka_pose.elbow)) {}
+    : RobotPose(
+          Affine(Eigen::Matrix4d::Map(franka_pose.O_T_EE.data())),
+          franka_pose.hasElbow() ? std::optional<ElbowState>(ElbowState(franka_pose.elbow)) : std::nullopt) {}
 
 Vector7d RobotPose::vector_repr() const {
   Eigen::AngleAxis<double> orientation(end_effector_pose_.rotation());
