@@ -20,25 +20,14 @@ option(BUILD_TESTS "Build tests" ON)
 find_package(Eigen3 3.4.0 REQUIRED NO_MODULE)
 find_package(Franka REQUIRED)
 
-if (${Franka_VERSION} VERSION_GREATER_EQUAL "0.8.0")
-    add_compile_definitions(FRANKA_0_8)
-endif ()
-
-if (${Franka_VERSION} VERSION_GREATER_EQUAL "0.9.0")
-    add_compile_definitions(FRANKA_0_9)
-endif ()
-
-if (${Franka_VERSION} VERSION_GREATER_EQUAL "0.10.0")
-    add_compile_definitions(FRANKA_0_10)
-endif ()
-
-if (${Franka_VERSION} VERSION_GREATER_EQUAL "0.15.0")
-    add_compile_definitions(FRANKA_0_15)
-endif ()
-
-if (${Franka_VERSION} VERSION_GREATER_EQUAL "0.18.0")
-    add_compile_definitions(FRANKA_0_18)
-endif ()
+set(FRANKA_VERSION_DEFINES "")
+foreach (franka_min_version 0.8 0.9 0.10 0.15 0.18)
+    if (${Franka_VERSION} VERSION_GREATER_EQUAL "${franka_min_version}.0")
+        string(REPLACE "." "_" franka_min_version_str "${franka_min_version}")
+        list(APPEND FRANKA_VERSION_DEFINES "FRANKA_${franka_min_version_str}")
+    endif ()
+endforeach ()
+add_compile_definitions(${FRANKA_VERSION_DEFINES})
 
 message("Found Eigen Version: ${Eigen3_VERSION}")
 message("Found Franka Version: ${Franka_VERSION}")
@@ -79,6 +68,28 @@ if (BUILD_PYTHON_MODULE)
     pybind11_add_module(_franky-lib ${PYTHON_SRC})
     target_link_libraries(_franky-lib PUBLIC franky)
     set_target_properties(_franky-lib PROPERTIES OUTPUT_NAME "_franky")
+
+    # Regenerates python/docstrings.hpp (which is checked in) from the doxygen comments in the C++
+    # headers. Not part of the regular build, as it requires pybind11_mkdoc and libclang; run it
+    # after changing doc comments in the headers. It uses the include directories and version
+    # defines of the actual build, so the extracted libfranka docstrings match the libfranka
+    # version franky is built against.
+    set(DOCSTRING_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/include")
+    foreach (dependency Franka::Franka Eigen3::Eigen ruckig::ruckig)
+        get_target_property(dependency_include_dirs ${dependency} INTERFACE_INCLUDE_DIRECTORIES)
+        if (dependency_include_dirs)
+            list(APPEND DOCSTRING_INCLUDE_DIRS ${dependency_include_dirs})
+        endif ()
+    endforeach ()
+    add_custom_target(franky-docstrings
+            ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/tools/generate_docstrings.py"
+            --output "${CMAKE_CURRENT_SOURCE_DIR}/python/docstrings.hpp"
+            --include-dirs ${DOCSTRING_INCLUDE_DIRS}
+            --defines ${FRANKA_VERSION_DEFINES}
+            --std "c++${CMAKE_CXX_STANDARD}"
+            COMMENT "Generating Python docstrings from the C++ headers..."
+            COMMAND_EXPAND_LISTS
+            VERBATIM)
 
     if (BUILD_PYTHON_STUBS)
         # Build stubs

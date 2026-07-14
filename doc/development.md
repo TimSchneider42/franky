@@ -62,6 +62,20 @@ franky is currently tested against the following versions
 - Python >=3.7
 - Catch2 2.13.8 (for testing only)
 
+## Regenerating the Python Docstrings
+
+The docstrings of the Python bindings are extracted from the doxygen comments in the C++ headers
+with [pybind11_mkdoc](https://github.com/pybind/pybind11_mkdoc) and are checked in as
+`python/docstrings.hpp`, so regular builds do not depend on pybind11_mkdoc. After changing doc
+comments in the headers, regenerate this file with the `franky-docstrings` CMake target, which uses
+the include directories and version defines of the configured build:
+
+```bash
+sudo apt-get install libclang-dev
+pip install pybind11_mkdoc "clang~=14.0"  # the clang package version should match libclang
+cmake --build build --target franky-docstrings
+```
+
 ## Building the Documentation
 
 The documentation is built with [Sphinx](https://www.sphinx-doc.org/).
