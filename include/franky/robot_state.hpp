@@ -112,7 +112,7 @@ struct RobotState {
    * Configured rotational inertia matrix of the end effector load with respect
    * to center of mass.
    */
-  IntertiaMatrix I_ee{};  // NOLINT(readability-identifier-naming)
+  InertiaMatrix I_ee{};  // NOLINT(readability-identifier-naming)
 
   /**
    * \f$^{F}x_{C_{EE}}\f$
@@ -132,7 +132,7 @@ struct RobotState {
    * Configured rotational inertia matrix of the external load with respect to
    * center of mass.
    */
-  IntertiaMatrix I_load{};  // NOLINT(readability-identifier-naming)
+  InertiaMatrix I_load{};  // NOLINT(readability-identifier-naming)
 
   /**
    * \f$^{F}x_{C_{load}}\f$
@@ -152,7 +152,7 @@ struct RobotState {
    * Combined rotational inertia matrix of the end effector load and the
    * external load with respect to the center of mass.
    */
-  IntertiaMatrix I_total{};  // NOLINT(readability-identifier-naming)
+  InertiaMatrix I_total{};  // NOLINT(readability-identifier-naming)
 
   /**
    * \f$^{F}x_{C_{total}}\f$
