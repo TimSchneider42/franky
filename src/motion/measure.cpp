@@ -67,7 +67,7 @@ Measure Measure::RelTime() {
       [](const RobotState &robot_state, franka::Duration rel_time, franka::Duration abs_time) {
         return rel_time.toSec();
       },
-      "t");
+      "Measure.REL_TIME");
 }
 
 Measure Measure::AbsTime() {
@@ -75,7 +75,7 @@ Measure Measure::AbsTime() {
       [](const RobotState &robot_state, franka::Duration rel_time, franka::Duration abs_time) {
         return abs_time.toSec();
       },
-      "t");
+      "Measure.ABS_TIME");
 }
 
 MEASURE_CMP_DEF(==)
