@@ -58,26 +58,27 @@ If real-time is not listed in your groups, try rebooting.
 
 ## Installing franky
 
-To start using franky with Python and libfranka *0.21.2*, just install it via
+To start using franky with Python and the latest libfranka *0.21.2*, just install it via
 
 ```bash
 pip install franky-control
 ```
 
-We also provide wheels for libfranka versions *0.7.1*, *0.8.0*, *0.9.2*, *0.12.1*, *0.13.3*,
+If you need `franky` for a specific robot server version, you can install the corresponding wheel by adding an `--extra-index-url` specifying your robot's server version. `franky` supports Robot Server versions 2 through 10.
+
+```bash
+# Replace 10 with your robot server version
+pip install franky-control --extra-index-url "https://timschneider42.github.io/franky/whl/by-robot-server-version/10/"
+```
+
+If you need a specific libfranka version, we provide wheels for versions *0.7.1*, *0.8.0*, *0.9.2*, *0.12.1*, *0.13.3*,
 *0.14.2*, *0.17.0*, and *0.21.2*.
 They can be installed via
 
 ```bash
-VERSION=0-9-2
-wget https://github.com/TimSchneider42/franky/releases/latest/download/libfranka_${VERSION}_wheels.zip
-unzip libfranka_${VERSION}_wheels.zip
-pip install numpy websockets>=11
-pip install --no-index --find-links=./dist franky-control
+# You can replace the libfranka version by any of the supported versions denoted above
+pip install franky-control --extra-index-url "https://timschneider42.github.io/franky/whl/libfranka-0.21.2/"
 ```
-
-If you are unsure which libfranka version you need, check
-the [compatibility matrix](https://frankarobotics.github.io/docs/compatibility.html) of your robot's firmware.
 
 ## Development Builds
 
@@ -87,8 +88,8 @@ These wheels are rebuilt on every push to `master` and are provided for all supp
 They can be installed via the [package index](https://timschneider42.github.io/franky/whl/) by adding the `--pre` flag:
 
 ```bash
-# You can replace the libfranka version by any of the supported versions denoted above
-pip install --pre franky-control --extra-index-url "https://timschneider42.github.io/franky/whl/libfranka-0.21.2/"
+# Replace 10 with your robot server version
+pip install --pre franky-control --extra-index-url "https://timschneider42.github.io/franky/whl/by-robot-server-version/10/"
 ```
 
 Development builds are versioned as pre-releases of the next patch version, and their version indicates the commit and
