@@ -36,7 +36,7 @@ class StopMotion<franka::JointPositions> : public JointMotion {
 };
 
 /**
- * @brief Stop motion for joint velocity position control mode.
+ * @brief Stop motion for joint velocity control mode.
  */
 template <>
 class StopMotion<franka::JointVelocities> : public JointVelocityMotion {

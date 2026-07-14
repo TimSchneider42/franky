@@ -18,30 +18,29 @@ struct MotionPlannerException : std::runtime_error {
  * @brief A waypoint with a target and optional parameters.
  *
  * @tparam TargetType The type of the target.
- *
- * @param target                    The target of this waypoint.
- * @param reference_type            The reference type (absolute or relative).
- * @param relative_dynamics_factor  The relative dynamics factor for this
- * waypoint. This factor will get multiplied with the robot's global dynamics
- * factor and the motion dynamics factor to get the actual dynamics factor for
- * this waypoint.
- * @param minimum_time              The minimum time to get to the next
- * waypoint.
- * @param hold_target_duration      For how long to hold the target of this
- * waypoint after it has been reached.
- * @param max_total_duration        The maximum time to try reaching this
- * waypoint before moving on to the next waypoint. Default is infinite.
  */
 template <typename TargetType>
 struct Waypoint {
+  /** The target of this waypoint. */
   TargetType target;
 
+  /**
+   * The relative dynamics factor for this waypoint. This factor will get
+   * multiplied with the robot's global dynamics factor and the motion dynamics
+   * factor to get the actual dynamics factor for this waypoint.
+   */
   RelativeDynamicsFactor relative_dynamics_factor{1.0};
 
+  /** The minimum time to get to the next waypoint. */
   std::optional<franka::Duration> minimum_time{std::nullopt};
 
+  /** For how long to hold the target of this waypoint after it has been reached. */
   franka::Duration hold_target_duration{0};
 
+  /**
+   * The maximum time to try reaching this waypoint before moving on to the
+   * next waypoint. Default is infinite.
+   */
   std::optional<franka::Duration> max_total_duration{std::nullopt};
 };
 
@@ -69,8 +68,15 @@ class WaypointMotion : public Motion<ControlSignalType> {
   explicit WaypointMotion(std::vector<WaypointType> waypoints, bool return_when_finished = true)
       : waypoints_(std::move(waypoints)), return_when_finished_(return_when_finished), prev_result_() {}
 
+  /**
+   * @brief The waypoints this motion follows.
+   */
   [[nodiscard]] const std::vector<WaypointType> &waypoints() const { return waypoints_; }
 
+  /**
+   * @brief Whether the motion ends when the last waypoint is reached or keeps
+   * holding the last target.
+   */
   [[nodiscard]] bool return_when_finished() const { return return_when_finished_; }
 
  protected:

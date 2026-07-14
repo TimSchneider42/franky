@@ -13,6 +13,9 @@ class JointMotion : public JointWaypointMotion {
  public:
   /**
    * @param target                   The target joint state.
+   * @param reference_type           The reference type (absolute or relative).
+   * An absolute target is defined in the robot's base frame, a relative target
+   * is defined relative to the current joint position.
    * @param relative_dynamics_factor The relative dynamics factor for this
    * motion. The factor will get multiplied with the robot's global dynamics
    * factor to get the actual dynamics factor for this motion.

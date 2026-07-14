@@ -14,7 +14,7 @@ namespace franky {
 /**
  * @brief Joint velocity waypoint motion.
  *
- * This motion follows multiple joint waypoints in a time-optimal way.
+ * This motion follows multiple joint velocity waypoints in a time-optimal way.
  */
 class JointVelocityWaypointMotion : public VelocityWaypointMotion<franka::JointVelocities, Vector7d> {
  public:

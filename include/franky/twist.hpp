@@ -68,7 +68,7 @@ class Twist {
    * computes the twist of a frame B that is rigidly attached to frame A by a
    * link with the given translation: B = A + T, where T is the translation.
    *
-   * @param link_translation: The translation of the link. Must be in the same
+   * @param link_translation The translation of the link. Must be in the same
    * reference frame as this twist.
    * @return The twist propagated through the link.
    */

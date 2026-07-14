@@ -375,9 +375,9 @@ class Robot : public franka::Robot {
    * @brief Execute the given motion
    * @param motion The motion to execute.
    * @param async Whether to execute the motion asynchronously.
-   * @param[in] limit_rate True if rate limiting should be activated. False by default.
+   * @param limit_rate True if rate limiting should be activated. False by default.
    *   This could distort your motion!
-   * @param[in] cutoff_frequency Cutoff frequency for a first order low-pass filter applied on
+   * @param cutoff_frequency Cutoff frequency for a first order low-pass filter applied on
    *   the user commanded signal. Set to franka::kMaxCutoffFrequency to disable.
    */
   void move(
@@ -395,9 +395,9 @@ class Robot : public franka::Robot {
    * @brief Execute the given motion
    * @param motion The motion to execute.
    * @param async Whether to execute the motion asynchronously.
-   * @param[in] limit_rate True if rate limiting should be activated. False by default.
+   * @param limit_rate True if rate limiting should be activated. False by default.
    *   This could distort your motion!
-   * @param[in] cutoff_frequency Cutoff frequency for a first order low-pass filter applied on
+   * @param cutoff_frequency Cutoff frequency for a first order low-pass filter applied on
    *   the user commanded signal. Set to franka::kMaxCutoffFrequency to disable.
    */
   void move(
@@ -415,9 +415,9 @@ class Robot : public franka::Robot {
    * @brief Execute the given motion
    * @param motion The motion to execute.
    * @param async Whether to execute the motion asynchronously.
-   * @param[in] limit_rate True if rate limiting should be activated. False by default.
+   * @param limit_rate True if rate limiting should be activated. False by default.
    *   This could distort your motion!
-   * @param[in] cutoff_frequency Cutoff frequency for a first order low-pass filter applied on
+   * @param cutoff_frequency Cutoff frequency for a first order low-pass filter applied on
    *   the user commanded signal. Set to franka::kMaxCutoffFrequency to disable.
    */
   void move(
@@ -435,9 +435,9 @@ class Robot : public franka::Robot {
    * @brief Execute the given motion
    * @param motion The motion to execute.
    * @param async Whether to execute the motion asynchronously.
-   * @param[in] limit_rate True if rate limiting should be activated. False by default.
+   * @param limit_rate True if rate limiting should be activated. False by default.
    *   This could distort your motion!
-   * @param[in] cutoff_frequency Cutoff frequency for a first order low-pass filter applied on
+   * @param cutoff_frequency Cutoff frequency for a first order low-pass filter applied on
    *   the user commanded signal. Set to franka::kMaxCutoffFrequency to disable.
    */
   void move(
@@ -455,9 +455,9 @@ class Robot : public franka::Robot {
    * @brief Execute the given motion
    * @param motion The motion to execute.
    * @param async Whether to execute the motion asynchronously.
-   * @param[in] limit_rate True if rate limiting should be activated. False by default.
+   * @param limit_rate True if rate limiting should be activated. False by default.
    *   This could distort your motion!
-   * @param[in] cutoff_frequency Cutoff frequency for a first order low-pass filter applied on
+   * @param cutoff_frequency Cutoff frequency for a first order low-pass filter applied on
    *   the user commanded signal. Set to franka::kMaxCutoffFrequency to disable.
    */
   void move(

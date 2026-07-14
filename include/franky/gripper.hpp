@@ -25,7 +25,7 @@ class Gripper : public franka::Gripper {
   Gripper(Gripper &&gripper) noexcept : franka::Gripper(std::move(gripper)) {}
 
   /**
-   * @brief Asynchronous variant of the franka::Gripper::grasp function.
+   * @brief Asynchronous variant of the grasp function.
    *
    * @param width Size of the object to grasp in [m].
    * @param speed Closing speed in [m/s].
@@ -41,11 +41,11 @@ class Gripper : public franka::Gripper {
       double width, double speed, double force, double epsilon_inner = 0.005, double epsilon_outer = 0.005);
 
   /**
-   * @brief Asynchronous variant of the franka::Gripper::move function.
+   * @brief Asynchronous variant of the move function.
    * @param width Intended opening width in [m].
    * @param speed Speed of the movement in [m/s].
    * @return Future that becomes ready when the movement is finished. Contains
-   * true if the movement was successful,
+   * true if the movement was successful.
    */
   std::shared_future<bool> moveAsync(double width, double speed);
 
@@ -65,14 +65,14 @@ class Gripper : public franka::Gripper {
   std::shared_future<bool> openAsync(double speed);
 
   /**
-   * @brief Asynchronous variant of the franka::Gripper::homing function.
+   * @brief Asynchronous variant of the homing function.
    * @return A future that becomes ready when the homing is finished. Contains
    * true if the homing was successful.
    */
   std::shared_future<bool> homingAsync();
 
   /**
-   * @brief Asynchronous variant of the franka::Gripper::stop function.
+   * @brief Asynchronous variant of the stop function.
    * @return A future that becomes ready when the stop is finished. Contains
    * true if the stop was successful.
    */

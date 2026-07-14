@@ -18,7 +18,7 @@ template <typename TargetType>
 using VelocityWaypoint = Waypoint<TargetType>;
 
 /**
- * @brief A motion following multiple positional waypoints in a time-optimal
+ * @brief A motion following multiple velocity waypoints in a time-optimal
  * way. Works with arbitrary initial conditions.
  * @tparam ControlSignalType The type of the control signal. Either
  * franka::Torques, franka::JointVelocities, franka::CartesianVelocities,
@@ -39,6 +39,9 @@ class VelocityWaypointMotion : public WaypointMotion<ControlSignalType, Velocity
       : WaypointMotion<ControlSignalType, VelocityWaypoint<TargetType>, TargetType>(waypoints, true),
         relative_dynamics_factor_(relative_dynamics_factor) {}
 
+  /**
+   * @brief The relative dynamics factor of this motion.
+   */
   [[nodiscard]] const RelativeDynamicsFactor &relative_dynamics_factor() const { return relative_dynamics_factor_; }
 
  protected:

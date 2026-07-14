@@ -14,7 +14,7 @@ namespace franky {
 /**
  * @brief Cartesian velocity of a robot.
  *
- * This class encapsulates the cartesian velocity of a robot, which comproses
+ * This class encapsulates the cartesian velocity of a robot, which comprises
  * the end effector twist and the elbow velocity.
  */
 class RobotVelocity {

@@ -33,10 +33,25 @@ class JointImpedanceTrackingMotion : public JointImpedanceBase {
   explicit JointImpedanceTrackingMotion(
       ReferenceCallback reference_callback, const Params &params = Params{}, double gains_time_constant = 0.1);
 
+  /**
+   * @brief Set the joint reference tracked by the controller.
+   *
+   * The reference is validated and picked up by the control loop in the next
+   * cycle.
+   * @param reference The new reference.
+   */
   void setReference(const JointReference &reference) {
     reference.validate();
     reference_handle_.set(reference);
   }
+
+  /**
+   * @brief Get a copy of the last commanded joint reference, or nullopt if no
+   * reference has been set yet.
+   *
+   * Mutating the returned object has no effect on the motion; pass it to
+   * setReference to apply changes.
+   */
   [[nodiscard]] std::optional<JointReference> getReference() const { return reference_handle_.getLastWritten(); }
 
  protected:

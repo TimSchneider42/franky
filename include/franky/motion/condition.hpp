@@ -10,8 +10,8 @@ namespace franky {
  *
  * This class defines a condition on the robot state, which can be used to
  * define a condition for a reaction in a motion. Conditions support logical
- * operations (&&, ||, ==, !=, !) and can be combined to form more complex
- * conditions.
+ * operations (conjunction, disjunction, equality, and negation) and can be
+ * combined to form more complex conditions.
  */
 class Condition {
  public:

@@ -62,6 +62,10 @@ inline Matrix6d defaultCartesianImpedanceDamping(const Matrix6d &stiffness) {
   return 2.0 * solver.operatorSqrt();
 }
 
+/**
+ * @brief Runtime-adjustable stiffness and damping gains for Cartesian
+ * impedance motions.
+ */
 struct CartesianImpedanceGains {
   CartesianImpedanceGains() = default;
 
@@ -70,6 +74,16 @@ struct CartesianImpedanceGains {
     validate();
   }
 
+  /**
+   * @brief Create gains with uniform translational and rotational components.
+   *
+   * @param translational_stiffness Stiffness applied to all translational axes [N/m].
+   * @param rotational_stiffness    Stiffness applied to all rotational axes [Nm/rad].
+   * @param translational_damping   Damping applied to all translational axes
+   * [Ns/m]. If unset, critical damping is used.
+   * @param rotational_damping      Damping applied to all rotational axes
+   * [Nms/rad]. If unset, critical damping is used.
+   */
   static CartesianImpedanceGains isotropic(
       double translational_stiffness, double rotational_stiffness,
       std::optional<double> translational_damping = std::nullopt,
@@ -85,6 +99,13 @@ struct CartesianImpedanceGains {
     return gains;
   }
 
+  /**
+   * @brief Create gains from per-axis diagonal entries.
+   *
+   * @param stiffness Per-axis stiffness [N/m, Nm/rad], ordered [x, y, z, rx, ry, rz].
+   * @param damping   Per-axis damping [Ns/m, Nms/rad], ordered [x, y, z, rx,
+   * ry, rz]. If unset, critical damping is used.
+   */
   static CartesianImpedanceGains diagonal(const Vector6d &stiffness, std::optional<Vector6d> damping = std::nullopt) {
     CartesianImpedanceGains gains;
     gains.stiffness = stiffness.asDiagonal();
@@ -93,7 +114,10 @@ struct CartesianImpedanceGains {
     return gains;
   }
 
+  /** Cartesian stiffness matrix [N/m, Nm/rad], ordered [x, y, z, rx, ry, rz]. */
   Matrix6d stiffness{defaultCartesianImpedanceStiffness()};
+
+  /** Cartesian damping matrix. If unset, critical damping is used. */
   std::optional<Matrix6d> damping{std::nullopt};
 
   /** @brief Throw std::invalid_argument if any gain is non-finite. */
@@ -170,12 +194,22 @@ using NullspaceTask = std::variant<PostureTask, ManipulabilityTask>;
  * @brief Runtime-adjustable gains for a nullspace task.
  */
 struct NullspaceGains {
+  /** Per-joint posture stiffness [Nm/rad]. A joint with zero stiffness is not pushed. */
   Vector7d posture_stiffness{Vector7d::Zero()};
+
+  /** Per-joint posture damping [Nms/rad]. If unset, critical damping is used. */
   std::optional<Vector7d> posture_damping{std::nullopt};
+
+  /** Absolute torque clamp for the posture task [Nm]. Unset means no clamp. */
   std::optional<double> posture_max_torque{std::nullopt};
 
+  /** Gain applied to the manipulability gradient. */
   double manipulability_gain{0.0};
+
+  /** Joint damping applied to the manipulability task before projection [Nms/rad]. */
   double manipulability_damping{0.0};
+
+  /** Absolute torque clamp for the manipulability task [Nm]. Unset means no clamp. */
   std::optional<double> manipulability_max_torque{std::nullopt};
 };
 
@@ -240,15 +274,45 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
     }
   };
 
+  /**
+   * @brief The target pose of the motion.
+   */
   [[nodiscard]] const Affine &target() const { return target_; }
 
+  /**
+   * @brief Set the target impedance gains.
+   *
+   * The gains are validated and then smoothed in the control loop via
+   * exponential interpolation.
+   * @param gains The new target gains.
+   */
   void setGains(const CartesianImpedanceGains &gains) {
     gains.validate();
     gains_handle_.set(gains);
   }
+
+  /**
+   * @brief Get a copy of the current target impedance gains.
+   *
+   * Mutating the returned object has no effect on the motion; pass it to
+   * setGains to apply changes.
+   */
   [[nodiscard]] CartesianImpedanceGains getGains() const { return gains_handle_.getLastWritten(); }
 
+  /**
+   * @brief Set the target nullspace gains.
+   *
+   * The gains are smoothed in the control loop via exponential interpolation.
+   * @param gains The new target nullspace gains.
+   */
   void setNullspaceGains(const NullspaceGains &gains) { nullspace_gains_handle_.set(gains); }
+
+  /**
+   * @brief Get a copy of the current target nullspace gains.
+   *
+   * Mutating the returned object has no effect on the motion; pass it to
+   * setNullspaceGains to apply changes.
+   */
   [[nodiscard]] NullspaceGains getNullspaceGains() const { return nullspace_gains_handle_.getLastWritten(); }
 
  protected:

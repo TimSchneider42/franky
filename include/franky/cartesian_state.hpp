@@ -8,7 +8,7 @@
 
 namespace franky {
 
-/*
+/**
  * @brief Cartesian state of a robot.
  *
  * This class encapsulates the cartesian state of a robot, which comprises the
@@ -56,12 +56,12 @@ class CartesianState {
     return {pose_.changeEndEffectorFrame(transform), velocity_.changeEndEffectorFrame(offset_world_frame)};
   }
 
-  /*
+  /**
    * @brief Pose component of the state.
    */
   [[nodiscard]] RobotPose pose() const { return pose_; }
 
-  /*
+  /**
    * @brief Velocity component of the state.
    */
   [[nodiscard]] RobotVelocity velocity() const { return velocity_; }

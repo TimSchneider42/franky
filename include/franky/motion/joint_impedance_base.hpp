@@ -26,8 +26,13 @@ inline Vector7d defaultJointImpedanceDamping() {
  * adds the optional per-cycle feedforward torque term to the commanded torques.
  */
 struct JointReference {
+  /** Desired joint positions [rad]. */
   Vector7d q{Vector7d::Zero()};
+
+  /** Desired joint velocities [rad/s]. */
   Vector7d dq{Vector7d::Zero()};
+
+  /** Feedforward torque added to the commanded torques [Nm]. */
   Vector7d tau_ff{Vector7d::Zero()};
 
   /** @brief Throw std::invalid_argument if any value is non-finite. */
@@ -38,6 +43,10 @@ struct JointReference {
   }
 };
 
+/**
+ * @brief Runtime-adjustable stiffness and damping gains for joint impedance
+ * motions.
+ */
 struct JointImpedanceGains {
   JointImpedanceGains() = default;
 
@@ -48,7 +57,10 @@ struct JointImpedanceGains {
     validate();
   }
 
+  /** Joint stiffness gains [Nm/rad]. */
   Vector7d stiffness{defaultJointImpedanceStiffness()};
+
+  /** Joint damping gains [Nms/rad]. */
   Vector7d damping{defaultJointImpedanceDamping()};
 
   /** @brief Throw std::invalid_argument if any gain is negative or non-finite. */
@@ -107,20 +119,59 @@ struct JointImpedanceParams {
  */
 class JointImpedanceBase : public Motion<franka::Torques> {
  public:
+  /**
+   * @brief The target joint positions of the motion [rad].
+   */
   [[nodiscard]] const Vector7d &target() const { return target_; }
+
+  /**
+   * @brief The target joint velocities of the motion [rad/s].
+   */
   [[nodiscard]] const Vector7d &target_velocity() const { return target_velocity_; }
+
+  /**
+   * @brief The parameters of the motion.
+   */
   [[nodiscard]] const JointImpedanceParams &params() const { return params_; }
 
+  /**
+   * @brief Set the target impedance gains.
+   *
+   * The gains are validated and then smoothed in the control loop via
+   * exponential interpolation.
+   * @param gains The new target gains.
+   */
   void setGains(const JointImpedanceGains &gains) {
     gains.validate();
     gains_handle_.set(gains);
   }
+
+  /**
+   * @brief Get a copy of the current target impedance gains.
+   *
+   * Mutating the returned object has no effect on the motion; pass it to
+   * setGains to apply changes.
+   */
   [[nodiscard]] JointImpedanceGains getGains() const { return gains_handle_.getLastWritten(); }
 
+  /**
+   * @brief Set the target Cartesian shaping gains.
+   *
+   * The gains are validated and then smoothed in the control loop via
+   * exponential interpolation.
+   * @param gains The new target Cartesian gains.
+   */
   void setCartesianGains(const CartesianImpedanceGains &gains) {
     gains.validate();
     cartesian_gains_handle_.set(gains);
   }
+
+  /**
+   * @brief Get a copy of the current target Cartesian shaping gains.
+   *
+   * Mutating the returned object has no effect on the motion; pass it to
+   * setCartesianGains to apply changes.
+   */
   [[nodiscard]] CartesianImpedanceGains getCartesianGains() const { return cartesian_gains_handle_.getLastWritten(); }
 
  protected:

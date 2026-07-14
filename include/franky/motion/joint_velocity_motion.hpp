@@ -12,8 +12,8 @@ class JointVelocityMotion : public JointVelocityWaypointMotion {
  public:
   /**
    * @param target                   The target joint velocity.
-   * @param duration                 Duration this command is active. Default is
-   * 1s.
+   * @param duration                 For how long the target is held after it
+   * has been reached. Default is 1s.
    * @param relative_dynamics_factor The relative dynamics factor for this
    * motion. The factor will get multiplied with the robot's global dynamics
    * factor to get the actual dynamics factor for this motion.

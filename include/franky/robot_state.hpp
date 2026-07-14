@@ -50,14 +50,13 @@ struct RobotState {
 
   /**
    * \f$^{O}T_{EE}\f$
-   * Measured end effector pose in @ref o-frame "base frame".
+   * Measured end effector pose in the base frame.
    */
   Affine O_T_EE{};  // NOLINT(readability-identifier-naming)
 
   /**
    * \f${^OT_{EE}}_{d}\f$
-   * Last desired end effector pose of motion generation in @ref o-frame "base
-   * frame".
+   * Last desired end effector pose of motion generation in the base frame.
    */
   Affine O_T_EE_d{};  // NOLINT(readability-identifier-naming)
 
@@ -98,7 +97,7 @@ struct RobotState {
    * \f$^{EE}T_{K}\f$
    * Stiffness frame pose in end effector frame.
    *
-   * See also @ref k-frame "K frame".
+   * See also the stiffness frame K.
    */
   Affine EE_T_K{};  // NOLINT(readability-identifier-naming)
 
@@ -286,11 +285,10 @@ struct RobotState {
   /**
    * \f$^OF_{K,\text{ext}}\f$
    * Estimated external wrench (force, torque) acting on stiffness frame,
-   * expressed relative to the @ref o-frame "base frame". Forces applied by the
+   * expressed relative to the the base frame. Forces applied by the
    * robot to the environment are positive, while forces applied by the
    * environment on the robot are negative. Becomes
-   * \f$[0,0,0,0,0,0]\f$ when near or in a singularity. See also @ref k-frame
-   * "Stiffness frame K". Unit: \f$[N,N,N,Nm,Nm,Nm]\f$.
+   * \f$[0,0,0,0,0,0]\f$ when near or in a singularity. See also the stiffness frame K. Unit: \f$[N,N,N,Nm,Nm,Nm]\f$.
    */
   Vector6d O_F_ext_hat_K{};  // NOLINT(readability-identifier-naming)
 
@@ -300,14 +298,13 @@ struct RobotState {
    * expressed relative to the stiffness frame. Forces applied by the robot to
    * the environment are positive, while forces applied by the environment on
    * the robot are negative. Becomes
-   * \f$[0,0,0,0,0,0]\f$ when near or in a singularity. See also @ref k-frame
-   * "Stiffness frame K". Unit: \f$[N,N,N,Nm,Nm,Nm]\f$.
+   * \f$[0,0,0,0,0,0]\f$ when near or in a singularity. See also the stiffness frame K. Unit: \f$[N,N,N,Nm,Nm,Nm]\f$.
    */
   Vector6d K_F_ext_hat_K{};  // NOLINT(readability-identifier-naming)
 
   /**
    * \f${^OdP_{EE}}_{d}\f$
-   * Desired end effector twist in @ref o-frame "base frame".
+   * Desired end effector twist in the base frame.
    * Unit:
    * \f$[\frac{m}{s},\frac{m}{s},\frac{m}{s},\frac{rad}{s},\frac{rad}{s},\frac{rad}{s}]\f$.
    */
@@ -318,7 +315,7 @@ struct RobotState {
    * \f${^OddP}_O\f$
    * Linear component of the acceleration of the robot's base, expressed in
    * frame parallel to the
-   * @ref o-frame "base frame", i.e. the base's translational acceleration. If
+   * the base frame, i.e. the base's translational acceleration. If
    * the base is resting this shows the direction of the gravity vector. It is
    * hardcoded for now to `{0, 0, -9.81}`.
    */
@@ -327,20 +324,19 @@ struct RobotState {
 
   /**
    * \f${^OT_{EE}}_{c}\f$
-   * Last commanded end effector pose of motion generation in @ref o-frame "base
-   * frame".
+   * Last commanded end effector pose of motion generation in the base frame.
    */
   Affine O_T_EE_c{};  // NOLINT(readability-identifier-naming)
 
   /**
    * \f${^OdP_{EE}}_{c}\f$
-   * Last commanded end effector twist in @ref o-frame "base frame".
+   * Last commanded end effector twist in the base frame.
    */
   Twist O_dP_EE_c{};  // NOLINT(readability-identifier-naming)
 
   /**
    * \f${^OddP_{EE}}_{c}\f$
-   * Last commanded end effector acceleration in @ref o-frame "base frame".
+   * Last commanded end effector acceleration in the base frame.
    * Unit:
    * \f$[\frac{m}{s^2},\frac{m}{s^2},\frac{m}{s^2},\frac{rad}{s^2},\frac{rad}{s^2},\frac{rad}{s^2}]\f$.
    */
@@ -387,8 +383,8 @@ struct RobotState {
   /**
    * Strictly monotonically increasing timestamp since robot start.
    *
-   * Inside of control loops @ref callback-docs "time_step" parameter of
-   * Robot::control can be used instead.
+   * Inside of control loops, the time_step parameter of the control loop
+   * callbacks can be used instead.
    */
   franka::Duration time{};
 
@@ -412,7 +408,7 @@ struct RobotState {
 
   /**
    * Estimated end-effector twist (linear and angular velocity) expressed in
-   * @ref o-frame "base frame". Computed by franky; not provided by franka
+   * the base frame. Computed by franky; not provided by franka
    * firmware. Unit:
    * \f$[\frac{m}{s},\frac{m}{s},\frac{m}{s},\frac{rad}{s},\frac{rad}{s},\frac{rad}{s}]\f$.
    */
@@ -421,7 +417,7 @@ struct RobotState {
   /**
    * Estimated end-effector spatial acceleration (linear and angular
    * acceleration) expressed in
-   * @ref o-frame "base frame". Computed by franky; not provided by franka
+   * the base frame. Computed by franky; not provided by franka
    * firmware. Unit:
    * \f$[\frac{m}{s^2},\frac{m}{s^2},\frac{m}{s^2},\frac{rad}{s^2},\frac{rad}{s^2},\frac{rad}{s^2}]\f$.
    */

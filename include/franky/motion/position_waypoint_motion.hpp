@@ -13,11 +13,10 @@ namespace franky {
  * @brief A position waypoint with a target and optional parameters.
  *
  * @tparam TargetType The type of the target.
- *
- * @param reference_type The reference type (absolute or relative).
  */
 template <typename TargetType>
 struct PositionWaypoint : public Waypoint<TargetType> {
+  /** The reference type (absolute or relative). */
   ReferenceType reference_type{ReferenceType::kAbsolute};
 };
 
@@ -46,6 +45,9 @@ class PositionWaypointMotion : public WaypointMotion<ControlSignalType, Position
       : WaypointMotion<ControlSignalType, PositionWaypoint<TargetType>, TargetType>(waypoints, return_when_finished),
         relative_dynamics_factor_(relative_dynamics_factor) {}
 
+  /**
+   * @brief The relative dynamics factor of this motion.
+   */
   [[nodiscard]] const RelativeDynamicsFactor &relative_dynamics_factor() const { return relative_dynamics_factor_; }
 
  protected:

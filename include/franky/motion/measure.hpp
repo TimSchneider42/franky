@@ -14,8 +14,9 @@ namespace franky {
  *
  * This class defines a measure on the robot state, which can be used to define
  * a condition for a reaction in a motion. Measures support arithmetic
- * operations (+, -, *, /, ^) and comparisons (==, !=, <, >, <=, >=) and can be
- * combined to form more complex measures.
+ * operations (``+``, ``-``, ``*``, ``/``, ``^``) and comparisons (``==``,
+ * ``!=``, ``<``, ``>``, ``<=``, ``>=``) can be combined to form more complex
+ * measures.
  */
 class Measure {
   using MeasureFunc = std::function<double(const RobotState &, franka::Duration, franka::Duration)>;

@@ -9,7 +9,8 @@
 namespace franky {
 
 /**
- * @brief TwistAcceleration acceleration of a frame (2nd derivative of a pose).
+ * @brief Acceleration of a frame (2nd time derivative of a pose, consisting of
+ * a linear and an angular acceleration).
  */
 class TwistAcceleration {
  public:

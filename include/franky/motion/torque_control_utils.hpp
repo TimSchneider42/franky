@@ -40,6 +40,10 @@ inline void validateNonNegativeFinite(const Vector7d &values, const char *name) 
   }
 }
 
+/**
+ * @brief Shared torque safety limits and soft joint-limit repulsion settings
+ * for torque-control motions.
+ */
 struct TorqueSafetyParams {
   /** Maximum allowed torque step per cycle in [Nm]. */
   double max_delta_tau{1.0};
@@ -63,6 +67,9 @@ struct TorqueSafetyParams {
   double joint_limit_max_torque{5.0};
 };
 
+/**
+ * @brief Per-joint friction feedforward settings for torque-control motions.
+ */
 struct FrictionCompensationParams {
   FrictionCompensationParams() = default;
 

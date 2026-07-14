@@ -9,7 +9,14 @@ namespace franky {
 /**
  * @brief Flip direction of a joint.
  */
-enum class FlipDirection { kNegative = -1, kNeutral = 0, kPositive = 1 };
+enum class FlipDirection {
+  /** The joint angle is negative. */
+  kNegative = -1,
+  /** The joint angle is zero. */
+  kNeutral = 0,
+  /** The joint angle is positive. */
+  kPositive = 1
+};
 
 std::ostream &operator<<(std::ostream &os, const FlipDirection &flip_direction);
 

@@ -35,6 +35,9 @@ class CartesianVelocityWaypointMotion : public VelocityWaypointMotion<franka::Ca
       const std::vector<VelocityWaypoint<RobotVelocity>> &waypoints,
       const RelativeDynamicsFactor &relative_dynamics_factor = 1.0, Affine ee_frame = Affine::Identity());
 
+  /**
+   * @brief The end-effector frame for which the targets are defined.
+   */
   [[nodiscard]] const Affine &ee_frame() const { return ee_frame_; }
 
  protected:
