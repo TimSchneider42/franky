@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Eigen/Eigenvalues>
 #include <algorithm>
 #include <cmath>
 #include <optional>
@@ -9,6 +10,28 @@
 #include "franky/types.hpp"
 
 namespace franky {
+
+inline double interpolateGain(double current, double target, double alpha, double settle_tolerance = 1e-6) {
+  const double next = current + alpha * (target - current);
+  return std::abs(next - target) <= settle_tolerance ? target : next;
+}
+
+/**
+ * @brief Interpolate a fixed-size Eigen value and snap it to the target once settled.
+ *
+ * Snapping prevents exponentially filtered gains from changing by tiny amounts forever, which is
+ * important when a derived quantity is cached using exact equality.
+ */
+template <typename DerivedCurrent, typename DerivedTarget>
+inline typename DerivedCurrent::PlainObject interpolateGain(
+    const Eigen::MatrixBase<DerivedCurrent> &current, const Eigen::MatrixBase<DerivedTarget> &target, double alpha,
+    double settle_tolerance = 1e-6) {
+  typename DerivedCurrent::PlainObject next = current + alpha * (target - current);
+  for (int i = 0; i < next.size(); ++i) {
+    next.coeffRef(i) = interpolateGain(current.derived().coeff(i), target.derived().coeff(i), alpha, settle_tolerance);
+  }
+  return next;
+}
 
 /**
  * @brief Throw std::invalid_argument if value is negative or non-finite.
@@ -32,11 +55,23 @@ inline void validateFinite(const Eigen::MatrixBase<Derived> &values, const char 
 /**
  * @brief Throw std::invalid_argument if any element of values is negative or non-finite.
  */
-inline void validateNonNegativeFinite(const Vector7d &values, const char *name) {
+template <typename Derived>
+inline void validateNonNegativeFinite(const Eigen::MatrixBase<Derived> &values, const char *name) {
   for (int i = 0; i < values.size(); ++i) {
     if (!std::isfinite(values[i]) || values[i] < 0.0) {
       throw std::invalid_argument(std::string(name) + " must contain only finite, non-negative values");
     }
+  }
+}
+
+inline void validatePositiveSemidefinite(const Matrix6d &matrix, const char *name) {
+  validateFinite(matrix, name);
+  if (!matrix.isApprox(matrix.transpose())) {
+    throw std::invalid_argument(std::string(name) + " must be symmetric");
+  }
+  const Eigen::SelfAdjointEigenSolver<Matrix6d> solver(matrix);
+  if (solver.info() != Eigen::Success || solver.eigenvalues().minCoeff() < 0.0) {
+    throw std::invalid_argument(std::string(name) + " must be positive semidefinite");
   }
 }
 
@@ -65,6 +100,17 @@ struct TorqueSafetyParams {
 
   /** Absolute torque clamp for the repulsion term in [Nm]. */
   double joint_limit_max_torque{5.0};
+
+  /** @brief Throw std::invalid_argument if any safety parameter is out of range. */
+  void validate() const {
+    validateNonNegativeFinite(max_delta_tau, "safety.max_delta_tau");
+    validateNonNegativeFinite(joint_limit_activation_distance, "safety.joint_limit_activation_distance");
+    validateNonNegativeFinite(joint_limit_stiffness, "safety.joint_limit_stiffness");
+    validateNonNegativeFinite(joint_limit_damping, "safety.joint_limit_damping");
+    validateNonNegativeFinite(joint_limit_max_torque, "safety.joint_limit_max_torque");
+    if (lower_joint_limits.has_value()) validateFinite(*lower_joint_limits, "safety.lower_joint_limits");
+    if (upper_joint_limits.has_value()) validateFinite(*upper_joint_limits, "safety.upper_joint_limits");
+  }
 };
 
 /**

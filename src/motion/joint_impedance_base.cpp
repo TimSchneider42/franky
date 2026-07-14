@@ -20,6 +20,9 @@ JointImpedanceBase::JointImpedanceBase(
       gains_time_constant_(gains_time_constant),
       current_stiffness_(params.stiffness),
       current_damping_(params.damping) {
+  if (!std::isfinite(gains_time_constant_) || gains_time_constant_ <= 0.0) {
+    throw std::invalid_argument("gains_time_constant must be finite and positive");
+  }
   if (params.cartesian_gains.has_value()) {
     const auto &cartesian_gains = *params.cartesian_gains;
     CartesianShapingState shaping;
@@ -58,7 +61,7 @@ franka::Torques JointImpedanceBase::computeCommand(
   if (cartesian_shaping_.has_value()) {
     auto &shaping = *cartesian_shaping_;
     const auto target_gains = cartesian_gains_handle_.get();
-    shaping.stiffness += alpha * (target_gains.stiffness - shaping.stiffness);
+    shaping.stiffness = interpolateGain(shaping.stiffness, target_gains.stiffness, alpha);
     // An unset target means "critically damp the current stiffness"; interpolate toward it like any
     // other gain so unsetting damping is as smooth as setting it. The ternary keeps the
     // eigendecomposition off the explicit-damping path.

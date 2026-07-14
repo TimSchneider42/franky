@@ -37,24 +37,6 @@ NullspaceGains nullspaceGainsFromTasks(const std::vector<NullspaceTask> &tasks) 
   return gains;
 }
 
-template <typename T>
-T lerp(const T &current, const T &target, double alpha) {
-  return current + alpha * (target - current);
-}
-
-// Lerp, but snap to target within tolerance so disabling (target 0) reaches the sentinel exactly.
-double approach(double current, double target, double alpha) {
-  constexpr double kSettleTolerance = 1e-6;
-  const double next = current + alpha * (target - current);
-  return std::abs(next - target) <= kSettleTolerance ? target : next;
-}
-
-Vector7d approach(const Vector7d &current, const Vector7d &target, double alpha) {
-  Vector7d next;
-  for (int i = 0; i < 7; ++i) next[i] = approach(current[i], target[i], alpha);
-  return next;
-}
-
 Eigen::Matrix<double, 6, 6> computeTaskSpaceInertia(const Jacobian &jacobian, const Eigen::Matrix<double, 7, 7> &mass) {
   const Eigen::Matrix<double, 7, 6> mass_inv_jacobian_transpose = mass.ldlt().solve(jacobian.transpose());
   const Eigen::Matrix<double, 6, 6> task_mass_inv = jacobian * mass_inv_jacobian_transpose;
@@ -175,6 +157,9 @@ CartesianImpedanceBase::CartesianImpedanceBase(
       gains_time_constant_(gains_time_constant),
       current_stiffness_(params.stiffness),
       current_nullspace_gains_(nullspaceGainsFromTasks(params.nullspace_tasks)) {
+  if (!std::isfinite(gains_time_constant_) || gains_time_constant_ <= 0.0) {
+    throw std::invalid_argument("gains_time_constant must be finite and positive");
+  }
   params_.validate();
   critical_damping_ = defaultCartesianImpedanceDamping(current_stiffness_);
   critical_damping_stiffness_ = current_stiffness_;
@@ -197,24 +182,24 @@ franka::Torques CartesianImpedanceBase::computeCommand(
   // Interpolate toward the target gains.
   const auto target_gains = gains_handle_.get();
   const double alpha = 1.0 - std::exp(-dt / gains_time_constant_);
-  current_stiffness_ = lerp(current_stiffness_, target_gains.stiffness, alpha);
+  current_stiffness_ = interpolateGain(current_stiffness_, target_gains.stiffness, alpha);
   // An unset target means "critically damp the current stiffness"; interpolate toward it like any
   // other gain so unsetting damping is as smooth as setting it. The ternary keeps the
   // eigendecomposition off the explicit-damping path.
   const Matrix6d &target_damping = target_gains.damping.has_value() ? *target_gains.damping : criticalDamping();
-  current_damping_ = lerp(current_damping_, target_damping, alpha);
+  current_damping_ += alpha * (target_damping - current_damping_);
 
   const auto target_nullspace_gains = nullspace_gains_handle_.get();
   auto &cur = current_nullspace_gains_;
-  cur.posture_stiffness = approach(cur.posture_stiffness, target_nullspace_gains.posture_stiffness, alpha);
+  cur.posture_stiffness = interpolateGain(cur.posture_stiffness, target_nullspace_gains.posture_stiffness, alpha);
   const Vector7d posture_critical = 2.0 * cur.posture_stiffness.cwiseMax(0.0).cwiseSqrt();
-  cur.posture_damping = approach(
+  cur.posture_damping = interpolateGain(
       cur.posture_damping.value_or(posture_critical),
       target_nullspace_gains.posture_damping.value_or(posture_critical),
       alpha);
-  cur.manipulability_gain = approach(cur.manipulability_gain, target_nullspace_gains.manipulability_gain, alpha);
+  cur.manipulability_gain = interpolateGain(cur.manipulability_gain, target_nullspace_gains.manipulability_gain, alpha);
   cur.manipulability_damping =
-      approach(cur.manipulability_damping, target_nullspace_gains.manipulability_damping, alpha);
+      interpolateGain(cur.manipulability_damping, target_nullspace_gains.manipulability_damping, alpha);
   // Hard clamp limit (optional), not a shaped gain: snap it. saturateTorqueRate keeps the
   // commanded torque smooth.
   cur.posture_max_torque = target_nullspace_gains.posture_max_torque;
@@ -230,7 +215,7 @@ franka::Torques CartesianImpedanceBase::computeCommand(
   error.head(3) << robot_state.O_T_EE.translation() - reference.target.translation();
   error.head(3) = error.head(3).cwiseMax(-params_.translational_error_clip).cwiseMin(params_.translational_error_clip);
 
-  Eigen::Quaterniond quat(reference.target.linear());
+  Eigen::Quaterniond quat(reference.target.rotation());
   if (quat.coeffs().dot(orientation.coeffs()) < 0.0) {
     orientation.coeffs() << -orientation.coeffs();
   }

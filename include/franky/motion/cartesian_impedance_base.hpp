@@ -120,10 +120,10 @@ struct CartesianImpedanceGains {
   /** Cartesian damping matrix. If unset, critical damping is used. */
   std::optional<Matrix6d> damping{std::nullopt};
 
-  /** @brief Throw std::invalid_argument if any gain is non-finite. */
+  /** @brief Throw std::invalid_argument unless gains are symmetric positive semidefinite matrices. */
   void validate() const {
-    validateFinite(stiffness, "stiffness");
-    if (damping.has_value()) validateFinite(*damping, "damping");
+    validatePositiveSemidefinite(stiffness, "stiffness");
+    if (damping.has_value()) validatePositiveSemidefinite(*damping, "damping");
   }
 };
 
@@ -136,7 +136,9 @@ struct PostureTask {
   PostureTask(
       const Vector7d &target, const Vector7d &stiffness, std::optional<Vector7d> damping = std::nullopt,
       std::optional<double> max_torque = std::nullopt)
-      : target(target), stiffness(stiffness), damping(std::move(damping)), max_torque(max_torque) {}
+      : target(target), stiffness(stiffness), damping(std::move(damping)), max_torque(max_torque) {
+    validate();
+  }
 
   /** Convenience constructor applying the same scalar gains to all joints. */
   PostureTask(
@@ -144,6 +146,7 @@ struct PostureTask {
       std::optional<double> max_torque = std::nullopt)
       : target(target), stiffness(Vector7d::Constant(stiffness)), max_torque(max_torque) {
     if (damping.has_value()) this->damping = Vector7d::Constant(*damping);
+    validate();
   }
 
   /** Preferred joint posture [rad]. */
@@ -167,6 +170,14 @@ struct PostureTask {
 
   /** Per-joint absolute torque clamp for this task [Nm]. Unset means no clamp. */
   std::optional<double> max_torque{std::nullopt};
+
+  /** @brief Throw std::invalid_argument if any task parameter is out of range. */
+  void validate() const {
+    validateFinite(target, "nullspace posture target");
+    validateNonNegativeFinite(stiffness, "nullspace posture stiffness");
+    if (damping.has_value()) validateNonNegativeFinite(*damping, "nullspace posture damping");
+    if (max_torque.has_value()) validateNonNegativeFinite(*max_torque, "nullspace posture max_torque");
+  }
 };
 
 /**
@@ -176,7 +187,9 @@ struct ManipulabilityTask {
   ManipulabilityTask() = default;
 
   ManipulabilityTask(double gain, double damping = 0.0, std::optional<double> max_torque = std::nullopt)
-      : gain(gain), damping(damping), max_torque(max_torque) {}
+      : gain(gain), damping(damping), max_torque(max_torque) {
+    validate();
+  }
 
   /** Gain applied to the manipulability gradient. */
   double gain{0.0};
@@ -186,6 +199,13 @@ struct ManipulabilityTask {
 
   /** Per-joint absolute torque clamp for this task [Nm]. Unset means no clamp. */
   std::optional<double> max_torque{std::nullopt};
+
+  /** @brief Throw std::invalid_argument if any task parameter is out of range. */
+  void validate() const {
+    validateNonNegativeFinite(gain, "nullspace manipulability gain");
+    validateNonNegativeFinite(damping, "nullspace manipulability damping");
+    if (max_torque.has_value()) validateNonNegativeFinite(*max_torque, "nullspace manipulability max_torque");
+  }
 };
 
 using NullspaceTask = std::variant<PostureTask, ManipulabilityTask>;
@@ -211,6 +231,17 @@ struct NullspaceGains {
 
   /** Absolute torque clamp for the manipulability task [Nm]. Unset means no clamp. */
   std::optional<double> manipulability_max_torque{std::nullopt};
+
+  /** @brief Throw std::invalid_argument if any gain or clamp is out of range. */
+  void validate() const {
+    validateNonNegativeFinite(posture_stiffness, "nullspace posture stiffness");
+    if (posture_damping.has_value()) validateNonNegativeFinite(*posture_damping, "nullspace posture damping");
+    if (posture_max_torque.has_value()) validateNonNegativeFinite(*posture_max_torque, "nullspace posture max_torque");
+    validateNonNegativeFinite(manipulability_gain, "nullspace manipulability gain");
+    validateNonNegativeFinite(manipulability_damping, "nullspace manipulability damping");
+    if (manipulability_max_torque.has_value())
+      validateNonNegativeFinite(*manipulability_max_torque, "nullspace manipulability max_torque");
+  }
 };
 
 /**
@@ -268,8 +299,23 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
 
     /** @brief Throw std::invalid_argument if any parameter is out of range. */
     void validate() const {
-      validateFinite(stiffness, "stiffness");
-      if (damping.has_value()) validateFinite(*damping, "damping");
+      validatePositiveSemidefinite(stiffness, "stiffness");
+      if (damping.has_value()) validatePositiveSemidefinite(*damping, "damping");
+      validateNonNegativeFinite(translational_error_clip, "translational_error_clip");
+      validateNonNegativeFinite(rotational_error_clip, "rotational_error_clip");
+      bool has_posture_task = false;
+      bool has_manipulability_task = false;
+      for (const auto &task : nullspace_tasks) {
+        std::visit([](const auto &concrete_task) { concrete_task.validate(); }, task);
+        if (std::holds_alternative<PostureTask>(task)) {
+          if (has_posture_task) throw std::invalid_argument("Only one PostureTask is supported.");
+          has_posture_task = true;
+        } else {
+          if (has_manipulability_task) throw std::invalid_argument("Only one ManipulabilityTask is supported.");
+          has_manipulability_task = true;
+        }
+      }
+      safety.validate();
       friction.validate();
     }
   };
@@ -305,7 +351,10 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
    * The gains are smoothed in the control loop via exponential interpolation.
    * @param gains The new target nullspace gains.
    */
-  void setNullspaceGains(const NullspaceGains &gains) { nullspace_gains_handle_.set(gains); }
+  void setNullspaceGains(const NullspaceGains &gains) {
+    gains.validate();
+    nullspace_gains_handle_.set(gains);
+  }
 
   /**
    * @brief Get a copy of the current target nullspace gains.

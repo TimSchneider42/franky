@@ -106,6 +106,7 @@ struct JointImpedanceParams {
     if (cartesian_gains.has_value()) {
       cartesian_gains->validate();
     }
+    safety.validate();
     friction.validate();
   }
 };
