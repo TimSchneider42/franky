@@ -39,6 +39,7 @@ guide/index
 :maxdepth: 1
 
 api/python
+api/cpp
 ```
 
 ```{toctree}

@@ -90,6 +90,5 @@ jacobian = robot.model.body_jacobian(Frame.EndEffector, state)
 urdf_model = robot.model_urdf
 ```
 
-For a full list of state-related features, check
-the [Robot](https://timschneider42.github.io/franky/classfranky_1_1_robot.html)
-and [Model](https://timschneider42.github.io/franky/classfranky_1_1_model.html) sections of the documentation.
+For a full list of state-related features, check the {py:class}`franky.Robot`
+and {py:class}`franky.Model` API documentation.

@@ -29,8 +29,15 @@ myst_enable_extensions = [
 ]
 myst_heading_anchors = 4
 
-# tutorial.md is a redirect stub kept for old GitHub links; html/ is the Doxygen output
-exclude_patterns = ["_build", "html", "tutorial.md", "requirements.txt"]
+# tutorial.md is a redirect stub kept for old GitHub links; cpp_mainpage.md is the main
+# page of the Doxygen site; html/ holds the Google site verification file
+exclude_patterns = [
+    "_build",
+    "html",
+    "tutorial.md",
+    "cpp_mainpage.md",
+    "requirements.txt",
+]
 
 html_theme = "furo"
 html_title = f"franky {release}"
