@@ -10,3 +10,4 @@ tmp
 *.pyc
 /cmake-build-*
 /.idea/
+/doc/_build/
