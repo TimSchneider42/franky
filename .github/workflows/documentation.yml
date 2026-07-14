@@ -1,12 +1,31 @@
 name: Documentation
 
+# Builds the Sphinx site with the Python and C++ API references and deploys it to
+# <pages-url>/release/ (master) or <pages-url>/dev/ (dev). The Python API reference is
+# generated from the docstrings of the built franky module, so a wheel is built first.
+
 on:
   push:
-    branches:
-    - master
+    branches: [master, dev]
+  workflow_dispatch:
+
+concurrency:
+  group: documentation-${{ github.ref_name }}
+  cancel-in-progress: true
 
 jobs:
+  build-wheel:
+    if: github.ref_name == 'master' || github.ref_name == 'dev'
+    uses: ./.github/workflows/build_wheels.yml
+    with:
+      # The wheel is only used to generate the Python API reference, so a single build
+      # configuration matching the Python version used below suffices
+      libfranka-version: 0.21.2
+      manylinux-version: manylinux_2_28_x86_64
+      python-versions: cp312-cp312
+
   build-deploy:
+    needs: build-wheel
     runs-on: ubuntu-latest
     # Serialize all deployments to gh-pages (shared with the package index workflow)
     # to avoid push races
@@ -19,18 +38,50 @@ jobs:
         dependency_packages: doxygen
       run: sudo apt-get update && sudo apt-get -y install ${dependency_packages}
 
-    - name: build
-      run: cd doc && VERSION=$(cat ../VERSION) doxygen ./Doxyfile
+    - uses: actions/setup-python@v6
+      with:
+        python-version: "3.12"
 
-    # The deployment below replaces the entire gh-pages root, so it must include the
-    # package index
-    - name: generate package index
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: python3 tools/generate_simple_index.py --output doc/html/whl
+    - name: get wheel
+      uses: actions/download-artifact@v8
+      with:
+        pattern: wheels___*
+        path: wheels/
+        merge-multiple: true
+
+    - name: install franky and Sphinx
+      run: |
+        pip install wheels/franky_control-*.whl
+        pip install -r doc/requirements.txt
+
+    - name: build website
+      # On dev, FRANKY_DOCS_ANNOUNCEMENT displays a banner marking the documentation
+      # as the development version
+      run: |
+        if [ "${GITHUB_REF_NAME}" = dev ]; then
+          pages_url="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}"
+          export FRANKY_DOCS_ANNOUNCEMENT="This is the documentation of the development version of franky. The documentation of the latest release can be found <a href=\"${pages_url}/release/\">here</a>."
+        fi
+        VERSION=$(cat VERSION) sphinx-build -W --keep-going -b html doc doc/_build/html
+
+    - name: build C++ API reference
+      run: cd doc && VERSION=$(cat ../VERSION) doxygen ./Doxyfile  # outputs to doc/_build/html/cpp
 
     - name: deploy
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./doc/_build/html
+        # Replaces only the target directory, leaving the rest of the site untouched
+        destination_dir: ${{ github.ref_name == 'dev' && 'dev' || 'release' }}
+
+    # doc/html holds the static files served at the site root: the redirects to
+    # release/ and the Google site verification file. keep_files prevents this
+    # deployment from removing release/, dev/ and whl/.
+    - name: deploy root files
+      if: github.ref_name == 'master'
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./doc/html
+        keep_files: true
