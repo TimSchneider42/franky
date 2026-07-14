@@ -115,6 +115,9 @@ class WaypointMotion : public Motion<ControlSignalType> {
     }
 
     if (prev_result_ == ruckig::Finished || max_time_reached) {
+      // minimum_duration constrains travel to a waypoint, not the stationary
+      // trajectory updates used while holding it.
+      input_parameter_.minimum_duration = std::nullopt;
       if (!target_reached_time_.has_value()) {
         target_reached_time_ = rel_time;
       }

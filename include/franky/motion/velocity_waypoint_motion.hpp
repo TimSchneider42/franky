@@ -47,6 +47,7 @@ class VelocityWaypointMotion : public WaypointMotion<ControlSignalType, Velocity
  protected:
   void setInputLimits(
       const VelocityWaypoint<TargetType> &waypoint, ruckig::InputParameter<7> &input_parameter) const override {
+    input_parameter.minimum_duration = std::nullopt;
     auto [vel_lim, acc_lim, jerk_lim] = getAbsoluteInputLimits();
 
     auto relative_dynamics_factor =
