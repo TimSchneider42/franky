@@ -12,7 +12,12 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum
 from http.client import HTTPSConnection, HTTPResponse
-from typing import Optional, Any, Literal
+from typing import Optional, Any
+
+try:
+    from typing import Literal
+except ImportError:  # Python 3.7
+    from typing_extensions import Literal
 
 import websockets.sync.client as ws_sync
 
