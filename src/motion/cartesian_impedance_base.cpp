@@ -236,8 +236,9 @@ franka::Torques CartesianImpedanceBase::computeCommand(
   }
 
   Eigen::Quaterniond error_quaternion(orientation.inverse() * quat);
-  error.tail(3) << error_quaternion.x(), error_quaternion.y(), error_quaternion.z();
-  error.tail(3) << -robot_state.O_T_EE.linear() * error.tail(3);
+  const Eigen::AngleAxisd error_angle_axis(error_quaternion);
+  const Eigen::Vector3d rotation_vector = error_angle_axis.angle() * error_angle_axis.axis();
+  error.tail(3) = -robot_state.O_T_EE.linear() * rotation_vector;
   error.tail(3) = error.tail(3).cwiseMax(-params_.rotational_error_clip).cwiseMin(params_.rotational_error_clip);
 
   const Vector6d desired_twist =
