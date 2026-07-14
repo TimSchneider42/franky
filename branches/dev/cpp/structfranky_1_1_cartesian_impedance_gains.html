@@ -95,7 +95,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9700f59039deed8f358329f74876993e" id="r_a9700f59039deed8f358329f74876993e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_cartesian_impedance_gains.html#a9700f59039deed8f358329f74876993e">CartesianImpedanceGains</a> (<a class="el" href="namespacefranky.html#a6ccd41d8c07a9600de3eb0394cc5e039">Matrix6d</a> <a class="el" href="structfranky_1_1_cartesian_impedance_gains.html#a4d85151cd1c9c5ca9631b588bb204d52">stiffness</a>, std::optional&lt; <a class="el" href="namespacefranky.html#a6ccd41d8c07a9600de3eb0394cc5e039">Matrix6d</a> &gt; <a class="el" href="structfranky_1_1_cartesian_impedance_gains.html#a32aa27fb518f8e9f71064083304b4fd8">damping</a>=std::nullopt)</td></tr>
 <tr class="separator:a9700f59039deed8f358329f74876993e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca5b3490b1124edfb740630b73cdbadc" id="r_aca5b3490b1124edfb740630b73cdbadc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_cartesian_impedance_gains.html#aca5b3490b1124edfb740630b73cdbadc">validate</a> () <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a></td></tr>
-<tr class="memdesc:aca5b3490b1124edfb740630b73cdbadc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Throw std::invalid_argument if any gain is non-finite.  <br /></td></tr>
+<tr class="memdesc:aca5b3490b1124edfb740630b73cdbadc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Throw std::invalid_argument unless gains are symmetric positive semidefinite matrices.  <br /></td></tr>
 <tr class="separator:aca5b3490b1124edfb740630b73cdbadc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
@@ -306,7 +306,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Throw std::invalid_argument if any gain is non-finite. </p>
+<p>Throw std::invalid_argument unless gains are symmetric positive semidefinite matrices. </p>
 
 </div>
 </div>

@@ -95,6 +95,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af8e4e47070258b48dda539a4170940fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f04e16d4f1d0a6d73504dc79485e033" id="r_a2f04e16d4f1d0a6d73504dc79485e033"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_posture_task.html#a2f04e16d4f1d0a6d73504dc79485e033">PostureTask</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;<a class="el" href="structfranky_1_1_posture_task.html#a125e4d1037730e1b4699a9f84fff89bb">target</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> <a class="el" href="structfranky_1_1_posture_task.html#a9a86cf4246dc745c1149ada45ea81a24">stiffness</a>, std::optional&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> &gt; <a class="el" href="structfranky_1_1_posture_task.html#a6e9946c7aab2c21f708616225b06d3a1">damping</a>=std::nullopt, std::optional&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> &gt; <a class="el" href="structfranky_1_1_posture_task.html#ae87e834b004a660bc10bfb7d2a0c781c">max_torque</a>=std::nullopt)</td></tr>
 <tr class="separator:a2f04e16d4f1d0a6d73504dc79485e033"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1d5790d832a81584203433fda36dc01" id="r_aa1d5790d832a81584203433fda36dc01"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_posture_task.html#aa1d5790d832a81584203433fda36dc01">validate</a> () <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a></td></tr>
+<tr class="memdesc:aa1d5790d832a81584203433fda36dc01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Throw std::invalid_argument if any task parameter is out of range.  <br /></td></tr>
+<tr class="separator:aa1d5790d832a81584203433fda36dc01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -229,6 +232,34 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Convenience constructor applying the same scalar gains to all joints. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aa1d5790d832a81584203433fda36dc01" name="aa1d5790d832a81584203433fda36dc01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1d5790d832a81584203433fda36dc01">&#9670;&#160;</a></span>validate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a> franky::PostureTask::validate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Throw std::invalid_argument if any task parameter is out of range. </p>
 
 </div>
 </div>
