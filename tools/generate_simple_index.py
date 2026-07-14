@@ -35,6 +35,46 @@ import urllib.request
 from collections import defaultdict
 from pathlib import Path
 
+
+def get_server_mappings(compatibility_file, libfranka_versions):
+    comp = json.loads(compatibility_file.read_text())
+
+    def version_tuple(v):
+        return tuple(
+            int(x) for x in v.replace(">=", "").replace("<", "").strip().split(".")
+        )
+
+    avail_versions_sorted = sorted(libfranka_versions, key=version_tuple)
+
+    def get_best_libfranka(min_v_str, max_v_str):
+        min_v = version_tuple(min_v_str) if min_v_str else (0,)
+        max_v = version_tuple(max_v_str) if max_v_str else (999,)
+
+        best = None
+        for v in avail_versions_sorted:
+            vt = version_tuple(v)
+            if vt >= min_v and vt < max_v:
+                best = v
+        return best
+
+    def map_servers(reqs):
+        items = sorted(reqs.items(), key=lambda x: version_tuple(x[1]))
+        mapping = {}
+        for i in range(len(items)):
+            server = items[i][0]
+            min_v = items[i][1]
+            max_v = items[i + 1][1] if i + 1 < len(items) else None
+
+            best = get_best_libfranka(min_v, max_v)
+            if best:
+                mapping[server] = best
+        return mapping
+
+    return map_servers(comp.get("robot_server", {})), map_servers(
+        comp.get("gripper_server", {})
+    )
+
+
 LIBFRANKA_LABEL_RE = re.compile(r"(?:^|\.)libfranka\.([0-9]+(?:\.[0-9]+)*)$")
 
 
@@ -163,6 +203,24 @@ def generate_index(wheels, libfranka_versions, output_dir):
     write_page(output_dir / "index.html", "franky package index", landing_lines)
 
 
+def generate_server_index(wheels, mapping, prefix, output_dir):
+    prefix_dir = output_dir / prefix
+    prefix_dir.mkdir(parents=True, exist_ok=True)
+
+    server_lines = []
+    for server_version in sorted(mapping.keys(), key=lambda x: int(x), reverse=True):
+        libfranka_version = mapping[server_version]
+        link_path = prefix_dir / server_version
+        if link_path.exists() or link_path.is_symlink():
+            link_path.unlink()
+        os.symlink(f"../libfranka-{libfranka_version}", link_path)
+        server_lines.append(f'<a href="{server_version}/">{server_version}</a><br>')
+
+    write_page(
+        prefix_dir / "index.html", f"Available {prefix.replace('-', ' ')}", server_lines
+    )
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument(
@@ -197,8 +255,13 @@ def main():
         "versions"
     ]
 
+    comp_file = Path(__file__).parent.parent / "doc" / "compatibility.json"
+    robot_map, gripper_map = get_server_mappings(comp_file, libfranka_versions)
+
     wheels = collect_wheels(releases)
     generate_index(wheels, libfranka_versions, args.output)
+    generate_server_index(wheels, robot_map, "by-robot-server-version", args.output)
+    generate_server_index(wheels, gripper_map, "by-gripper-server-version", args.output)
 
     total = sum(
         len(files) for projects in wheels.values() for files in projects.values()
