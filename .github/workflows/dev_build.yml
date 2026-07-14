@@ -65,8 +65,8 @@ jobs:
           IFS=. read -r major minor patch < VERSION
           wheel_version="${major}.${minor}.$((patch + 1)).dev${{ needs.get-build-info.outputs.build-number }}+g${{ needs.get-build-info.outputs.commit-hash }}"
           pages_url="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}"
-          gh release delete dev --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag || true
-          gh release create dev \
+          gh release delete dev-release --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag || true
+          gh release create dev-release \
             --repo "$GITHUB_REPOSITORY" \
             --target "$GITHUB_SHA" \
             --prerelease \

@@ -182,7 +182,7 @@ pip install --no-index --find-links=./dist franky-control
 
 #### Development builds
 
-If you need the latest features before they make it into an official release, we provide wheels of the current `master` branch in the rolling [dev release](https://github.com/TimSchneider42/franky/releases/tag/dev).
+If you need the latest features before they make it into an official release, we provide wheels of the current `master` branch in the rolling [dev release](https://github.com/TimSchneider42/franky/releases/tag/dev-release).
 These wheels are rebuilt on every push to `master` and are provided for all supported libfranka versions.
 They can be installed via the [package index](https://timschneider42.github.io/franky/whl/) by adding the `--pre` flag:
 
