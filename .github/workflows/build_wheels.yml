@@ -26,6 +26,13 @@ on:
         required: false
         type: string
         default: ""
+      python-versions:
+        description: >
+          Space-separated list of Python builds to build wheels for (e.g.
+          "cp312-cp312"). Leave empty to build for all supported versions.
+        required: false
+        type: string
+        default: ""
 
 jobs:
   ensure-container:
@@ -51,6 +58,7 @@ jobs:
           FRANKY_DEV_BUILD_NUMBER: ${{ inputs.dev-build-number }}
           FRANKY_DEV_BUILD_HASH: ${{ inputs.dev-commit-hash }}
           FRANKY_LIBFRANKA_VERSION_LABEL: ${{ inputs.libfranka-version-label }}
+          PYBIN_VERSIONS: ${{ inputs.python-versions }}
 
       - name: Upload wheels
         uses: actions/upload-artifact@v7
