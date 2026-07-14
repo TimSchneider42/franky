@@ -2,6 +2,7 @@
 #include <franka/exception.h>
 #include <pybind11/pybind11.h>
 
+#include "docstrings.hpp"
 #include "franky.hpp"
 #include "macros.hpp"
 
@@ -38,7 +39,8 @@ using namespace franky;
 #define NUM_ERRORS 37
 #endif
 
-#define ADD_ERROR(unused, name) errors.def_property_readonly(#name, [](const franky::Errors &e) { return e.name; });
+#define ADD_ERROR(unused, name) \
+  errors.def_property_readonly(#name, [](const franky::Errors &e) { return e.name; }, DOC(franka, Errors, name));
 #define UNPACK_ERRORS_INNER(tuple, itr, name) , tuple[itr + 1].cast<bool>()
 #define UNPACK_ERRORS_1(tuple, name0, ...)                                                                   \
   franky::Errors {                                                                                           \
@@ -49,7 +51,7 @@ using namespace franky;
 #define UNPACK_ERRORS(tuple, ...) UNPACK_ERRORS_1(tuple, __VA_ARGS__)
 
 void bind_errors(py::module &m) {
-  py::class_<franky::Errors> errors(m, "Errors");
+  py::class_<franky::Errors> errors(m, "Errors", DOC(franka, Errors));
   errors.def(py::init<>());
   MAP(ADD_ERROR, ERRORS)
   errors.def("__repr__", [](const franky::Errors &errors) { return std::string(errors); });
@@ -63,17 +65,27 @@ void bind_errors(py::module &m) {
             return UNPACK_ERRORS(t, ERRORS);
           }));
 
-  py::register_exception<franka::Exception>(m, "Exception");
-  py::register_exception<franka::CommandException>(m, "CommandException");
-  py::register_exception<franka::ControlException>(m, "ControlException");
-  py::register_exception<franka::IncompatibleVersionException>(m, "IncompatibleVersionException");
-  py::register_exception<franka::InvalidOperationException>(m, "InvalidOperationException");
-  py::register_exception<franka::ModelException>(m, "ModelException");
-  py::register_exception<franka::NetworkException>(m, "NetworkException");
-  py::register_exception<franka::ProtocolException>(m, "ProtocolException");
-  py::register_exception<franka::RealtimeException>(m, "RealtimeException");
-  py::register_exception<InvalidMotionTypeException>(m, "InvalidMotionTypeException");
-  py::register_exception<MotionReuseException>(m, "MotionReuseException");
-  py::register_exception<ReactionRecursionException>(m, "ReactionRecursionException");
-  py::register_exception<GripperException>(m, "GripperException");
+  py::register_exception<franka::Exception>(m, "Exception").attr("__doc__") = DOC(franka, Exception);
+  py::register_exception<franka::CommandException>(m, "CommandException").attr("__doc__") =
+      DOC(franka, CommandException);
+  py::register_exception<franka::ControlException>(m, "ControlException").attr("__doc__") =
+      DOC(franka, ControlException);
+  py::register_exception<franka::IncompatibleVersionException>(m, "IncompatibleVersionException").attr("__doc__") =
+      DOC(franka, IncompatibleVersionException);
+  py::register_exception<franka::InvalidOperationException>(m, "InvalidOperationException").attr("__doc__") =
+      DOC(franka, InvalidOperationException);
+  py::register_exception<franka::ModelException>(m, "ModelException").attr("__doc__") = DOC(franka, ModelException);
+  py::register_exception<franka::NetworkException>(m, "NetworkException").attr("__doc__") =
+      DOC(franka, NetworkException);
+  py::register_exception<franka::ProtocolException>(m, "ProtocolException").attr("__doc__") =
+      DOC(franka, ProtocolException);
+  py::register_exception<franka::RealtimeException>(m, "RealtimeException").attr("__doc__") =
+      DOC(franka, RealtimeException);
+  py::register_exception<InvalidMotionTypeException>(m, "InvalidMotionTypeException").attr("__doc__") =
+      DOC(franky, InvalidMotionTypeException);
+  py::register_exception<MotionReuseException>(m, "MotionReuseException").attr("__doc__") =
+      DOC(franky, MotionReuseException);
+  py::register_exception<ReactionRecursionException>(m, "ReactionRecursionException").attr("__doc__") =
+      DOC(franky, ReactionRecursionException);
+  py::register_exception<GripperException>(m, "GripperException").attr("__doc__") = DOC(franky, GripperException);
 }

@@ -3,6 +3,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
+#include "docstrings.hpp"
 #include "franky.hpp"
 #include "macros.hpp"
 
@@ -10,8 +11,9 @@ namespace py = pybind11;
 using namespace pybind11::literals;  // to bring in the '_a' literal
 using namespace franky;
 
-#define ADD_FIELD_RO(obj_type, unused, name) .def_readonly(#name, &obj_type::name)
-#define ADD_FIELDS_RO(obj, obj_type, ...) obj MAP_C1(ADD_FIELD_RO, obj_type, __VA_ARGS__);
+#define ADD_ROBOT_STATE_FIELD(unused, name) .def_readonly(#name, &RobotState::name, DOC(franky, RobotState, name))
+#define ADD_GRIPPER_STATE_FIELD(unused, name) \
+  .def_readonly(#name, &franka::GripperState::name, DOC(franka, GripperState, name))
 
 #ifdef FRANKA_0_8
 #define EXTRA_FIELDS1 F_T_NE, NE_T_EE,
@@ -36,8 +38,8 @@ using namespace franky;
 #define GRIPPER_STATE_FIELDS width, max_width, is_grasped, temperature, time
 
 void bind_robot_state(py::module &m) {
-  py::class_<RobotState> robot_state(m, "RobotState");
-  ADD_FIELDS_RO(robot_state, RobotState, ROBOT_STATE_FIELDS)
+  py::class_<RobotState> robot_state(m, "RobotState", DOC(franky, RobotState));
+  robot_state MAP(ADD_ROBOT_STATE_FIELD, ROBOT_STATE_FIELDS);
   robot_state.def(
       py::pickle(
           [](const RobotState &state) {  // __getstate__
@@ -48,8 +50,8 @@ void bind_robot_state(py::module &m) {
             return UNPACK_TUPLE(RobotState, t, ROBOT_STATE_FIELDS);
           }));
 
-  py::class_<franka::GripperState> gripper_state(m, "GripperState");
-  ADD_FIELDS_RO(gripper_state, franka::GripperState, GRIPPER_STATE_FIELDS)
+  py::class_<franka::GripperState> gripper_state(m, "GripperState", DOC(franka, GripperState));
+  gripper_state MAP(ADD_GRIPPER_STATE_FIELD, GRIPPER_STATE_FIELDS);
   gripper_state.def(
       py::pickle(
           [](const franka::GripperState &state) {  // __getstate__

@@ -3,6 +3,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
+#include "docstrings.hpp"
 #include "franky.hpp"
 #include "sequential_executor.hpp"
 
@@ -15,12 +16,12 @@ SequentialExecutor callback_executor;
 template <typename ControlSignalType>
 void mkMotionAndReactionClasses(py::module_ &m, const std::string &control_signal_name) {
   py::class_<Motion<ControlSignalType>, std::shared_ptr<Motion<ControlSignalType>>> motion_class(
-      m, ("Base" + control_signal_name + "Motion").c_str());
+      m, ("Base" + control_signal_name + "Motion").c_str(), DOC(franky, Motion));
   py::class_<Reaction<ControlSignalType>, std::shared_ptr<Reaction<ControlSignalType>>> reaction_class(
-      m, (control_signal_name + "Reaction").c_str());
+      m, (control_signal_name + "Reaction").c_str(), DOC(franky, Reaction));
 
-  motion_class.def_property_readonly("reactions", &Motion<ControlSignalType>::reactions)
-      .def("add_reaction", &Motion<ControlSignalType>::addReaction)
+  motion_class.def_property_readonly("reactions", &Motion<ControlSignalType>::reactions, DOC(franky, Motion, reactions))
+      .def("add_reaction", &Motion<ControlSignalType>::addReaction, "reaction"_a, DOC(franky, Motion, addReaction))
       .def(
           "register_callback",
           [](Motion<ControlSignalType> &motion, const typename Motion<ControlSignalType>::CallbackType &callback) {
@@ -52,13 +53,15 @@ void mkMotionAndReactionClasses(py::module_ &m, const std::string &control_signa
               });
             });
           },
-          "callback"_a);
+          "callback"_a,
+          DOC(franky, Motion, registerCallback));
 
   reaction_class
       .def(
           py::init<const Condition &, std::shared_ptr<Motion<ControlSignalType>>>(),
           "condition"_a,
-          "motion"_a = nullptr)
+          "motion"_a = nullptr,
+          DOC(franky, Reaction, Reaction))
       .def(
           "register_callback",
           [](Reaction<ControlSignalType> &reaction,
@@ -81,12 +84,13 @@ void mkMotionAndReactionClasses(py::module_ &m, const std::string &control_signa
                   });
                 });
           },
-          "callback"_a);
+          "callback"_a,
+          DOC(franky, Reaction, registerCallback));
 }
 
 void bind_reactions(py::module &m) {
-  py::class_<Condition>(m, "Condition")
-      .def(py::init<bool>(), "constant_value"_a)
+  py::class_<Condition>(m, "Condition", DOC(franky, Condition))
+      .def(py::init<bool>(), "constant_value"_a, DOC(franky, Condition, Condition_2))
       .def("__invert__", py::overload_cast<const Condition &>(&operator!), py::is_operator())
       .def(py::self == py::self)
       .def(py::self == bool())
@@ -107,12 +111,17 @@ void bind_reactions(py::module &m) {
       .def("__repr__", &Condition::repr);
   py::implicitly_convertible<bool, Condition>();
 
-  py::class_<Measure>(m, "Measure")
-      .def_property_readonly_static("FORCE_X", [](py::object) { return Measure::ForceX(); })
-      .def_property_readonly_static("FORCE_Y", [](py::object) { return Measure::ForceY(); })
-      .def_property_readonly_static("FORCE_Z", [](py::object) { return Measure::ForceZ(); })
-      .def_property_readonly_static("REL_TIME", [](py::object) { return Measure::RelTime(); })
-      .def_property_readonly_static("ABS_TIME", [](py::object) { return Measure::AbsTime(); })
+  py::class_<Measure>(m, "Measure", DOC(franky, Measure))
+      .def_property_readonly_static(
+          "FORCE_X", [](py::object) { return Measure::ForceX(); }, DOC(franky, Measure, ForceX))
+      .def_property_readonly_static(
+          "FORCE_Y", [](py::object) { return Measure::ForceY(); }, DOC(franky, Measure, ForceY))
+      .def_property_readonly_static(
+          "FORCE_Z", [](py::object) { return Measure::ForceZ(); }, DOC(franky, Measure, ForceZ))
+      .def_property_readonly_static(
+          "REL_TIME", [](py::object) { return Measure::RelTime(); }, DOC(franky, Measure, RelTime))
+      .def_property_readonly_static(
+          "ABS_TIME", [](py::object) { return Measure::AbsTime(); }, DOC(franky, Measure, AbsTime))
       .def(-py::self)
       .def(py::self == py::self)
       .def(py::self == double_t())
