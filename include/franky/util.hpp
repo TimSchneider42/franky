@@ -3,7 +3,9 @@
 #include <franka/duration.h>
 
 #include <Eigen/Core>
+#include <Eigen/Geometry>
 #include <array>
+#include <franky/types.hpp>
 
 namespace franky {
 
