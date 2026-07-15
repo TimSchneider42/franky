@@ -16,7 +16,12 @@ namespace franky {
  */
 template <typename TargetType>
 struct PositionWaypoint : public Waypoint<TargetType> {
-  /** The reference type (absolute or relative). */
+  /**
+   * The reference type (absolute or relative). A relative waypoint is resolved
+   * against the preceding waypoint's target. The first relative waypoint is
+   * resolved against the motion's initial commanded position. This remains
+   * true if max_total_duration advances past a waypoint before it is reached.
+   */
   ReferenceType reference_type{ReferenceType::kAbsolute};
 };
 

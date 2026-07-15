@@ -11,6 +11,13 @@ and [Google naming conventions](https://google.github.io/styleguide/cppguide.htm
 
 All units are in $m$, $\frac{m}{s}$, $\textit{rad}$, or $\frac{\textit{rad}}{s}$.
 
+For both joint and Cartesian position waypoint motions, a relative waypoint is
+resolved against the preceding waypoint's target. The first relative waypoint
+is resolved against the commanded position at which the motion starts. This
+keeps the path deterministic even when `max_total_duration` advances past a
+waypoint before the robot reaches it: subsequent relative waypoints remain
+anchored to that waypoint's target, not the position reached at the timeout.
+
 ## Joint Position Control
 
 ```python
@@ -142,6 +149,12 @@ m_cp5 = CartesianWaypointMotion(
 # Stop the robot in Cartesian position control mode.
 m_cp6 = CartesianStopMotion()
 ```
+
+Cartesian poses specify a final orientation, not a rotation direction or
+number of turns. Each waypoint therefore uses an equivalent rotation of at
+most 180°. To request a larger rotation in a particular direction, split it
+into consistently signed relative increments smaller than 180° (for example,
+two +135° waypoints for +270°).
 
 ## Cartesian Velocity Control
 
