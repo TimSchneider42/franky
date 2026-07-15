@@ -48,6 +48,9 @@ Robot::Robot(const std::string &fci_hostname, const Params &params)
   model_urdf_ = getRobotModel();
 #endif
   setCollisionBehavior(params_.default_torque_threshold, params_.default_force_threshold);
+  // Prime the buffer before asynchronous control can make state() rely on it.
+  state_buffer_.set(RobotState::from_franka(readOnce()));
+}
 
 Robot::~Robot() noexcept {
   bool control_running = false;
