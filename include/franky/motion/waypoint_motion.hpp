@@ -31,7 +31,10 @@ struct Waypoint {
    */
   RelativeDynamicsFactor relative_dynamics_factor{1.0};
 
-  /** The minimum time to get to the next waypoint. */
+  /**
+   * The minimum time to reach this waypoint. This value is ignored when the
+   * effective relative dynamics factor has max_dynamics() set.
+   */
   std::optional<franka::Duration> minimum_time{std::nullopt};
 
   /** For how long to hold the target of this waypoint after it has been reached. */
@@ -111,7 +114,8 @@ class WaypointMotion : public Motion<ControlSignalType> {
 
     auto max_time_reached = false;
     if (waypoint_iterator_ != waypoints_.end() && waypoint_iterator_->max_total_duration.has_value()) {
-      max_time_reached = rel_time - waypoint_started_time_ >= waypoint_iterator_->max_total_duration.value();
+      max_time_reached = rel_time >= waypoint_started_time_ &&
+                         rel_time - waypoint_started_time_ >= waypoint_iterator_->max_total_duration.value();
     }
 
     if (prev_result_ == ruckig::Finished || max_time_reached) {
@@ -128,7 +132,9 @@ class WaypointMotion : public Motion<ControlSignalType> {
           // adjust to target values
           hold_target_duration = std::max(hold_target_duration, franka::Duration(10));
         }
-        if (rel_time - target_reached_time_.value() >= hold_target_duration || max_time_reached) {
+        const auto hold_time_reached =
+            rel_time >= target_reached_time_.value() && rel_time - target_reached_time_.value() >= hold_target_duration;
+        if (hold_time_reached || max_time_reached) {
           target_reached_time_ = std::nullopt;
           ++waypoint_iterator_;
           if (waypoint_iterator_ != waypoints_.end()) {

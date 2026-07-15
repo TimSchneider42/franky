@@ -34,7 +34,7 @@ void CartesianWaypointMotion::initWaypointMotion(
   Vector7d initial_acceleration_with_elbow =
       (Vector7d() << robot_state.O_ddP_EE_c.vector_repr(), robot_state.ddelbow_c).finished();
 
-  target_state_ = robot_pose;
+  target_state_ = robot_pose * ee_frame_;
 
   input_parameter.current_position = toStdD<7>(robot_pose.vector_repr());
   input_parameter.current_velocity = toStdD<7>(initial_velocity.vector_repr());
@@ -49,7 +49,7 @@ franka::CartesianPose CartesianWaypointMotion::getControlSignal(
   if (previous_command.has_value() && previous_command->hasElbow()) {
     current_elbow_flip = static_cast<FlipDirection>(previous_command->elbow[1]);
   }
-  RobotPose target_pose(toEigenD<7>(input_parameter.current_position), !has_elbow);
+  RobotPose target_pose(toEigenD<7>(input_parameter.current_position), !has_elbow, current_elbow_flip);
   return (ref_frame_ * target_pose).as_franka_pose(current_elbow_flip);
 }
 

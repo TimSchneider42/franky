@@ -71,6 +71,10 @@ ControlSignalType MotionGenerator<ControlSignalType>::operator()(
     // subsequently.
     current_motion_->init(robot_, robot_state, previous_command_);
   }
+  // A reaction resets rel_time_offset_. Recompute the relative time so the
+  // replacement motion starts with the same zero-based clock as any other
+  // newly initialized motion.
+  rel_time = abs_time_ - rel_time_offset_;
   previous_command_ = current_motion_->nextCommand(robot_state, period, rel_time, abs_time_, previous_command_);
   return previous_command_.value();
 }
