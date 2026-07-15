@@ -22,12 +22,13 @@ Reaction<ControlSignalType>::Reaction(
     const Condition &condition, const std::shared_ptr<Motion<ControlSignalType>> new_motion)
     : Reaction(condition, [new_motion](const RobotState &, franka::Duration, franka::Duration) { return new_motion; }) {
   if (new_motion == nullptr) throw std::invalid_argument("The new motion must not be null.");
-  patchMutexRT(callback_mutex_);
 }
 
 template <typename ControlSignalType>
 Reaction<ControlSignalType>::Reaction(Condition condition, const Reaction::MotionFunc &motion_func)
-    : condition_(std::move(condition)), motion_func_(motion_func) {}
+    : condition_(std::move(condition)), motion_func_(motion_func) {
+  patchMutexRT(callback_mutex_);
+}
 
 template <typename ControlSignalType>
 std::shared_ptr<Motion<ControlSignalType>> Reaction<ControlSignalType>::operator()(
