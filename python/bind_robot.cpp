@@ -12,6 +12,23 @@ namespace py = pybind11;
 using namespace pybind11::literals;  // to bring in the '_a' literal
 using namespace franky;
 
+namespace {
+
+struct RobotDeleter {
+  void operator()(Robot *robot) const {
+    if (PyGILState_Check()) {
+      py::gil_scoped_release release;
+      delete robot;
+    } else {
+      delete robot;
+    }
+  }
+};
+
+using PythonRobotPtr = std::unique_ptr<Robot, RobotDeleter>;
+
+}  // namespace
+
 template <typename ControlSignalType>
 void robotMove(
     Robot &robot, const std::shared_ptr<Motion<ControlSignalType>> &motion, bool async, bool limit_rate,
@@ -150,7 +167,7 @@ void bind_robot(py::module &m) {
           py::cpp_function(&Gripper::max_width, py::call_guard<py::gil_scoped_release>()),
           DOC(franky, Gripper, max_width));
 
-  py::class_<Robot>(m, "_RobotInternal", DOC(franky, Robot))
+  py::class_<Robot, PythonRobotPtr>(m, "_RobotInternal", DOC(franky, Robot))
       .def(
           py::init<>([](const std::string &fci_hostname,
                         RelativeDynamicsFactor relative_dynamics_factor,
@@ -168,7 +185,7 @@ void bind_robot(py::module &m) {
                         double kalman_dq_d_obs_var,
                         double kalman_ddq_d_obs_var,
                         double kalman_control_adaptation_rate) {
-            return std::make_unique<Robot>(
+            return PythonRobotPtr(new Robot(
                 fci_hostname,
                 Robot::Params{
                     relative_dynamics_factor,
@@ -185,7 +202,7 @@ void bind_robot(py::module &m) {
                     kalman_q_d_obs_var,
                     kalman_dq_d_obs_var,
                     kalman_ddq_d_obs_var,
-                    kalman_control_adaptation_rate});
+                    kalman_control_adaptation_rate}));
           }),
           R"doc(Connect to a Franka robot.
 

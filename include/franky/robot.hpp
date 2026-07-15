@@ -167,6 +167,14 @@ class Robot : public franka::Robot {
    */
   explicit Robot(const std::string &fci_hostname, const Params &params);
 
+  /**
+   * @brief Stop and join any asynchronous motion before destroying the robot.
+   *
+   * Exceptions raised while stopping or joining are discarded because a
+   * destructor cannot report asynchronous control errors safely.
+   */
+  ~Robot() noexcept;
+
   using franka::Robot::setCollisionBehavior;
 
   /**

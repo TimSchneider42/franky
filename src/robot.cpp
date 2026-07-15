@@ -48,6 +48,29 @@ Robot::Robot(const std::string &fci_hostname, const Params &params)
   model_urdf_ = getRobotModel();
 #endif
   setCollisionBehavior(params_.default_torque_threshold, params_.default_force_threshold);
+
+Robot::~Robot() noexcept {
+  bool control_running = false;
+  {
+    std::lock_guard lock(*control_mutex_);
+    control_running = motion_generator_running_;
+  }
+
+  if (control_running) {
+    try {
+      stop();
+    } catch (...) {
+      // Destruction must continue so an already finishing control thread can
+      // still be joined. Any control error is intentionally discarded below.
+    }
+  }
+
+  try {
+    std::unique_lock lock(*control_mutex_);
+    joinMotionUnsafe(lock);
+  } catch (...) {
+    // joinMotionUnsafe joins before rethrowing the stored control exception.
+  }
 }
 
 bool Robot::hasErrors() { return static_cast<bool>(state().current_errors); }
