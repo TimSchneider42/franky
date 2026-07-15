@@ -6,6 +6,7 @@
 #include <franka/robot.h>
 #include <franka/robot_state.h>
 
+#include <chrono>
 #include <exception>
 #include <future>
 #include <optional>
@@ -498,8 +499,9 @@ class Robot : public franka::Robot {
   // Written by the real-time thread while in control and by user threads (under
   // control_mutex_) otherwise; control_mutex_ synchronizes the writer handover.
   WaitFreeTripleBuffer<RobotState> state_buffer_;
-  // Serializes user-side readers of state_buffer_. Never taken by the real-time thread.
-  std::mutex state_mutex_;
+  // Receipt time paired with the robot timestamp currently in state_buffer_.
+  // Only accessed by user threads while control_mutex_ is held.
+  std::chrono::steady_clock::time_point state_received_at_;
   std::shared_ptr<std::mutex> control_mutex_;
   std::condition_variable control_finished_condition_;
   std::exception_ptr control_exception_;

@@ -6,6 +6,19 @@
 
 namespace franky {
 
+namespace {
+
+constexpr uint64_t kRobotStateFreshnessToleranceMS = 3;
+
+[[nodiscard]] bool robotStateIsStale(
+    double host_advance_ms, uint64_t previous_robot_time_ms, uint64_t candidate_robot_time_ms) {
+  if (candidate_robot_time_ms < previous_robot_time_ms) return true;
+  const auto robot_advance_ms = candidate_robot_time_ms - previous_robot_time_ms;
+  return host_advance_ms > static_cast<double>(robot_advance_ms + kRobotStateFreshnessToleranceMS);
+}
+
+}  // namespace
+
 #ifdef FRANKA_0_10
 #define SEL_VAL(value_panda, value_fer) value_fer
 #else
@@ -50,6 +63,7 @@ Robot::Robot(const std::string &fci_hostname, const Params &params)
   setCollisionBehavior(params_.default_torque_threshold, params_.default_force_threshold);
   // Prime the buffer before asynchronous control can make state() rely on it.
   state_buffer_.set(RobotState::from_franka(readOnce()));
+  state_received_at_ = std::chrono::steady_clock::now();
 }
 
 Robot::~Robot() noexcept {
@@ -84,15 +98,30 @@ bool Robot::recoverFromErrors() {
 }
 
 RobotState Robot::state() {
-  std::lock_guard state_lock(state_mutex_);
+  RobotState result;
   {
     std::lock_guard control_lock(*control_mutex_);
     if (!is_in_control_unsafe()) {
-      readOnce();  // For some reason, calling this for the first time returns old data. So call it twice.
-      state_buffer_.set(RobotState::from_franka(readOnce()));
+      const auto previous = state_buffer_.get();
+      auto candidate = readOnce();
+      auto received_at = std::chrono::steady_clock::now();
+      const auto host_advance_ms = std::chrono::duration<double, std::milli>(received_at - state_received_at_).count();
+
+      if (robotStateIsStale(host_advance_ms, previous.time.toMSec(), candidate.time.toMSec())) {
+        // If libfranka gave us data that hasn't advanced as much as the host time since the last read
+        // (within 3ms), read again to get fresh data.
+        candidate = readOnce();
+        received_at = std::chrono::steady_clock::now();
+      }
+      result = RobotState::from_franka(candidate);
+      state_buffer_.set(result);
+      state_received_at_ = received_at;
+    } else {
+      result = state_buffer_.get();
+      state_received_at_ = std::chrono::steady_clock::now();
     }
   }
-  return state_buffer_.get();
+  return result;
 }
 
 void Robot::setCollisionBehavior(const ScalarOrArray<7> &torque_threshold, const ScalarOrArray<6> &force_threshold) {
