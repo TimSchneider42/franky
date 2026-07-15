@@ -108,6 +108,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab017d5bb8451915dbc0fde436782c771"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a242b157f9b7fa39617a84680b92ee477" id="r_a242b157f9b7fa39617a84680b92ee477"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a242b157f9b7fa39617a84680b92ee477">Robot</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> std::string &amp;<a class="el" href="classfranky_1_1_robot.html#a25ca7e90c8a10848921fb35a378a7d33">fci_hostname</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="structfranky_1_1_robot_1_1_params.html">Params</a> &amp;params)</td></tr>
 <tr class="separator:a242b157f9b7fa39617a84680b92ee477"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a160ab9d9c89634d941586df2739f74ef" id="r_a160ab9d9c89634d941586df2739f74ef"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#a160ab9d9c89634d941586df2739f74ef">~Robot</a> () <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">noexcept</a></td></tr>
+<tr class="memdesc:a160ab9d9c89634d941586df2739f74ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop and join any asynchronous motion before destroying the robot.  <br /></td></tr>
+<tr class="separator:a160ab9d9c89634d941586df2739f74ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad586cb00aa450d5c51bc8260b9ad373" id="r_aad586cb00aa450d5c51bc8260b9ad373"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_robot.html#aad586cb00aa450d5c51bc8260b9ad373">setCollisionBehavior</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">torque_threshold</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#ae77a95d5f13271457b8c8fb645da3bd9">ScalarOrArray</a>&lt; 6 &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">force_threshold</a>)</td></tr>
 <tr class="memdesc:aad586cb00aa450d5c51bc8260b9ad373"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the collision behavior of the robot.  <br /></td></tr>
 <tr class="separator:aad586cb00aa450d5c51bc8260b9ad373"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -315,6 +318,34 @@ Static Public Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a160ab9d9c89634d941586df2739f74ef" name="a160ab9d9c89634d941586df2739f74ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a160ab9d9c89634d941586df2739f74ef">&#9670;&#160;</a></span>~Robot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">franky::Robot::~Robot </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stop and join any asynchronous motion before destroying the robot. </p>
+<p>Exceptions raised while stopping or joining are discarded because a destructor cannot report asynchronous control errors safely. </p>
 
 </div>
 </div>

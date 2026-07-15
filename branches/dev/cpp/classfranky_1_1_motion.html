@@ -267,7 +267,9 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
 </div><div class="memdoc">
 
 <p>Add a reaction to the motion. </p>
-<p>Reactions are evaluated in every step of the motion and can replace the current motion with a new motion. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Reactions are evaluated in every step of the motion and can replace the current motion with a new motion.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function synchronously from a condition, motion function, or reaction callback while this motion's reactions are being evaluated. <a class="el" href="classfranky_1_1_reaction.html" title="A reaction that can be attached to a motion.">Reaction</a> evaluation holds the reaction-list mutex, so doing so would deadlock. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">reaction</td><td>The reaction to add. </td></tr>
   </table>
@@ -295,7 +297,9 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
 </div><div class="memdoc">
 
 <p>Add a reaction to the front of the reaction list. </p>
-<p>Reactions are evaluated in every step of the motion and can replace the current motion with a new motion. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Reactions are evaluated in every step of the motion and can replace the current motion with a new motion.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function synchronously from a condition, motion function, or reaction callback while this motion's reactions are being evaluated. <a class="el" href="classfranky_1_1_reaction.html" title="A reaction that can be attached to a motion.">Reaction</a> evaluation holds the reaction-list mutex, so doing so would deadlock. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">reaction</td><td>The reaction to add. </td></tr>
   </table>

@@ -205,7 +205,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A reaction that can be attached to a motion.  <a href="classfranky_1_1_reaction.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_reaction_recursion_exception.html">ReactionRecursionException</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exception thrown when the reaction recursion limit (8) is reached.  <a href="structfranky_1_1_reaction_recursion_exception.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exception thrown when the reaction recursion limit (16) is reached.  <a href="structfranky_1_1_reaction_recursion_exception.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_relative_dynamics_factor.html">RelativeDynamicsFactor</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Relative dynamics factors.  <a href="classfranky_1_1_relative_dynamics_factor.html#details">More...</a><br /></td></tr>
@@ -276,7 +276,7 @@ Typedefs</h2></td></tr>
 <tr class="memdesc:a116c8b6ee7de162e8528d8554f5c3533"><td class="mdescLeft">&#160;</td><td class="mdescRight">Double-buffered handle for updating a <a class="el" href="structfranky_1_1_cartesian_reference.html" title="Cartesian impedance reference expressed in the base frame.">CartesianReference</a> online.  <br /></td></tr>
 <tr class="separator:a116c8b6ee7de162e8528d8554f5c3533"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a7e6526b9fe1644e8f31c09afaca294" id="r_a6a7e6526b9fe1644e8f31c09afaca294"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a6a7e6526b9fe1644e8f31c09afaca294">JointReferenceHandle</a> = <a class="el" href="classfranky_1_1_wait_free_triple_buffer.html">WaitFreeTripleBuffer</a>&lt; std::optional&lt; <a class="el" href="structfranky_1_1_joint_reference.html">JointReference</a> &gt; &gt;</td></tr>
-<tr class="memdesc:a6a7e6526b9fe1644e8f31c09afaca294"><td class="mdescLeft">&#160;</td><td class="mdescRight">Double-buffered handle for updating a <a class="el" href="structfranky_1_1_joint_reference.html" title="Joint-space reference for joint impedance motions.">JointReference</a> online.  <br /></td></tr>
+<tr class="memdesc:a6a7e6526b9fe1644e8f31c09afaca294"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle for updating a <a class="el" href="structfranky_1_1_joint_reference.html" title="Joint-space reference for joint impedance motions.">JointReference</a> online.  <br /></td></tr>
 <tr class="separator:a6a7e6526b9fe1644e8f31c09afaca294"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7af3aea8bf2e7bc0f366814328c1fb32" id="r_a7af3aea8bf2e7bc0f366814328c1fb32"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">TargetType</a> &gt; </td></tr>
 <tr class="memitem:a7af3aea8bf2e7bc0f366814328c1fb32"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">using</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a7af3aea8bf2e7bc0f366814328c1fb32">VelocityWaypoint</a> = <a class="el" href="structfranky_1_1_waypoint.html">Waypoint</a>&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">TargetType</a> &gt;</td></tr>
@@ -588,7 +588,7 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
       </table>
 </div><div class="memdoc">
 
-<p>Double-buffered handle for updating a <a class="el" href="structfranky_1_1_joint_reference.html" title="Joint-space reference for joint impedance motions.">JointReference</a> online. </p>
+<p>Handle for updating a <a class="el" href="structfranky_1_1_joint_reference.html" title="Joint-space reference for joint impedance motions.">JointReference</a> online. </p>
 <p>This handle is intended to be written from a user thread while a single <a class="el" href="classfranky_1_1_joint_impedance_tracking_motion.html" title="Client-side joint impedance controller with a dynamic online reference.">JointImpedanceTrackingMotion</a> is running. The motion reads the latest valid reference each control cycle without needing to replace the motion object. </p>
 
 </div>

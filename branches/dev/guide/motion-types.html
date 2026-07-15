@@ -390,6 +390,12 @@ The C++ interface is generally analogous, though some variable and method names 
 follow <a class="reference external" href="https://peps.python.org/pep-0008/">PEP 8</a> naming conventions in Python
 and <a class="reference external" href="https://google.github.io/styleguide/cppguide.html">Google naming conventions</a> in C++.</p>
 <p>All units are in <span class="math notranslate nohighlight">\(m\)</span>, <span class="math notranslate nohighlight">\(\frac{m}{s}\)</span>, <span class="math notranslate nohighlight">\(\textit{rad}\)</span>, or <span class="math notranslate nohighlight">\(\frac{\textit{rad}}{s}\)</span>.</p>
+<p>For both joint and Cartesian position waypoint motions, a relative waypoint is
+resolved against the preceding waypoint’s target. The first relative waypoint
+is resolved against the commanded position at which the motion starts. This
+keeps the path deterministic even when <code class="docutils literal notranslate"><span class="pre">max_total_duration</span></code> advances past a
+waypoint before the robot reaches it: subsequent relative waypoints remain
+anchored to that waypoint’s target, not the position reached at the timeout.</p>
 <section id="joint-position-control">
 <h2>Joint Position Control<a class="headerlink" href="#joint-position-control" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">franky</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
@@ -521,6 +527,11 @@ and <a class="reference external" href="https://google.github.io/styleguide/cppg
 <span class="n">m_cp6</span> <span class="o">=</span> <span class="n">CartesianStopMotion</span><span class="p">()</span>
 </pre></div>
 </div>
+<p>Cartesian poses specify a final orientation, not a rotation direction or
+number of turns. Each waypoint therefore uses an equivalent rotation of at
+most 180°. To request a larger rotation in a particular direction, split it
+into consistently signed relative increments smaller than 180° (for example,
+two +135° waypoints for +270°).</p>
 </section>
 <section id="cartesian-velocity-control">
 <h2>Cartesian Velocity Control<a class="headerlink" href="#cartesian-velocity-control" title="Link to this heading">¶</a></h2>
