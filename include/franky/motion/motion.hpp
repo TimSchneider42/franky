@@ -33,6 +33,11 @@ class Motion {
    *
    * Reactions are evaluated in every step of the motion and can replace the
    * current motion with a new motion.
+   *
+   * @warning Do not call this function synchronously from a condition, motion
+   * function, or reaction callback while this motion's reactions are being
+   * evaluated. Reaction evaluation holds the reaction-list mutex, so doing so
+   * would deadlock.
    * @param reaction The reaction to add.
    */
   void addReaction(std::shared_ptr<Reaction<ControlSignalType>> reaction);
@@ -42,6 +47,11 @@ class Motion {
    *
    * Reactions are evaluated in every step of the motion and can replace the
    * current motion with a new motion.
+   *
+   * @warning Do not call this function synchronously from a condition, motion
+   * function, or reaction callback while this motion's reactions are being
+   * evaluated. Reaction evaluation holds the reaction-list mutex, so doing so
+   * would deadlock.
    * @param reaction The reaction to add.
    */
   void addReactionFront(std::shared_ptr<Reaction<ControlSignalType>> reaction);

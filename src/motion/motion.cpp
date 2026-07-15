@@ -73,6 +73,7 @@ ControlSignalType Motion<ControlSignalType>::nextCommand(
 template <typename ControlSignalType>
 std::shared_ptr<Motion<ControlSignalType>> Motion<ControlSignalType>::checkAndCallReactions(
     const RobotState &robot_state, franka::Duration rel_time, franka::Duration abs_time) {
+  const std::lock_guard lock(reaction_mutex_);
   for (auto &reaction : reactions_) {
     if (reaction->condition(robot_state, rel_time, abs_time)) {
       auto new_motion = (*reaction)(robot_state, rel_time, abs_time);
