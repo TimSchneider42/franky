@@ -57,12 +57,16 @@ franka::CartesianVelocities CartesianVelocityWaypointMotion::getControlSignal(
     auto time_step_s = time_step.toSec();
     auto current_elbow_vel = input_parameter.current_position[6];
     auto current_elbow_acc = input_parameter.current_velocity[6];
-    auto last_elbow_acc = 2 * (current_elbow_vel - last_elbow_vel_) / time_step_s - current_elbow_acc;
-    auto elbow_jerk = (current_elbow_acc - last_elbow_acc) / time_step_s;
-    auto current_elbow_pos = last_elbow_pos_ + current_elbow_vel * time_step_s +
-                             0.5 * current_elbow_acc * std::pow(time_step_s, 2) +
-                             1.0 / 6.0 * elbow_jerk * std::pow(time_step_s, 3);
+    auto current_elbow_pos = last_elbow_pos_;
+    if (time_step_s > 0.0) {
+      auto last_elbow_acc = 2 * (current_elbow_vel - last_elbow_vel_) / time_step_s - current_elbow_acc;
+      auto elbow_jerk = (current_elbow_acc - last_elbow_acc) / time_step_s;
+      current_elbow_pos += current_elbow_vel * time_step_s + 0.5 * current_elbow_acc * std::pow(time_step_s, 2) +
+                           1.0 / 6.0 * elbow_jerk * std::pow(time_step_s, 3);
+    }
 
+    // Even on libfranka's zero-period first callback, retain the velocity that
+    // was actually emitted as the reconstruction baseline for the next tick.
     last_elbow_vel_ = current_elbow_vel;
     last_elbow_pos_ = current_elbow_pos;
     auto current_elbow_flip = robot_state.elbow.joint_4_flip();
