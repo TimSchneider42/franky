@@ -32,6 +32,9 @@ void CartesianVelocityWaypointMotion::initWaypointMotion(
   } else {
     current_velocity = RobotVelocity(robot_state.O_dP_EE_c, robot_state.delbow_c);
   }
+  // Ruckig plans twists at ee_frame; convert the commanded EE twist accordingly.
+  const Eigen::Vector3d ee_to_frame_world = robot_state.O_T_EE_c.linear() * ee_frame_.translation();
+  current_velocity = current_velocity.changeEndEffectorFrame(ee_to_frame_world);
 
   Vector7d initial_acceleration_with_elbow =
       (Vector7d() << robot_state.O_ddP_EE_c.vector_repr(), robot_state.ddelbow_c).finished();
@@ -53,6 +56,9 @@ franka::CartesianVelocities CartesianVelocityWaypointMotion::getControlSignal(
     const ruckig::InputParameter<7> &input_parameter) {
   auto has_elbow = input_parameter.enabled[6];
   RobotVelocity target_vel(toEigenD<7>(input_parameter.current_position));
+  // Convert the ee_frame twist to the configured EE using its current commanded orientation.
+  const Eigen::Vector3d frame_to_ee_world = -robot_state.O_T_EE_c.linear() * ee_frame_.translation();
+  target_vel = target_vel.changeEndEffectorFrame(frame_to_ee_world);
   if (has_elbow) {
     auto time_step_s = time_step.toSec();
     auto current_elbow_vel = input_parameter.current_position[6];
@@ -82,17 +88,10 @@ franka::CartesianVelocities CartesianVelocityWaypointMotion::getControlSignal(
 void CartesianVelocityWaypointMotion::setNewWaypoint(
     const RobotState &robot_state, const std::optional<franka::CartesianVelocities> &previous_command,
     const VelocityWaypoint<RobotVelocity> &new_waypoint, ruckig::InputParameter<7> &input_parameter) {
-  // The target twist is anchored at ee_frame, while libfranka expects it at the
-  // configured end effector. Express that frame-to-EE offset in world coordinates.
-  const Eigen::Vector3d frame_to_ee_world = -robot_state.O_T_EE.linear() * ee_frame_.translation();
-  auto new_target_transformed = new_waypoint.target.changeEndEffectorFrame(frame_to_ee_world);
-  // This is a bit of an oversimplification, as the angular velocities don't
-  // work like linear velocities (but we pretend they do here). However, it is
-  // probably good enough here.
-  input_parameter.target_position = toStdD<7>(new_target_transformed.vector_repr());
+  input_parameter.target_position = toStdD<7>(new_waypoint.target.vector_repr());
   input_parameter.target_velocity = toStdD<7>(Vector7d::Zero());
   const bool had_elbow = input_parameter.enabled[6];
-  const bool has_elbow = new_target_transformed.elbow_velocity().has_value();
+  const bool has_elbow = new_waypoint.target.elbow_velocity().has_value();
   if (has_elbow && !had_elbow) {
     input_parameter.current_position[6] = robot_state.delbow_c;
     input_parameter.current_velocity[6] = robot_state.ddelbow_c;
@@ -118,6 +117,8 @@ std::tuple<Vector7d, Vector7d, Vector7d> CartesianVelocityWaypointMotion::getAbs
 std::tuple<Vector7d, Vector7d, Vector7d> CartesianVelocityWaypointMotion::getDesiredState(
     const RobotState &robot_state) const {
   RobotVelocity current_velocity(robot_state.O_dP_EE_d, robot_state.delbow_c);
+  const Eigen::Vector3d ee_to_frame_world = robot_state.O_T_EE_c.linear() * ee_frame_.translation();
+  current_velocity = current_velocity.changeEndEffectorFrame(ee_to_frame_world);
   Vector7d current_acceleration =
       (Vector7d() << robot_state.O_ddP_EE_c.vector_repr(), robot_state.ddelbow_c).finished();
   return {current_velocity.vector_repr(), current_acceleration, Vector7d::Zero()};
