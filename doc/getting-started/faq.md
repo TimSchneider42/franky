@@ -10,9 +10,7 @@ franky.IncompatibleVersionException: libfranka: Incompatible library version (se
 
 then your Franka robot is either not on the most recent firmware version, or you are using the older Franka Panda
 model.
-In any case, it's no big deal; just check [here](https://frankarobotics.github.io/docs/compatibility.html) which
-libfranka version you need and follow our [instructions](installation.md#installing-franky) to install the appropriate
-franky wheels.
+In any case, it's no big deal; just follow our [instructions](installation.md#installing-franky) to install the appropriate franky wheels.
 
 ## Can I use CUDA jointly with franky?
 
