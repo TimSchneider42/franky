@@ -146,11 +146,15 @@ std::optional<ControlSignalType> Robot::current_control_signal_type() {
   return CartesianPose;
 }
 
-RelativeDynamicsFactor Robot::relative_dynamics_factor() { return relative_dynamics_factor_handle_.getLastWritten(); }
+RelativeDynamicsFactor Robot::relative_dynamics_factor() {
+  std::lock_guard lock(*control_mutex_);
+  return relative_dynamics_factor_handle_.getLastWritten();
+}
 
 RelativeDynamicsFactor Robot::relative_dynamics_factor_rt() { return relative_dynamics_factor_handle_.get(); }
 
 void Robot::setRelativeDynamicsFactor(const RelativeDynamicsFactor &relative_dynamics_factor) {
+  std::lock_guard lock(*control_mutex_);
   relative_dynamics_factor_handle_.set(relative_dynamics_factor);
 }
 
