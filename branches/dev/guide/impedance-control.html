@@ -499,6 +499,7 @@ discontinuity errors from abrupt torque steps.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">franky</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">Affine</span><span class="p">,</span>
     <span class="n">CartesianImpedanceTracker</span><span class="p">,</span>
+    <span class="n">PostureTask</span><span class="p">,</span>
     <span class="n">Twist</span><span class="p">,</span>
 <span class="p">)</span>
 
@@ -506,8 +507,7 @@ discontinuity errors from abrupt torque steps.</p>
     <span class="n">robot</span><span class="p">,</span>
     <span class="n">translational_stiffness</span><span class="o">=</span><span class="mf">1200.0</span><span class="p">,</span>
     <span class="n">rotational_stiffness</span><span class="o">=</span><span class="mf">80.0</span><span class="p">,</span>
-    <span class="n">nullspace_target</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.7</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">],</span>
-    <span class="n">nullspace_stiffness</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
+    <span class="n">posture_task</span><span class="o">=</span><span class="n">PostureTask</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.7</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">],</span> <span class="n">stiffness</span><span class="o">=</span><span class="mf">10.0</span><span class="p">),</span>
     <span class="n">max_delta_tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
     <span class="n">period</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
 <span class="p">)</span> <span class="k">as</span> <span class="n">tracker</span><span class="p">:</span>
@@ -551,21 +551,34 @@ configurations often need more — the damping can be set explicitly through
 6-vector, and <code class="docutils literal notranslate"><span class="pre">tracker.set_gains(damping=franky.CRITICAL)</span></code> unpins it. Damping is all-or-nothing
 and omitting it means critical. A stiffness change re-criticals damping unless <code class="docutils literal notranslate"><span class="pre">damping</span></code> is
 passed in the same call. <code class="docutils literal notranslate"><span class="pre">JointImpedanceTracker.set_gains</span></code> follows the same rule with 7-vectors.</p>
-<p>Cartesian impedance motions also support an optional secondary posture
-objective through <code class="docutils literal notranslate"><span class="pre">nullspace_target</span></code> and <code class="docutils literal notranslate"><span class="pre">nullspace_stiffness</span></code>. When enabled,
-the controller adds a joint-space posture term projected into the Jacobian
-nullspace, so it biases the redundant arm posture without changing the
-Cartesian task to first order. <code class="docutils literal notranslate"><span class="pre">nullspace_stiffness</span></code> accepts either a single
-scalar applied to all joints or a per-joint 7-vector, so individual joints can
-be weighted differently or excluded (zero stiffness) from the posture
-objective. Keep in mind that the projection spreads the resulting torque over
-all joints participating in the self-motion: pushing a single joint biases the
-whole null-space posture rather than moving that joint alone. The posture
-gains can be retuned online by passing <code class="docutils literal notranslate"><span class="pre">nullspace_stiffness</span></code> (scalar or
-7-vector) to <code class="docutils literal notranslate"><span class="pre">CartesianImpedanceTracker.set_gains</span></code>, or by writing a
-<code class="docutils literal notranslate"><span class="pre">NullspaceGains</span></code> object through <code class="docutils literal notranslate"><span class="pre">tracker.motion.set_nullspace_gains</span></code>.
-Further nullspace objectives (such as manipulability maximization) and fully
-custom <code class="docutils literal notranslate"><span class="pre">nullspace_tasks</span></code> are available through the C++ API.</p>
+<p>Cartesian impedance motions also support optional secondary objectives projected
+into the Jacobian nullspace, so they bias the redundant arm posture without
+changing the Cartesian task to first order. Pass a <code class="docutils literal notranslate"><span class="pre">posture_task</span></code> (a
+<code class="docutils literal notranslate"><span class="pre">PostureTask</span></code>) to regulate toward a joint posture, and/or a <code class="docutils literal notranslate"><span class="pre">manipulability_task</span></code>
+(a <code class="docutils literal notranslate"><span class="pre">ManipulabilityTask</span></code>) to maximize manipulability; at most one of each is
+supported. A <code class="docutils literal notranslate"><span class="pre">PostureTask</span></code>’s per-joint stiffness can weight joints differently or
+exclude them (zero stiffness). Keep in mind that the projection spreads the
+resulting torque over all joints participating in the self-motion: pushing a
+single joint biases the whole null-space posture rather than moving that joint
+alone.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">franky</span><span class="w"> </span><span class="kn">import</span> <span class="n">ManipulabilityTask</span><span class="p">,</span> <span class="n">PostureTask</span>
+
+<span class="k">with</span> <span class="n">CartesianImpedanceTracker</span><span class="p">(</span>
+    <span class="n">robot</span><span class="p">,</span>
+    <span class="n">translational_stiffness</span><span class="o">=</span><span class="mf">200.0</span><span class="p">,</span>
+    <span class="n">rotational_stiffness</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
+    <span class="n">posture_task</span><span class="o">=</span><span class="n">PostureTask</span><span class="p">(</span><span class="n">robot</span><span class="o">.</span><span class="n">current_joint_state</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="n">stiffness</span><span class="o">=</span><span class="mf">2.0</span><span class="p">),</span>
+    <span class="n">manipulability_task</span><span class="o">=</span><span class="n">ManipulabilityTask</span><span class="p">(</span><span class="n">gain</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">max_torque</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+    <span class="n">period</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">tracker</span><span class="p">:</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>The task set is fixed at construction, but the gains can be retuned online:
+<code class="docutils literal notranslate"><span class="pre">tracker.set_gains(posture_stiffness=...)</span></code> (scalar or 7-vector) nudges just the
+posture stiffness, or <code class="docutils literal notranslate"><span class="pre">tracker.set_gains(nullspace_gains=NullspaceGains(...))</span></code>
+replaces the full posture + manipulability gains. Retuning a gain for a task that
+was not configured at construction raises.</p>
 <p><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceTracker</span></code> also accepts <code class="docutils literal notranslate"><span class="pre">translational_error_clip</span></code> and
 <code class="docutils literal notranslate"><span class="pre">rotational_error_clip</span></code> (each a 3-vector in m and rad respectively) to hard-clip
 the pose error fed into the spring law, which can prevent large torque spikes
