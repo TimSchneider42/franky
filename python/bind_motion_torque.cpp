@@ -37,28 +37,20 @@ JointImpedanceParams makeJointImpedanceParams(
     const std::optional<Vector7d> &constant_torque_offset, const std::optional<Vector7d> &lower_joint_limits,
     const std::optional<Vector7d> &upper_joint_limits, bool compensate_coriolis, double max_delta_tau,
     double joint_limit_activation_distance, double joint_limit_stiffness, double joint_limit_damping,
-    double joint_limit_max_torque, const std::optional<Vector7d> &friction_coulomb,
-    const std::optional<Vector7d> &friction_viscous, const std::optional<Vector7d> &friction_max_torque,
-    double friction_velocity_epsilon) {
+    double joint_limit_max_torque, const std::optional<FrictionCompensationParams> &friction) {
   auto params = JointImpedanceParams{};
-  if (stiffness.has_value()) {
-    params.stiffness = stiffness.value();
-    if (!damping.has_value()) params.damping = defaultJointImpedanceDamping(params.stiffness);
-  }
-  if (damping.has_value()) params.damping = damping.value();
+  if (stiffness.has_value()) params.stiffness = stiffness.value();
+  params.damping = damping;  // unset -> critical damping is tracked in the control loop
   if (cartesian_stiffness.has_value()) {
     params.cartesian_gains = CartesianImpedanceGains::diagonal(*cartesian_stiffness, cartesian_damping);
   } else if (cartesian_damping.has_value()) {
     throw py::value_error("cartesian_damping requires cartesian_stiffness to be set");
   }
-  if (friction_coulomb.has_value()) params.friction.coulomb = friction_coulomb.value();
-  if (friction_viscous.has_value()) params.friction.viscous = friction_viscous.value();
-  if (friction_max_torque.has_value()) params.friction.max_torque = friction_max_torque.value();
+  if (friction.has_value()) params.friction = friction.value();
   if (constant_torque_offset.has_value()) params.constant_torque_offset = constant_torque_offset.value();
   params.safety.lower_joint_limits = lower_joint_limits;
   params.safety.upper_joint_limits = upper_joint_limits;
   params.compensate_coriolis = compensate_coriolis;
-  params.friction.velocity_epsilon = friction_velocity_epsilon;
   params.safety.max_delta_tau = max_delta_tau;
   params.safety.joint_limit_activation_distance = joint_limit_activation_distance;
   params.safety.joint_limit_stiffness = joint_limit_stiffness;
@@ -78,17 +70,21 @@ Vector7d broadcastJointGain(const JointGain &value) {
 CartesianImpedanceBase::Params makeCartesianImpedanceParams(
     double translational_stiffness, double rotational_stiffness,
     const std::optional<std::array<std::optional<double>, 6>> &force_constraints,
-    const std::optional<Vector7d> &nullspace_target, const JointGain &nullspace_stiffness, double max_delta_tau,
-    const std::optional<Vector7d> &lower_joint_limits, const std::optional<Vector7d> &upper_joint_limits,
-    double joint_limit_activation_distance, double joint_limit_stiffness, double joint_limit_damping,
-    double joint_limit_max_torque, const Eigen::Vector3d &translational_error_clip,
-    const Eigen::Vector3d &rotational_error_clip, const std::optional<FrictionCompensationParams> &friction) {
+    const std::optional<PostureTask> &posture_task, const std::optional<ManipulabilityTask> &manipulability_task,
+    double max_delta_tau, const std::optional<Vector7d> &lower_joint_limits,
+    const std::optional<Vector7d> &upper_joint_limits, double joint_limit_activation_distance,
+    double joint_limit_stiffness, double joint_limit_damping, double joint_limit_max_torque,
+    const Eigen::Vector3d &translational_error_clip, const Eigen::Vector3d &rotational_error_clip,
+    const std::optional<FrictionCompensationParams> &friction) {
   auto params = CartesianImpedanceBase::Params{};
   params.stiffness = cartesianGainBlocks(translational_stiffness, rotational_stiffness);
   params.translational_error_clip = translational_error_clip;
   params.rotational_error_clip = rotational_error_clip;
-  if (nullspace_target.has_value()) {
-    params.nullspace_tasks.emplace_back(PostureTask(*nullspace_target, broadcastJointGain(nullspace_stiffness)));
+  if (posture_task.has_value()) {
+    params.nullspace_tasks.emplace_back(*posture_task);
+  }
+  if (manipulability_task.has_value()) {
+    params.nullspace_tasks.emplace_back(*manipulability_task);
   }
   params.safety.max_delta_tau = max_delta_tau;
   params.safety.joint_limit_activation_distance = joint_limit_activation_distance;
@@ -211,7 +207,7 @@ void bind_motion_torque(py::module &m) {
           "stiffness"_a = std::nullopt,
           "damping"_a = std::nullopt,
           "Construct joint impedance gains. If stiffness is unset, the default stiffness is used. If damping is "
-          "unset, critical damping is used.")
+          "unset (None), critical damping is tracked against the current stiffness in the control loop.")
       .def_readwrite("stiffness", &JointImpedanceGains::stiffness, DOC(franky, JointImpedanceGains, stiffness))
       .def_readwrite("damping", &JointImpedanceGains::damping, DOC(franky, JointImpedanceGains, damping));
 
@@ -396,13 +392,8 @@ void bind_motion_torque(py::module &m) {
                         double joint_limit_stiffness,
                         double joint_limit_damping,
                         double joint_limit_max_torque,
-                        std::optional<Vector7d>
-                            friction_coulomb,
-                        std::optional<Vector7d>
-                            friction_viscous,
-                        std::optional<Vector7d>
-                            friction_max_torque,
-                        double friction_velocity_epsilon) {
+                        std::optional<FrictionCompensationParams>
+                            friction) {
             auto params = makeJointImpedanceParams(
                 stiffness,
                 damping,
@@ -417,10 +408,7 @@ void bind_motion_torque(py::module &m) {
                 joint_limit_stiffness,
                 joint_limit_damping,
                 joint_limit_max_torque,
-                friction_coulomb,
-                friction_viscous,
-                friction_max_torque,
-                friction_velocity_epsilon);
+                friction);
 
             const Vector7d target_vector = target;
             if (target_velocity.has_value()) {
@@ -453,10 +441,7 @@ and upper_joint_limits are set).)doc",
           "joint_limit_stiffness"_a = 4.0,
           "joint_limit_damping"_a = 1.0,
           "joint_limit_max_torque"_a = 5.0,
-          "friction_coulomb"_a = std::nullopt,
-          "friction_viscous"_a = std::nullopt,
-          "friction_max_torque"_a = std::nullopt,
-          "friction_velocity_epsilon"_a = 0.03)
+          "friction"_a = std::nullopt)
       .def_property_readonly("target", &JointImpedanceMotion::target, DOC(franky, JointImpedanceBase, target))
       .def_property_readonly(
           "target_velocity", &JointImpedanceMotion::target_velocity, DOC(franky, JointImpedanceBase, target_velocity))
@@ -485,13 +470,8 @@ and upper_joint_limits are set).)doc",
                         double joint_limit_stiffness,
                         double joint_limit_damping,
                         double joint_limit_max_torque,
-                        std::optional<Vector7d>
-                            friction_coulomb,
-                        std::optional<Vector7d>
-                            friction_viscous,
-                        std::optional<Vector7d>
-                            friction_max_torque,
-                        double friction_velocity_epsilon,
+                        std::optional<FrictionCompensationParams>
+                            friction,
                         double gains_time_constant) {
             auto params = makeJointImpedanceParams(
                 stiffness,
@@ -507,10 +487,7 @@ and upper_joint_limits are set).)doc",
                 joint_limit_stiffness,
                 joint_limit_damping,
                 joint_limit_max_torque,
-                friction_coulomb,
-                friction_viscous,
-                friction_max_torque,
-                friction_velocity_epsilon);
+                friction);
             return std::make_shared<JointImpedanceTrackingMotion>(params, gains_time_constant);
           }),
           R"doc(Construct a dynamic joint impedance controller.
@@ -532,10 +509,7 @@ interpolates toward them with the given time constant, allowing smooth runtime s
           "joint_limit_stiffness"_a = 4.0,
           "joint_limit_damping"_a = 1.0,
           "joint_limit_max_torque"_a = 5.0,
-          "friction_coulomb"_a = std::nullopt,
-          "friction_viscous"_a = std::nullopt,
-          "friction_max_torque"_a = std::nullopt,
-          "friction_velocity_epsilon"_a = 0.03,
+          "friction"_a = std::nullopt,
           "gains_time_constant"_a = 0.1)
       .def_property_readonly("target", &JointImpedanceTrackingMotion::target, DOC(franky, JointImpedanceBase, target))
       .def_property_readonly(
@@ -569,9 +543,10 @@ interpolates toward them with the given time constant, allowing smooth runtime s
                         double rotational_stiffness,
                         std::optional<std::array<std::optional<double>, 6>>
                             force_constraints,
-                        std::optional<Vector7d>
-                            nullspace_target,
-                        const JointGain &nullspace_stiffness,
+                        std::optional<PostureTask>
+                            posture_task,
+                        std::optional<ManipulabilityTask>
+                            manipulability_task,
                         double max_delta_tau,
                         std::optional<Vector7d>
                             lower_joint_limits,
@@ -589,8 +564,8 @@ interpolates toward them with the given time constant, allowing smooth runtime s
                 translational_stiffness,
                 rotational_stiffness,
                 force_constraints,
-                nullspace_target,
-                nullspace_stiffness,
+                posture_task,
+                manipulability_task,
                 max_delta_tau,
                 lower_joint_limits,
                 upper_joint_limits,
@@ -617,15 +592,15 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
 
 Cartesian damping is chosen internally as critically damped with respect to the requested stiffness.
 
-The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order. nullspace_stiffness accepts a scalar (applied to all joints) or a per-joint 7-vector; joints with zero stiffness are not pushed by the posture objective.)doc",
+The optional posture_task adds a secondary joint-posture objective (a PostureTask) that is projected into the Jacobian nullspace, biasing the redundant arm posture without changing the Cartesian task to first order. Its per-joint stiffness leaves zero-stiffness joints unpushed. manipulability_task adds a manipulability-maximization objective in the same nullspace. At most one of each is supported.)doc",
           "target"_a,
           "target_twist"_a = std::nullopt,
           py::arg_v("target_type", ReferenceType::kAbsolute, "_franky.ReferenceType.Absolute"),
           "translational_stiffness"_a = 500,
           "rotational_stiffness"_a = 50,
           "force_constraints"_a = std::nullopt,
-          "nullspace_target"_a = std::nullopt,
-          "nullspace_stiffness"_a = 0.0,
+          "posture_task"_a = std::nullopt,
+          "manipulability_task"_a = std::nullopt,
           "max_delta_tau"_a = 1.0,
           "lower_joint_limits"_a = std::nullopt,
           "upper_joint_limits"_a = std::nullopt,
@@ -654,9 +629,10 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
                         double rotational_stiffness,
                         std::optional<std::array<std::optional<double>, 6>>
                             force_constraints,
-                        std::optional<Vector7d>
-                            nullspace_target,
-                        const JointGain &nullspace_stiffness,
+                        std::optional<PostureTask>
+                            posture_task,
+                        std::optional<ManipulabilityTask>
+                            manipulability_task,
                         double max_delta_tau,
                         std::optional<Vector7d>
                             lower_joint_limits,
@@ -675,8 +651,8 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
                 translational_stiffness,
                 rotational_stiffness,
                 force_constraints,
-                nullspace_target,
-                nullspace_stiffness,
+                posture_task,
+                manipulability_task,
                 max_delta_tau,
                 lower_joint_limits,
                 upper_joint_limits,
@@ -692,15 +668,15 @@ The optional nullspace_target and nullspace_stiffness parameters add a secondary
           R"doc(Construct a dynamic Cartesian impedance tracking controller.
 
 Cartesian damping is chosen internally as critically damped with respect to the requested stiffness.
-The optional nullspace_target and nullspace_stiffness parameters add a secondary joint-posture objective that is projected into the Jacobian nullspace, so it biases the redundant arm posture without changing the Cartesian task to first order. nullspace_stiffness accepts a scalar (applied to all joints) or a per-joint 7-vector; joints with zero stiffness are not pushed by the posture objective.
+The optional posture_task adds a secondary joint-posture objective (a PostureTask) that is projected into the Jacobian nullspace, biasing the redundant arm posture without changing the Cartesian task to first order. Its per-joint stiffness leaves zero-stiffness joints unpushed. manipulability_task adds a manipulability-maximization objective in the same nullspace. Their gains can be retuned at runtime via set_nullspace_gains.
 
 The controller reads target gains each cycle and exponentially
 interpolates toward them with the given time constant, allowing smooth runtime stiffness changes.)doc",
           "translational_stiffness"_a = 500,
           "rotational_stiffness"_a = 50,
           "force_constraints"_a = std::nullopt,
-          "nullspace_target"_a = std::nullopt,
-          "nullspace_stiffness"_a = 0.0,
+          "posture_task"_a = std::nullopt,
+          "manipulability_task"_a = std::nullopt,
           "max_delta_tau"_a = 1.0,
           "lower_joint_limits"_a = std::nullopt,
           "upper_joint_limits"_a = std::nullopt,

@@ -68,22 +68,27 @@ and `JointImpedanceTracker`) support optional friction compensation. Coulomb and
 terms are added as feedforward terms to the commanded torque each cycle and clamped per joint:
 
 ```python
+from franky import FrictionCompensationParams
+
 # Use friction compensation to get a smooth zero-g mode kinesthetic demonstrations
 with JointImpedanceTracker(
     robot,
     stiffness=[0.0] * 7,
     damping=[0.0] * 7,
-    friction_coulomb=[0.5, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2],   # [Nm]
-    friction_viscous=[0.1, 0.1, 0.1, 0.1, 0.05, 0.05, 0.05], # [Nms/rad]
-    friction_max_torque=[2.0] * 7,  # per-joint clamp [Nm]
+    friction=FrictionCompensationParams(
+        coulomb=[0.5, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2],   # [Nm]
+        viscous=[0.1, 0.1, 0.1, 0.1, 0.05, 0.05, 0.05], # [Nms/rad]
+        max_torque=[2.0] * 7,  # per-joint clamp [Nm]
+    ),
     period=0.01,
 ) as tracker:
     ...
 ```
 
 The Coulomb term uses a smooth sign approximation controlled by
-`friction_velocity_epsilon` (default `0.03 rad/s`). Either or both terms can
-be omitted; unset terms default to zero.
+`FrictionCompensationParams.velocity_epsilon` (default `0.03 rad/s`). Either or both
+terms can be omitted; unset terms default to zero. `CartesianImpedanceTracker` accepts
+the same `friction=` object.
 
 Joint impedance can additionally be shaped in Cartesian space. Passing
 `cartesian_stiffness` (a 6-vector `[x, y, z, rx, ry, rz]` at the end effector,
@@ -129,6 +134,7 @@ motion = CartesianImpedanceMotion(
 from franky import (
     Affine,
     CartesianImpedanceTracker,
+    PostureTask,
     Twist,
 )
 
@@ -136,8 +142,7 @@ with CartesianImpedanceTracker(
     robot,
     translational_stiffness=1200.0,
     rotational_stiffness=80.0,
-    nullspace_target=[0.0, -0.6, 0.0, -2.2, 0.0, 1.7, 0.7],
-    nullspace_stiffness=10.0,
+    posture_task=PostureTask([0.0, -0.6, 0.0, -2.2, 0.0, 1.7, 0.7], stiffness=10.0),
     max_delta_tau=0.5,
     period=0.01,
 ) as tracker:
@@ -181,21 +186,41 @@ tracker.motion.set_gains(
 )
 ```
 
-Cartesian impedance motions also support an optional secondary posture
-objective through `nullspace_target` and `nullspace_stiffness`. When enabled,
-the controller adds a joint-space posture term projected into the Jacobian
-nullspace, so it biases the redundant arm posture without changing the
-Cartesian task to first order. `nullspace_stiffness` accepts either a single
-scalar applied to all joints or a per-joint 7-vector, so individual joints can
-be weighted differently or excluded (zero stiffness) from the posture
-objective. Keep in mind that the projection spreads the resulting torque over
-all joints participating in the self-motion: pushing a single joint biases the
-whole null-space posture rather than moving that joint alone. The posture
-gains can be retuned online by passing `nullspace_stiffness` (scalar or
-7-vector) to `CartesianImpedanceTracker.set_gains`, or by writing a
-`NullspaceGains` object through `tracker.motion.set_nullspace_gains`.
-Further nullspace objectives (such as manipulability maximization) and fully
-custom `nullspace_tasks` are available through the C++ API.
+The tracker also exposes damping directly: `tracker.set_gains(damping=[...])` pins a full
+6-vector, and `tracker.set_gains(damping=franky.CRITICAL)` unpins it. Damping is all-or-nothing
+and omitting it means critical. A stiffness change re-criticals damping unless `damping` is
+passed in the same call. `JointImpedanceTracker.set_gains` follows the same rule with 7-vectors.
+
+Cartesian impedance motions also support optional secondary objectives projected
+into the Jacobian nullspace, so they bias the redundant arm posture without
+changing the Cartesian task to first order. Pass a `posture_task` (a
+`PostureTask`) to regulate toward a joint posture, and/or a `manipulability_task`
+(a `ManipulabilityTask`) to maximize manipulability; at most one of each is
+supported. A `PostureTask`'s per-joint stiffness can weight joints differently or
+exclude them (zero stiffness). Keep in mind that the projection spreads the
+resulting torque over all joints participating in the self-motion: pushing a
+single joint biases the whole null-space posture rather than moving that joint
+alone.
+
+```python
+from franky import ManipulabilityTask, PostureTask
+
+with CartesianImpedanceTracker(
+    robot,
+    translational_stiffness=200.0,
+    rotational_stiffness=10.0,
+    posture_task=PostureTask(robot.current_joint_state.position, stiffness=2.0),
+    manipulability_task=ManipulabilityTask(gain=5.0, max_torque=1.0),
+    period=0.01,
+) as tracker:
+    ...
+```
+
+The task set is fixed at construction, but the gains can be retuned online:
+`tracker.set_gains(posture_stiffness=...)` (scalar or 7-vector) nudges just the
+posture stiffness, or `tracker.set_gains(nullspace_gains=NullspaceGains(...))`
+replaces the full posture + manipulability gains. Retuning a gain for a task that
+was not configured at construction raises.
 
 `CartesianImpedanceTracker` also accepts `translational_error_clip` and
 `rotational_error_clip` (each a 3-vector in m and rad respectively) to hard-clip

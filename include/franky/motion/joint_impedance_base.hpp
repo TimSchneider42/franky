@@ -52,21 +52,24 @@ struct JointImpedanceGains {
 
   explicit JointImpedanceGains(
       const std::optional<Vector7d> &stiffness, const std::optional<Vector7d> &damping = std::nullopt)
-      : stiffness(stiffness.value_or(defaultJointImpedanceStiffness())),
-        damping(damping.has_value() ? *damping : defaultJointImpedanceDamping(this->stiffness)) {
+      : stiffness(stiffness.value_or(defaultJointImpedanceStiffness())), damping(damping) {
     validate();
   }
 
   /** Joint stiffness gains [Nm/rad]. */
   Vector7d stiffness{defaultJointImpedanceStiffness()};
 
-  /** Joint damping gains [Nms/rad]. */
-  Vector7d damping{defaultJointImpedanceDamping()};
+  /**
+   * Joint damping gains [Nms/rad]. If unset, the controller tracks critical damping,
+   * 2*sqrt(stiffness), against the current (smoothed) stiffness every control cycle, so
+   * damping stays critical through gain transitions.
+   */
+  std::optional<Vector7d> damping{std::nullopt};
 
   /** @brief Throw std::invalid_argument if any gain is negative or non-finite. */
   void validate() const {
     validateNonNegativeFinite(stiffness, "stiffness");
-    validateNonNegativeFinite(damping, "damping");
+    if (damping.has_value()) validateNonNegativeFinite(*damping, "damping");
   }
 };
 
@@ -77,8 +80,9 @@ struct JointImpedanceParams {
   /** Joint stiffness gains in [Nm/rad]. */
   Vector7d stiffness{defaultJointImpedanceStiffness()};
 
-  /** Joint damping gains in [Nms/rad]. */
-  Vector7d damping{defaultJointImpedanceDamping()};
+  /** Joint damping gains in [Nms/rad]. If unset, critical damping is tracked against the
+   *  current (smoothed) stiffness. */
+  std::optional<Vector7d> damping{std::nullopt};
 
   /** Maximum absolute joint position error [rad] used by the joint-space controller. */
   Vector7d error_clip{Vector7d::Constant(0.5)};
@@ -101,7 +105,7 @@ struct JointImpedanceParams {
   /** @brief Throw std::invalid_argument if any parameter is out of range. */
   void validate() const {
     validateNonNegativeFinite(stiffness, "stiffness");
-    validateNonNegativeFinite(damping, "damping");
+    if (damping.has_value()) validateNonNegativeFinite(*damping, "damping");
     validateNonNegativeFinite(error_clip, "error_clip");
     if (cartesian_gains.has_value()) {
       cartesian_gains->validate();

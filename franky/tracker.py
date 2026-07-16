@@ -7,6 +7,7 @@ import numpy as np
 
 from ._franky import (
     Affine,
+    CartesianImpedanceGains,
     CartesianImpedanceTrackingMotion,
     CartesianReference,
     ControlException,
@@ -14,6 +15,9 @@ from ._franky import (
     JointImpedanceGains,
     JointImpedanceTrackingMotion,
     JointReference,
+    ManipulabilityTask,
+    NullspaceGains,
+    PostureTask,
     TorqueStopMotion,
     Twist,
     TwistAcceleration,
@@ -29,14 +33,23 @@ def _is_premption_exception(exc: ControlException) -> bool:
 _DEFAULT_JOINT_STIFFNESS = np.full(7, 50.0)
 
 
-def _default_joint_damping(stiffness: np.ndarray) -> np.ndarray:
-    return 2.0 * np.sqrt(stiffness)
+class _CriticalDamping:
+    """Sentinel type for :data:`CRITICAL`."""
+
+    __slots__ = ()
+
+    def __repr__(self) -> str:
+        return "franky.CRITICAL"
 
 
-def _as_joint_gain(name: str, value) -> np.ndarray:
+#: Pass as ``damping=`` to unpin damping back to critical tracking without touching stiffness.
+CRITICAL = _CriticalDamping()
+
+
+def _as_gain_vector(name: str, value, size: int) -> np.ndarray:
     vector = np.asarray(value, dtype=float)
-    if vector.shape != (7,):
-        raise ValueError(f"{name} must contain exactly 7 values")
+    if vector.shape != (size,):
+        raise ValueError(f"{name} must contain exactly {size} values")
     if not np.all(np.isfinite(vector)):
         raise ValueError(f"{name} must contain only finite values")
     if np.any(vector < 0.0):
@@ -45,11 +58,12 @@ def _as_joint_gain(name: str, value) -> np.ndarray:
 
 
 class CartesianImpedanceTracker:
-    """A long-lived session for streaming Cartesian impedance tracking commands.
+    """Long-lived session for streaming Cartesian impedance tracking commands.
 
-    Wraps the lifecycle of a CartesianReferenceHandle, CartesianImpedanceTrackingMotion,
-    and the async robot.move() call into a single object. Use as a context manager to
-    ensure the controller is stopped on exit.
+    Use as a context manager to stop the controller on exit. Stiffness and damping are
+    orthogonal knobs (see :meth:`set_gains`); omitting damping means critical damping
+    (``2 * sqrt(stiffness)``), tracked against the current stiffness each cycle. Pass
+    ``posture_task``/``manipulability_task`` to add nullspace objectives.
 
     Example::
 
@@ -62,12 +76,14 @@ class CartesianImpedanceTracker:
         self,
         robot: Robot,
         *,
-        translational_stiffness: float = 500.0,
-        rotational_stiffness: float = 50.0,
+        translational_stiffness: Optional[float] = None,
+        rotational_stiffness: Optional[float] = None,
+        damping: Optional[np.ndarray] = None,
+        gains: Optional[CartesianImpedanceGains] = None,
         translational_error_clip: Optional[np.ndarray] = None,
         rotational_error_clip: Optional[np.ndarray] = None,
-        nullspace_target: Optional[np.ndarray] = None,
-        nullspace_stiffness: Union[float, np.ndarray] = 0.0,
+        posture_task: Optional[PostureTask] = None,
+        manipulability_task: Optional[ManipulabilityTask] = None,
         friction: Optional[FrictionCompensationParams] = None,
         max_delta_tau: float = 1.0,
         lower_joint_limits: Optional[np.ndarray] = None,
@@ -79,6 +95,17 @@ class CartesianImpedanceTracker:
         gains_time_constant: float = 0.1,
         period: Optional[float] = None,
     ):
+        if gains is not None and (
+            translational_stiffness is not None
+            or rotational_stiffness is not None
+            or damping is not None
+        ):
+            raise ValueError(
+                "Pass either `gains` (a full CartesianImpedanceGains object, for anisotropic stiffness) "
+                "or the isotropic `translational_stiffness`/`rotational_stiffness`/`damping` keywords, "
+                "not both."
+            )
+
         self._robot = robot
         self._period = period
         self._tick_count = 0
@@ -90,8 +117,8 @@ class CartesianImpedanceTracker:
             "rotational_stiffness": rotational_stiffness,
             "translational_error_clip": translational_error_clip,
             "rotational_error_clip": rotational_error_clip,
-            "nullspace_target": nullspace_target,
-            "nullspace_stiffness": nullspace_stiffness,
+            "posture_task": posture_task,
+            "manipulability_task": manipulability_task,
             "friction": friction,
             "max_delta_tau": max_delta_tau,
             "lower_joint_limits": lower_joint_limits,
@@ -105,6 +132,13 @@ class CartesianImpedanceTracker:
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
         self._motion = CartesianImpedanceTrackingMotion(**kwargs)
+
+        if gains is not None:
+            self._motion.set_gains(gains)
+        elif damping is not None and damping is not CRITICAL:
+            current = self._motion.get_gains()
+            current.damping = np.diag(_as_gain_vector("damping", damping, 6))
+            self._motion.set_gains(current)
 
         # Seed initial target from current pose so the robot doesn't jump.
         initial_pose = self._robot.current_pose.end_effector_pose
@@ -160,28 +194,66 @@ class CartesianImpedanceTracker:
         *,
         translational_stiffness: Optional[float] = None,
         rotational_stiffness: Optional[float] = None,
-        nullspace_stiffness: Optional[Union[float, np.ndarray]] = None,
+        damping: Optional[np.ndarray] = None,
+        gains: Optional[CartesianImpedanceGains] = None,
+        posture_stiffness: Optional[Union[float, np.ndarray]] = None,
+        nullspace_gains: Optional[NullspaceGains] = None,
     ) -> None:
-        """Update impedance gains. Smoothed in the RT loop via exponential interpolation.
+        """Update impedance gains (smoothed in the RT loop).
 
-        Omitted components keep their current target value. A named stiffness overwrites its
-        3x3 block isotropically; damping is preserved (use ``motion.set_gains`` for
-        anisotropic or explicit-damping gains). ``nullspace_stiffness`` accepts a scalar
-        (applied to all joints) or a per-joint 7-vector.
+        ``translational_stiffness``/``rotational_stiffness`` set a stiffness block. ``damping``
+        is all-or-nothing: a full 6-vector ``[x, y, z, rx, ry, rz]`` pins it, :data:`CRITICAL`
+        unpins it. ``gains`` total-replaces with a full :class:`CartesianImpedanceGains` object
+        (for anisotropic stiffness) and is exclusive with the rest. Omitting damping means
+        critical: a stiffness change re-criticals unless ``damping`` is passed too.
+
+        For the nullspace, ``posture_stiffness`` (scalar or 7-vector) nudges just the posture
+        task's stiffness; ``nullspace_gains`` replaces the full :class:`NullspaceGains` (posture +
+        manipulability). Mutually exclusive; both only retune tasks configured at construction.
         """
-        current = self._motion.get_gains()
-        # Preserve the full stiffness matrix (anisotropy) and damping; overwrite only named blocks.
-        stiffness = np.array(current.stiffness, copy=True)
-        if translational_stiffness is not None:
-            stiffness[0:3, 0:3] = translational_stiffness * np.eye(3)
-        if rotational_stiffness is not None:
-            stiffness[3:6, 3:6] = rotational_stiffness * np.eye(3)
-        current.stiffness = stiffness
-        self._motion.set_gains(current)
-        if nullspace_stiffness is not None:
-            nullspace_gains = self._motion.get_nullspace_gains()
-            nullspace_gains.posture_stiffness = nullspace_stiffness
+        stiffness_given = (
+            translational_stiffness is not None or rotational_stiffness is not None
+        )
+        damping_given = damping is not None
+        if gains is not None and (stiffness_given or damping_given):
+            raise ValueError(
+                "Pass either `gains` (a full CartesianImpedanceGains object, for anisotropic stiffness) "
+                "or the isotropic `translational_stiffness`/`rotational_stiffness`/`damping` keywords, "
+                "not both."
+            )
+        if nullspace_gains is not None and posture_stiffness is not None:
+            raise ValueError(
+                "Pass either `nullspace_gains` or `posture_stiffness`, not both."
+            )
+
+        if gains is not None:
+            self._motion.set_gains(gains)
+        elif stiffness_given or damping_given:
+            current = self._motion.get_gains()
+            # Preserve the full stiffness matrix (anisotropy); overwrite only named blocks.
+            stiffness_matrix = np.array(current.stiffness, copy=True)
+            if translational_stiffness is not None:
+                stiffness_matrix[0:3, 0:3] = translational_stiffness * np.eye(3)
+            if rotational_stiffness is not None:
+                stiffness_matrix[3:6, 3:6] = rotational_stiffness * np.eye(3)
+            current.stiffness = stiffness_matrix
+
+            if damping_given:
+                current.damping = (
+                    None
+                    if damping is CRITICAL
+                    else np.diag(_as_gain_vector("damping", damping, 6))
+                )
+            elif stiffness_given:
+                current.damping = None
+            self._motion.set_gains(current)
+
+        if nullspace_gains is not None:
             self._motion.set_nullspace_gains(nullspace_gains)
+        elif posture_stiffness is not None:
+            current_ns = self._motion.get_nullspace_gains()
+            current_ns.posture_stiffness = posture_stiffness
+            self._motion.set_nullspace_gains(current_ns)
 
     # --- state ---
 
@@ -283,10 +355,7 @@ class JointImpedanceTracker:
         cartesian_damping: Optional[np.ndarray] = None,
         constant_torque_offset: Optional[np.ndarray] = None,
         compensate_coriolis: bool = True,
-        friction_coulomb: Optional[np.ndarray] = None,
-        friction_viscous: Optional[np.ndarray] = None,
-        friction_max_torque: Optional[np.ndarray] = None,
-        friction_velocity_epsilon: float = 0.03,
+        friction: Optional[FrictionCompensationParams] = None,
         max_delta_tau: float = 1.0,
         lower_joint_limits: Optional[np.ndarray] = None,
         upper_joint_limits: Optional[np.ndarray] = None,
@@ -303,15 +372,15 @@ class JointImpedanceTracker:
         self._t_start = _time.perf_counter()
         self._t_next = self._t_start
 
-        # Seed gains handle with initial values. When damping is omitted, use
-        # critical damping for unit inertia so zero stiffness implies zero damping.
-        stiffness_init = _as_joint_gain(
-            "stiffness", _DEFAULT_JOINT_STIFFNESS if stiffness is None else stiffness
+        # Damping is all-or-nothing: omitted/CRITICAL -> unset (RT loop tracks critical);
+        # a full 7-vector pins it.
+        stiffness_init = _as_gain_vector(
+            "stiffness", _DEFAULT_JOINT_STIFFNESS if stiffness is None else stiffness, 7
         )
         damping_init = (
-            _as_joint_gain("damping", damping)
-            if damping is not None
-            else _default_joint_damping(stiffness_init)
+            _as_gain_vector("damping", damping, 7)
+            if damping is not None and damping is not CRITICAL
+            else None
         )
 
         kwargs = {
@@ -329,10 +398,7 @@ class JointImpedanceTracker:
             ),
             "constant_torque_offset": constant_torque_offset,
             "compensate_coriolis": compensate_coriolis,
-            "friction_coulomb": friction_coulomb,
-            "friction_viscous": friction_viscous,
-            "friction_max_torque": friction_max_torque,
-            "friction_velocity_epsilon": friction_velocity_epsilon,
+            "friction": friction,
             "max_delta_tau": max_delta_tau,
             "lower_joint_limits": lower_joint_limits,
             "upper_joint_limits": upper_joint_limits,
@@ -400,26 +466,23 @@ class JointImpedanceTracker:
         stiffness: Optional[np.ndarray] = None,
         damping: Optional[np.ndarray] = None,
     ) -> None:
-        """Update joint impedance gains. Smoothed in the RT loop via exponential interpolation.
+        """Update joint impedance gains (smoothed in the RT loop).
 
-        When stiffness is changed and damping is omitted, damping is updated to
-        the critical damping heuristic 2*sqrt(stiffness). Otherwise, omitted
-        gains keep their current target values.
+        ``stiffness``/``damping`` are orthogonal 7-vectors. ``damping`` is all-or-nothing:
+        passing it pins it, :data:`CRITICAL` unpins it. Omitting damping means critical: a
+        stiffness change re-criticals unless ``damping`` is passed too.
         """
+        if stiffness is None and damping is None:
+            return
+
         current = self._motion.get_gains()
-        k = _as_joint_gain(
-            "stiffness",
-            (stiffness if stiffness is not None else current.stiffness),
+        k = _as_gain_vector(
+            "stiffness", (stiffness if stiffness is not None else current.stiffness), 7
         )
-        d = (
-            _as_joint_gain("damping", damping)
-            if damping is not None
-            else (
-                _default_joint_damping(k)
-                if stiffness is not None
-                else _as_joint_gain("damping", current.damping)
-            )
-        )
+        if damping is not None:
+            d = None if damping is CRITICAL else _as_gain_vector("damping", damping, 7)
+        else:
+            d = None
         self._motion.set_gains(JointImpedanceGains(k, d))
 
     # --- state ---
@@ -428,6 +491,11 @@ class JointImpedanceTracker:
     def state(self):
         """The current robot state from this control session."""
         return self._robot.state
+
+    @property
+    def current_joint_state(self):
+        """The current joint state as a JointState (shorthand for robot.current_joint_state)."""
+        return self._robot.current_joint_state
 
     @property
     def is_running(self) -> bool:

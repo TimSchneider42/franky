@@ -19,7 +19,7 @@ JointImpedanceBase::JointImpedanceBase(
       cartesian_gains_handle_(params.cartesian_gains.value_or(CartesianImpedanceGains{})),
       gains_time_constant_(gains_time_constant),
       current_stiffness_(params.stiffness),
-      current_damping_(params.damping) {
+      current_damping_(params.damping.value_or(defaultJointImpedanceDamping(params.stiffness))) {
   if (!std::isfinite(gains_time_constant_) || gains_time_constant_ <= 0.0) {
     throw std::invalid_argument("gains_time_constant must be finite and positive");
   }
@@ -51,7 +51,10 @@ franka::Torques JointImpedanceBase::computeCommand(
   const auto target_gains = gains_handle_.get();
   const double alpha = 1.0 - std::exp(-dt / gains_time_constant_);
   current_stiffness_ += alpha * (target_gains.stiffness - current_stiffness_);
-  current_damping_ += alpha * (target_gains.damping - current_damping_);
+  // An unset damping target means "critically damp the current stiffness"
+  const Vector7d target_damping =
+      target_gains.damping.has_value() ? *target_gains.damping : defaultJointImpedanceDamping(current_stiffness_);
+  current_damping_ += alpha * (target_damping - current_damping_);
 
   Vector7d torque_feedforward = params_.constant_torque_offset + reference.tau_ff;
   const Vector7d q_error = (reference.q - robot_state.q).cwiseMax(-params_.error_clip).cwiseMin(params_.error_clip);

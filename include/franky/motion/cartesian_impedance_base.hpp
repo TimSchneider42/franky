@@ -354,6 +354,21 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
    */
   void setNullspaceGains(const NullspaceGains &gains) {
     gains.validate();
+    bool has_posture = false;
+    bool has_manipulability = false;
+    for (const auto &task : params_.nullspace_tasks) {
+      if (std::holds_alternative<PostureTask>(task))
+        has_posture = true;
+      else
+        has_manipulability = true;
+    }
+    if (!has_posture && !gains.posture_stiffness.isZero()) {
+      throw std::invalid_argument("nullspace posture gains set but no PostureTask was configured at construction");
+    }
+    if (!has_manipulability && gains.manipulability_gain != 0.0) {
+      throw std::invalid_argument(
+          "nullspace manipulability gain set but no ManipulabilityTask was configured at construction");
+    }
     nullspace_gains_handle_.set(gains);
   }
 

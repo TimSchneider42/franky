@@ -155,6 +155,7 @@ See the [Impedance Control](../guide/impedance-control.md) chapter of the guide 
    CartesianImpedanceMotion
    CartesianImpedanceTrackingMotion
    CartesianImpedanceTracker
+   CRITICAL
    CartesianImpedanceGains
    CartesianImpedanceParams
    CartesianImpedanceMotionParams

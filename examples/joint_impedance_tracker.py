@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 
-from franky import JointImpedanceTracker, Robot
+from franky import FrictionCompensationParams, JointImpedanceTracker, Robot
 
 
 FRICTION_COULOMB = [0.5, 0.4, 0.5, 0.4, 0.4, 0.4, 0.2]
@@ -80,8 +80,13 @@ if __name__ == "__main__":
     with JointImpedanceTracker(
         robot,
         stiffness=stiffness,
-        friction_coulomb=FRICTION_COULOMB if args.friction else None,
-        friction_viscous=FRICTION_VISCOUS if args.friction else None,
+        friction=(
+            FrictionCompensationParams(
+                coulomb=FRICTION_COULOMB, viscous=FRICTION_VISCOUS
+            )
+            if args.friction
+            else None
+        ),
         lower_joint_limits=lower_joint_limits,
         upper_joint_limits=upper_joint_limits,
         period=0.001,

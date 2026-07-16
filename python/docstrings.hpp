@@ -4239,7 +4239,8 @@ static const char *mkd_doc_franky_JointImpedanceGains_JointImpedanceGains = R"do
 
 static const char *mkd_doc_franky_JointImpedanceGains_JointImpedanceGains_2 = R"doc()doc";
 
-static const char *mkd_doc_franky_JointImpedanceGains_damping = R"doc(Joint damping gains [Nms/rad].)doc";
+static const char *mkd_doc_franky_JointImpedanceGains_damping =
+    R"doc(Joint damping gains [Nms/rad]. If unset (None), the controller tracks critical damping, 2*sqrt(stiffness), against the current (smoothed) stiffness every control cycle.)doc";
 
 static const char *mkd_doc_franky_JointImpedanceGains_stiffness = R"doc(Joint stiffness gains [Nm/rad].)doc";
 
@@ -4274,7 +4275,8 @@ static const char *mkd_doc_franky_JointImpedanceParams_compensate_coriolis =
 static const char *mkd_doc_franky_JointImpedanceParams_constant_torque_offset =
     R"doc(Constant torque offset added to every command in [Nm].)doc";
 
-static const char *mkd_doc_franky_JointImpedanceParams_damping = R"doc(Joint damping gains in [Nms/rad].)doc";
+static const char *mkd_doc_franky_JointImpedanceParams_damping =
+    R"doc(Joint damping gains in [Nms/rad]. If unset (None), critical damping is tracked against the current (smoothed) stiffness.)doc";
 
 static const char *mkd_doc_franky_JointImpedanceParams_error_clip =
     R"doc(Maximum absolute joint position error [rad] used by the joint-space controller.)doc";
