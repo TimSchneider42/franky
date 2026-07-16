@@ -68,22 +68,27 @@ and `JointImpedanceTracker`) support optional friction compensation. Coulomb and
 terms are added as feedforward terms to the commanded torque each cycle and clamped per joint:
 
 ```python
+from franky import FrictionCompensationParams
+
 # Use friction compensation to get a smooth zero-g mode kinesthetic demonstrations
 with JointImpedanceTracker(
     robot,
     stiffness=[0.0] * 7,
     damping=[0.0] * 7,
-    friction_coulomb=[0.5, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2],   # [Nm]
-    friction_viscous=[0.1, 0.1, 0.1, 0.1, 0.05, 0.05, 0.05], # [Nms/rad]
-    friction_max_torque=[2.0] * 7,  # per-joint clamp [Nm]
+    friction=FrictionCompensationParams(
+        coulomb=[0.5, 0.5, 0.4, 0.4, 0.3, 0.3, 0.2],   # [Nm]
+        viscous=[0.1, 0.1, 0.1, 0.1, 0.05, 0.05, 0.05], # [Nms/rad]
+        max_torque=[2.0] * 7,  # per-joint clamp [Nm]
+    ),
     period=0.01,
 ) as tracker:
     ...
 ```
 
 The Coulomb term uses a smooth sign approximation controlled by
-`friction_velocity_epsilon` (default `0.03 rad/s`). Either or both terms can
-be omitted; unset terms default to zero.
+`FrictionCompensationParams.velocity_epsilon` (default `0.03 rad/s`). Either or both
+terms can be omitted; unset terms default to zero. `CartesianImpedanceTracker` accepts
+the same `friction=` object.
 
 Joint impedance can additionally be shaped in Cartesian space. Passing
 `cartesian_stiffness` (a 6-vector `[x, y, z, rx, ry, rz]` at the end effector,
@@ -180,6 +185,11 @@ tracker.motion.set_gains(
     )
 )
 ```
+
+The tracker also exposes damping directly: `tracker.set_gains(damping=[...])` pins a full
+6-vector, and `tracker.set_gains(damping=franky.CRITICAL)` unpins it. Damping is all-or-nothing
+and omitting it means critical. A stiffness change re-criticals damping unless `damping` is
+passed in the same call. `JointImpedanceTracker.set_gains` follows the same rule with 7-vectors.
 
 Cartesian impedance motions also support an optional secondary posture
 objective through `nullspace_target` and `nullspace_stiffness`. When enabled,

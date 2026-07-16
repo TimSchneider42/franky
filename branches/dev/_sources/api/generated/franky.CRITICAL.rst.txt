@@ -1,0 +1,6 @@
+﻿franky.CRITICAL
+===============
+
+.. currentmodule:: franky
+
+.. autodata:: CRITICAL

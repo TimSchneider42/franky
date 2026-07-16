@@ -97,8 +97,8 @@ Public Member Functions</h2></td></tr>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ab0e9132e2ca488f83583319efd1e6db7" id="r_ab0e9132e2ca488f83583319efd1e6db7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_joint_impedance_params.html#ab0e9132e2ca488f83583319efd1e6db7">stiffness</a> {<a class="el" href="namespacefranky.html#a901a193c7ec8f7ae4da9e83a4b6eefd6">defaultJointImpedanceStiffness</a>()}</td></tr>
 <tr class="separator:ab0e9132e2ca488f83583319efd1e6db7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6f0943da6bd28892293bdd02918b1dc" id="r_ac6f0943da6bd28892293bdd02918b1dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_joint_impedance_params.html#ac6f0943da6bd28892293bdd02918b1dc">damping</a> {<a class="el" href="namespacefranky.html#aff6dd8d5ecb3f23f21576f7da3301482">defaultJointImpedanceDamping</a>()}</td></tr>
-<tr class="separator:ac6f0943da6bd28892293bdd02918b1dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a051c606ac74f1db53788fff248d3d790" id="r_a051c606ac74f1db53788fff248d3d790"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_joint_impedance_params.html#a051c606ac74f1db53788fff248d3d790">damping</a> {std::nullopt}</td></tr>
+<tr class="separator:a051c606ac74f1db53788fff248d3d790"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b593843288f717e85d5202b388cbe81" id="r_a7b593843288f717e85d5202b388cbe81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_joint_impedance_params.html#a7b593843288f717e85d5202b388cbe81">error_clip</a> {Vector7d::Constant(0.5)}</td></tr>
 <tr class="separator:a7b593843288f717e85d5202b388cbe81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc6ae9079e37ec656a5faca7416d635a" id="r_abc6ae9079e37ec656a5faca7416d635a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_joint_impedance_params.html#abc6ae9079e37ec656a5faca7416d635a">constant_torque_offset</a> {Vector7d::Zero()}</td></tr>
@@ -188,18 +188,18 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ac6f0943da6bd28892293bdd02918b1dc" name="ac6f0943da6bd28892293bdd02918b1dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac6f0943da6bd28892293bdd02918b1dc">&#9670;&#160;</a></span>damping</h2>
+<a id="a051c606ac74f1db53788fff248d3d790" name="a051c606ac74f1db53788fff248d3d790"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a051c606ac74f1db53788fff248d3d790">&#9670;&#160;</a></span>damping</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> franky::JointImpedanceParams::damping {<a class="el" href="namespacefranky.html#aff6dd8d5ecb3f23f21576f7da3301482">defaultJointImpedanceDamping</a>()}</td>
+          <td class="memname">std::optional&lt;<a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&gt; franky::JointImpedanceParams::damping {std::nullopt}</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Joint damping gains in [Nms/rad]. </p>
+<p>Joint damping gains in [Nms/rad]. If unset, critical damping is tracked against the current (smoothed) stiffness. </p>
 
 </div>
 </div>

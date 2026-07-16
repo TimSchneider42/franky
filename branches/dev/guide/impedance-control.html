@@ -287,6 +287,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.CartesianImpedanceMotion.html">franky.CartesianImpedanceMotion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.CartesianImpedanceTrackingMotion.html">franky.CartesianImpedanceTrackingMotion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.CartesianImpedanceTracker.html">franky.CartesianImpedanceTracker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.CRITICAL.html">franky.CRITICAL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.CartesianImpedanceGains.html">franky.CartesianImpedanceGains</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.CartesianImpedanceParams.html">franky.CartesianImpedanceParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.CartesianImpedanceMotionParams.html">franky.CartesianImpedanceMotionParams</a></li>
@@ -439,22 +440,27 @@ added on top of any <code class="docutils literal notranslate"><span class="pre"
 <p>All joint-space impedance motions (<code class="docutils literal notranslate"><span class="pre">JointImpedanceMotion</span></code>, <code class="docutils literal notranslate"><span class="pre">JointImpedanceTrackingMotion</span></code>,
 and <code class="docutils literal notranslate"><span class="pre">JointImpedanceTracker</span></code>) support optional friction compensation. Coulomb and viscous
 terms are added as feedforward terms to the commanded torque each cycle and clamped per joint:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use friction compensation to get a smooth zero-g mode kinesthetic demonstrations</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">franky</span><span class="w"> </span><span class="kn">import</span> <span class="n">FrictionCompensationParams</span>
+
+<span class="c1"># Use friction compensation to get a smooth zero-g mode kinesthetic demonstrations</span>
 <span class="k">with</span> <span class="n">JointImpedanceTracker</span><span class="p">(</span>
     <span class="n">robot</span><span class="p">,</span>
     <span class="n">stiffness</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">7</span><span class="p">,</span>
     <span class="n">damping</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">7</span><span class="p">,</span>
-    <span class="n">friction_coulomb</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span>   <span class="c1"># [Nm]</span>
-    <span class="n">friction_viscous</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">],</span> <span class="c1"># [Nms/rad]</span>
-    <span class="n">friction_max_torque</span><span class="o">=</span><span class="p">[</span><span class="mf">2.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">7</span><span class="p">,</span>  <span class="c1"># per-joint clamp [Nm]</span>
+    <span class="n">friction</span><span class="o">=</span><span class="n">FrictionCompensationParams</span><span class="p">(</span>
+        <span class="n">coulomb</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span>   <span class="c1"># [Nm]</span>
+        <span class="n">viscous</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">],</span> <span class="c1"># [Nms/rad]</span>
+        <span class="n">max_torque</span><span class="o">=</span><span class="p">[</span><span class="mf">2.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">7</span><span class="p">,</span>  <span class="c1"># per-joint clamp [Nm]</span>
+    <span class="p">),</span>
     <span class="n">period</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
 <span class="p">)</span> <span class="k">as</span> <span class="n">tracker</span><span class="p">:</span>
     <span class="o">...</span>
 </pre></div>
 </div>
 <p>The Coulomb term uses a smooth sign approximation controlled by
-<code class="docutils literal notranslate"><span class="pre">friction_velocity_epsilon</span></code> (default <code class="docutils literal notranslate"><span class="pre">0.03</span> <span class="pre">rad/s</span></code>). Either or both terms can
-be omitted; unset terms default to zero.</p>
+<code class="docutils literal notranslate"><span class="pre">FrictionCompensationParams.velocity_epsilon</span></code> (default <code class="docutils literal notranslate"><span class="pre">0.03</span> <span class="pre">rad/s</span></code>). Either or both
+terms can be omitted; unset terms default to zero. <code class="docutils literal notranslate"><span class="pre">CartesianImpedanceTracker</span></code> accepts
+the same <code class="docutils literal notranslate"><span class="pre">friction=</span></code> object.</p>
 <p>Joint impedance can additionally be shaped in Cartesian space. Passing
 <code class="docutils literal notranslate"><span class="pre">cartesian_stiffness</span></code> (a 6-vector <code class="docutils literal notranslate"><span class="pre">[x,</span> <span class="pre">y,</span> <span class="pre">z,</span> <span class="pre">rx,</span> <span class="pre">ry,</span> <span class="pre">rz]</span></code> at the end effector,
 expressed in the base frame) adds <code class="docutils literal notranslate"><span class="pre">J^T</span> <span class="pre">diag(cartesian_stiffness)</span> <span class="pre">J</span></code> on top of
@@ -541,6 +547,10 @@ configurations often need more — the damping can be set explicitly through
 <span class="p">)</span>
 </pre></div>
 </div>
+<p>The tracker also exposes damping directly: <code class="docutils literal notranslate"><span class="pre">tracker.set_gains(damping=[...])</span></code> pins a full
+6-vector, and <code class="docutils literal notranslate"><span class="pre">tracker.set_gains(damping=franky.CRITICAL)</span></code> unpins it. Damping is all-or-nothing
+and omitting it means critical. A stiffness change re-criticals damping unless <code class="docutils literal notranslate"><span class="pre">damping</span></code> is
+passed in the same call. <code class="docutils literal notranslate"><span class="pre">JointImpedanceTracker.set_gains</span></code> follows the same rule with 7-vectors.</p>
 <p>Cartesian impedance motions also support an optional secondary posture
 objective through <code class="docutils literal notranslate"><span class="pre">nullspace_target</span></code> and <code class="docutils literal notranslate"><span class="pre">nullspace_stiffness</span></code>. When enabled,
 the controller adds a joint-space posture term projected into the Jacobian

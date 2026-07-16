@@ -287,6 +287,7 @@
 <li class="toctree-l2"><a class="reference internal" href="franky.CartesianImpedanceMotion.html">franky.CartesianImpedanceMotion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.CartesianImpedanceTrackingMotion.html">franky.CartesianImpedanceTrackingMotion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.CartesianImpedanceTracker.html">franky.CartesianImpedanceTracker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="franky.CRITICAL.html">franky.CRITICAL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.CartesianImpedanceGains.html">franky.CartesianImpedanceGains</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.CartesianImpedanceParams.html">franky.CartesianImpedanceParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.CartesianImpedanceMotionParams.html">franky.CartesianImpedanceMotionParams</a></li>
@@ -390,13 +391,13 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="franky.JointImpedanceGains.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#franky.JointImpedanceGains" title="franky._franky.JointImpedanceGains"><span class="pre">franky._franky.JointImpedanceGains</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">stiffness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Annotated</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.typing.ArrayLike</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.float64</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'[7,</span> <span class="pre">1]'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Annotated</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.typing.ArrayLike</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.float64</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'[7,</span> <span class="pre">1]'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#franky.JointImpedanceGains.__init__" title="Link to this definition">¶</a></dt>
-<dd><p>Construct joint impedance gains. If stiffness is unset, the default stiffness is used. If damping is unset, critical damping is used.</p>
+<dd><p>Construct joint impedance gains. If stiffness is unset, the default stiffness is used. If damping is unset (None), critical damping is tracked against the current stiffness in the control loop.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="franky.JointImpedanceGains.damping">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">damping</span></span><a class="headerlink" href="#franky.JointImpedanceGains.damping" title="Link to this definition">¶</a></dt>
-<dd><p>Joint damping gains [Nms/rad].</p>
+<dd><p>Joint damping gains [Nms/rad]. If unset (None), the controller tracks critical damping, 2*sqrt(stiffness), against the current (smoothed) stiffness every control cycle.</p>
 </dd></dl>
 
 <dl class="py property">
