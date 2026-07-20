@@ -35,12 +35,28 @@ def find_headers(include_dirs: "list[Path]") -> "list[Path]":
     return franky_headers + franka_headers
 
 
+LIBFRANKA_NOTICE = """\
+
+  The docstrings of the franka::* entities are extracted from the headers of libfranka
+  (https://github.com/frankaemika/libfranka), Copyright (c) Franka Robotics GmbH, which is
+  licensed under the Apache License, Version 2.0
+  (http://www.apache.org/licenses/LICENSE-2.0).
+"""
+
+
 def postprocess(output_file: Path) -> None:
     # Clean up doxygen artifacts that pybind11_mkdoc does not handle (mostly from the libfranka
     # headers): "param [in]:" direction annotations and "\ " escapes.
     content = output_file.read_text()
     content = re.sub(r" \[(?:in|out|in,out)\]:", ":", content)
     content = content.replace("\\ ", " ")
+    # Append the libfranka license notice to the header comment written by pybind11_mkdoc.
+    mkdoc_header_end = "extracted by pybind11_mkdoc.\n"
+    if mkdoc_header_end not in content:
+        sys.exit(
+            "Error: did not find the pybind11_mkdoc header comment to attach the notice to."
+        )
+    content = content.replace(mkdoc_header_end, mkdoc_header_end + LIBFRANKA_NOTICE, 1)
     output_file.write_text(content)
 
 

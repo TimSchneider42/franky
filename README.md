@@ -116,6 +116,10 @@ For non-commercial applications, this software is licensed under the LGPL v3.0.
 If you want to use franky within commercial applications or under a different license, please contact us for individual
 agreements.
 
+The Python docstrings of the `franka.*` entities ([`python/docstrings.hpp`](python/docstrings.hpp)) are extracted from
+the headers of [libfranka](https://github.com/frankaemika/libfranka), Copyright (c) Franka Robotics GmbH, which is
+licensed under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
 ## Contributing
 
 If you wish to contribute to this project, you are welcome to create a pull request.

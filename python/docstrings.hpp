@@ -1,6 +1,11 @@
 /*
   This file contains docstrings for use in the Python bindings.
   Do not edit! They were automatically extracted by pybind11_mkdoc.
+
+  The docstrings of the franka::* entities are extracted from the headers of libfranka
+  (https://github.com/frankaemika/libfranka), Copyright (c) Franka Robotics GmbH, which is
+  licensed under the Apache License, Version 2.0
+  (http://www.apache.org/licenses/LICENSE-2.0).
  */
 
 #define MKD_EXPAND(x) x
