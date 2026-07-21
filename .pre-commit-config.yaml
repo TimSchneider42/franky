@@ -17,7 +17,17 @@ repos:
         # clang-format treats notebooks as JSON and splits long lines into adjacent
         # string literals, which is invalid JSON
         exclude: '\.ipynb$'
-  - repo: https://github.com/proinsias/linkchecker-markdown.git
-    rev: 6763f1f
+  - repo: local
     hooks:
+      # Wraps linkcheckmd to check links to the documentation site against the dev
+      # deployment (branches/dev/) when not on master (see tools/linkcheck_markdown.py)
       - id: linkcheckmd
+        name: linkcheckmd
+        entry: python tools/linkcheck_markdown.py
+        language: python
+        # Avoid parallel invocations hammering github.com (HTTP 429); linkcheckmd
+        # already checks links concurrently via asyncio
+        require_serial: true
+        additional_dependencies:
+          - linkcheckmd @ git+https://github.com/proinsias/linkchecker-markdown.git@6763f1f
+        types: [ markdown ]
