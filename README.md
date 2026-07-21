@@ -22,7 +22,7 @@
   </a>
 
   <a href="https://github.com/timschneider42/franky/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/license-LGPL-green.svg" alt="LGPL">
+    <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT">
   </a>
 </p>
 
@@ -112,9 +112,8 @@ The full documentation is available at [https://timschneider42.github.io/franky/
 
 ## 📜 License
 
-For non-commercial applications, this software is licensed under the LGPL v3.0.
-If you want to use franky within commercial applications or under a different license, please contact us for individual
-agreements.
+Starting with version 2.0.0, franky is licensed under the [MIT License](LICENSE).
+Versions prior to 2.0.0 were released under the LGPL v3.0 and remain available under that license.
 
 The Python docstrings of the `franka.*` entities ([`python/docstrings.hpp`](python/docstrings.hpp)) are extracted from
 the headers of [libfranka](https://github.com/frankaemika/libfranka), Copyright (c) Franka Robotics GmbH, which is

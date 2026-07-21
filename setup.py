@@ -123,7 +123,7 @@ setup(
     author_email="tim@robot-learning.de",
     url="https://github.com/TimSchneider42/franky",
     packages=find_packages(),
-    license="LGPL-3.0-or-later",
+    license="MIT",
     ext_modules=[Extension("franky/_franky", [])],
     cmdclass=dict(build_ext=CMakeBuild),
     keywords=["control", "robotics", "franka", "franka-panda", "franka-research-3"],

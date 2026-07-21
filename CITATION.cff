@@ -7,7 +7,7 @@ authors:
     orcid: "0000-0001-6605-9257"
     affiliation: "Technical University of Darmstadt"
 repository-code: "https://github.com/TimSchneider42/franky"
-license: "LGPL-3.0"
+license: "MIT"
 abstract: |
   franky is a high-level control library for Franka robots, offering Python and C++ support.
   It eliminates the need for strict real-time programming by allowing high-level position
