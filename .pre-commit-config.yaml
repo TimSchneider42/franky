@@ -19,15 +19,13 @@ repos:
         exclude: '\.ipynb$'
   - repo: local
     hooks:
-      # Wraps linkcheckmd to check links to the documentation site against the dev
+      # Checks links in Markdown files, resolving documentation links against the dev
       # deployment (branches/dev/) when not on master (see tools/linkcheck_markdown.py)
-      - id: linkcheckmd
-        name: linkcheckmd
+      - id: linkcheck-markdown
+        name: linkcheck-markdown
         entry: python tools/linkcheck_markdown.py
         language: python
-        # Avoid parallel invocations hammering github.com (HTTP 429); linkcheckmd
-        # already checks links concurrently via asyncio
+        # A single invocation dedupes URLs and throttles requests per host; parallel
+        # invocations would defeat that and provoke HTTP 429 from github.com
         require_serial: true
-        additional_dependencies:
-          - linkcheckmd @ git+https://github.com/proinsias/linkchecker-markdown.git@6763f1f
         types: [ markdown ]
