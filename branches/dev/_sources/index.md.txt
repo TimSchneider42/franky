@@ -18,6 +18,16 @@ Ready to go? Follow the [installation instructions](getting-started/installation
 the [guide](guide/index.md) for an introduction.
 If you do not have a robot at hand, you can also try the [simulation](guide/simulation.md) first.
 
+## 📜 License
+
+Starting with version 2.0.0, franky is licensed under the
+[MIT License](https://github.com/TimSchneider42/franky/blob/master/LICENSE).
+Versions prior to 2.0.0 were released under the LGPL v3.0 and remain available under that license.
+
+The Python docstrings of the `franka.*` entities are extracted from the headers of
+[libfranka](https://github.com/frankaemika/libfranka), Copyright (c) Franka Robotics GmbH, which is licensed under the
+[Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
 ```{toctree}
 :caption: Getting Started
 :maxdepth: 1
