@@ -116,12 +116,7 @@ for how to install matching wheels.
 
 ## 📚 Documentation
 
-The full documentation is available at [https://timschneider42.github.io/franky/](https://timschneider42.github.io/franky/):
-
-- [Installation](https://timschneider42.github.io/franky/getting-started/installation.html) — real-time kernel setup, real-time permissions, wheels for older libfranka versions, and [Docker](https://timschneider42.github.io/franky/getting-started/docker.html)
-- [Guide](https://timschneider42.github.io/franky/guide/index.html) — geometry types, trajectory control, real-time reactions, asynchronous motion execution, gripper control, the Desk API, and simulation
-- [FAQ](https://timschneider42.github.io/franky/getting-started/faq.html) — CUDA on real-time kernels, remote robot setups, and more
-- [Development](https://timschneider42.github.io/franky/development.html) — building from source, tested dependency versions, differences to frankx, and contributing
+The full documentation is available at [https://timschneider42.github.io/franky/](https://timschneider42.github.io/franky/).
 
 ## 📜 License
 
