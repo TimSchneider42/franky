@@ -3383,7 +3383,9 @@ static const char *mkd_doc_franky_CartesianImpedanceBase_Params_friction =
 static const char *mkd_doc_franky_CartesianImpedanceBase_Params_nullspace_tasks =
     R"doc(Nullspace objectives.
 
-Each task contributes a joint-space torque that is summed and projected into the Jacobian nullspace.)doc";
+Each task contributes a joint-space torque that is summed and projected into the Jacobian nullspace.
+At most one task of each concrete type is supported because runtime-adjustable gains are shared by
+task type.)doc";
 
 static const char *mkd_doc_franky_CartesianImpedanceBase_Params_rotational_error_clip =
     R"doc(Maximum absolute Cartesian orientation error [rad] used by the task-space controller.
@@ -3510,7 +3512,7 @@ static const char *mkd_doc_franky_CartesianImpedanceGains_stiffness =
     R"doc(Cartesian stiffness matrix [N/m, Nm/rad], ordered [x, y, z, rx, ry, rz].)doc";
 
 static const char *mkd_doc_franky_CartesianImpedanceGains_validate =
-    R"doc(Throw std::invalid_argument if any gain is non-finite.)doc";
+    R"doc(Throw std::invalid_argument unless gains are symmetric positive semidefinite matrices.)doc";
 
 static const char *mkd_doc_franky_CartesianImpedanceMotion =
     R"doc(Cartesian impedance motion.
@@ -4245,7 +4247,9 @@ static const char *mkd_doc_franky_JointImpedanceGains_JointImpedanceGains = R"do
 static const char *mkd_doc_franky_JointImpedanceGains_JointImpedanceGains_2 = R"doc()doc";
 
 static const char *mkd_doc_franky_JointImpedanceGains_damping =
-    R"doc(Joint damping gains [Nms/rad]. If unset (None), the controller tracks critical damping, 2*sqrt(stiffness), against the current (smoothed) stiffness every control cycle.)doc";
+    R"doc(Joint damping gains [Nms/rad]. If unset, the controller tracks critical damping, 2*sqrt(stiffness),
+against the current (smoothed) stiffness every control cycle, so damping stays critical through gain
+transitions.)doc";
 
 static const char *mkd_doc_franky_JointImpedanceGains_stiffness = R"doc(Joint stiffness gains [Nm/rad].)doc";
 
@@ -4281,7 +4285,8 @@ static const char *mkd_doc_franky_JointImpedanceParams_constant_torque_offset =
     R"doc(Constant torque offset added to every command in [Nm].)doc";
 
 static const char *mkd_doc_franky_JointImpedanceParams_damping =
-    R"doc(Joint damping gains in [Nms/rad]. If unset (None), critical damping is tracked against the current (smoothed) stiffness.)doc";
+    R"doc(Joint damping gains in [Nms/rad]. If unset, critical damping is tracked against the
+ current (smoothed) stiffness.)doc";
 
 static const char *mkd_doc_franky_JointImpedanceParams_error_clip =
     R"doc(Maximum absolute joint position error [rad] used by the joint-space controller.)doc";
@@ -4460,6 +4465,8 @@ static const char *mkd_doc_franky_JointWaypointMotion_initWaypointMotion = R"doc
 
 static const char *mkd_doc_franky_JointWaypointMotion_setNewWaypoint = R"doc()doc";
 
+static const char *mkd_doc_franky_JointWaypointMotion_target_position = R"doc()doc";
+
 static const char *mkd_doc_franky_ManipulabilityTask =
     R"doc(Manipulability maximization objective projected into the Cartesian nullspace.)doc";
 
@@ -4475,12 +4482,15 @@ static const char *mkd_doc_franky_ManipulabilityTask_gain = R"doc(Gain applied t
 static const char *mkd_doc_franky_ManipulabilityTask_max_torque =
     R"doc(Per-joint absolute torque clamp for this task [Nm]. Unset means no clamp.)doc";
 
+static const char *mkd_doc_franky_ManipulabilityTask_validate =
+    R"doc(Throw std::invalid_argument if any task parameter is out of range.)doc";
+
 static const char *mkd_doc_franky_Measure =
     R"doc(A measure on the robot state.
 
 This class defines a measure on the robot state, which can be used to define a condition for a
 reaction in a motion. Measures support arithmetic operations (``+``, ``-``, ``*``, ``/``, ``^``) and
-comparisons (``==``, ``!=``, ``<``, ``>``, ``<=``, ``>=``) and can be combined to form more complex
+comparisons (``==``, ``!=``, ``<``, ``>``, ``<=``, ``>=``) can be combined to form more complex
 measures.)doc";
 
 static const char *mkd_doc_franky_Measure_AbsTime =
@@ -4841,6 +4851,11 @@ motion.
 Args:
     reaction: The reaction to add.
 
+Warning:
+    Do not call this function synchronously from a condition, motion function, or reaction callback
+    while this motion's reactions are being evaluated. Reaction evaluation holds the reaction-list
+    mutex, so doing so would deadlock.
+
 )doc";
 
 static const char *mkd_doc_franky_Motion_addReactionFront =
@@ -4851,6 +4866,11 @@ motion.
 
 Args:
     reaction: The reaction to add.
+
+Warning:
+    Do not call this function synchronously from a condition, motion function, or reaction callback
+    while this motion's reactions are being evaluated. Reaction evaluation holds the reaction-list
+    mutex, so doing so would deadlock.
 
 )doc";
 
@@ -4946,6 +4966,9 @@ static const char *mkd_doc_franky_NullspaceGains_posture_max_torque =
 static const char *mkd_doc_franky_NullspaceGains_posture_stiffness =
     R"doc(Per-joint posture stiffness [Nm/rad]. A joint with zero stiffness is not pushed.)doc";
 
+static const char *mkd_doc_franky_NullspaceGains_validate =
+    R"doc(Throw std::invalid_argument if any gain or clamp is out of range.)doc";
+
 static const char *mkd_doc_franky_PositionWaypoint =
     R"doc(A position waypoint with a target and optional parameters.
 
@@ -4987,7 +5010,9 @@ static const char *mkd_doc_franky_PositionWaypointMotion_relative_dynamics_facto
 static const char *mkd_doc_franky_PositionWaypointMotion_setInputLimits = R"doc()doc";
 
 static const char *mkd_doc_franky_PositionWaypoint_reference_type =
-    R"doc(The reference type (absolute or relative).)doc";
+    R"doc(The reference type (absolute or relative). A relative waypoint is resolved against the preceding
+waypoint's target. The first relative waypoint is resolved against the motion's initial commanded
+position. This remains true if max_total_duration advances past a waypoint before it is reached.)doc";
 
 static const char *mkd_doc_franky_PostureTask =
     R"doc(Joint-posture objective projected into the Cartesian nullspace.)doc";
@@ -5016,6 +5041,9 @@ self-motion.)doc";
 
 static const char *mkd_doc_franky_PostureTask_target = R"doc(Preferred joint posture [rad].)doc";
 
+static const char *mkd_doc_franky_PostureTask_validate =
+    R"doc(Throw std::invalid_argument if any task parameter is out of range.)doc";
+
 static const char *mkd_doc_franky_Reaction =
     R"doc(A reaction that can be attached to a motion.
 
@@ -5038,7 +5066,7 @@ state. Reactions consist of a condition and a motion that replaces the current m
 the condition is met.)doc";
 
 static const char *mkd_doc_franky_ReactionRecursionException =
-    R"doc(Exception thrown when the reaction recursion limit (8) is reached.)doc";
+    R"doc(Exception thrown when the reaction recursion limit (16) is reached.)doc";
 
 static const char *mkd_doc_franky_Reaction_Reaction =
     R"doc(Args:
@@ -6081,7 +6109,7 @@ Returns:
 
 static const char *mkd_doc_franky_Robot_state_buffer = R"doc()doc";
 
-static const char *mkd_doc_franky_Robot_state_mutex = R"doc()doc";
+static const char *mkd_doc_franky_Robot_state_received_at = R"doc()doc";
 
 static const char *mkd_doc_franky_Robot_translation_acceleration_limit =
     R"doc(Translational acceleration limit [m/s²].)doc";
@@ -6106,11 +6134,41 @@ even if it does not change.
 Note that the commanded torques are still subject to the torque rate limit
 (TorqueSafetyParams::max_delta_tau), so large steps are ramped in over multiple cycles.)doc";
 
+static const char *mkd_doc_franky_SimpleTorqueMotion_SimpleTorqueMotion = R"doc()doc";
+
+static const char *mkd_doc_franky_SimpleTorqueMotion_SimpleTorqueMotion_2 =
+    R"doc(Args:
+    initial_torque: The torque applied until the first torque signal arrives [Nm].
+    signal_timeout: Maximum duration [s] without a new torque signal, or nullopt to disable the
+                    watchdog.
+
+)doc";
+
+static const char *mkd_doc_franky_SimpleTorqueMotion_TorqueCommand = R"doc()doc";
+
+static const char *mkd_doc_franky_SimpleTorqueMotion_TorqueCommand_seq = R"doc()doc";
+
+static const char *mkd_doc_franky_SimpleTorqueMotion_TorqueCommand_tau = R"doc()doc";
+
+static const char *mkd_doc_franky_SimpleTorqueMotion_current_torque = R"doc()doc";
+
 static const char *mkd_doc_franky_SimpleTorqueMotion_getTorque =
     R"doc(Get a copy of the last published torque [Nm], or the initial torque if no torque has been published
-yet.)doc";
+yet.
+
+)doc";
+
+static const char *mkd_doc_franky_SimpleTorqueMotion_initImpl = R"doc()doc";
+
+static const char *mkd_doc_franky_SimpleTorqueMotion_last_seq = R"doc()doc";
+
+static const char *mkd_doc_franky_SimpleTorqueMotion_last_signal_time = R"doc()doc";
+
+static const char *mkd_doc_franky_SimpleTorqueMotion_nextCommandImpl = R"doc()doc";
 
 static const char *mkd_doc_franky_SimpleTorqueMotion_params = R"doc(The parameters of the motion.)doc";
+
+static const char *mkd_doc_franky_SimpleTorqueMotion_params_2 = R"doc()doc";
 
 static const char *mkd_doc_franky_SimpleTorqueMotion_setTorque =
     R"doc(Set the torque applied by the motion [Nm].
@@ -6123,6 +6181,10 @@ Args:
     torque: The new joint torques [Nm].
 
 )doc";
+
+static const char *mkd_doc_franky_SimpleTorqueMotion_torque_handle = R"doc()doc";
+
+static const char *mkd_doc_franky_SimpleTorqueMotion_write_seq = R"doc()doc";
 
 static const char *mkd_doc_franky_SimpleTorqueParams = R"doc(Parameters for SimpleTorqueMotion.)doc";
 
@@ -6142,6 +6204,9 @@ static const char *mkd_doc_franky_SimpleTorqueParams_signal_timeout =
 with a TorqueSignalTimeoutException. The watchdog is armed when the motion starts, so the initial
 torque is only held for this duration as well. Set to nullopt to disable the watchdog and hold the
 last commanded torque indefinitely.)doc";
+
+static const char *mkd_doc_franky_SimpleTorqueParams_validate =
+    R"doc(Throw std::invalid_argument if any parameter is out of range.)doc";
 
 static const char *mkd_doc_franky_StopMotion = R"doc()doc";
 
@@ -6216,6 +6281,9 @@ static const char *mkd_doc_franky_TorqueSafetyParams_max_delta_tau =
 
 static const char *mkd_doc_franky_TorqueSafetyParams_upper_joint_limits =
     R"doc(Upper soft joint limits in [rad]. Joint-limit repulsion is active when both limits are set.)doc";
+
+static const char *mkd_doc_franky_TorqueSafetyParams_validate =
+    R"doc(Throw std::invalid_argument if any safety parameter is out of range.)doc";
 
 static const char *mkd_doc_franky_TorqueSignalTimeoutException =
     R"doc(Thrown when a SimpleTorqueMotion does not receive a new torque signal in time.)doc";
@@ -6440,10 +6508,19 @@ static const char *mkd_doc_franky_VelocityWaypointMotion_relative_dynamics_facto
 static const char *mkd_doc_franky_VelocityWaypointMotion_setInputLimits = R"doc()doc";
 
 static const char *mkd_doc_franky_WaitFreeTripleBuffer =
-    R"doc(Wait-free, Single-Producer Single-Consumer (SPSC) triple buffer.
+    R"doc(Triple buffer connecting concurrent user threads with a single real-time thread.
 
-This buffer allows a single user thread to safely write data without ever blocking, and a single
-real-time loop to safely read the latest available data without locking or experiencing torn reads.)doc";
+The core exchange is a wait-free, Single-Producer Single-Consumer (SPSC) triple buffer: one writer
+can publish data without ever blocking, and one reader can obtain the latest available data without
+locking or experiencing torn reads. On top of that, a write mutex and a read mutex serialize
+concurrent writers and concurrent readers, respectively, so that multiple user threads may safely
+share either side.
+
+The real-time thread must not take these mutexes, as it could then be blocked by user threads.
+Instead, it must exclusively use the unsafe variants (setUnsafe(), getUnsafe(),
+getLastWrittenUnsafe()), which is safe as long as it is the only thread on its side of the
+buffer: all other threads on the same side must use the locking variants, and no other thread
+may use the unsafe variants concurrently.)doc";
 
 static const char *mkd_doc_franky_WaitFreeTripleBuffer_WaitFreeTripleBuffer = R"doc()doc";
 
@@ -6458,25 +6535,63 @@ static const char *mkd_doc_franky_WaitFreeTripleBuffer_buffers = R"doc()doc";
 static const char *mkd_doc_franky_WaitFreeTripleBuffer_get =
     R"doc(Get the most recently published data.
 
-* Note: This method mutates internal read indices to securely take ownership
-of the newest buffer, hence it cannot be marked const.
+Takes the read mutex to serialize concurrent readers. Must not be called from the real-time thread;
+use getUnsafe() there instead.
+
+Note: This method mutates internal read indices to securely take ownership of the newest
+buffer, hence it cannot be marked const.
 
 )doc";
 
 static const char *mkd_doc_franky_WaitFreeTripleBuffer_getLastWritten =
     R"doc(Get the most recently written value from the writer's side.
 
-Must only be called from the writer thread. Unlike get(), this does not consume the "new data" flag
-or interact with the reader in any way. Before the first set(), this returns a default-constructed
-T.
+Takes the write mutex, as it accesses writer-owned state. Unlike get(), this does not consume the
+"new data" flag or interact with the reader in any way. Before the first set(), this returns a
+default-constructed T. Must not be called from the real-time thread; use getLastWrittenUnsafe()
+there instead.
+
+)doc";
+
+static const char *mkd_doc_franky_WaitFreeTripleBuffer_getLastWrittenUnsafe =
+    R"doc(Get the most recently written value from the writer's side without taking the write mutex.
+
+Must only be called if no other thread is writing concurrently. This is the variant the real-time
+thread has to use, as it must not block on the write mutex.
+
+)doc";
+
+static const char *mkd_doc_franky_WaitFreeTripleBuffer_getUnsafe =
+    R"doc(Get the most recently published data without taking the read mutex.
+
+Must only be called if no other thread is reading concurrently. This is the variant the real-time
+thread has to use, as it must not block on the read mutex.
 
 )doc";
 
 static const char *mkd_doc_franky_WaitFreeTripleBuffer_last_written_index = R"doc()doc";
 
-static const char *mkd_doc_franky_WaitFreeTripleBuffer_set = R"doc(Publish new data.)doc";
+static const char *mkd_doc_franky_WaitFreeTripleBuffer_read_mutex = R"doc()doc";
+
+static const char *mkd_doc_franky_WaitFreeTripleBuffer_set =
+    R"doc(Publish new data.
+
+Takes the write mutex to serialize concurrent writers. Must not be called from the real-time thread;
+use setUnsafe() there instead.
+
+)doc";
+
+static const char *mkd_doc_franky_WaitFreeTripleBuffer_setUnsafe =
+    R"doc(Publish new data without taking the write mutex.
+
+Must only be called if no other thread is writing concurrently. This is the variant the real-time
+thread has to use, as it must not block on the write mutex.
+
+)doc";
 
 static const char *mkd_doc_franky_WaitFreeTripleBuffer_shared_state = R"doc()doc";
+
+static const char *mkd_doc_franky_WaitFreeTripleBuffer_write_mutex = R"doc()doc";
 
 static const char *mkd_doc_franky_Waypoint =
     R"doc(A waypoint with a target and optional parameters.
@@ -6551,7 +6666,9 @@ static const char *mkd_doc_franky_Waypoint_max_total_duration =
     R"doc(The maximum time to try reaching this waypoint before moving on to the next waypoint. Default is
 infinite.)doc";
 
-static const char *mkd_doc_franky_Waypoint_minimum_time = R"doc(The minimum time to get to the next waypoint.)doc";
+static const char *mkd_doc_franky_Waypoint_minimum_time =
+    R"doc(The minimum time to reach this waypoint. This value is ignored when the effective relative dynamics
+factor has max_dynamics() set.)doc";
 
 static const char *mkd_doc_franky_Waypoint_relative_dynamics_factor =
     R"doc(The relative dynamics factor for this waypoint. This factor will get multiplied with the robot's
@@ -6592,6 +6709,16 @@ static const char *mkd_doc_franky_ensureStd = R"doc()doc";
 static const char *mkd_doc_franky_expand = R"doc()doc";
 
 static const char *mkd_doc_franky_expandEigen = R"doc()doc";
+
+static const char *mkd_doc_franky_interpolateGain = R"doc()doc";
+
+static const char *mkd_doc_franky_interpolateGain_2 =
+    R"doc(Interpolate a fixed-size Eigen value and snap it to the target once settled.
+
+Snapping prevents exponentially filtered gains from changing by tiny amounts forever, which is
+important when a derived quantity is cached using exact equality.
+
+)doc";
 
 static const char *mkd_doc_franky_measure_pow = R"doc()doc";
 
@@ -6676,19 +6803,6 @@ Args:
 
 static const char *mkd_doc_franky_saturateTorqueRate = R"doc()doc";
 
-static const char *mkd_doc_franky_scope_guard =
-    R"doc(A scope guard that executes a function when it goes out of scope.)doc";
-
-static const char *mkd_doc_franky_scope_guard_f = R"doc()doc";
-
-static const char *mkd_doc_franky_scope_guard_scope_guard =
-    R"doc(Constructor that takes a function to execute when the guard goes out of scope.
-
-Args:
-    f: The function to execute.
-
-)doc";
-
 static const char *mkd_doc_franky_stdToAffine = R"doc()doc";
 
 static const char *mkd_doc_franky_toEigen = R"doc()doc";
@@ -6711,6 +6825,8 @@ static const char *mkd_doc_franky_validateNonNegativeFinite =
 
 static const char *mkd_doc_franky_validateNonNegativeFinite_2 =
     R"doc(Throw std::invalid_argument if any element of values is negative or non-finite.)doc";
+
+static const char *mkd_doc_franky_validatePositiveSemidefinite = R"doc()doc";
 
 #if defined(__GNUG__)
 #pragma GCC diagnostic pop
