@@ -6,7 +6,7 @@ Its chapters are now maintained under [`doc/guide/`](guide/index.md):
 * [Getting started](guide/index.md)
 * [Geometry](guide/geometry.md)
 * [Robot and robot state](guide/robot.md)
-* [Motion types](guide/motion-types.md)
+* [Trajectory control](guide/trajectory-control.md)
 * [Impedance control](guide/impedance-control.md)
 * [Executing motions](guide/executing-motions.md)
 * [Real-time reactions](guide/reactions.md)

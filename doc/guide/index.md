@@ -46,7 +46,7 @@ types, how to implement real-time reactions and changing waypoints in real time,
 
 geometry
 robot
-motion-types
+trajectory-control
 impedance-control
 torque-control
 executing-motions

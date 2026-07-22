@@ -1,4 +1,4 @@
-# 🏃‍♂️ Motion Types
+# 🏃‍♂️ Trajectory Control
 
 franky currently supports four trajectory control modes: **joint position control**, **joint velocity control**, **cartesian position control**, and **cartesian velocity control**.
 Each of these control modes is invoked by passing the robot an appropriate _Motion_ object.

@@ -1,6 +1,6 @@
 # 🫨 Impedance Control
 
-In addition to the [trajectory-based motion types](motion-types.md), franky also provides
+In addition to the [trajectory control modes](trajectory-control.md), franky also provides
 client-side impedance controllers in torque mode.
 
 If you want to command joint torques directly instead of using a spring-damper

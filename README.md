@@ -50,7 +50,7 @@ the [simulation](https://timschneider42.github.io/franky/guide/simulation.html) 
 - **Control your Franka robot directly from Python in just a few lines!**
   No more endless hours setting up ROS, juggling packages, or untangling dependencies. Just `pip install` — no ROS at all.
 
-- **[Multiple control modes](https://timschneider42.github.io/franky/guide/motion-types.html)**: [Cartesian position](https://timschneider42.github.io/franky/guide/motion-types.html#cartesian-position-control), [Cartesian velocity](https://timschneider42.github.io/franky/guide/motion-types.html#cartesian-velocity-control), [Joint position](https://timschneider42.github.io/franky/guide/motion-types.html#joint-position-control), [Joint velocity](https://timschneider42.github.io/franky/guide/motion-types.html#joint-velocity-control), [Impedance control](https://timschneider42.github.io/franky/guide/impedance-control.html), and [Torque control](https://timschneider42.github.io/franky/guide/torque-control.html)
+- **[Multiple control modes](https://timschneider42.github.io/franky/guide/trajectory-control.html)**: [Cartesian position](https://timschneider42.github.io/franky/guide/trajectory-control.html#cartesian-position-control), [Cartesian velocity](https://timschneider42.github.io/franky/guide/trajectory-control.html#cartesian-velocity-control), [Joint position](https://timschneider42.github.io/franky/guide/trajectory-control.html#joint-position-control), [Joint velocity](https://timschneider42.github.io/franky/guide/trajectory-control.html#joint-velocity-control), [Impedance control](https://timschneider42.github.io/franky/guide/impedance-control.html), and [Torque control](https://timschneider42.github.io/franky/guide/torque-control.html)
   franky uses [Ruckig](https://github.com/pantor/ruckig) to generate smooth, time-optimal trajectories while respecting velocity, acceleration, and jerk limits.
 
 - **[Real-time control from Python and C++](https://timschneider42.github.io/franky/guide/realtime-motions.html)**
@@ -116,7 +116,7 @@ for how to install matching wheels.
 The full documentation is available at [https://timschneider42.github.io/franky/](https://timschneider42.github.io/franky/):
 
 - [Installation](https://timschneider42.github.io/franky/getting-started/installation.html) — real-time kernel setup, real-time permissions, wheels for older libfranka versions, and [Docker](https://timschneider42.github.io/franky/getting-started/docker.html)
-- [Guide](https://timschneider42.github.io/franky/guide/index.html) — geometry types, motion types, real-time reactions, asynchronous motion execution, gripper control, the Desk API, and simulation
+- [Guide](https://timschneider42.github.io/franky/guide/index.html) — geometry types, trajectory control, real-time reactions, asynchronous motion execution, gripper control, the Desk API, and simulation
 - [FAQ](https://timschneider42.github.io/franky/getting-started/faq.html) — CUDA on real-time kernels, remote robot setups, and more
 - [Development](https://timschneider42.github.io/franky/development.html) — building from source, tested dependency versions, differences to frankx, and contributing
 
