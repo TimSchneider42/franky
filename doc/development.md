@@ -98,19 +98,28 @@ Aside from bug fixes and general performance improvements, franky provides the f
 * [Reactions allow for the registration of callbacks instead of just printing to stdout when fired.](guide/reactions.md)
 * [Motions allow for the registration of callbacks for profiling.](guide/executing-motions.md#motion-callbacks)
 * [The robot state is also available during control.](guide/robot.md#robot-state)
-* A larger part of the libfranka API is exposed to python (e.g., `setCollisionBehavior`, `setJoinImpedance`, and
+* A larger part of the libfranka API is exposed to python (e.g., `setCollisionBehavior`, `setJointImpedance`, and
   `setCartesianImpedance`).
 * Cartesian motion generation handles boundaries in Euler angles properly.
-* [There is a new joint motion type that supports waypoints.](guide/trajectory-control.md)
+* [Motions in both joint and Cartesian space support waypoints with target velocities.](guide/trajectory-control.md)
+* franky supports [joint velocity control](guide/trajectory-control.md#joint-velocity-control)
+  and [cartesian velocity control](guide/trajectory-control.md#cartesian-velocity-control).
+* [franky provides client-side joint and Cartesian impedance controllers](guide/impedance-control.md), including
+  tracking variants whose references and gains can be updated in real time.
+* [Joint torques can be commanded directly](guide/torque-control.md) with `SimpleTorqueMotion`.
+* [The robot's kinematics model is accessible](guide/robot.md#robot-state) for computing forward kinematics and
+  Jacobians, and the robot's URDF model can be retrieved.
+* [The Franka Desk API can be accessed programmatically](guide/desk.md), e.g., to unlock the brakes, enable the FCI,
+  or run the safety self-test.
+* [franky can be used with the franky-sim simulator](guide/simulation.md), a drop-in replacement for the real robot.
 * [The signature of `Affine` changed.](guide/geometry.md) `Affine` does not handle elbow positions anymore.
   Instead, a new class `RobotPose` stores both the end-effector pose and optionally the elbow position.
 * The `MotionData` class does not exist anymore.
   Instead, reactions and other settings moved to `Motion`.
 * [The `Measure` class allows for arithmetic operations.](guide/reactions.md)
 * Exceptions caused by libfranka are raised properly instead of being printed to stdout.
-* [We provide wheels for both Franka Research 3 and the older Franka Panda](getting-started/installation.md)
-* franky supports [joint velocity control](guide/trajectory-control.md#joint-velocity-control)
-  and [cartesian velocity control](guide/trajectory-control.md#cartesian-velocity-control)
+* [We provide wheels for a wide range of libfranka versions](getting-started/installation.md), supporting both the
+  Franka Research 3 and the older Franka Panda.
 * The dynamics limits are not hard-coded anymore but can be [set for each robot instance](guide/robot.md).
 
 ## Contributing
