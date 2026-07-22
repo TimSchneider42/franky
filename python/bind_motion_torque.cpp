@@ -763,4 +763,79 @@ sustained external push cannot make it hang.)doc",
           "max_duration"_a = 2.0,
           "compensate_coriolis"_a = true,
           "max_delta_tau"_a = 1.0);
+
+  py::class_<SimpleTorqueParams>(m, "SimpleTorqueParams", DOC(franky, SimpleTorqueParams))
+      .def(py::init<>())
+      .def_readwrite(
+          "initial_torque", &SimpleTorqueParams::initial_torque, DOC(franky, SimpleTorqueParams, initial_torque))
+      .def_readwrite(
+          "signal_timeout", &SimpleTorqueParams::signal_timeout, DOC(franky, SimpleTorqueParams, signal_timeout))
+      .def_readwrite(
+          "compensate_coriolis",
+          &SimpleTorqueParams::compensate_coriolis,
+          DOC(franky, SimpleTorqueParams, compensate_coriolis))
+      .def_readwrite("safety", &SimpleTorqueParams::safety, DOC(franky, SimpleTorqueParams, safety))
+      .def_readwrite("friction", &SimpleTorqueParams::friction, DOC(franky, SimpleTorqueParams, friction));
+
+  py::class_<SimpleTorqueMotion, Motion<franka::Torques>, std::shared_ptr<SimpleTorqueMotion>>(
+      m, "SimpleTorqueMotion", DOC(franky, SimpleTorqueMotion))
+      .def(
+          py::init<>([](std::optional<Vector7d> initial_torque,
+                        std::optional<double>
+                            signal_timeout,
+                        bool compensate_coriolis,
+                        double max_delta_tau,
+                        std::optional<Vector7d>
+                            lower_joint_limits,
+                        std::optional<Vector7d>
+                            upper_joint_limits,
+                        double joint_limit_activation_distance,
+                        double joint_limit_stiffness,
+                        double joint_limit_damping,
+                        double joint_limit_max_torque,
+                        std::optional<FrictionCompensationParams>
+                            friction) {
+            auto params = SimpleTorqueParams{};
+            if (initial_torque.has_value()) params.initial_torque = initial_torque.value();
+            params.signal_timeout = signal_timeout;
+            params.compensate_coriolis = compensate_coriolis;
+            params.safety.max_delta_tau = max_delta_tau;
+            params.safety.lower_joint_limits = lower_joint_limits;
+            params.safety.upper_joint_limits = upper_joint_limits;
+            params.safety.joint_limit_activation_distance = joint_limit_activation_distance;
+            params.safety.joint_limit_stiffness = joint_limit_stiffness;
+            params.safety.joint_limit_damping = joint_limit_damping;
+            params.safety.joint_limit_max_torque = joint_limit_max_torque;
+            if (friction.has_value()) params.friction = friction.value();
+            return std::make_shared<SimpleTorqueMotion>(params);
+          }),
+          R"doc(Construct a direct joint torque controller.
+
+The motion applies the joint torques it is given, without any feedback law on top. Until
+the first call to set_torque, it applies initial_torque (zero by default). Afterwards, it
+applies the last torque published with set_torque, analogous to how the references of the
+impedance motions are updated.
+
+As the robot is not commanded by any controller in between torque signals, the motion
+terminates with a TorqueSignalTimeoutException if no new torque arrives within
+signal_timeout seconds (0.05 by default, None to disable). Hence, set_torque has to be
+called regularly, even if the torque does not change.
+
+Note that the commanded torques are still subject to the torque rate limit max_delta_tau,
+so large steps are ramped in over multiple cycles.)doc",
+          "initial_torque"_a = std::nullopt,
+          "signal_timeout"_a = 0.05,
+          "compensate_coriolis"_a = false,
+          "max_delta_tau"_a = 1.0,
+          "lower_joint_limits"_a = std::nullopt,
+          "upper_joint_limits"_a = std::nullopt,
+          "joint_limit_activation_distance"_a = 0.1,
+          "joint_limit_stiffness"_a = 4.0,
+          "joint_limit_damping"_a = 1.0,
+          "joint_limit_max_torque"_a = 5.0,
+          "friction"_a = std::nullopt)
+      .def_property_readonly(
+          "params", [](const SimpleTorqueMotion &m) { return m.params(); }, DOC(franky, SimpleTorqueMotion, params))
+      .def("get_torque", &SimpleTorqueMotion::getTorque, DOC(franky, SimpleTorqueMotion, getTorque))
+      .def("set_torque", &SimpleTorqueMotion::setTorque, "torque"_a, DOC(franky, SimpleTorqueMotion, setTorque));
 }

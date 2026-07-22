@@ -90,5 +90,7 @@ void bind_errors(py::module &m) {
       DOC(franky, MotionReuseException);
   py::register_exception<ReactionRecursionException>(m, "ReactionRecursionException").attr("__doc__") =
       DOC(franky, ReactionRecursionException);
+  py::register_exception<TorqueSignalTimeoutException>(m, "TorqueSignalTimeoutException").attr("__doc__") =
+      DOC(franky, TorqueSignalTimeoutException);
   py::register_exception<GripperException>(m, "GripperException").attr("__doc__") = DOC(franky, GripperException);
 }

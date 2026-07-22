@@ -6090,6 +6090,59 @@ static const char *mkd_doc_franky_Robot_translation_jerk_limit = R"doc(Translati
 
 static const char *mkd_doc_franky_Robot_translation_velocity_limit = R"doc(Translational velocity limit [m/s].)doc";
 
+static const char *mkd_doc_franky_SimpleTorqueMotion =
+    R"doc(Direct joint torque control with a signal watchdog.
+
+This motion applies the joint torques it is given, without any feedback law on top. Until the first
+torque signal arrives, it applies SimpleTorqueParams::initial_torque. New torques are published with
+setTorque from a user thread, analogous to how the references of the impedance motions are updated,
+and are picked up by the control loop in the next cycle.
+
+As the robot is not commanded by any controller in between torque signals, the motion terminates
+with a TorqueSignalTimeoutException if no new torque arrives within
+SimpleTorqueParams::signal_timeout (50ms by default). Hence, the torque has to be updated regularly,
+even if it does not change.
+
+Note that the commanded torques are still subject to the torque rate limit
+(TorqueSafetyParams::max_delta_tau), so large steps are ramped in over multiple cycles.)doc";
+
+static const char *mkd_doc_franky_SimpleTorqueMotion_getTorque =
+    R"doc(Get a copy of the last published torque [Nm], or the initial torque if no torque has been published
+yet.)doc";
+
+static const char *mkd_doc_franky_SimpleTorqueMotion_params = R"doc(The parameters of the motion.)doc";
+
+static const char *mkd_doc_franky_SimpleTorqueMotion_setTorque =
+    R"doc(Set the torque applied by the motion [Nm].
+
+The torque is validated and picked up by the control loop in the next cycle. It also resets the
+watchdog, so this function has to be called at least every SimpleTorqueParams::signal_timeout
+seconds while the motion is running.
+
+Args:
+    torque: The new joint torques [Nm].
+
+)doc";
+
+static const char *mkd_doc_franky_SimpleTorqueParams = R"doc(Parameters for SimpleTorqueMotion.)doc";
+
+static const char *mkd_doc_franky_SimpleTorqueParams_compensate_coriolis =
+    R"doc(Compensate Coriolis forces using the robot model.)doc";
+
+static const char *mkd_doc_franky_SimpleTorqueParams_friction = R"doc(Joint friction compensation settings.)doc";
+
+static const char *mkd_doc_franky_SimpleTorqueParams_initial_torque =
+    R"doc(Torque applied until the first torque signal arrives [Nm].)doc";
+
+static const char *mkd_doc_franky_SimpleTorqueParams_safety =
+    R"doc(Shared torque safety limits and soft joint-limit repulsion settings.)doc";
+
+static const char *mkd_doc_franky_SimpleTorqueParams_signal_timeout =
+    R"doc(Maximum duration [s] the motion tolerates without receiving a new torque signal before it terminates
+with a TorqueSignalTimeoutException. The watchdog is armed when the motion starts, so the initial
+torque is only held for this duration as well. Set to nullopt to disable the watchdog and hold the
+last commanded torque indefinitely.)doc";
+
 static const char *mkd_doc_franky_StopMotion = R"doc()doc";
 
 static const char *mkd_doc_franky_StopMotion_2 = R"doc(Stop motion for joint position control mode.)doc";
@@ -6163,6 +6216,9 @@ static const char *mkd_doc_franky_TorqueSafetyParams_max_delta_tau =
 
 static const char *mkd_doc_franky_TorqueSafetyParams_upper_joint_limits =
     R"doc(Upper soft joint limits in [rad]. Joint-limit repulsion is active when both limits are set.)doc";
+
+static const char *mkd_doc_franky_TorqueSignalTimeoutException =
+    R"doc(Thrown when a SimpleTorqueMotion does not receive a new torque signal in time.)doc";
 
 static const char *mkd_doc_franky_TorqueStopParams =
     R"doc(Parameters for the torque-control stop motion (StopMotion<franka::Torques>).)doc";

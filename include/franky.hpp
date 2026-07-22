@@ -23,6 +23,7 @@
 #include "franky/motion/position_waypoint_motion.hpp"
 #include "franky/motion/reaction.hpp"
 #include "franky/motion/reference_type.hpp"
+#include "franky/motion/simple_torque_motion.hpp"
 #include "franky/motion/stop_motion.hpp"
 #include "franky/motion/waypoint_motion.hpp"
 #include "franky/robot.hpp"

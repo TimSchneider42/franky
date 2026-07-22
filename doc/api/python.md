@@ -166,6 +166,8 @@ See the [Impedance Control](../guide/impedance-control.md) chapter of the guide 
    TorqueSafetyParams
    TorqueStopMotion
    TorqueStopParams
+   SimpleTorqueMotion
+   SimpleTorqueParams
 ```
 
 ## Reactions
@@ -250,6 +252,7 @@ See the [Web Interface API](../guide/desk.md) chapter of the guide for an introd
    ProtocolException
    ReactionRecursionException
    RealtimeException
+   TorqueSignalTimeoutException
    DeskError
    FrankaAPIError
    TakeControlTimeoutError

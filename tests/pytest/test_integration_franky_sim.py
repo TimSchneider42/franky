@@ -4,12 +4,11 @@ Integration tests using franky to control the simulated FR3 robot.
 Each test spins up a Mujoco-backed SimulationServer, connects with franky's Robot,
 executes motions covering every joint / Cartesian direction, and asserts the robot
 reached the expected pose.
-
-Torque control is intentionally excluded (out of scope per the task description).
 """
 
 from __future__ import annotations
 
+import time
 from contextlib import contextmanager
 
 import franky
@@ -498,6 +497,102 @@ def test_cartesian_impedance_tracker():
             atol=CART_ATOL,
             err_msg="Position out of tolerance for CartesianImpedanceTracker",
         )
+
+
+# ---------------------------------------------------------------------------
+# Test 8b - Simple torque control
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.timeout(30)
+def test_simple_torque_motion():
+    """
+    Feed torques to a running SimpleTorqueMotion and verify the robot follows them.
+    Joint 1 rotates about the vertical axis, so gravity does not bias the result.
+    """
+    torque = np.zeros(7)
+    torque[0] = 2.0
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
+        q_initial = np.array(robot.current_joint_state.position)
+
+        # A timeout well above the feed rate, as this test is about the torques
+        # themselves and Python is not a real-time environment.
+        motion = franky.SimpleTorqueMotion(signal_timeout=0.2)
+        robot.move(motion, asynchronous=True)
+
+        for _ in range(100):
+            motion.set_torque(torque)
+            time.sleep(0.01)
+
+        np.testing.assert_allclose(motion.get_torque(), torque)
+
+        # Torque motions never finish on their own; TorqueStopMotion ends them cleanly.
+        robot.move(franky.TorqueStopMotion(), asynchronous=True)
+        robot.join_motion()
+
+        q_final = np.array(robot.current_joint_state.position)
+        assert q_final[0] > q_initial[0] + 0.05, (
+            f"Joint 1 did not follow the commanded torque "
+            f"(Δq = {q_final[0] - q_initial[0]:.4f})"
+        )
+
+
+# ---------------------------------------------------------------------------
+# Test 8c - Simple torque control initial torque
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.timeout(30)
+def test_simple_torque_motion_initial_torque():
+    """
+    Without a signal timeout, SimpleTorqueMotion holds its initial torque
+    indefinitely, so the robot moves without any call to set_torque.
+    """
+    initial_torque = np.zeros(7)
+    initial_torque[0] = -2.0
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
+        q_initial = np.array(robot.current_joint_state.position)
+
+        motion = franky.SimpleTorqueMotion(
+            initial_torque=initial_torque, signal_timeout=None
+        )
+        robot.move(motion, asynchronous=True)
+        time.sleep(1.0)
+
+        robot.move(franky.TorqueStopMotion(), asynchronous=True)
+        robot.join_motion()
+
+        q_final = np.array(robot.current_joint_state.position)
+        assert q_final[0] < q_initial[0] - 0.05, (
+            f"Joint 1 did not follow the initial torque "
+            f"(Δq = {q_final[0] - q_initial[0]:.4f})"
+        )
+
+
+# ---------------------------------------------------------------------------
+# Test 8d - Simple torque control signal watchdog
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.timeout(30)
+def test_simple_torque_motion_signal_timeout():
+    """
+    A SimpleTorqueMotion that stops receiving torque signals must terminate with a
+    TorqueSignalTimeoutException shortly after the default timeout of 50 ms elapsed.
+    """
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
+
+        motion = franky.SimpleTorqueMotion()
+        robot.move(motion, asynchronous=True)
+
+        start_time = time.monotonic()
+        with pytest.raises(franky.TorqueSignalTimeoutException):
+            robot.join_motion()
+        elapsed = time.monotonic() - start_time
+        assert elapsed < 2.0, f"Watchdog took too long to fire ({elapsed:.3f}s)"
 
 
 # ---------------------------------------------------------------------------
