@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - master
+      - dev
   workflow_dispatch:
 
 concurrency:
-  group: dev-build
+  group: dev-build-${{ github.ref_name }}
   cancel-in-progress: true
 
 jobs:
@@ -62,21 +63,30 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          if [ "$GITHUB_REF_NAME" = master ]; then
+            release_tag=dev-release
+            release_title="Development (stable)"
+            index_path=whl
+          else
+            release_tag=unstable-release
+            release_title="Development (unstable)"
+            index_path="branches/${GITHUB_REF_NAME}/whl"
+          fi
           IFS=. read -r major minor patch < VERSION
           wheel_version="${major}.${minor}.$((patch + 1)).dev${{ needs.get-build-info.outputs.build-number }}+g${{ needs.get-build-info.outputs.commit-hash }}"
           pages_url="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}"
-          gh release delete dev-release --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag || true
-          gh release create dev-release \
+          gh release delete "$release_tag" --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag || true
+          gh release create "$release_tag" \
             --repo "$GITHUB_REPOSITORY" \
             --target "$GITHUB_SHA" \
             --prerelease \
-            --title "Development build" \
-            --notes "Automatic build of the latest \`master\` (${GITHUB_SHA}).
+            --title "$release_title" \
+            --notes "Automatic build of the latest \`${GITHUB_REF_NAME}\` (${GITHUB_SHA}).
 
-          Wheel version: \`${wheel_version}.libfranka.<libfranka version>\`, where \`<libfranka version>\` is the libfranka version the wheel was built against. Wheels are provided for all supported libfranka versions and can be installed via the [package index](${pages_url}/whl/):
+          Wheel version: \`${wheel_version}.libfranka.<libfranka version>\`, where \`<libfranka version>\` is the libfranka version the wheel was built against. Wheels are provided for all supported libfranka versions and can be installed via the [package index](${pages_url}/${index_path}/):
 
           \`\`\`bash
-          pip install --pre franky-control --extra-index-url ${pages_url}/whl/libfranka-<libfranka version>/
+          pip install --pre franky-control --extra-index-url ${pages_url}/${index_path}/libfranka-<libfranka version>/
           \`\`\`" \
             wheels/*.whl
 

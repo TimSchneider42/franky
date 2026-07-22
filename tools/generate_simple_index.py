@@ -21,6 +21,10 @@ libfranka version) and are deliberately not indexed here, as PyPI already serves
 them. Labelled wheels outrank the PyPI wheel of the same version, so a sub-index
 always takes precedence over PyPI where it applies.
 
+Releases can be filtered by tag with --only-tag/--exclude-tag, which is used to build
+per-branch indexes (branches/<branch>/whl/) from that branch's rolling pre-release
+while keeping its wheels out of the main index.
+
 Only uses the Python standard library. Authenticates with GITHUB_TOKEN or GH_TOKEN if
 set (recommended, to avoid API rate limits).
 """
@@ -241,6 +245,19 @@ def main():
         default=None,
         help="Read releases from this JSON file instead of the GitHub API (for testing)",
     )
+    parser.add_argument(
+        "--only-tag",
+        action="append",
+        metavar="TAG",
+        help="Only index wheels from releases with these tags (repeatable)",
+    )
+    parser.add_argument(
+        "--exclude-tag",
+        action="append",
+        default=[],
+        metavar="TAG",
+        help="Skip releases with these tags (repeatable)",
+    )
     args = parser.parse_args()
 
     if args.releases_json is not None:
@@ -250,6 +267,10 @@ def main():
             parser.error("--repository is required if $GITHUB_REPOSITORY is not set")
         token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
         releases = fetch_releases(args.repository, token=token)
+
+    if args.only_tag is not None:
+        releases = [r for r in releases if r.get("tag_name") in args.only_tag]
+    releases = [r for r in releases if r.get("tag_name") not in args.exclude_tag]
 
     libfranka_versions = json.loads(args.libfranka_versions_file.read_text())[
         "versions"

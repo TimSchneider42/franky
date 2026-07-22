@@ -1,7 +1,9 @@
 name: Update package index
 
-# Regenerates the PEP 503 package index on gh-pages (under whl/) from the wheels
-# attached to the GitHub releases
+# Regenerates the PEP 503 package indexes on gh-pages from the wheels attached to the
+# GitHub releases: the main index (whl/) with the stable releases and master dev
+# builds, plus one index per branch (branches/<branch>/whl/) with only that branch's
+# rolling pre-release
 
 on:
   workflow_call:
@@ -21,15 +23,33 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Generate package index
+      - name: Generate package indexes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python3 tools/generate_simple_index.py --output whl-index
+        run: |
+          python3 tools/generate_simple_index.py --output whl-index --exclude-tag unstable-release
+          python3 tools/generate_simple_index.py --output branch-index/master --only-tag dev-release
+          python3 tools/generate_simple_index.py --output branch-index/dev --only-tag unstable-release
 
       - name: Deploy package index
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./whl-index
-          # Replaces only whl/, leaving the documentation at the root untouched
+          # Each deployment replaces only its destination_dir, leaving the
+          # documentation on gh-pages untouched
           destination_dir: whl
+
+      - name: Deploy master branch index
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./branch-index/master
+          destination_dir: branches/master/whl
+
+      - name: Deploy dev branch index
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./branch-index/dev
+          destination_dir: branches/dev/whl

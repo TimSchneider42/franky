@@ -80,6 +80,16 @@ pip install franky-control
 
 Otherwise, follow the [installation instructions](https://timschneider42.github.io/franky/getting-started/installation.html) first.
 
+We also provide development builds of the latest `master` (stable) and `dev` (unstable) branches:
+
+```bash
+# Replace 10 with your robot server version
+# Development (stable): latest master branch
+pip install --pre franky-control --extra-index-url "https://timschneider42.github.io/franky/whl/by-robot-server-version/10/"
+# Development (unstable): latest dev branch
+pip install --pre franky-control --extra-index-url "https://timschneider42.github.io/franky/branches/dev/whl/by-robot-server-version/10/"
+```
+
 Now we are already ready to go!
 Unlock the brakes in the web interface, activate FCI, and start coding:
 
