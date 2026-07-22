@@ -475,19 +475,28 @@ Aside from bug fixes and general performance improvements, franky provides the f
 <li><p><a class="reference internal" href="guide/reactions.html"><span class="std std-doc">Reactions allow for the registration of callbacks instead of just printing to stdout when fired.</span></a></p></li>
 <li><p><a class="reference internal" href="guide/executing-motions.html#motion-callbacks"><span class="std std-ref">Motions allow for the registration of callbacks for profiling.</span></a></p></li>
 <li><p><a class="reference internal" href="guide/robot.html#robot-state"><span class="std std-ref">The robot state is also available during control.</span></a></p></li>
-<li><p>A larger part of the libfranka API is exposed to python (e.g., <code class="docutils literal notranslate"><span class="pre">setCollisionBehavior</span></code>, <code class="docutils literal notranslate"><span class="pre">setJoinImpedance</span></code>, and
+<li><p>A larger part of the libfranka API is exposed to python (e.g., <code class="docutils literal notranslate"><span class="pre">setCollisionBehavior</span></code>, <code class="docutils literal notranslate"><span class="pre">setJointImpedance</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">setCartesianImpedance</span></code>).</p></li>
 <li><p>Cartesian motion generation handles boundaries in Euler angles properly.</p></li>
-<li><p><a class="reference internal" href="guide/trajectory-control.html"><span class="std std-doc">There is a new joint motion type that supports waypoints.</span></a></p></li>
+<li><p><a class="reference internal" href="guide/trajectory-control.html"><span class="std std-doc">Motions in both joint and Cartesian space support waypoints with target velocities.</span></a></p></li>
+<li><p>franky supports <a class="reference internal" href="guide/trajectory-control.html#joint-velocity-control"><span class="std std-ref">joint velocity control</span></a>
+and <a class="reference internal" href="guide/trajectory-control.html#cartesian-velocity-control"><span class="std std-ref">cartesian velocity control</span></a>.</p></li>
+<li><p><a class="reference internal" href="guide/impedance-control.html"><span class="std std-doc">franky provides client-side joint and Cartesian impedance controllers</span></a>, including
+tracking variants whose references and gains can be updated in real time.</p></li>
+<li><p><a class="reference internal" href="guide/torque-control.html"><span class="std std-doc">Joint torques can be commanded directly</span></a> with <code class="docutils literal notranslate"><span class="pre">SimpleTorqueMotion</span></code>.</p></li>
+<li><p><a class="reference internal" href="guide/robot.html#robot-state"><span class="std std-ref">The robot’s kinematics model is accessible</span></a> for computing forward kinematics and
+Jacobians, and the robot’s URDF model can be retrieved.</p></li>
+<li><p><a class="reference internal" href="guide/desk.html"><span class="std std-doc">The Franka Desk API can be accessed programmatically</span></a>, e.g., to unlock the brakes, enable the FCI,
+or run the safety self-test.</p></li>
+<li><p><a class="reference internal" href="guide/simulation.html"><span class="std std-doc">franky can be used with the franky-sim simulator</span></a>, a drop-in replacement for the real robot.</p></li>
 <li><p><a class="reference internal" href="guide/geometry.html"><span class="std std-doc">The signature of <code class="docutils literal notranslate"><span class="pre">Affine</span></code> changed.</span></a> <code class="docutils literal notranslate"><span class="pre">Affine</span></code> does not handle elbow positions anymore.
 Instead, a new class <code class="docutils literal notranslate"><span class="pre">RobotPose</span></code> stores both the end-effector pose and optionally the elbow position.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">MotionData</span></code> class does not exist anymore.
 Instead, reactions and other settings moved to <code class="docutils literal notranslate"><span class="pre">Motion</span></code>.</p></li>
 <li><p><a class="reference internal" href="guide/reactions.html"><span class="std std-doc">The <code class="docutils literal notranslate"><span class="pre">Measure</span></code> class allows for arithmetic operations.</span></a></p></li>
 <li><p>Exceptions caused by libfranka are raised properly instead of being printed to stdout.</p></li>
-<li><p><a class="reference internal" href="getting-started/installation.html"><span class="std std-doc">We provide wheels for both Franka Research 3 and the older Franka Panda</span></a></p></li>
-<li><p>franky supports <a class="reference internal" href="guide/trajectory-control.html#joint-velocity-control"><span class="std std-ref">joint velocity control</span></a>
-and <a class="reference internal" href="guide/trajectory-control.html#cartesian-velocity-control"><span class="std std-ref">cartesian velocity control</span></a></p></li>
+<li><p><a class="reference internal" href="getting-started/installation.html"><span class="std std-doc">We provide wheels for a wide range of libfranka versions</span></a>, supporting both the
+Franka Research 3 and the older Franka Panda.</p></li>
 <li><p>The dynamics limits are not hard-coded anymore but can be <a class="reference internal" href="guide/robot.html"><span class="std std-doc">set for each robot instance</span></a>.</p></li>
 </ul>
 </section>
