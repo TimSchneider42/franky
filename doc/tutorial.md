@@ -12,5 +12,5 @@ Its chapters are now maintained under [`doc/guide/`](guide/index.md):
 * [Real-time reactions](guide/reactions.md)
 * [Real-time motions](guide/realtime-motions.md)
 * [Gripper](guide/gripper.md)
-* [Web interface (Desk) API](guide/desk.md)
+* [Desk API](guide/desk.md)
 * [Simulation](guide/simulation.md)

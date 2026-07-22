@@ -209,10 +209,10 @@ See the [Gripper](../guide/gripper.md) chapter of the guide for an introduction.
    BoolFuture
 ```
 
-## Desk Web Interface
+## Desk API
 
 Programmatic access to the Franka Desk web interface.
-See the [Web Interface API](../guide/desk.md) chapter of the guide for an introduction.
+See the [Desk API](../guide/desk.md) chapter of the guide for an introduction.
 
 ```{eval-rst}
 .. currentmodule:: franky
