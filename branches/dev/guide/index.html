@@ -212,6 +212,7 @@
 <li class="toctree-l2"><a class="reference internal" href="robot.html">🤖 Robot</a></li>
 <li class="toctree-l2"><a class="reference internal" href="motion-types.html">🏃‍♂️ Motion Types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="impedance-control.html">🫨 Impedance Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torque-control.html">💪 Torque Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="executing-motions.html">🎬 Executing Motions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reactions.html">⚡ Real-Time Reactions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="realtime-motions.html">⏱️ Real-Time Motions</a></li>
@@ -298,6 +299,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.TorqueSafetyParams.html">franky.TorqueSafetyParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.TorqueStopMotion.html">franky.TorqueStopMotion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.TorqueStopParams.html">franky.TorqueStopParams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.SimpleTorqueMotion.html">franky.SimpleTorqueMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.SimpleTorqueParams.html">franky.SimpleTorqueParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.Reaction.html">franky.Reaction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.Condition.html">franky.Condition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.Measure.html">franky.Measure</a></li>
@@ -329,6 +332,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.ProtocolException.html">franky.ProtocolException</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.ReactionRecursionException.html">franky.ReactionRecursionException</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.RealtimeException.html">franky.RealtimeException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.TorqueSignalTimeoutException.html">franky.TorqueSignalTimeoutException</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.DeskError.html">franky.DeskError</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.FrankaAPIError.html">franky.FrankaAPIError</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.TakeControlTimeoutError.html">franky.TakeControlTimeoutError</a></li>
@@ -436,6 +440,13 @@ types, how to implement real-time reactions and changing waypoints in real time,
 <li class="toctree-l2"><a class="reference internal" href="impedance-control.html#joint-impedance-control">Joint Impedance Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="impedance-control.html#cartesian-impedance-control">Cartesian Impedance Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="impedance-control.html#ending-a-torque-motion">Ending a Torque Motion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="torque-control.html">💪 Torque Control</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="torque-control.html#the-signal-watchdog">The Signal Watchdog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torque-control.html#initial-torque">Initial Torque</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torque-control.html#safety-limits">Safety Limits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torque-control.html#ending-the-motion">Ending the Motion</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="executing-motions.html">🎬 Executing Motions</a><ul>

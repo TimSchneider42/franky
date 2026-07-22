@@ -48,6 +48,7 @@ geometry
 robot
 motion-types
 impedance-control
+torque-control
 executing-motions
 reactions
 realtime-motions

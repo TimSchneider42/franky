@@ -210,6 +210,7 @@
 <li class="toctree-l2"><a class="reference internal" href="guide/robot.html">🤖 Robot</a></li>
 <li class="toctree-l2"><a class="reference internal" href="guide/motion-types.html">🏃‍♂️ Motion Types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="guide/impedance-control.html">🫨 Impedance Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/torque-control.html">💪 Torque Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="guide/executing-motions.html">🎬 Executing Motions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="guide/reactions.html">⚡ Real-Time Reactions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="guide/realtime-motions.html">⏱️ Real-Time Motions</a></li>
@@ -296,6 +297,8 @@
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.TorqueSafetyParams.html">franky.TorqueSafetyParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.TorqueStopMotion.html">franky.TorqueStopMotion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.TorqueStopParams.html">franky.TorqueStopParams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.SimpleTorqueMotion.html">franky.SimpleTorqueMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.SimpleTorqueParams.html">franky.SimpleTorqueParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Reaction.html">franky.Reaction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Condition.html">franky.Condition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.Measure.html">franky.Measure</a></li>
@@ -327,6 +330,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.ProtocolException.html">franky.ProtocolException</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.ReactionRecursionException.html">franky.ReactionRecursionException</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.RealtimeException.html">franky.RealtimeException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.TorqueSignalTimeoutException.html">franky.TorqueSignalTimeoutException</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.DeskError.html">franky.DeskError</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.FrankaAPIError.html">franky.FrankaAPIError</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.TakeControlTimeoutError.html">franky.TakeControlTimeoutError</a></li>
@@ -533,6 +537,10 @@
 </li>
           <li><a href="api/generated/franky.RobotVelocity.html#franky.RobotVelocity.__init__">(franky.RobotVelocity method)</a>
 </li>
+          <li><a href="api/generated/franky.SimpleTorqueMotion.html#franky.SimpleTorqueMotion.__init__">(franky.SimpleTorqueMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.SimpleTorqueParams.html#franky.SimpleTorqueParams.__init__">(franky.SimpleTorqueParams method)</a>
+</li>
           <li><a href="api/generated/franky.TorqueReaction.html#franky.TorqueReaction.__init__">(franky.TorqueReaction method)</a>
 </li>
           <li><a href="api/generated/franky.Torques.html#franky.Torques.__init__">(franky.Torques method)</a>
@@ -610,6 +618,8 @@
           <li><a href="api/generated/franky.JointVelocityWaypointMotion.html#franky.JointVelocityWaypointMotion.add_reaction">(franky.JointVelocityWaypointMotion method)</a>
 </li>
           <li><a href="api/generated/franky.JointWaypointMotion.html#franky.JointWaypointMotion.add_reaction">(franky.JointWaypointMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.SimpleTorqueMotion.html#franky.SimpleTorqueMotion.add_reaction">(franky.SimpleTorqueMotion method)</a>
 </li>
           <li><a href="api/generated/franky.TorqueStopMotion.html#franky.TorqueStopMotion.add_reaction">(franky.TorqueStopMotion method)</a>
 </li>
@@ -805,6 +815,8 @@
         <li><a href="api/generated/franky.JointImpedanceParams.html#franky.JointImpedanceParams.compensate_coriolis">compensate_coriolis (franky.JointImpedanceParams property)</a>
 
         <ul>
+          <li><a href="api/generated/franky.SimpleTorqueParams.html#franky.SimpleTorqueParams.compensate_coriolis">(franky.SimpleTorqueParams property)</a>
+</li>
           <li><a href="api/generated/franky.TorqueStopParams.html#franky.TorqueStopParams.compensate_coriolis">(franky.TorqueStopParams property)</a>
 </li>
         </ul></li>
@@ -1072,10 +1084,10 @@
           <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.force_constraints">(franky.CartesianImpedanceParams property)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/generated/franky.Errors.html#franky.Errors.force_control_safety_violation">force_control_safety_violation (franky.Errors property)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/generated/franky.Errors.html#franky.Errors.force_controller_desired_force_tolerance_violation">force_controller_desired_force_tolerance_violation (franky.Errors property)</a>
 </li>
         <li><a href="api/generated/franky.Measure.html#franky.Measure.FORCE_X">FORCE_X (franky.Measure attribute)</a>
@@ -1094,6 +1106,8 @@
           <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.friction">(franky.CartesianImpedanceParams property)</a>
 </li>
           <li><a href="api/generated/franky.JointImpedanceParams.html#franky.JointImpedanceParams.friction">(franky.JointImpedanceParams property)</a>
+</li>
+          <li><a href="api/generated/franky.SimpleTorqueParams.html#franky.SimpleTorqueParams.friction">(franky.SimpleTorqueParams property)</a>
 </li>
         </ul></li>
         <li><a href="api/generated/franky.FrictionCompensationParams.html#franky.FrictionCompensationParams">FrictionCompensationParams (class in franky)</a>
@@ -1158,6 +1172,8 @@
           <li><a href="api/generated/franky.JointImpedanceTrackingMotion.html#franky.JointImpedanceTrackingMotion.get_reference">(franky.JointImpedanceTrackingMotion method)</a>
 </li>
         </ul></li>
+        <li><a href="api/generated/franky.SimpleTorqueMotion.html#franky.SimpleTorqueMotion.get_torque">get_torque() (franky.SimpleTorqueMotion method)</a>
+</li>
         <li><a href="api/generated/franky.Gripper.html#franky.Gripper.grasp">grasp() (franky.Gripper method)</a>
 </li>
         <li><a href="api/generated/franky.Gripper.html#franky.Gripper.grasp_async">grasp_async() (franky.Gripper method)</a>
@@ -1236,14 +1252,16 @@
 </li>
         <li><a href="api/generated/franky.IncompatibleVersionException.html#franky.IncompatibleVersionException">IncompatibleVersionException</a>
 </li>
+        <li><a href="api/generated/franky.SimpleTorqueParams.html#franky.SimpleTorqueParams.initial_torque">initial_torque (franky.SimpleTorqueParams property)</a>
+</li>
         <li><a href="api/generated/franky.Errors.html#franky.Errors.instability_detected">instability_detected (franky.Errors property)</a>
 </li>
         <li><a href="api/generated/franky.InvalidMotionTypeException.html#franky.InvalidMotionTypeException">InvalidMotionTypeException</a>
 </li>
-        <li><a href="api/generated/franky.InvalidOperationException.html#franky.InvalidOperationException">InvalidOperationException</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.InvalidOperationException.html#franky.InvalidOperationException">InvalidOperationException</a>
+</li>
         <li><a href="api/generated/franky.Affine.html#franky.Affine.inverse">inverse (franky.Affine property)</a>
 </li>
         <li><a href="api/generated/franky.Gripper.html#franky.Gripper.is_grasped">is_grasped (franky.Gripper property)</a>
@@ -1663,6 +1681,8 @@
 </li>
           <li><a href="api/generated/franky.JointImpedanceTrackingMotion.html#franky.JointImpedanceTrackingMotion.params">(franky.JointImpedanceTrackingMotion property)</a>
 </li>
+          <li><a href="api/generated/franky.SimpleTorqueMotion.html#franky.SimpleTorqueMotion.params">(franky.SimpleTorqueMotion property)</a>
+</li>
         </ul></li>
         <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.password">password (franky.BaseDesk property)</a>
 
@@ -1803,6 +1823,8 @@
 </li>
           <li><a href="api/generated/franky.JointWaypointMotion.html#franky.JointWaypointMotion.reactions">(franky.JointWaypointMotion property)</a>
 </li>
+          <li><a href="api/generated/franky.SimpleTorqueMotion.html#franky.SimpleTorqueMotion.reactions">(franky.SimpleTorqueMotion property)</a>
+</li>
           <li><a href="api/generated/franky.TorqueStopMotion.html#franky.TorqueStopMotion.reactions">(franky.TorqueStopMotion property)</a>
 </li>
         </ul></li>
@@ -1884,6 +1906,8 @@
           <li><a href="api/generated/franky.JointVelocityWaypointMotion.html#franky.JointVelocityWaypointMotion.register_callback">(franky.JointVelocityWaypointMotion method)</a>
 </li>
           <li><a href="api/generated/franky.JointWaypointMotion.html#franky.JointWaypointMotion.register_callback">(franky.JointWaypointMotion method)</a>
+</li>
+          <li><a href="api/generated/franky.SimpleTorqueMotion.html#franky.SimpleTorqueMotion.register_callback">(franky.SimpleTorqueMotion method)</a>
 </li>
           <li><a href="api/generated/franky.TorqueReaction.html#franky.TorqueReaction.register_callback">(franky.TorqueReaction method)</a>
 </li>
@@ -1993,6 +2017,8 @@
 </li>
           <li><a href="api/generated/franky.JointImpedanceParams.html#franky.JointImpedanceParams.safety">(franky.JointImpedanceParams property)</a>
 </li>
+          <li><a href="api/generated/franky.SimpleTorqueParams.html#franky.SimpleTorqueParams.safety">(franky.SimpleTorqueParams property)</a>
+</li>
         </ul></li>
         <li><a href="api/generated/franky.Errors.html#franky.Errors.self_collision_avoidance_violation">self_collision_avoidance_violation (franky.Errors property)</a>
 </li>
@@ -2072,10 +2098,10 @@
 </li>
         <li><a href="api/generated/franky.Robot.html#franky.Robot.set_joint_impedance">set_joint_impedance() (franky.Robot method)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/generated/franky.Robot.html#franky.Robot.set_k">set_k() (franky.Robot method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/generated/franky.Robot.html#franky.Robot.set_load">set_load() (franky.Robot method)</a>
 </li>
         <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.set_mode_execution">set_mode_execution() (franky.BaseDesk method)</a>
@@ -2108,7 +2134,15 @@
           <li><a href="api/generated/franky.JointImpedanceTracker.html#franky.JointImpedanceTracker.set_target">(franky.JointImpedanceTracker method)</a>
 </li>
         </ul></li>
+        <li><a href="api/generated/franky.SimpleTorqueMotion.html#franky.SimpleTorqueMotion.set_torque">set_torque() (franky.SimpleTorqueMotion method)</a>
+</li>
         <li><a href="api/generated/franky.Desk.html#franky.Desk.shutdown">shutdown() (franky.Desk method)</a>
+</li>
+        <li><a href="api/generated/franky.SimpleTorqueParams.html#franky.SimpleTorqueParams.signal_timeout">signal_timeout (franky.SimpleTorqueParams property)</a>
+</li>
+        <li><a href="api/generated/franky.SimpleTorqueMotion.html#franky.SimpleTorqueMotion">SimpleTorqueMotion (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.SimpleTorqueParams.html#franky.SimpleTorqueParams">SimpleTorqueParams (class in franky)</a>
 </li>
         <li><a href="api/generated/franky.Errors.html#franky.Errors.start_elbow_sign_inconsistent">start_elbow_sign_inconsistent (franky.Errors property)</a>
 </li>
@@ -2236,10 +2270,10 @@
         </ul></li>
         <li><a href="api/generated/franky.RobotState.html#franky.RobotState.tau_J_d">tau_J_d (franky.RobotState property)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/generated/franky.Errors.html#franky.Errors.tau_j_range_violation">tau_j_range_violation (franky.Errors property)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/generated/franky.GripperState.html#franky.GripperState.temperature">temperature (franky.GripperState property)</a>
 </li>
         <li><a href="api/generated/franky.RobotState.html#franky.RobotState.theta">theta (franky.RobotState property)</a>
@@ -2277,6 +2311,8 @@
 </li>
         </ul></li>
         <li><a href="api/generated/franky.TorqueSafetyParams.html#franky.TorqueSafetyParams">TorqueSafetyParams (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.TorqueSignalTimeoutException.html#franky.TorqueSignalTimeoutException">TorqueSignalTimeoutException</a>
 </li>
         <li><a href="api/generated/franky.TorqueStopMotion.html#franky.TorqueStopMotion">TorqueStopMotion (class in franky)</a>
 </li>

@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="🎬 Executing Motions" href="executing-motions.html"><link rel="prev" title="🏃‍♂️ Motion Types" href="motion-types.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="💪 Torque Control" href="torque-control.html"><link rel="prev" title="🏃‍♂️ Motion Types" href="motion-types.html">
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
@@ -212,6 +212,7 @@
 <li class="toctree-l2"><a class="reference internal" href="robot.html">🤖 Robot</a></li>
 <li class="toctree-l2"><a class="reference internal" href="motion-types.html">🏃‍♂️ Motion Types</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">🫨 Impedance Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="torque-control.html">💪 Torque Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="executing-motions.html">🎬 Executing Motions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reactions.html">⚡ Real-Time Reactions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="realtime-motions.html">⏱️ Real-Time Motions</a></li>
@@ -298,6 +299,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.TorqueSafetyParams.html">franky.TorqueSafetyParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.TorqueStopMotion.html">franky.TorqueStopMotion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.TorqueStopParams.html">franky.TorqueStopParams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.SimpleTorqueMotion.html">franky.SimpleTorqueMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.SimpleTorqueParams.html">franky.SimpleTorqueParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.Reaction.html">franky.Reaction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.Condition.html">franky.Condition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.Measure.html">franky.Measure</a></li>
@@ -329,6 +332,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.ProtocolException.html">franky.ProtocolException</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.ReactionRecursionException.html">franky.ReactionRecursionException</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.RealtimeException.html">franky.RealtimeException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.TorqueSignalTimeoutException.html">franky.TorqueSignalTimeoutException</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.DeskError.html">franky.DeskError</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.FrankaAPIError.html">franky.FrankaAPIError</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.TakeControlTimeoutError.html">franky.TakeControlTimeoutError</a></li>
@@ -385,6 +389,8 @@
 <h1>🫨 Impedance Control<a class="headerlink" href="#impedance-control" title="Link to this heading">¶</a></h1>
 <p>In addition to the <a class="reference internal" href="motion-types.html"><span class="std std-doc">trajectory-based motion types</span></a>, franky also provides
 client-side impedance controllers in torque mode.</p>
+<p>If you want to command joint torques directly instead of using a spring-damper
+law, see <a class="reference internal" href="torque-control.html"><span class="std std-doc">Torque Control</span></a>.</p>
 <p>There are two variants for both joint-space and Cartesian impedance:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">JointImpedanceMotion</span></code> and <code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotion</span></code> are fixed-target motions.
@@ -616,12 +622,12 @@ a sustained external push can never make the stop hang.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="executing-motions.html">
+          <a class="next-page" href="torque-control.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">🎬 Executing Motions</div>
+                <div class="title">💪 Torque Control</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>

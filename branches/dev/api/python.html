@@ -212,6 +212,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../guide/robot.html">🤖 Robot</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide/motion-types.html">🏃‍♂️ Motion Types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide/impedance-control.html">🫨 Impedance Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide/torque-control.html">💪 Torque Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide/executing-motions.html">🎬 Executing Motions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide/reactions.html">⚡ Real-Time Reactions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide/realtime-motions.html">⏱️ Real-Time Motions</a></li>
@@ -298,6 +299,8 @@
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.TorqueSafetyParams.html">franky.TorqueSafetyParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.TorqueStopMotion.html">franky.TorqueStopMotion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.TorqueStopParams.html">franky.TorqueStopParams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/franky.SimpleTorqueMotion.html">franky.SimpleTorqueMotion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/franky.SimpleTorqueParams.html">franky.SimpleTorqueParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.Reaction.html">franky.Reaction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.Condition.html">franky.Condition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.Measure.html">franky.Measure</a></li>
@@ -329,6 +332,7 @@
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.ProtocolException.html">franky.ProtocolException</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.ReactionRecursionException.html">franky.ReactionRecursionException</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.RealtimeException.html">franky.RealtimeException</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/franky.TorqueSignalTimeoutException.html">franky.TorqueSignalTimeoutException</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.DeskError.html">franky.DeskError</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.FrankaAPIError.html">franky.FrankaAPIError</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.TakeControlTimeoutError.html">franky.TakeControlTimeoutError</a></li>
@@ -677,6 +681,12 @@ See the <a class="reference internal" href="../guide/impedance-control.html"><sp
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/franky.TorqueStopParams.html#franky.TorqueStopParams" title="franky.TorqueStopParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TorqueStopParams</span></code></a></p></td>
 <td><p>Parameters for the torque-control stop motion (StopMotion&lt;franka::Torques&gt;).</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/franky.SimpleTorqueMotion.html#franky.SimpleTorqueMotion" title="franky.SimpleTorqueMotion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SimpleTorqueMotion</span></code></a></p></td>
+<td><p>Direct joint torque control with a signal watchdog.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/franky.SimpleTorqueParams.html#franky.SimpleTorqueParams" title="franky.SimpleTorqueParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SimpleTorqueParams</span></code></a></p></td>
+<td><p>Parameters for SimpleTorqueMotion.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -812,13 +822,16 @@ See the <a class="reference internal" href="../guide/desk.html"><span class="std
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/franky.RealtimeException.html#franky.RealtimeException" title="franky.RealtimeException"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RealtimeException</span></code></a></p></td>
 <td><p>RealtimeException is thrown if realtime priority cannot be set.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/franky.DeskError.html#franky.DeskError" title="franky.DeskError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeskError</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/franky.TorqueSignalTimeoutException.html#franky.TorqueSignalTimeoutException" title="franky.TorqueSignalTimeoutException"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TorqueSignalTimeoutException</span></code></a></p></td>
+<td><p>Thrown when a SimpleTorqueMotion does not receive a new torque signal in time.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/franky.DeskError.html#franky.DeskError" title="franky.DeskError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeskError</span></code></a></p></td>
 <td><p>Base class for errors raised by the Desk classes.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/franky.FrankaAPIError.html#franky.FrankaAPIError" title="franky.FrankaAPIError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FrankaAPIError</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/franky.FrankaAPIError.html#franky.FrankaAPIError" title="franky.FrankaAPIError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FrankaAPIError</span></code></a></p></td>
 <td><p>Raised when the Franka web API returns an error response.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/franky.TakeControlTimeoutError.html#franky.TakeControlTimeoutError" title="franky.TakeControlTimeoutError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TakeControlTimeoutError</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/franky.TakeControlTimeoutError.html#franky.TakeControlTimeoutError" title="franky.TakeControlTimeoutError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TakeControlTimeoutError</span></code></a></p></td>
 <td><p>Raised when control over the robot could not be obtained within the timeout.</p></td>
 </tr>
 </tbody>

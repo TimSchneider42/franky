@@ -3,7 +3,7 @@ var searchData=
   ['cartesian_5fcollision_0',['cartesian_collision',['../structfranky_1_1_robot_state.html#a7a4b2dc3fd3c5bd534b77c7ff2c44a6d',1,'franky::RobotState']]],
   ['cartesian_5fcontact_1',['cartesian_contact',['../structfranky_1_1_robot_state.html#a4ea218cbe444c02ba65c9e2f2d9fb9f0',1,'franky::RobotState']]],
   ['cartesian_5fgains_2',['cartesian_gains',['../structfranky_1_1_joint_impedance_params.html#adb7c5d0cd36c975464ddbdf22cc00c2b',1,'franky::JointImpedanceParams']]],
-  ['compensate_5fcoriolis_3',['compensate_coriolis',['../structfranky_1_1_joint_impedance_params.html#a52ee599019fcecb061c6e8ec6bcc9cbf',1,'franky::JointImpedanceParams::compensate_coriolis'],['../structfranky_1_1_torque_stop_params.html#a05633c28474ed1783c03e645c090d9d0',1,'franky::TorqueStopParams::compensate_coriolis']]],
+  ['compensate_5fcoriolis_3',['compensate_coriolis',['../structfranky_1_1_joint_impedance_params.html#a52ee599019fcecb061c6e8ec6bcc9cbf',1,'franky::JointImpedanceParams::compensate_coriolis'],['../structfranky_1_1_simple_torque_params.html#a0577c5ce144aa4cb5fbc3716224c5607',1,'franky::SimpleTorqueParams::compensate_coriolis'],['../structfranky_1_1_torque_stop_params.html#a05633c28474ed1783c03e645c090d9d0',1,'franky::TorqueStopParams::compensate_coriolis']]],
   ['constant_5ftorque_5foffset_4',['constant_torque_offset',['../structfranky_1_1_joint_impedance_params.html#abc6ae9079e37ec656a5faca7416d635a',1,'franky::JointImpedanceParams']]],
   ['control_5fcommand_5fsuccess_5frate_5',['control_command_success_rate',['../structfranky_1_1_robot_state.html#a9f615eac9283d889c0b4dfe2a4ecc5c5',1,'franky::RobotState']]],
   ['control_5frate_6',['control_rate',['../classfranky_1_1_robot.html#a3155de462f5590cc67b2874acf846f53',1,'franky::Robot']]],

@@ -3,6 +3,9 @@
 In addition to the [trajectory-based motion types](motion-types.md), franky also provides
 client-side impedance controllers in torque mode.
 
+If you want to command joint torques directly instead of using a spring-damper
+law, see [Torque Control](torque-control.md).
+
 There are two variants for both joint-space and Cartesian impedance:
 
 - `JointImpedanceMotion` and `CartesianImpedanceMotion` are fixed-target motions.

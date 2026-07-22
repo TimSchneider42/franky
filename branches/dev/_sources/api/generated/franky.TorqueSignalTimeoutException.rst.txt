@@ -1,0 +1,6 @@
+﻿franky.TorqueSignalTimeoutException
+===================================
+
+.. currentmodule:: franky
+
+.. autoexception:: TorqueSignalTimeoutException
