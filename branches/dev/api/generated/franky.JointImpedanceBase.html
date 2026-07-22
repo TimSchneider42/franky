@@ -217,7 +217,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../guide/reactions.html">⚡ Real-Time Reactions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../guide/realtime-motions.html">⏱️ Real-Time Motions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../guide/gripper.html">👌 Gripper</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../guide/desk.html">🖳 Accessing the Web Interface API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide/desk.html">🖳 Accessing the Desk API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../guide/simulation.html">🖥️ Simulating the Robot</a></li>
 </ul>
 </li>
@@ -411,6 +411,12 @@ motion.</p>
 <dd class="field-odd"><p><strong>reaction</strong> – The reaction to add.</p>
 </dd>
 </dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do not call this function synchronously from a condition, motion function, or reaction callback
+while this motion’s reactions are being evaluated. Reaction evaluation holds the reaction-list
+mutex, so doing so would deadlock.</p>
+</div>
 </dd></dl>
 
 <dl class="py method">

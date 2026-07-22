@@ -217,7 +217,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../guide/reactions.html">⚡ Real-Time Reactions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../guide/realtime-motions.html">⏱️ Real-Time Motions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../guide/gripper.html">👌 Gripper</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../guide/desk.html">🖳 Accessing the Web Interface API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide/desk.html">🖳 Accessing the Desk API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../guide/simulation.html">🖥️ Simulating the Robot</a></li>
 </ul>
 </li>
@@ -417,13 +417,16 @@ infinite.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="franky.CartesianWaypoint.minimum_time">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">minimum_time</span></span><a class="headerlink" href="#franky.CartesianWaypoint.minimum_time" title="Link to this definition">¶</a></dt>
-<dd><p>The minimum time to get to the next waypoint.</p>
+<dd><p>The minimum time to reach this waypoint. This value is ignored when the effective relative dynamics
+factor has max_dynamics() set.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="franky.CartesianWaypoint.reference_type">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">reference_type</span></span><a class="headerlink" href="#franky.CartesianWaypoint.reference_type" title="Link to this definition">¶</a></dt>
-<dd><p>The reference type (absolute or relative).</p>
+<dd><p>The reference type (absolute or relative). A relative waypoint is resolved against the preceding
+waypoint’s target. The first relative waypoint is resolved against the motion’s initial commanded
+position. This remains true if max_total_duration advances past a waypoint before it is reached.</p>
 </dd></dl>
 
 <dl class="py property">

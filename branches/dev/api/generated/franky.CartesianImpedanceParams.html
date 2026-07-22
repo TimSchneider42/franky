@@ -217,7 +217,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../guide/reactions.html">⚡ Real-Time Reactions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../guide/realtime-motions.html">⏱️ Real-Time Motions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../guide/gripper.html">👌 Gripper</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../guide/desk.html">🖳 Accessing the Web Interface API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide/desk.html">🖳 Accessing the Desk API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../guide/simulation.html">🖥️ Simulating the Robot</a></li>
 </ul>
 </li>
@@ -419,7 +419,9 @@
 <dt class="sig sig-object py" id="franky.CartesianImpedanceParams.nullspace_tasks">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">nullspace_tasks</span></span><a class="headerlink" href="#franky.CartesianImpedanceParams.nullspace_tasks" title="Link to this definition">¶</a></dt>
 <dd><p>Nullspace objectives.</p>
-<p>Each task contributes a joint-space torque that is summed and projected into the Jacobian nullspace.</p>
+<p>Each task contributes a joint-space torque that is summed and projected into the Jacobian nullspace.
+At most one task of each concrete type is supported because runtime-adjustable gains are shared by
+task type.</p>
 </dd></dl>
 
 <dl class="py property">

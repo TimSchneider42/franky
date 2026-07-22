@@ -1,11 +1,11 @@
-# 🖳 Accessing the Web Interface API
+# 🖳 Accessing the Desk API
 
 For Franka robots, control happens via the Franka Control Interface (FCI), which has to be enabled through the Franka UI in the robot's web interface.
 The Franka UI also provides methods for locking and unlocking the brakes, setting the execution mode, and executing the safety self-test.
 However, sometimes you may want to access these methods programmatically, e.g., for automatically unlocking the brakes before starting a motion, or automatically executing the self-test after 24h of continuous execution.
 
 For that reason, franky provides two classes that allow you to programmatically access these features: `Desk` (for the current Franka Desk API v1) and `DeskWebSession` (for older firmwares).
-Note that `DeskWebSession` directly accesses the web interface API is not officially supported and documented by Franka.
+Note that `DeskWebSession` directly accesses the web interface API, which is not officially supported or documented by Franka.
 Hence, use this feature at your own risk.
 
 A typical automated workflow could look like this:

@@ -8,7 +8,7 @@ var searchData=
   ['waitfreetriplebuffer_3c_20franky_3a_3arobotstate_20_3e_5',['WaitFreeTripleBuffer&lt; franky::RobotState &gt;',['../classfranky_1_1_wait_free_triple_buffer.html',1,'franky']]],
   ['waitfreetriplebuffer_3c_20std_3a_3aoptional_3c_20cartesianreference_20_3e_20_3e_6',['WaitFreeTripleBuffer&lt; std::optional&lt; CartesianReference &gt; &gt;',['../classfranky_1_1_wait_free_triple_buffer.html',1,'franky']]],
   ['waitfreetriplebuffer_3c_20std_3a_3aoptional_3c_20jointreference_20_3e_20_3e_7',['WaitFreeTripleBuffer&lt; std::optional&lt; JointReference &gt; &gt;',['../classfranky_1_1_wait_free_triple_buffer.html',1,'franky']]],
-  ['waitfreetriplebuffer_3c_20torquecommand_20_3e_8',['WaitFreeTripleBuffer&lt; TorqueCommand &gt;',['../classfranky_1_1_wait_free_triple_buffer.html',1,'franky']]],
+  ['waitfreetriplebuffer_3c_20vector7d_20_3e_8',['WaitFreeTripleBuffer&lt; Vector7d &gt;',['../classfranky_1_1_wait_free_triple_buffer.html',1,'franky']]],
   ['waypoint_9',['Waypoint',['../structfranky_1_1_waypoint.html',1,'franky']]],
   ['waypointmotion_10',['WaypointMotion',['../classfranky_1_1_waypoint_motion.html',1,'franky']]],
   ['waypointmotion_3c_20controlsignaltype_2c_20positionwaypoint_3c_20targettype_20_3e_2c_20targettype_20_3e_11',['WaypointMotion&lt; ControlSignalType, PositionWaypoint&lt; TargetType &gt;, TargetType &gt;',['../classfranky_1_1_waypoint_motion.html',1,'franky']]],

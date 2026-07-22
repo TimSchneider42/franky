@@ -217,7 +217,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../guide/reactions.html">⚡ Real-Time Reactions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide/realtime-motions.html">⏱️ Real-Time Motions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide/gripper.html">👌 Gripper</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../guide/desk.html">🖳 Accessing the Web Interface API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide/desk.html">🖳 Accessing the Desk API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide/simulation.html">🖥️ Simulating the Robot</a></li>
 </ul>
 </li>
@@ -746,10 +746,10 @@ See the <a class="reference internal" href="../guide/gripper.html"><span class="
 </table>
 </div>
 </section>
-<section id="desk-web-interface">
-<h2>Desk Web Interface<a class="headerlink" href="#desk-web-interface" title="Link to this heading">¶</a></h2>
+<section id="desk-api">
+<h2>Desk API<a class="headerlink" href="#desk-api" title="Link to this heading">¶</a></h2>
 <p>Programmatic access to the Franka Desk web interface.
-See the <a class="reference internal" href="../guide/desk.html"><span class="std std-doc">Web Interface API</span></a> chapter of the guide for an introduction.</p>
+See the <a class="reference internal" href="../guide/desk.html"><span class="std std-doc">Desk API</span></a> chapter of the guide for an introduction.</p>
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
@@ -817,7 +817,7 @@ See the <a class="reference internal" href="../guide/desk.html"><span class="std
 <td><p>ProtocolException is thrown if the robot returns an incorrect message.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/franky.ReactionRecursionException.html#franky.ReactionRecursionException" title="franky.ReactionRecursionException"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ReactionRecursionException</span></code></a></p></td>
-<td><p>Exception thrown when the reaction recursion limit (8) is reached.</p></td>
+<td><p>Exception thrown when the reaction recursion limit (16) is reached.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/franky.RealtimeException.html#franky.RealtimeException" title="franky.RealtimeException"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RealtimeException</span></code></a></p></td>
 <td><p>RealtimeException is thrown if realtime priority cannot be set.</p></td>
@@ -908,7 +908,7 @@ See the <a class="reference internal" href="../guide/desk.html"><span class="std
 <li><a class="reference internal" href="#impedance-and-torque-control">Impedance and Torque Control</a></li>
 <li><a class="reference internal" href="#reactions">Reactions</a></li>
 <li><a class="reference internal" href="#gripper">Gripper</a></li>
-<li><a class="reference internal" href="#desk-web-interface">Desk Web Interface</a></li>
+<li><a class="reference internal" href="#desk-api">Desk API</a></li>
 <li><a class="reference internal" href="#exceptions">Exceptions</a></li>
 </ul>
 </li>

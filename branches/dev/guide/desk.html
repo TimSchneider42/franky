@@ -7,7 +7,7 @@
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>🖳 Accessing the Web Interface API - franky 1.1.4</title>
+        <title>🖳 Accessing the Desk API - franky 1.1.4</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -217,7 +217,7 @@
 <li class="toctree-l2"><a class="reference internal" href="reactions.html">⚡ Real-Time Reactions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="realtime-motions.html">⏱️ Real-Time Motions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gripper.html">👌 Gripper</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">🖳 Accessing the Web Interface API</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">🖳 Accessing the Desk API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simulation.html">🖥️ Simulating the Robot</a></li>
 </ul>
 </li>
@@ -385,13 +385,13 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section class="tex2jax_ignore mathjax_ignore" id="accessing-the-web-interface-api">
-<h1>🖳 Accessing the Web Interface API<a class="headerlink" href="#accessing-the-web-interface-api" title="Link to this heading">¶</a></h1>
+          <section class="tex2jax_ignore mathjax_ignore" id="accessing-the-desk-api">
+<h1>🖳 Accessing the Desk API<a class="headerlink" href="#accessing-the-desk-api" title="Link to this heading">¶</a></h1>
 <p>For Franka robots, control happens via the Franka Control Interface (FCI), which has to be enabled through the Franka UI in the robot’s web interface.
 The Franka UI also provides methods for locking and unlocking the brakes, setting the execution mode, and executing the safety self-test.
 However, sometimes you may want to access these methods programmatically, e.g., for automatically unlocking the brakes before starting a motion, or automatically executing the self-test after 24h of continuous execution.</p>
 <p>For that reason, franky provides two classes that allow you to programmatically access these features: <code class="docutils literal notranslate"><span class="pre">Desk</span></code> (for the current Franka Desk API v1) and <code class="docutils literal notranslate"><span class="pre">DeskWebSession</span></code> (for older firmwares).
-Note that <code class="docutils literal notranslate"><span class="pre">DeskWebSession</span></code> directly accesses the web interface API is not officially supported and documented by Franka.
+Note that <code class="docutils literal notranslate"><span class="pre">DeskWebSession</span></code> directly accesses the web interface API, which is not officially supported or documented by Franka.
 Hence, use this feature at your own risk.</p>
 <p>A typical automated workflow could look like this:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">franky</span>
@@ -527,7 +527,7 @@ Each event is returned as a <code class="docutils literal notranslate"><span cla
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">🖳 Accessing the Web Interface API</a><ul>
+<li><a class="reference internal" href="#">🖳 Accessing the Desk API</a><ul>
 <li><a class="reference internal" href="#reading-pilot-button-events">Reading Pilot Button Events</a></li>
 </ul>
 </li>

@@ -81,7 +81,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Wait-free, Single-Producer Single-Consumer (SPSC) triple buffer.  
+<p>Triple buffer connecting concurrent user threads with a single real-time thread.  
  <a href="classfranky_1_1_wait_free_triple_buffer.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="wait__free__triple__buffer_8hpp_source.html">wait_free_triple_buffer.hpp</a>&gt;</code></p>
@@ -95,17 +95,30 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6ebcdced6d6d90866ce8d4656f960fbc" id="r_a6ebcdced6d6d90866ce8d4656f960fbc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a6ebcdced6d6d90866ce8d4656f960fbc">set</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">value</a>)</td></tr>
 <tr class="memdesc:a6ebcdced6d6d90866ce8d4656f960fbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publish new data.  <br /></td></tr>
 <tr class="separator:a6ebcdced6d6d90866ce8d4656f960fbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c2ab0e955127029f82df0809baa1ff2" id="r_a8c2ab0e955127029f82df0809baa1ff2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a8c2ab0e955127029f82df0809baa1ff2">setUnsafe</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">value</a>)</td></tr>
+<tr class="memdesc:a8c2ab0e955127029f82df0809baa1ff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publish new data without taking the write mutex.  <br /></td></tr>
+<tr class="separator:a8c2ab0e955127029f82df0809baa1ff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab525b458fe799b0083270435aaeb69a0" id="r_ab525b458fe799b0083270435aaeb69a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#ab525b458fe799b0083270435aaeb69a0">getLastWritten</a> () <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a></td></tr>
 <tr class="memdesc:ab525b458fe799b0083270435aaeb69a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the most recently written value from the writer's side.  <br /></td></tr>
 <tr class="separator:ab525b458fe799b0083270435aaeb69a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f15737ddc9a8c94e2ef10932742e2c8" id="r_a3f15737ddc9a8c94e2ef10932742e2c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a3f15737ddc9a8c94e2ef10932742e2c8">getLastWrittenUnsafe</a> () <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a></td></tr>
+<tr class="memdesc:a3f15737ddc9a8c94e2ef10932742e2c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the most recently written value from the writer's side without taking the write mutex.  <br /></td></tr>
+<tr class="separator:a3f15737ddc9a8c94e2ef10932742e2c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8279fcb7a8c93a2ecf9cff8d7e873acb" id="r_a8279fcb7a8c93a2ecf9cff8d7e873acb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a8279fcb7a8c93a2ecf9cff8d7e873acb">get</a> ()</td></tr>
 <tr class="memdesc:a8279fcb7a8c93a2ecf9cff8d7e873acb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the most recently published data.  <br /></td></tr>
 <tr class="separator:a8279fcb7a8c93a2ecf9cff8d7e873acb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62350cebc1b479509db2ed1b3de90af4" id="r_a62350cebc1b479509db2ed1b3de90af4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a62350cebc1b479509db2ed1b3de90af4">hasNewData</a> () <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a></td></tr>
+<tr class="memdesc:a62350cebc1b479509db2ed1b3de90af4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the writer has published data that no reader has consumed yet.  <br /></td></tr>
+<tr class="separator:a62350cebc1b479509db2ed1b3de90af4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a097df631a04e074c86df90d8d57152c9" id="r_a097df631a04e074c86df90d8d57152c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a097df631a04e074c86df90d8d57152c9">getUnsafe</a> ()</td></tr>
+<tr class="memdesc:a097df631a04e074c86df90d8d57152c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the most recently published data without taking the read mutex.  <br /></td></tr>
+<tr class="separator:a097df631a04e074c86df90d8d57152c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a>&gt;<br />
-class franky::WaitFreeTripleBuffer&lt; T &gt;</div><p>Wait-free, Single-Producer Single-Consumer (SPSC) triple buffer. </p>
-<p>This buffer allows a single user thread to safely write data without ever blocking, and a single real-time loop to safely read the latest available data without locking or experiencing torn reads. </p>
+class franky::WaitFreeTripleBuffer&lt; T &gt;</div><p>Triple buffer connecting concurrent user threads with a single real-time thread. </p>
+<p>The core exchange is a wait-free, Single-Producer Single-Consumer (SPSC) triple buffer: one writer can publish data without ever blocking, and one reader can obtain the latest available data without locking or experiencing torn reads. On top of that, a write mutex and a read mutex serialize concurrent writers and concurrent readers, respectively, so that multiple user threads may safely share either side.</p>
+<p>The real-time thread must not take these mutexes, as it could then be blocked by user threads. Instead, it must exclusively use the unsafe variants (<a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a8c2ab0e955127029f82df0809baa1ff2" title="Publish new data without taking the write mutex.">setUnsafe()</a>, <a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a097df631a04e074c86df90d8d57152c9" title="Get the most recently published data without taking the read mutex.">getUnsafe()</a>, <a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a3f15737ddc9a8c94e2ef10932742e2c8" title="Get the most recently written value from the writer&#39;s side without taking the write mutex.">getLastWrittenUnsafe()</a>), which is safe as long as it is the only thread on its side of the buffer: all other threads on the same side must use the locking variants, and no other thread may use the unsafe variants concurrently. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="add7bca8dfe08ad556f8f929487b0976e" name="add7bca8dfe08ad556f8f929487b0976e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#add7bca8dfe08ad556f8f929487b0976e">&#9670;&#160;</a></span>WaitFreeTripleBuffer() <span class="overload">[1/2]</span></h2>
@@ -189,9 +202,8 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
 </div><div class="memdoc">
 
 <p>Get the most recently published data. </p>
-<ul>
-<li>Note: This method mutates internal read indices to securely take ownership of the newest buffer, hence it cannot be marked const. </li>
-</ul>
+<p>Takes the read mutex to serialize concurrent readers. Must not be called from the real-time thread; use <a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a097df631a04e074c86df90d8d57152c9" title="Get the most recently published data without taking the read mutex.">getUnsafe()</a> there instead.</p>
+<p>Note: This method mutates internal read indices to securely take ownership of the newest buffer, hence it cannot be marked const. </p>
 
 </div>
 </div>
@@ -221,7 +233,97 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
 </div><div class="memdoc">
 
 <p>Get the most recently written value from the writer's side. </p>
-<p>Must only be called from the writer thread. Unlike <a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a8279fcb7a8c93a2ecf9cff8d7e873acb" title="Get the most recently published data.">get()</a>, this does not consume the "new data" flag or interact with the reader in any way. Before the first <a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a6ebcdced6d6d90866ce8d4656f960fbc" title="Publish new data.">set()</a>, this returns a default-constructed T. </p>
+<p>Takes the write mutex, as it accesses writer-owned state. Unlike <a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a8279fcb7a8c93a2ecf9cff8d7e873acb" title="Get the most recently published data.">get()</a>, this does not consume the "new data" flag or interact with the reader in any way. Before the first <a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a6ebcdced6d6d90866ce8d4656f960fbc" title="Publish new data.">set()</a>, this returns a default-constructed T. Must not be called from the real-time thread; use <a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a3f15737ddc9a8c94e2ef10932742e2c8" title="Get the most recently written value from the writer&#39;s side without taking the write mutex.">getLastWrittenUnsafe()</a> there instead. </p>
+
+</div>
+</div>
+<a id="a3f15737ddc9a8c94e2ef10932742e2c8" name="a3f15737ddc9a8c94e2ef10932742e2c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f15737ddc9a8c94e2ef10932742e2c8">&#9670;&#160;</a></span>getLastWrittenUnsafe()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a> &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a> <a class="el" href="classfranky_1_1_wait_free_triple_buffer.html">franky::WaitFreeTripleBuffer</a>&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a> &gt;::getLastWrittenUnsafe </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the most recently written value from the writer's side without taking the write mutex. </p>
+<p>Must only be called if no other thread is writing concurrently. This is the variant the real-time thread has to use, as it must not block on the write mutex. </p>
+
+</div>
+</div>
+<a id="a097df631a04e074c86df90d8d57152c9" name="a097df631a04e074c86df90d8d57152c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a097df631a04e074c86df90d8d57152c9">&#9670;&#160;</a></span>getUnsafe()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a> &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a> <a class="el" href="classfranky_1_1_wait_free_triple_buffer.html">franky::WaitFreeTripleBuffer</a>&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a> &gt;::getUnsafe </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the most recently published data without taking the read mutex. </p>
+<p>Must only be called if no other thread is reading concurrently. This is the variant the real-time thread has to use, as it must not block on the read mutex. </p>
+
+</div>
+</div>
+<a id="a62350cebc1b479509db2ed1b3de90af4" name="a62350cebc1b479509db2ed1b3de90af4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62350cebc1b479509db2ed1b3de90af4">&#9670;&#160;</a></span>hasNewData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a> &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">bool</a> <a class="el" href="classfranky_1_1_wait_free_triple_buffer.html">franky::WaitFreeTripleBuffer</a>&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a> &gt;::hasNewData </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check whether the writer has published data that no reader has consumed yet. </p>
+<p>This is a single atomic load and does not consume the "new data" flag; only <a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a8279fcb7a8c93a2ecf9cff8d7e873acb" title="Get the most recently published data.">get()</a> and <a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a097df631a04e074c86df90d8d57152c9" title="Get the most recently published data without taking the read mutex.">getUnsafe()</a> do. Hence, it is safe to call from any thread, including the real-time thread. </p>
 
 </div>
 </div>
@@ -252,6 +354,38 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
 </div><div class="memdoc">
 
 <p>Publish new data. </p>
+<p>Takes the write mutex to serialize concurrent writers. Must not be called from the real-time thread; use <a class="el" href="classfranky_1_1_wait_free_triple_buffer.html#a8c2ab0e955127029f82df0809baa1ff2" title="Publish new data without taking the write mutex.">setUnsafe()</a> there instead. </p>
+
+</div>
+</div>
+<a id="a8c2ab0e955127029f82df0809baa1ff2" name="a8c2ab0e955127029f82df0809baa1ff2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c2ab0e955127029f82df0809baa1ff2">&#9670;&#160;</a></span>setUnsafe()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">typename</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a> &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a> <a class="el" href="classfranky_1_1_wait_free_triple_buffer.html">franky::WaitFreeTripleBuffer</a>&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a> &gt;::setUnsafe </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">T</a> &amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Publish new data without taking the write mutex. </p>
+<p>Must only be called if no other thread is writing concurrently. This is the variant the real-time thread has to use, as it must not block on the write mutex. </p>
 
 </div>
 </div>
