@@ -71,7 +71,7 @@ the [simulation](https://timschneider42.github.io/franky/guide/simulation.html) 
 - **Full Python access to the libfranka API**
   Want to tweak impedance, read the robot state, set force thresholds, or mess with the Jacobian? Go for it. If libfranka supports it, chances are franky does, too.
 
-- **Scared to test code on the real system?**: [franky-sim](https://github.com/TimSchneider42/franky-sim) provides **[simulator support](https://timschneider42.github.io/franky/guide/simulation.html) for franky**! It is easy to install and use and serves as a drop-in replacement for the real robot.
+- **Scared to test code on the real system?**: **[franky-sim](https://github.com/TimSchneider42/franky-sim) provides [simulator support](https://timschneider42.github.io/franky/guide/simulation.html) for franky**! It is easy to install and use and serves as a drop-in replacement for the real robot.
 
 ## 📖 Python Quickstart Guide
 
