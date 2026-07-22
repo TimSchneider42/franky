@@ -99,16 +99,22 @@ class WaitFreeTripleBuffer {
   }
 
   /**
+   * @brief Check whether the writer has published data that no reader has consumed yet.
+   *
+   * This is a single atomic load and does not consume the "new data" flag; only get() and
+   * getUnsafe() do. Hence, it is safe to call from any thread, including the real-time thread.
+   */
+  [[nodiscard]] bool hasNewData() const { return (shared_state_.load(std::memory_order_acquire) & 0x04) != 0; }
+
+  /**
    * @brief Get the most recently published data without taking the read mutex.
    *
    * Must only be called if no other thread is reading concurrently. This is the variant the
    * real-time thread has to use, as it must not block on the read mutex.
    */
   [[nodiscard]] T getUnsafe() {
-    const uint8_t current_state = shared_state_.load(std::memory_order_acquire);
-
     // If the writer has published a new buffer since we last checked...
-    if ((current_state & 0x04) != 0) {
+    if (hasNewData()) {
       // Atomically hand our current read buffer back to the shared pool
       // (with the "new" flag cleared) and take ownership of the newest buffer.
       const uint8_t old_state = shared_state_.exchange(active_read_index_, std::memory_order_acq_rel);

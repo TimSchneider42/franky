@@ -2,7 +2,6 @@
 
 #include <franka/control_types.h>
 
-#include <cstdint>
 #include <optional>
 #include <stdexcept>
 
@@ -92,14 +91,14 @@ class SimpleTorqueMotion : public Motion<franka::Torques> {
    */
   void setTorque(const Vector7d &torque) {
     validateFinite(torque, "torque");
-    torque_handle_.set({torque, ++write_seq_});
+    torque_handle_.set(torque);
   }
 
   /**
    * @brief Get a copy of the last published torque [Nm], or the initial torque if no torque has
    * been published yet.
    */
-  [[nodiscard]] Vector7d getTorque() const { return torque_handle_.getLastWritten().tau; }
+  [[nodiscard]] Vector7d getTorque() const { return torque_handle_.getLastWritten(); }
 
   /**
    * @brief The parameters of the motion.
@@ -114,20 +113,10 @@ class SimpleTorqueMotion : public Motion<franka::Torques> {
       const std::optional<franka::Torques> &previous_command) override;
 
  private:
-  // Sequence numbers distinguish a newly published torque from the last one being read again.
-  struct TorqueCommand {
-    Vector7d tau{Vector7d::Zero()};
-    uint64_t seq{0};
-  };
-
   SimpleTorqueParams params_;
-  WaitFreeTripleBuffer<TorqueCommand> torque_handle_;
-
-  // Owned by the user thread.
-  uint64_t write_seq_{0};
+  WaitFreeTripleBuffer<Vector7d> torque_handle_;
 
   // Owned by the control loop.
-  uint64_t last_seq_{0};
   Vector7d current_torque_{Vector7d::Zero()};
   double last_signal_time_{0.0};
 };

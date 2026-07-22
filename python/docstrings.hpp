@@ -6144,12 +6144,6 @@ static const char *mkd_doc_franky_SimpleTorqueMotion_SimpleTorqueMotion_2 =
 
 )doc";
 
-static const char *mkd_doc_franky_SimpleTorqueMotion_TorqueCommand = R"doc()doc";
-
-static const char *mkd_doc_franky_SimpleTorqueMotion_TorqueCommand_seq = R"doc()doc";
-
-static const char *mkd_doc_franky_SimpleTorqueMotion_TorqueCommand_tau = R"doc()doc";
-
 static const char *mkd_doc_franky_SimpleTorqueMotion_current_torque = R"doc()doc";
 
 static const char *mkd_doc_franky_SimpleTorqueMotion_getTorque =
@@ -6159,8 +6153,6 @@ yet.
 )doc";
 
 static const char *mkd_doc_franky_SimpleTorqueMotion_initImpl = R"doc()doc";
-
-static const char *mkd_doc_franky_SimpleTorqueMotion_last_seq = R"doc()doc";
 
 static const char *mkd_doc_franky_SimpleTorqueMotion_last_signal_time = R"doc()doc";
 
@@ -6183,8 +6175,6 @@ Args:
 )doc";
 
 static const char *mkd_doc_franky_SimpleTorqueMotion_torque_handle = R"doc()doc";
-
-static const char *mkd_doc_franky_SimpleTorqueMotion_write_seq = R"doc()doc";
 
 static const char *mkd_doc_franky_SimpleTorqueParams = R"doc(Parameters for SimpleTorqueMotion.)doc";
 
@@ -6566,6 +6556,14 @@ static const char *mkd_doc_franky_WaitFreeTripleBuffer_getUnsafe =
 
 Must only be called if no other thread is reading concurrently. This is the variant the real-time
 thread has to use, as it must not block on the read mutex.
+
+)doc";
+
+static const char *mkd_doc_franky_WaitFreeTripleBuffer_hasNewData =
+    R"doc(Check whether the writer has published data that no reader has consumed yet.
+
+This is a single atomic load and does not consume the "new data" flag; only get() and getUnsafe()
+do. Hence, it is safe to call from any thread, including the real-time thread.
 
 )doc";
 

@@ -9,7 +9,7 @@
 namespace franky {
 
 SimpleTorqueMotion::SimpleTorqueMotion(const SimpleTorqueParams &params)
-    : params_(params), torque_handle_(TorqueCommand{params.initial_torque, 0}) {
+    : params_(params), torque_handle_(params.initial_torque) {
   params_.validate();
 }
 
@@ -27,10 +27,8 @@ franka::Torques SimpleTorqueMotion::nextCommandImpl(
     franka::Duration /*abs_time*/, const std::optional<franka::Torques> & /*previous_command*/) {
   const double t = rel_time.toSec();
 
-  const auto command = torque_handle_.getUnsafe();
-  if (command.seq != last_seq_) {
-    last_seq_ = command.seq;
-    current_torque_ = command.tau;
+  if (torque_handle_.hasNewData()) {
+    current_torque_ = torque_handle_.getUnsafe();
     last_signal_time_ = t;
   } else if (params_.signal_timeout.has_value() && t - last_signal_time_ > params_.signal_timeout.value()) {
     throw TorqueSignalTimeoutException(
