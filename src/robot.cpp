@@ -177,7 +177,7 @@ std::optional<ControlSignalType> Robot::current_control_signal_type() {
 
 RelativeDynamicsFactor Robot::relative_dynamics_factor() { return relative_dynamics_factor_handle_.getLastWritten(); }
 
-RelativeDynamicsFactor Robot::relative_dynamics_factor_rt() { return relative_dynamics_factor_handle_.get(); }
+RelativeDynamicsFactor Robot::relative_dynamics_factor_rt() { return relative_dynamics_factor_handle_.getUnsafe(); }
 
 void Robot::setRelativeDynamicsFactor(const RelativeDynamicsFactor &relative_dynamics_factor) {
   relative_dynamics_factor_handle_.set(relative_dynamics_factor);

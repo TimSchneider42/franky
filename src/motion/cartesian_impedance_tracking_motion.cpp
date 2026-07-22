@@ -18,7 +18,7 @@ void CartesianImpedanceTrackingMotion::initImpl(
   target_ = Affine(Eigen::Matrix4d::Map(robot_state.O_T_EE.data()));
   target_twist_ = std::nullopt;
   target_acceleration_ = std::nullopt;
-  auto opt_reference = reference_handle_.get();
+  auto opt_reference = reference_handle_.getUnsafe();
   if (opt_reference) {
     target_ = opt_reference->target;
     target_twist_ = opt_reference->target_twist;
@@ -39,7 +39,7 @@ franka::Torques CartesianImpedanceTrackingMotion::nextCommandImpl(
   reference.target_twist = target_twist_;
   reference.target_acceleration = target_acceleration_;
 
-  auto opt_reference = reference_handle_.get();
+  auto opt_reference = reference_handle_.getUnsafe();
   if (opt_reference) {
     reference = *opt_reference;
   } else if (reference_callback_) {

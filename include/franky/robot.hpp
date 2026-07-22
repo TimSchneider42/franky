@@ -633,7 +633,8 @@ class Robot : public franka::Robot {
         auto motion_generator = &std::get<MotionGenerator<ControlSignalType>>(motion_generator_);
         motion_generator->registerUpdateCallback(
             [this](const RobotState &robot_state, franka::Duration duration, franka::Duration time) {
-              state_buffer_.set(robot_state);
+              // Runs in the real-time control thread, which must not take the buffer mutexes.
+              state_buffer_.setUnsafe(robot_state);
             });
         motion_generator_running_ = true;
         control_thread_ = std::thread([this, control_func_executor, motion_generator]() {

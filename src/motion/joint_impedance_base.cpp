@@ -48,7 +48,7 @@ const Matrix6d &JointImpedanceBase::criticalShapingDamping(CartesianShapingState
 franka::Torques JointImpedanceBase::computeCommand(
     const RobotState &robot_state, const JointReference &reference, double dt) {
   // Interpolate toward the target gains.
-  const auto target_gains = gains_handle_.get();
+  const auto target_gains = gains_handle_.getUnsafe();
   const double alpha = 1.0 - std::exp(-dt / gains_time_constant_);
   current_stiffness_ += alpha * (target_gains.stiffness - current_stiffness_);
   // An unset damping target means "critically damp the current stiffness"
@@ -63,7 +63,7 @@ franka::Torques JointImpedanceBase::computeCommand(
   Vector7d tau_d;
   if (cartesian_shaping_.has_value()) {
     auto &shaping = *cartesian_shaping_;
-    const auto target_gains = cartesian_gains_handle_.get();
+    const auto target_gains = cartesian_gains_handle_.getUnsafe();
     shaping.stiffness = interpolateGain(shaping.stiffness, target_gains.stiffness, alpha);
     // An unset target means "critically damp the current stiffness"; interpolate toward it like any
     // other gain so unsetting damping is as smooth as setting it. The ternary keeps the

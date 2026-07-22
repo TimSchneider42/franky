@@ -27,7 +27,7 @@ franka::Torques SimpleTorqueMotion::nextCommandImpl(
     franka::Duration /*abs_time*/, const std::optional<franka::Torques> & /*previous_command*/) {
   const double t = rel_time.toSec();
 
-  const auto command = torque_handle_.get();
+  const auto command = torque_handle_.getUnsafe();
   if (command.seq != last_seq_) {
     last_seq_ = command.seq;
     current_torque_ = command.tau;

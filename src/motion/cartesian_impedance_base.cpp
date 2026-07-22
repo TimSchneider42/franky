@@ -180,7 +180,7 @@ const Matrix6d &CartesianImpedanceBase::criticalDamping() {
 franka::Torques CartesianImpedanceBase::computeCommand(
     const RobotState &robot_state, const CartesianReference &reference, double dt) {
   // Interpolate toward the target gains.
-  const auto target_gains = gains_handle_.get();
+  const auto target_gains = gains_handle_.getUnsafe();
   const double alpha = 1.0 - std::exp(-dt / gains_time_constant_);
   current_stiffness_ = interpolateGain(current_stiffness_, target_gains.stiffness, alpha);
   // An unset target means "critically damp the current stiffness"; interpolate toward it like any
@@ -189,7 +189,7 @@ franka::Torques CartesianImpedanceBase::computeCommand(
   const Matrix6d &target_damping = target_gains.damping.has_value() ? *target_gains.damping : criticalDamping();
   current_damping_ += alpha * (target_damping - current_damping_);
 
-  const auto target_nullspace_gains = nullspace_gains_handle_.get();
+  const auto target_nullspace_gains = nullspace_gains_handle_.getUnsafe();
   auto &cur = current_nullspace_gains_;
   cur.posture_stiffness = interpolateGain(cur.posture_stiffness, target_nullspace_gains.posture_stiffness, alpha);
   const Vector7d posture_critical = 2.0 * cur.posture_stiffness.cwiseMax(0.0).cwiseSqrt();

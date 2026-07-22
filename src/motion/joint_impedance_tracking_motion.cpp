@@ -23,7 +23,7 @@ franka::Torques JointImpedanceTrackingMotion::nextCommandImpl(
   reference.q = target_;
   reference.dq = target_velocity_;
 
-  auto opt_reference = reference_handle_.get();
+  auto opt_reference = reference_handle_.getUnsafe();
   if (opt_reference) {
     reference = *opt_reference;
   } else if (reference_callback_) {
