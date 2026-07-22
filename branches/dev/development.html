@@ -210,7 +210,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="guide/index.html">📚 Guide</a><input aria-label="Toggle navigation of 📚 Guide" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="guide/geometry.html">🧮 Geometry</a></li>
 <li class="toctree-l2"><a class="reference internal" href="guide/robot.html">🤖 Robot</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/motion-types.html">🏃‍♂️ Motion Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/trajectory-control.html">🏃‍♂️ Trajectory Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="guide/impedance-control.html">🫨 Impedance Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="guide/torque-control.html">💪 Torque Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="guide/executing-motions.html">🎬 Executing Motions</a></li>
@@ -478,7 +478,7 @@ Aside from bug fixes and general performance improvements, franky provides the f
 <li><p>A larger part of the libfranka API is exposed to python (e.g., <code class="docutils literal notranslate"><span class="pre">setCollisionBehavior</span></code>, <code class="docutils literal notranslate"><span class="pre">setJoinImpedance</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">setCartesianImpedance</span></code>).</p></li>
 <li><p>Cartesian motion generation handles boundaries in Euler angles properly.</p></li>
-<li><p><a class="reference internal" href="guide/motion-types.html"><span class="std std-doc">There is a new joint motion type that supports waypoints.</span></a></p></li>
+<li><p><a class="reference internal" href="guide/trajectory-control.html"><span class="std std-doc">There is a new joint motion type that supports waypoints.</span></a></p></li>
 <li><p><a class="reference internal" href="guide/geometry.html"><span class="std std-doc">The signature of <code class="docutils literal notranslate"><span class="pre">Affine</span></code> changed.</span></a> <code class="docutils literal notranslate"><span class="pre">Affine</span></code> does not handle elbow positions anymore.
 Instead, a new class <code class="docutils literal notranslate"><span class="pre">RobotPose</span></code> stores both the end-effector pose and optionally the elbow position.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">MotionData</span></code> class does not exist anymore.
@@ -486,8 +486,8 @@ Instead, reactions and other settings moved to <code class="docutils literal not
 <li><p><a class="reference internal" href="guide/reactions.html"><span class="std std-doc">The <code class="docutils literal notranslate"><span class="pre">Measure</span></code> class allows for arithmetic operations.</span></a></p></li>
 <li><p>Exceptions caused by libfranka are raised properly instead of being printed to stdout.</p></li>
 <li><p><a class="reference internal" href="getting-started/installation.html"><span class="std std-doc">We provide wheels for both Franka Research 3 and the older Franka Panda</span></a></p></li>
-<li><p>franky supports <a class="reference internal" href="guide/motion-types.html#joint-velocity-control"><span class="std std-ref">joint velocity control</span></a>
-and <a class="reference internal" href="guide/motion-types.html#cartesian-velocity-control"><span class="std std-ref">cartesian velocity control</span></a></p></li>
+<li><p>franky supports <a class="reference internal" href="guide/trajectory-control.html#joint-velocity-control"><span class="std std-ref">joint velocity control</span></a>
+and <a class="reference internal" href="guide/trajectory-control.html#cartesian-velocity-control"><span class="std std-ref">cartesian velocity control</span></a></p></li>
 <li><p>The dynamics limits are not hard-coded anymore but can be <a class="reference internal" href="guide/robot.html"><span class="std std-doc">set for each robot instance</span></a>.</p></li>
 </ul>
 </section>

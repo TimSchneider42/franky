@@ -64,7 +64,7 @@ See the [Geometry](../guide/geometry.md) chapter of the guide for an introductio
 ## Trajectory Motions
 
 Motion types for the four trajectory control modes.
-See the [Motion Types](../guide/motion-types.md) chapter of the guide for an introduction.
+See the [Trajectory Control](../guide/trajectory-control.md) chapter of the guide for an introduction.
 
 ### Joint Position Control
 

@@ -101,7 +101,7 @@ Aside from bug fixes and general performance improvements, franky provides the f
 * A larger part of the libfranka API is exposed to python (e.g., `setCollisionBehavior`, `setJoinImpedance`, and
   `setCartesianImpedance`).
 * Cartesian motion generation handles boundaries in Euler angles properly.
-* [There is a new joint motion type that supports waypoints.](guide/motion-types.md)
+* [There is a new joint motion type that supports waypoints.](guide/trajectory-control.md)
 * [The signature of `Affine` changed.](guide/geometry.md) `Affine` does not handle elbow positions anymore.
   Instead, a new class `RobotPose` stores both the end-effector pose and optionally the elbow position.
 * The `MotionData` class does not exist anymore.
@@ -109,8 +109,8 @@ Aside from bug fixes and general performance improvements, franky provides the f
 * [The `Measure` class allows for arithmetic operations.](guide/reactions.md)
 * Exceptions caused by libfranka are raised properly instead of being printed to stdout.
 * [We provide wheels for both Franka Research 3 and the older Franka Panda](getting-started/installation.md)
-* franky supports [joint velocity control](guide/motion-types.md#joint-velocity-control)
-  and [cartesian velocity control](guide/motion-types.md#cartesian-velocity-control)
+* franky supports [joint velocity control](guide/trajectory-control.md#joint-velocity-control)
+  and [cartesian velocity control](guide/trajectory-control.md#cartesian-velocity-control)
 * The dynamics limits are not hard-coded anymore but can be [set for each robot instance](guide/robot.md).
 
 ## Contributing
