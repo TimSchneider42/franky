@@ -129,6 +129,13 @@ void bind_motion_torque(py::module &m) {
 
   py::class_<PostureTask>(m, "PostureTask", DOC(franky, PostureTask))
       .def(
+          py::init<const Vector7d &, const Vector7d &, std::optional<Vector7d>, std::optional<double>>(),
+          "target"_a,
+          "stiffness"_a,
+          "damping"_a = std::nullopt,
+          "max_torque"_a = std::nullopt,
+          DOC(franky, PostureTask, PostureTask_2))
+      .def(
           py::init<const Vector7d &, double, std::optional<double>, std::optional<double>>(),
           "target"_a,
           "stiffness"_a,

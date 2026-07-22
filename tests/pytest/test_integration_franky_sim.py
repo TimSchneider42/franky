@@ -321,8 +321,8 @@ def test_cartesian_impedance_nullspace_posture():
     Exercise the null-space posture task of the Cartesian impedance controller.
 
     The end-effector is commanded to hold its current pose while a secondary
-    posture objective (nullspace_target) pulls the joints toward a different
-    configuration.  The FR3 has 7 DoF and the Cartesian task constrains 6, so
+    posture objective (a nullspace PostureTask) pulls the joints toward a
+    different configuration.  The FR3 has 7 DoF and the Cartesian task constrains 6, so
     the controller can only move the arm along its one-dimensional self-motion
     manifold: the joints must get measurably closer to the null-space target
     while the end-effector pose remains unchanged.
@@ -351,8 +351,7 @@ def test_cartesian_impedance_nullspace_posture():
         def ns_control(nullspace_target: np.ndarray, nullspace_stiffness):
             motion = franky.CartesianImpedanceMotion(
                 franky.Affine(initial_pose.matrix),
-                nullspace_target=nullspace_target,
-                nullspace_stiffness=nullspace_stiffness,
+                posture_task=franky.PostureTask(nullspace_target, nullspace_stiffness),
             )
             # Scalars are broadcast to per-joint gains; readback is a 7-vector.
             np.testing.assert_allclose(
