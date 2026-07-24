@@ -106,9 +106,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a39d85438237067ffa3b3829500b01f14" id="r_a39d85438237067ffa3b3829500b01f14"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">LimitType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_dynamics_limit.html#a39d85438237067ffa3b3829500b01f14">get</a> () <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a></td></tr>
 <tr class="memdesc:a39d85438237067ffa3b3829500b01f14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current value of the limit.  <br /></td></tr>
 <tr class="separator:a39d85438237067ffa3b3829500b01f14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab18c479e9acb041551cab23f02cdfbcc" id="r_ab18c479e9acb041551cab23f02cdfbcc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">LimitType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_dynamics_limit.html#ab18c479e9acb041551cab23f02cdfbcc">getUnsafe</a> () <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a></td></tr>
-<tr class="memdesc:ab18c479e9acb041551cab23f02cdfbcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current value of the limit without taking the value mutex.  <br /></td></tr>
-<tr class="separator:ab18c479e9acb041551cab23f02cdfbcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a1487e224c2bac2b9f1ec0557c2ba33" id="r_a1a1487e224c2bac2b9f1ec0557c2ba33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">LimitType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_dynamics_limit.html#a1a1487e224c2bac2b9f1ec0557c2ba33">get_rt</a> () <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a></td></tr>
+<tr class="memdesc:a1a1487e224c2bac2b9f1ec0557c2ba33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current value of the limit without taking the value mutex.  <br /></td></tr>
+<tr class="separator:a1a1487e224c2bac2b9f1ec0557c2ba33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8183726a4540729a377615e0e207f154" id="r_a8183726a4540729a377615e0e207f154"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfranky_1_1_dynamics_limit.html#a8183726a4540729a377615e0e207f154">setFrom</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#ae9a820b03821a3e69e1e2eb1db33ea66">Array</a>&lt; 7 &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">value</a>)</td></tr>
 <tr class="separator:a8183726a4540729a377615e0e207f154"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -298,13 +298,13 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
 </div><div class="memdoc">
 
 <p>Get the current value of the limit. </p>
-<p>Retrieves the current value stored in this limit. Takes the value mutex to avoid reading a partially written value while another thread calls <a class="el" href="classfranky_1_1_dynamics_limit.html#a13c429626a61ddf6b37ad38e8b7ee9ec" title="Set a new value for the limit.">set()</a>. Must not be called from the real-time thread; use <a class="el" href="classfranky_1_1_dynamics_limit.html#ab18c479e9acb041551cab23f02cdfbcc" title="Get the current value of the limit without taking the value mutex.">getUnsafe()</a> there instead.</p>
+<p>Retrieves the current value stored in this limit. Takes the value mutex to avoid reading a partially written value while another thread calls <a class="el" href="classfranky_1_1_dynamics_limit.html#a13c429626a61ddf6b37ad38e8b7ee9ec" title="Set a new value for the limit.">set()</a>. Must not be called from the real-time thread; use <a class="el" href="classfranky_1_1_dynamics_limit.html#a1a1487e224c2bac2b9f1ec0557c2ba33" title="Get the current value of the limit without taking the value mutex.">get_rt()</a> there instead.</p>
 <dl class="section return"><dt>Returns</dt><dd>The current value of the limit. </dd></dl>
 
 </div>
 </div>
-<a id="ab18c479e9acb041551cab23f02cdfbcc" name="ab18c479e9acb041551cab23f02cdfbcc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab18c479e9acb041551cab23f02cdfbcc">&#9670;&#160;</a></span>getUnsafe()</h2>
+<a id="a1a1487e224c2bac2b9f1ec0557c2ba33" name="a1a1487e224c2bac2b9f1ec0557c2ba33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a1487e224c2bac2b9f1ec0557c2ba33">&#9670;&#160;</a></span>get_rt()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -315,7 +315,7 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">LimitType</a> <a class="el" href="classfranky_1_1_dynamics_limit.html">franky::DynamicsLimit</a>&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">LimitType</a> &gt;::getUnsafe </td>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">LimitType</a> <a class="el" href="classfranky_1_1_dynamics_limit.html">franky::DynamicsLimit</a>&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">LimitType</a> &gt;::get_rt </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
