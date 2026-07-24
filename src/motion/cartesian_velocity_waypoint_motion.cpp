@@ -106,12 +106,15 @@ std::tuple<Vector7d, Vector7d, Vector7d> CartesianVelocityWaypointMotion::getAbs
   const auto r = robot();
   return {
       vec_cart_rot_elbow(
-          r->translation_velocity_limit.get(), r->rotation_velocity_limit.get(), r->elbow_velocity_limit.get()),
+          r->translation_velocity_limit.get_rt(),
+          r->rotation_velocity_limit.get_rt(),
+          r->elbow_velocity_limit.get_rt()),
       vec_cart_rot_elbow(
-          r->translation_acceleration_limit.get(),
-          r->rotation_acceleration_limit.get(),
-          r->elbow_acceleration_limit.get()),
-      vec_cart_rot_elbow(r->translation_jerk_limit.get(), r->rotation_jerk_limit.get(), r->elbow_jerk_limit.get())};
+          r->translation_acceleration_limit.get_rt(),
+          r->rotation_acceleration_limit.get_rt(),
+          r->elbow_acceleration_limit.get_rt()),
+      vec_cart_rot_elbow(
+          r->translation_jerk_limit.get_rt(), r->rotation_jerk_limit.get_rt(), r->elbow_jerk_limit.get_rt())};
 }
 
 std::tuple<Vector7d, Vector7d, Vector7d> CartesianVelocityWaypointMotion::getDesiredState(

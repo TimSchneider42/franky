@@ -45,7 +45,8 @@ void JointVelocityWaypointMotion::setNewWaypoint(
 
 std::tuple<Vector7d, Vector7d, Vector7d> JointVelocityWaypointMotion::getAbsoluteInputLimits() const {
   const auto r = robot();
-  return {r->joint_velocity_limit.get(), r->joint_acceleration_limit.get(), r->joint_jerk_limit.get()};
+  return {
+      r->joint_velocity_limit.get_rt(), r->joint_acceleration_limit.get_rt(), r->joint_jerk_limit.get_rt()};
 }
 
 std::tuple<Vector7d, Vector7d, Vector7d> JointVelocityWaypointMotion::getDesiredState(
