@@ -3,6 +3,7 @@
 #include <franka/duration.h>
 #include <franka/robot_state.h>
 
+#include <algorithm>
 #include <franky/rt_mutex.hpp>
 
 #include "franky/motion/motion.hpp"
@@ -80,9 +81,20 @@ ControlSignalType MotionGenerator<ControlSignalType>::operator()(
 }
 
 template <typename ControlSignalType>
-void MotionGenerator<ControlSignalType>::updateMotion(const std::shared_ptr<Motion<ControlSignalType>> new_motion) {
+void MotionGenerator<ControlSignalType>::updateMotion(std::shared_ptr<Motion<ControlSignalType>> new_motion) {
   std::unique_lock<std::mutex> lock(new_motion_mutex_);
-  new_motion_ = new_motion;
+  // Check if we're the last ones holding a motion.
+  // If so, we drop it here, ensuring they wouldn't
+  // have been dropped by the RT thread (destructor would cause jitter)
+  retired_motions_.erase(
+      std::remove_if(
+          retired_motions_.begin(),
+          retired_motions_.end(),
+          [](const std::shared_ptr<Motion<ControlSignalType>> &motion) { return motion.use_count() == 1; }),
+      retired_motions_.end());
+  if (new_motion_ != nullptr) retired_motions_.push_back(new_motion_);
+  retired_motions_.push_back(new_motion);
+  new_motion_ = std::move(new_motion);
 }
 
 template <typename ControlSignalType>

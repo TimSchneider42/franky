@@ -82,6 +82,7 @@ class MotionGenerator {
   std::shared_ptr<Motion<ControlSignalType>> initial_motion_;
   std::shared_ptr<Motion<ControlSignalType>> current_motion_;
   std::shared_ptr<Motion<ControlSignalType>> new_motion_;
+  std::vector<std::shared_ptr<Motion<ControlSignalType>>> retired_motions_;
   std::vector<std::function<void(const RobotState &, franka::Duration, franka::Duration)>> update_callbacks_;
   std::mutex new_motion_mutex_;
   std::optional<ControlSignalType> previous_command_;
