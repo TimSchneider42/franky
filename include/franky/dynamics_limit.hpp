@@ -97,17 +97,40 @@ class DynamicsLimit {
       throw std::runtime_error(ss.str());
     }
     check(value);
+    // Don't allow readers while we update the value!
+    // RT thread is fine to read without the lock (get_rt),
+    // because it holds the control lock -> no one can call set
+    const std::lock_guard value_lock(value_mutex_);
     value_ = value;
   }
 
   /**
    * @brief Get the current value of the limit.
    *
-   * Retrieves the current value stored in this limit.
+   * Retrieves the current value stored in this limit. Takes the value mutex to avoid reading a
+   * partially written value while another thread calls set(). Must not be called from the real-time
+   * thread; use get_rt() there instead.
    *
    * @return The current value of the limit.
    */
-  [[nodiscard]] LimitType get() const { return value_; }
+  [[nodiscard]] LimitType get() const {
+    const std::lock_guard lock(value_mutex_);
+    return value_;
+  }
+
+  /**
+   * @brief Get the current value of the limit without taking the value mutex.
+   *
+   * This is the variant the real-time thread has to use, as it must not block on a mutex a user
+   * thread could be holding. Unlike the unsafe operations of WaitFreeTripleBuffer, this one imposes
+   * no obligation on the caller: set() refuses to write while the robot is in control, so no write
+   * can ever be in flight while the control loop is running. The last write before control started
+   * is visible because set() releases write_mutex_ (the robot's control mutex), which the creator of
+   * the control thread acquires before spawning it.
+   *
+   * @return The current value of the limit.
+   */
+  [[nodiscard]] LimitType get_rt() const { return value_; }
 
   /**
    * @brief The maximum value this limit can take as defined by Franka.
@@ -140,13 +163,14 @@ class DynamicsLimit {
   void check(const LimitType &value) const;
 
   std::shared_ptr<std::mutex> write_mutex_;   /**< Mutex for synchronizing writes to the limit. */
+  mutable std::mutex value_mutex_;            /**< Mutex guarding the value itself. */
   LimitType value_;                           /**< Current value of the limit. */
   std::function<bool()> can_write_condition_; /**< Function to check if writing is allowed. */
 };
 
 template <typename LimitTypeStream>
 std::ostream &operator<<(std::ostream &os, const DynamicsLimit<LimitTypeStream> &dynamics_limit) {
-  os << dynamics_limit.value_ << " (max: " << dynamics_limit.max << ")";
+  os << dynamics_limit.get() << " (max: " << dynamics_limit.max << ")";
   return os;
 }
 
