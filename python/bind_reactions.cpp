@@ -11,7 +11,33 @@ namespace py = pybind11;
 using namespace pybind11::literals;  // to bring in the '_a' literal
 using namespace franky;
 
-SequentialExecutor callback_executor;
+namespace {
+
+// Intentionally leaked: the queues can own Python objects, so a static destructor would release
+// them after Py_Finalize(). Created on first use, as both worker
+// threads are pure overhead for a process that never registers a callback. Only ever touched from
+// register_callback and the atexit hook, both of which hold the GIL, so it needs no synchronization.
+SequentialExecutor *executor_instance = nullptr;
+
+SequentialExecutor &callbackExecutor() {
+  if (executor_instance == nullptr) executor_instance = new SequentialExecutor();
+  return *executor_instance;
+}
+
+void shutdownCallbackExecutor() {
+  auto *executor = executor_instance;
+  if (executor == nullptr) return;
+  executor_instance = nullptr;
+  {
+    // The executor thread may be inside a Python callback, or about to acquire the GIL to destroy
+    // one, and can only finish if we let go of the GIL while joining it.
+    py::gil_scoped_release release;
+    executor->shutdown();
+  }
+  executor->clearPending();
+}
+
+}  // namespace
 
 template <typename ControlSignalType>
 void mkMotionAndReactionClasses(py::module_ &m, const std::string &control_signal_name) {
@@ -29,7 +55,8 @@ void mkMotionAndReactionClasses(py::module_ &m, const std::string &control_signa
             // thread only ever copies the pointer: copying the function itself acquires the GIL
             // (pybind11 guards the py::object refcount) and allocates.
             auto callback_ptr = std::make_shared<const typename Motion<ControlSignalType>::CallbackType>(callback);
-            motion.registerCallback([callback_ptr](
+            auto *callback_executor = &callbackExecutor();
+            motion.registerCallback([callback_ptr, callback_executor](
                                         const RobotState &robot_state,
                                         franka::Duration time_step,
                                         franka::Duration rel_time,
@@ -37,12 +64,12 @@ void mkMotionAndReactionClasses(py::module_ &m, const std::string &control_signa
                                         const ControlSignalType &control_signal) {
               // Init-captures: capturing the const-ref parameters by name would create const
               // members, making the closure copy instead of move into the queue's slot.
-              callback_executor.add([callback_ptr,
-                                     robot_state = robot_state,
-                                     time_step,
-                                     rel_time,
-                                     abs_time,
-                                     control_signal = control_signal]() {
+              callback_executor->add([callback_ptr,
+                                      robot_state = robot_state,
+                                      time_step,
+                                      rel_time,
+                                      abs_time,
+                                      control_signal = control_signal]() {
                 try {
                   (*callback_ptr)(robot_state, time_step, rel_time, abs_time, control_signal);
                 } catch (const py::error_already_set &e) {
@@ -70,10 +97,12 @@ void mkMotionAndReactionClasses(py::module_ &m, const std::string &control_signa
             auto callback_ptr =
                 std::make_shared<const std::function<void(const RobotState &, franka::Duration, franka::Duration)>>(
                     callback);
+            auto *callback_executor = &callbackExecutor();
             reaction.registerCallback(
-                [callback_ptr](const RobotState &robot_state, franka::Duration rel_time, franka::Duration abs_time) {
+                [callback_ptr, callback_executor](
+                    const RobotState &robot_state, franka::Duration rel_time, franka::Duration abs_time) {
                   // See the motion callback above for why robot_state is an init-capture.
-                  callback_executor.add([callback_ptr, robot_state = robot_state, rel_time, abs_time]() {
+                  callback_executor->add([callback_ptr, robot_state = robot_state, rel_time, abs_time]() {
                     try {
                       (*callback_ptr)(robot_state, rel_time, abs_time);
                     } catch (const py::error_already_set &e) {
@@ -89,6 +118,10 @@ void mkMotionAndReactionClasses(py::module_ &m, const std::string &control_signa
 }
 
 void bind_reactions(py::module &m) {
+  // Registered at import, so it runs last (atexit is LIFO)
+  // Joins the worker threads while Python is alive, which a static destructor cannot do.
+  py::module_::import("atexit").attr("register")(py::cpp_function(&shutdownCallbackExecutor));
+
   py::class_<Condition>(m, "Condition", DOC(franky, Condition))
       .def(py::init<bool>(), "constant_value"_a, DOC(franky, Condition, Condition_2))
       .def("__invert__", py::overload_cast<const Condition &>(&operator!), py::is_operator())
