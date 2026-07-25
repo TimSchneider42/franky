@@ -17,9 +17,10 @@ class ConcurrentQueue {
     condition_.notify_one();
   }
 
-  T pop() {
+  std::optional<T> pop() {
     std::unique_lock lock(mutex_);
-    condition_.wait(lock, [this]() { return !queue_.empty(); });
+    condition_.wait(lock, [this]() { return closed_ || !queue_.empty(); });
+    if (closed_) return std::nullopt;
     T item = std::move(queue_.front());
     queue_.pop();
     return item;
@@ -36,8 +37,23 @@ class ConcurrentQueue {
     return std::nullopt;
   }
 
+  void clear() {
+    std::queue<T> empty;
+    std::lock_guard lock(mutex_);
+    queue_.swap(empty);
+  }
+
+  void close() {
+    {
+      std::lock_guard lock(mutex_);
+      closed_ = true;
+    }
+    condition_.notify_all();
+  }
+
  private:
   std::queue<T> queue_;
   std::mutex mutex_;
   std::condition_variable condition_;
+  bool closed_{false};
 };

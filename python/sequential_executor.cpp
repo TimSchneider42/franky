@@ -1,6 +1,6 @@
 #include "sequential_executor.hpp"
 
-#include <chrono>
+#include <cerrno>
 #include <iostream>
 
 #if !defined(_WIN32) && !defined(_WIN64)
@@ -22,24 +22,75 @@ void tryMakeThreadRT() {
 
 }  // namespace
 
-SequentialExecutor::SequentialExecutor()
-    : execute_thread_(&SequentialExecutor::execute, this), relay_thread_(&SequentialExecutor::relay, this) {}
+SequentialExecutor::SequentialExecutor() {
+#if !defined(_WIN32) && !defined(_WIN64)
+  sem_init(&relay_semaphore_, 0, 0);
+#endif
+  execute_thread_ = std::thread(&SequentialExecutor::execute, this);
+  relay_thread_ = std::thread(&SequentialExecutor::relay, this);
+}
 
 SequentialExecutor::~SequentialExecutor() {
+  shutdown();
+  clearPending();
+}
+
+void SequentialExecutor::shutdown() {
+  bool expected = false;
+  if (!shutdown_started_.compare_exchange_strong(expected, true, std::memory_order_acq_rel)) {
+    while (!shutdown_complete_.load(std::memory_order_acquire)) std::this_thread::yield();
+    return;
+  }
+
   terminate_.store(true, std::memory_order_release);
-  relay_thread_.join();
-  execute_thread_.join();
+  notifyRelay();
+  if (relay_thread_.joinable()) relay_thread_.join();
+  queue_.close();
+  if (execute_thread_.joinable()) execute_thread_.join();
+  // No sem_destroy: the semaphore must stay valid for late sem_post() calls from producers. This
+  // object is leaked anyway, so there is nothing to reclaim.
+  shutdown_complete_.store(true, std::memory_order_release);
+}
+
+void SequentialExecutor::clearPending() {
+  std::function<void()> pending;
+  while (input_queue_.tryPop(pending)) pending = {};
+  queue_.clear();
+}
+
+void SequentialExecutor::notifyRelay() {
+#if !defined(_WIN32) && !defined(_WIN64)
+  sem_post(&relay_semaphore_);
+#else
+  {
+    std::lock_guard lock(relay_mutex_);
+    ++relay_notifications_;
+  }
+  relay_condition_.notify_one();
+#endif
+}
+
+void SequentialExecutor::waitForRelay() {
+#if !defined(_WIN32) && !defined(_WIN64)
+  while (sem_wait(&relay_semaphore_) != 0 && errno == EINTR) {
+  }
+#else
+  std::unique_lock lock(relay_mutex_);
+  relay_condition_.wait(lock, [this]() { return relay_notifications_ != 0; });
+  --relay_notifications_;
+#endif
 }
 
 void SequentialExecutor::relay() {
   tryMakeThreadRT();
   size_t reported_dropped = 0;
   std::function<void()> function;
-  while (!terminate_.load(std::memory_order_acquire)) {
-    bool idle = true;
+  while (true) {
+    waitForRelay();
+    if (terminate_.load(std::memory_order_acquire)) break;
+    // Actually allocated memory for the callback that the user registered
     while (input_queue_.tryPop(function)) {
       queue_.push(std::move(function));
-      idle = false;
     }
     auto dropped = dropped_.load(std::memory_order_relaxed);
     if (dropped > reported_dropped) {
@@ -48,13 +99,9 @@ void SequentialExecutor::relay() {
                 << std::endl;
       reported_dropped = dropped;
     }
-    if (idle) std::this_thread::sleep_for(std::chrono::microseconds(100));
   }
 }
 
 void SequentialExecutor::execute() {
-  while (!terminate_.load(std::memory_order_acquire)) {
-    auto callback = queue_.pop(std::chrono::microseconds(100));
-    if (callback.has_value()) (*callback)();
-  }
+  while (auto callback = queue_.pop()) (*callback)();
 }
