@@ -26,6 +26,7 @@ std::shared_future<bool> Gripper::stopAsync() {
 }
 
 std::shared_future<bool> Gripper::setCurrentFuture(std::future<bool> future) {
+  const std::lock_guard lock(future_mutex_);
   if (current_future_.valid()) current_future_.wait();
   current_future_ = future.share();
   return current_future_;

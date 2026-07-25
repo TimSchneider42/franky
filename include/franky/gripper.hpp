@@ -4,6 +4,7 @@
 #include <franka/gripper.h>
 
 #include <future>
+#include <mutex>
 
 namespace franky {
 
@@ -99,6 +100,8 @@ class Gripper : public franka::Gripper {
   [[nodiscard]] inline franka::GripperState state() const { return readOnce(); }
 
  private:
+  //! Guards current_future_, as the asynchronous functions may be called from multiple threads.
+  std::mutex future_mutex_;
   std::shared_future<bool> current_future_;
 
   std::shared_future<bool> setCurrentFuture(std::future<bool> future);
