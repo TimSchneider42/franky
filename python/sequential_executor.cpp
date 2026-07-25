@@ -103,5 +103,15 @@ void SequentialExecutor::relay() {
 }
 
 void SequentialExecutor::execute() {
-  while (auto callback = queue_.pop()) (*callback)();
+  while (auto callback = queue_.pop()) {
+    // Callbacks handle the errors they expect (a Python exception, say), but an
+    // argument that fails to convert or an allocation failure must not take down the process.
+    try {
+      (*callback)();
+    } catch (const std::exception &e) {
+      std::cerr << "franky: unhandled exception in callback: " << e.what() << std::endl;
+    } catch (...) {
+      std::cerr << "franky: unhandled non-standard exception in callback" << std::endl;
+    }
+  }
 }
