@@ -45,11 +45,12 @@ with franky.Desk("10.90.90.1", "username", "password") as desk:
 ```
 
 Control-token persistence is opt in. Passing `token_storage=True` to `DeskWebSession`
-or `Desk` stores the SPoC/control token in
-`$XDG_CONFIG_HOME/franky/control_tokens.conf`, falling back to
-`~/.config/franky/control_tokens.conf`, with user-only file permissions. This lets
-a later process retake the same control token after a crash. You can pass a path
-instead of `True` to choose a different storage file.
+or `Desk` stores the SPoC/control token under `$XDG_RUNTIME_DIR/franky/control-tokens/`
+(falling back to `$XDG_STATE_HOME/franky/control-tokens/`, then
+`~/.local/state/franky/control-tokens/`), one owner-only file per robot/user pair. This
+lets a later process retake the same control token after a crash. You can pass a path
+instead of `True` to use a different storage directory.
+
 
 In case you are running the robot for longer than 24h you will have noticed that you have to do a safety self-test every 24h.
 `Desk` allows to automate this task as well:
