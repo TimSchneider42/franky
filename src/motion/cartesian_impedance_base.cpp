@@ -1,9 +1,9 @@
 #include "franky/motion/cartesian_impedance_base.hpp"
 
 #include <Eigen/Core>
+#include <Eigen/Eigenvalues>
 #include <Eigen/Geometry>
 #include <Eigen/QR>
-#include <Eigen/SVD>
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -17,9 +17,8 @@ namespace franky {
 
 namespace {
 
-// Rank tolerance relative to the largest pivot. Eigen's default sits near the machine epsilon and
-// would inflate the pseudoinverse to ~1e15 next to a singularity. An FR3 Jacobian has a largest
-// singular value near two, so this cuts off where the previous absolute 1e-6 SVD tolerance did.
+// Rank tolerance for the Jacobian, relative to the largest pivot. Directions below it are dropped
+// rather than inverted.
 constexpr double kJacobianRankTolerance = 1e-6;
 
 NullspaceGains nullspaceGainsFromTasks(const std::vector<NullspaceTask> &tasks) {
@@ -46,13 +45,16 @@ NullspaceGains nullspaceGainsFromTasks(const std::vector<NullspaceTask> &tasks) 
 Eigen::Matrix<double, 6, 6> computeTaskSpaceInertia(const Jacobian &jacobian, const Eigen::Matrix<double, 7, 7> &mass) {
   const Eigen::Matrix<double, 7, 6> mass_inv_jacobian_transpose = mass.ldlt().solve(jacobian.transpose());
   const Eigen::Matrix<double, 6, 6> task_mass_inv = jacobian * mass_inv_jacobian_transpose;
-  Eigen::JacobiSVD<Eigen::Matrix<double, 6, 6>> svd(task_mass_inv, Eigen::ComputeFullU | Eigen::ComputeFullV);
-  Eigen::Matrix<double, 6, 6> sigma_inv = Eigen::Matrix<double, 6, 6>::Zero();
+  // J M^-1 J^T is symmetric positive semidefinite, so its eigenvalues are its singular values and
+  // V D^+ V^T comes out symmetric by construction. Eigenvalues also keep their sign, so directions
+  // that round negative are dropped
+  Eigen::SelfAdjointEigenSolver<Eigen::Matrix<double, 6, 6>> eigensolver(task_mass_inv);
+  Eigen::Matrix<double, 6, 6> eigenvalues_inv = Eigen::Matrix<double, 6, 6>::Zero();
   constexpr double tolerance = 1e-6;
   for (int i = 0; i < 6; ++i) {
-    if (svd.singularValues()[i] > tolerance) sigma_inv(i, i) = 1.0 / svd.singularValues()[i];
+    if (eigensolver.eigenvalues()[i] > tolerance) eigenvalues_inv(i, i) = 1.0 / eigensolver.eigenvalues()[i];
   }
-  return svd.matrixV() * sigma_inv * svd.matrixU().transpose();
+  return eigensolver.eigenvectors() * eigenvalues_inv * eigensolver.eigenvectors().transpose();
 }
 
 Vector7d clampTorque(const Vector7d &tau, std::optional<double> max_torque) {
@@ -68,9 +70,6 @@ struct JacobianNullspaceTerms {
   double manipulability{0.0};
 };
 
-// A complete orthogonal decomposition is a fixed Householder sequence, so unlike JacobiSVD it has
-// no data-dependent iteration count and yields the same pseudoinverse in about a third of the time.
-// Both are heap-free at this size.
 JacobianNullspaceTerms computeJacobianNullspaceTerms(const Jacobian &jacobian) {
   Eigen::CompleteOrthogonalDecomposition<Jacobian> cod;
   cod.setThreshold(kJacobianRankTolerance);
@@ -79,7 +78,7 @@ JacobianNullspaceTerms computeJacobianNullspaceTerms(const Jacobian &jacobian) {
   JacobianNullspaceTerms terms;
   terms.pinv = cod.pseudoInverse();
   // J*P = Q*[T 0]*Z, so det(J J^T) = det(T)^2 and the manipulability is |prod diag(T)|. Forming
-  // J J^T instead squares the condition number and halves the digits near a singularity.
+  // J J^T would square the condition number and halve the significant digits near a singularity.
   if (cod.rank() == jacobian.rows()) terms.manipulability = std::abs(cod.matrixT().diagonal().prod());
   return terms;
 }
@@ -212,7 +211,7 @@ franka::Torques CartesianImpedanceBase::computeCommand(
   cur.manipulability_gain = interpolateGain(cur.manipulability_gain, target_nullspace_gains.manipulability_gain, alpha);
   cur.manipulability_damping =
       interpolateGain(cur.manipulability_damping, target_nullspace_gains.manipulability_damping, alpha);
-  // Hard clamp limit (optional), not a shaped gain: snap it. saturateTorqueRate keeps the
+  // Hard clamp limit (optional). saturateTorqueRate keeps the
   // commanded torque smooth.
   cur.posture_max_torque = target_nullspace_gains.posture_max_torque;
   cur.manipulability_max_torque = target_nullspace_gains.manipulability_max_torque;
@@ -256,8 +255,8 @@ franka::Torques CartesianImpedanceBase::computeCommand(
   Vector7d tau_nullspace = Vector7d::Zero();
   if (!params_.nullspace_tasks.empty()) {
     const JacobianNullspaceTerms terms = computeJacobianNullspaceTerms(jacobian);
-    // Same projector as the previous I - J^T (J^T)^+, since pinv(J^T) = pinv(J)^T, but it reuses
-    // this decomposition instead of factoring J^T separately. Symmetric, so no transpose below.
+    // Orthogonal projector onto the nullspace of J, equal to the textbook I - J^T (J^T)^+ because
+    // pinv(J^T) = pinv(J)^T. Symmetric, so it needs no transpose below.
     const Eigen::Matrix<double, 7, 7> nullspace_projector =
         Eigen::Matrix<double, 7, 7>::Identity() - terms.pinv * jacobian;
     Vector7d tau_nullspace_unprojected = Vector7d::Zero();
