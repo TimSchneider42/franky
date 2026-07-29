@@ -2,6 +2,7 @@
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
+#include <Eigen/QR>
 #include <Eigen/SVD>
 #include <algorithm>
 #include <array>
@@ -15,6 +16,11 @@
 namespace franky {
 
 namespace {
+
+// Rank tolerance relative to the largest pivot. Eigen's default sits near the machine epsilon and
+// would inflate the pseudoinverse to ~1e15 next to a singularity. An FR3 Jacobian has a largest
+// singular value near two, so this cuts off where the previous absolute 1e-6 SVD tolerance did.
+constexpr double kJacobianRankTolerance = 1e-6;
 
 NullspaceGains nullspaceGainsFromTasks(const std::vector<NullspaceTask> &tasks) {
   NullspaceGains gains{};
@@ -49,38 +55,42 @@ Eigen::Matrix<double, 6, 6> computeTaskSpaceInertia(const Jacobian &jacobian, co
   return svd.matrixV() * sigma_inv * svd.matrixU().transpose();
 }
 
-Eigen::Matrix<double, 6, 7> pseudoInverse(const Eigen::Matrix<double, 7, 6> &matrix) {
-  Eigen::JacobiSVD<Eigen::Matrix<double, 7, 6>> svd(matrix, Eigen::ComputeFullU | Eigen::ComputeFullV);
-  const auto &singular_values = svd.singularValues();
-  Eigen::Matrix<double, 6, 7> sigma_pinv = Eigen::Matrix<double, 6, 7>::Zero();
-  constexpr double tolerance = 1e-6;
-  for (int i = 0; i < singular_values.size(); ++i) {
-    if (singular_values[i] > tolerance) sigma_pinv(i, i) = 1.0 / singular_values[i];
-  }
-  return svd.matrixV() * sigma_pinv * svd.matrixU().transpose();
-}
-
 Vector7d clampTorque(const Vector7d &tau, std::optional<double> max_torque) {
   if (!max_torque.has_value()) return tau;  // unset ⇒ no clamp
   return tau.cwiseMax(-*max_torque).cwiseMin(*max_torque);
 }
 
-double manipulability(const Jacobian &jacobian) {
-  const double determinant = (jacobian * jacobian.transpose()).determinant();
-  return std::sqrt(std::max(determinant, 0.0));
+// Jacobian quantities shared by the nullspace terms of one control cycle.
+struct JacobianNullspaceTerms {
+  Eigen::Matrix<double, 7, 6> pinv;
+
+  // Yoshikawa manipulability, the product of the singular values. Zero if rank deficient.
+  double manipulability{0.0};
+};
+
+// A complete orthogonal decomposition is a fixed Householder sequence, so unlike JacobiSVD it has
+// no data-dependent iteration count and yields the same pseudoinverse in about a third of the time.
+// Both are heap-free at this size.
+JacobianNullspaceTerms computeJacobianNullspaceTerms(const Jacobian &jacobian) {
+  Eigen::CompleteOrthogonalDecomposition<Jacobian> cod;
+  cod.setThreshold(kJacobianRankTolerance);
+  cod.compute(jacobian);
+
+  JacobianNullspaceTerms terms;
+  terms.pinv = cod.pseudoInverse();
+  // J*P = Q*[T 0]*Z, so det(J J^T) = det(T)^2 and the manipulability is |prod diag(T)|. Forming
+  // J J^T instead squares the condition number and halves the digits near a singularity.
+  if (cod.rank() == jacobian.rows()) terms.manipulability = std::abs(cod.matrixT().diagonal().prod());
+  return terms;
 }
 
-Vector7d manipulabilityGradient(const Model &model, const RobotState &robot_state, const Jacobian &jacobian) {
-  const double w = manipulability(jacobian);
+Vector7d manipulabilityGradient(
+    const Model &model, const RobotState &robot_state, const Jacobian &jacobian,
+    const JacobianNullspaceTerms &terms) {
+  const double w = terms.manipulability;
   if (w < 1e-10) return Vector7d::Zero();
 
-  Eigen::JacobiSVD<Jacobian> svd(jacobian, Eigen::ComputeFullU | Eigen::ComputeFullV);
-  Eigen::Matrix<double, 7, 6> J_pinv = Eigen::Matrix<double, 7, 6>::Zero();
-  constexpr double tolerance = 1e-6;
-  for (int i = 0; i < 6; ++i) {
-    if (svd.singularValues()[i] > tolerance)
-      J_pinv += (1.0 / svd.singularValues()[i]) * svd.matrixV().col(i) * svd.matrixU().col(i).transpose();
-  }
+  const Eigen::Matrix<double, 7, 6> &J_pinv = terms.pinv;
 
   const auto z = jacobian.bottomRows<3>();
 
@@ -139,9 +149,11 @@ Vector7d computeTaskTorque(const PostureTask &task, const RobotState &robot_stat
 }
 
 Vector7d computeTaskTorque(
-    const ManipulabilityTask &task, const Model &model, const RobotState &robot_state, const Jacobian &jacobian) {
+    const ManipulabilityTask &task, const Model &model, const RobotState &robot_state, const Jacobian &jacobian,
+    const JacobianNullspaceTerms &terms) {
   if (task.gain == 0.0) return Vector7d::Zero();
-  Vector7d tau = task.gain * manipulabilityGradient(model, robot_state, jacobian) - task.damping * robot_state.dq;
+  Vector7d tau =
+      task.gain * manipulabilityGradient(model, robot_state, jacobian, terms) - task.damping * robot_state.dq;
   return clampTorque(tau, task.max_torque);
 }
 
@@ -243,9 +255,11 @@ franka::Torques CartesianImpedanceBase::computeCommand(
   auto tau_task = jacobian.transpose() * wrench_cartesian;
   Vector7d tau_nullspace = Vector7d::Zero();
   if (!params_.nullspace_tasks.empty()) {
-    const auto jacobian_transpose_pinv = pseudoInverse(jacobian.transpose());
-    const auto nullspace_projector =
-        Eigen::Matrix<double, 7, 7>::Identity() - jacobian.transpose() * jacobian_transpose_pinv;
+    const JacobianNullspaceTerms terms = computeJacobianNullspaceTerms(jacobian);
+    // Same projector as the previous I - J^T (J^T)^+, since pinv(J^T) = pinv(J)^T, but it reuses
+    // this decomposition instead of factoring J^T separately. Symmetric, so no transpose below.
+    const Eigen::Matrix<double, 7, 7> nullspace_projector =
+        Eigen::Matrix<double, 7, 7>::Identity() - terms.pinv * jacobian;
     Vector7d tau_nullspace_unprojected = Vector7d::Zero();
     for (const auto &task : params_.nullspace_tasks) {
       tau_nullspace_unprojected += std::visit(
@@ -253,14 +267,14 @@ franka::Torques CartesianImpedanceBase::computeCommand(
             using Task = std::decay_t<decltype(concrete_task)>;
             const auto effective = applyGains(concrete_task, current_nullspace_gains_);
             if constexpr (std::is_same_v<Task, ManipulabilityTask>) {
-              return computeTaskTorque(effective, *model, robot_state, jacobian);
+              return computeTaskTorque(effective, *model, robot_state, jacobian, terms);
             } else {
               return computeTaskTorque(effective, robot_state);
             }
           },
           task);
     }
-    tau_nullspace = nullspace_projector.transpose() * tau_nullspace_unprojected;
+    tau_nullspace = nullspace_projector * tau_nullspace_unprojected;
   }
 
   Vector7d tau_limit = Vector7d::Zero();
