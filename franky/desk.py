@@ -1083,10 +1083,27 @@ class Desk(BaseDesk):
     def _take_control(self, wait_timeout: float = 30.0, force: bool = False):
         # force is ignored on the v1 API -- the server queues the request
         # (up to wait_timeout seconds) until the current holder releases.
-        res = self.send_api_request(
-            "/api/system/control-token:take",
-            content={"owner": self.username, "timeout": int(wait_timeout)},
-        )
+        try:
+            res = self.send_api_request(
+                "/api/system/control-token:take",
+                content={"owner": self.username, "timeout": int(wait_timeout)},
+            )
+        except FrankaAPIError as e:
+            try:
+                code = json.loads(e.message).get("code")
+            except (ValueError, TypeError, AttributeError):
+                code = None
+            if e.http_code == 424 and code == "Timeout":
+                raise TakeControlTimeoutError(
+                    f"Timed out after {wait_timeout}s waiting for the current control-token "
+                    "holder to release control. force=True has no effect on this API version. "
+                    "Either release control from whichever session currently holds it (the "
+                    "Desk web interface prompts that session to do so), retry with a longer "
+                    "wait_timeout, or pass token_storage=True to Desk() so a crashed run of "
+                    "this process can reclaim its own token next time instead of contending "
+                    "with a dead one."
+                ) from e
+            raise
         # See DeskWebSession._take_control on why the id is stringified here.
         token_id = res.get("tokenId")
         return (NO_TOKEN_ID if token_id is None else str(token_id)), res["token"]
