@@ -427,6 +427,12 @@ Hence, use this feature at your own risk.</p>
   <span class="n">desk</span><span class="o">.</span><span class="n">lock_brakes</span><span class="p">()</span>
 </pre></div>
 </div>
+<p>Control-token persistence is opt in. Passing <code class="docutils literal notranslate"><span class="pre">token_storage=True</span></code> to <code class="docutils literal notranslate"><span class="pre">DeskWebSession</span></code>
+or <code class="docutils literal notranslate"><span class="pre">Desk</span></code> stores the SPoC/control token under <code class="docutils literal notranslate"><span class="pre">$XDG_RUNTIME_DIR/franky/control-tokens/</span></code>
+(falling back to <code class="docutils literal notranslate"><span class="pre">$XDG_STATE_HOME/franky/control-tokens/</span></code>, then
+<code class="docutils literal notranslate"><span class="pre">~/.local/state/franky/control-tokens/</span></code>), one owner-only file per robot/user pair. This
+lets a later process retake the same control token after a crash. You can pass a path
+instead of <code class="docutils literal notranslate"><span class="pre">True</span></code> to use a different storage directory.</p>
 <p>In case you are running the robot for longer than 24h you will have noticed that you have to do a safety self-test every 24h.
 <code class="docutils literal notranslate"><span class="pre">Desk</span></code> allows to automate this task as well:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
