@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+import os
+
 from ._franky import _RobotInternal
 
 from .desk import DeskWebSession
@@ -10,7 +14,12 @@ class Robot(_RobotInternal):
     control parameters.
     """
 
-    def create_web_session(self, username: str, password: str) -> DeskWebSession:
+    def create_web_session(
+        self,
+        username: str,
+        password: str,
+        token_storage: bool | str | os.PathLike = False,
+    ) -> DeskWebSession:
         """Create a web session to the Desk interface of this robot.
 
         Note that this method returns a :class:`DeskWebSession`, which is only compatible with
@@ -20,9 +29,12 @@ class Robot(_RobotInternal):
         Args:
             username: Username to log into Franka Desk.
             password: Password to log into Franka Desk.
+            token_storage: Whether and where to persist control tokens.
 
         Returns:
             The Desk web session. Note that the session has to be opened before use, e.g. by
             using it as a context manager.
         """
-        return DeskWebSession(self.fci_hostname, username, password)
+        return DeskWebSession(
+            self.fci_hostname, username, password, token_storage=token_storage
+        )

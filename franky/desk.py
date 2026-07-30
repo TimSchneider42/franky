@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import base64
+import errno
 import hashlib
 import http.client
 import json
 import logging
+import os
 import ssl
+import tempfile
 import time
 import urllib.parse
 from abc import ABC, abstractmethod
@@ -21,7 +24,59 @@ except ImportError:  # Python 3.7
 
 import websockets.sync.client as ws_sync
 
+try:
+    import fcntl
+except ImportError:  # Non-POSIX platform: control token locking is unavailable.
+    fcntl = None
+
 logger = logging.getLogger(__name__)
+
+
+# A concurrent claim() can replace the file between opening it and locking it. Retrying resolves
+# it against the newer file; the bound only stops a pathological writer from spinning us.
+_ADOPT_ATTEMPTS = 4
+
+
+def _default_token_storage_dir() -> str:
+    """Return the default control token directory.
+
+    Prefers the runtime directory, being private, in memory and cleared on logout. Falls back to
+    the XDG state directory where there is no login session (containers, cron jobs, services).
+    """
+    for variable in ("XDG_RUNTIME_DIR", "XDG_STATE_HOME"):
+        base = os.environ.get(variable)
+        if base and os.path.isabs(base):
+            break
+    else:
+        base = os.path.expanduser("~/.local/state")
+    logger.debug("Storing control tokens under %s.", base)
+    return os.path.join(base, "franky", "control-tokens")
+
+
+def _make_token_storage_dir(directory: str) -> None:
+    """Create a token store directory, owner-only. An existing one is left as it is."""
+    if directory:
+        os.makedirs(directory, mode=0o700, exist_ok=True)
+
+
+def _try_lock(fd: int) -> bool:
+    """Whether the caller may use the token in fd; False if another live process owns it.
+
+    Anything that is not contention (no lock support, a filesystem that cannot lock) counts as
+    success: the lock only backs up the checks against the robot.
+    """
+    if fcntl is None:
+        logger.debug("Control token locking is not available on this platform.")
+        return True
+    try:
+        # flock, not fcntl.lockf: it is held by the open file description, so the kernel drops
+        # it when the process dies, and it does not require the file to be open for writing.
+        fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError as e:
+        if e.errno in (errno.EACCES, errno.EAGAIN):
+            return False
+        logger.debug("Could not lock control token file: %s", e)
+    return True
 
 
 class DeskError(Exception):
@@ -78,6 +133,13 @@ class BrakeState(Enum):
     UNLOCKED = "Unlocked"
 
 
+class NoTokenIdType:
+    pass
+
+
+NO_TOKEN_ID = NoTokenIdType()
+
+
 @dataclass(frozen=True)
 class PilotButtonEvent:
     """A single Pilot button state change."""
@@ -88,6 +150,190 @@ class PilotButtonEvent:
     def __repr__(self) -> str:
         action = "pressed" if self.pressed else "released"
         return f"PilotButtonEvent({self.button.value} {action})"
+
+
+@dataclass(frozen=True)
+class _ControlToken:
+    id: str | NoTokenIdType
+    token: str
+
+
+class _ControlTokenStore:
+    """Stores the control token of one (hostname, username) in a file of its own.
+
+    The file is also the ownership lock: a session flocks it while in use, and the kernel drops
+    that lock when the process dies, so a crashed session's token is adoptable and a live one's
+    is not. Whether the robot still honours a token is checked separately, during adoption.
+
+    Reads never raise; an unreadable file or store reports "no token stored".
+
+    claim() publishes with os.replace(), so a superseded session's descriptor no longer matches
+    the path and it will not delete the newer token. Best effort: the gap between that check and
+    the unlink is not serialized.
+    """
+
+    def __init__(self, directory: str | os.PathLike, hostname: str, username: str):
+        self._dir = os.path.expanduser(os.fspath(directory))
+        self._hostname = hostname
+        self._username = username
+        # Hashed: a username may contain a path separator, and "{hostname}_{username}" cannot
+        # tell "a_b" plus "c" from "a" plus "b_c". The plain values are stored inside the file,
+        # so it stays possible to tell which robot a file belongs to.
+        digest = hashlib.sha256(f"{hostname}\0{username}".encode("utf-8")).hexdigest()
+        self._path = os.path.join(self._dir, f"{digest[:32]}.token")
+        self._fd: int | None = None
+
+    def adopt(self) -> _ControlToken | None:
+        """Take over the stored token, if there is one and no other process is using it."""
+        self.release()
+        for _ in range(_ADOPT_ATTEMPTS):
+            try:
+                fd = os.open(self._path, os.O_RDONLY | os.O_CLOEXEC)
+            except FileNotFoundError:
+                return None
+            except OSError as e:
+                logger.debug("Could not open control token %s: %s", self._path, e)
+                return None
+            try:
+                if not _try_lock(fd):
+                    logger.info(
+                        "Not adopting the stored control token for %s: another process is "
+                        "using it. Call take_control() to take control for this session.",
+                        self._hostname,
+                    )
+                    return None
+                if not self._is_current(fd):
+                    # Replaced between the open and the lock: retry against the newer file.
+                    continue
+                control_token = self._read(fd)
+                if control_token is None:
+                    return None
+                self._fd = fd
+                return control_token
+            finally:
+                # Anything but a successful adoption has to give the descriptor, and with it
+                # the lock, straight back.
+                if self._fd != fd:
+                    os.close(fd)
+        logger.debug("Gave up adopting the control token for %s.", self._hostname)
+        return None
+
+    def claim(self, control_token: _ControlToken) -> None:
+        """Store a freshly taken token and take ownership of it."""
+        self.release()
+        temporary_path = None
+        try:
+            _make_token_storage_dir(self._dir)
+            handle, temporary_path = tempfile.mkstemp(
+                prefix=f".{os.path.basename(self._path)}.",
+                suffix=".tmp",
+                dir=self._dir,
+            )
+            with os.fdopen(handle, "wb") as token_file:
+                token_file.write(self._encode(control_token))
+            # Locked before it is published, so this session owns the exact inode it publishes
+            # and a concurrent claim() cannot slip in between.
+            self._fd = os.open(temporary_path, os.O_RDONLY | os.O_CLOEXEC)
+            _try_lock(self._fd)
+            os.replace(temporary_path, self._path)
+        except OSError as e:
+            # Control is already held on the robot; failing to persist it only costs the next
+            # session a take_control().
+            logger.warning(
+                "Could not store the control token for %s: %s", self._hostname, e
+            )
+            self.release()
+            if temporary_path is not None:
+                self._unlink(temporary_path)
+
+    def release(self) -> None:
+        """Stop using the stored token, leaving it behind for the next session."""
+        if self._fd is None:
+            return
+        fd, self._fd = self._fd, None
+        # Closing the descriptor drops the flock with it.
+        try:
+            os.close(fd)
+        except OSError as e:
+            logger.debug("Could not close control token %s: %s", self._path, e)
+
+    def delete(self) -> None:
+        """Drop the stored token if it is still this session's, and release its lock."""
+        try:
+            # Ours only while the descriptor still refers to the file at the path; a newer
+            # session may have replaced it, and its token has to survive.
+            if self._fd is not None and self._is_current(self._fd):
+                self._unlink(self._path)
+        finally:
+            self.release()
+
+    def _is_current(self, fd: int) -> bool:
+        """Whether the file behind fd is still the one at the store path."""
+        try:
+            open_stat = os.fstat(fd)
+            path_stat = os.stat(self._path)
+        except OSError:
+            return False
+        return (open_stat.st_ino, open_stat.st_dev) == (
+            path_stat.st_ino,
+            path_stat.st_dev,
+        )
+
+    def _peek(self) -> _ControlToken | None:
+        """Read the stored token without taking ownership of it."""
+        try:
+            fd = os.open(self._path, os.O_RDONLY | os.O_CLOEXEC)
+        except OSError:
+            return None
+        try:
+            return self._read(fd)
+        finally:
+            os.close(fd)
+
+    def _read(self, fd: int) -> _ControlToken | None:
+        """Parse the token file behind fd, or None if it holds no usable token."""
+        try:
+            with os.fdopen(os.dup(fd), "rb") as token_file:
+                raw = token_file.read()
+        except OSError as e:
+            logger.warning("Ignoring unreadable control token %s: %s", self._path, e)
+            return None
+        try:
+            data = json.loads(raw)
+            token = data["token"]
+            token_id = data["id"]
+        except (ValueError, TypeError, KeyError) as e:
+            logger.warning("Ignoring unreadable control token %s: %s", self._path, e)
+            return None
+        if not isinstance(token, str) or not token:
+            return None
+        if token_id is None:
+            return _ControlToken(id=NO_TOKEN_ID, token=token)
+        if not isinstance(token_id, str) or not token_id:
+            return None
+        return _ControlToken(id=token_id, token=token)
+
+    def _encode(self, control_token: _ControlToken) -> bytes:
+        # JSON, so that no hostname, username or token can break out of its field, whatever it
+        # contains. The identifying pair is written alongside the token to keep the hashed file
+        # name greppable.
+        return json.dumps(
+            {
+                "hostname": self._hostname,
+                "username": self._username,
+                "id": None if control_token.id is NO_TOKEN_ID else control_token.id,
+                "token": control_token.token,
+            },
+            indent=2,
+        ).encode("utf-8")
+
+    def _unlink(self, path: str) -> None:
+        try:
+            os.unlink(path)
+        except FileNotFoundError:
+            pass
+        except OSError as e:
+            logger.debug("Could not remove %s: %s", path, e)
 
 
 def _encode_password(user: str, password: str) -> str:
@@ -113,15 +359,36 @@ class BaseDesk(ABC):
         hostname: Hostname or IP address of the robot.
         username: Username to log into Franka Desk.
         password: Password to log into Franka Desk.
+        token_storage: Whether and where to persist control tokens.
     """
 
-    def __init__(self, hostname: str, username: str, password: str):
+    def __init__(
+        self,
+        hostname: str,
+        username: str,
+        password: str,
+        token_storage: bool | str | os.PathLike = False,
+    ):
         super().__init__()
         self.__hostname = hostname
         self.__username = username
         self.__password = password
+        self.__token_store = (
+            None
+            if token_storage is False
+            else _ControlTokenStore(
+                (
+                    _default_token_storage_dir()
+                    if token_storage is True
+                    else token_storage
+                ),
+                hostname,
+                username,
+            )
+        )
         self.__pilot_button_socket = None
         self.__client = None
+        # Adoption is deferred until open(), after authentication makes validation possible.
         self.__control_token = None
         self.__control_token_id = None
 
@@ -145,11 +412,17 @@ class BaseDesk(ABC):
         """Release control if held, and close the connection to Franka Desk."""
         if not self.is_open:
             raise RuntimeError("Session is not open.")
-        self._close_pilot_button_socket()
-        if self.__control_token is not None:
-            self.release_control()
-        self.__client.close()
-        self.__client = None
+        try:
+            self._close_pilot_button_socket()
+            if self.__control_token is not None:
+                if self.has_control:
+                    self.release_control()
+                else:
+                    self.__discard_control_token()
+        finally:
+            if self.__token_store is not None:
+                self.__token_store.release()
+            self._close_client()
 
     def take_control(self, wait_timeout: float = 30.0, force: bool = False):
         """Obtain exclusive control over the robot.
@@ -170,13 +443,18 @@ class BaseDesk(ABC):
             self.__control_token_id, self.__control_token = self._take_control(
                 wait_timeout=wait_timeout, force=force
             )
+            if self.__token_store is not None:
+                self.__token_store.claim(
+                    _ControlToken(
+                        id=self.__control_token_id, token=self.__control_token
+                    )
+                )
 
     def release_control(self):
         """Release control over the robot, allowing other users to take it."""
         if self.__control_token is not None:
             self._release_control()
-        self.__control_token = None
-        self.__control_token_id = None
+        self.__discard_control_token()
 
     def send_api_request(
         self,
@@ -453,6 +731,38 @@ class BaseDesk(ABC):
                 "Client does not have control. Call take_control() first."
             )
 
+    def __discard_control_token(self) -> None:
+        self.__control_token = None
+        self.__control_token_id = None
+        if self.__token_store is not None:
+            self.__token_store.delete()
+
+    def _adopt_control_token(self) -> None:
+        if self.__token_store is None:
+            return
+        stored_token = self.__token_store.adopt()
+        if stored_token is None:
+            return
+        self.__control_token_id = stored_token.id
+        self.__control_token = stored_token.token
+        if not self.has_control:
+            logger.info(
+                "Discarding an expired stored control token for %s.", self.hostname
+            )
+            self.__discard_control_token()
+
+    def _abort_open(self) -> None:
+        if self.__token_store is not None:
+            self.__token_store.release()
+        self.__control_token = None
+        self.__control_token_id = None
+        self._close_client()
+
+    def _close_client(self) -> None:
+        if self.__client is not None:
+            self.__client.close()
+            self.__client = None
+
     def _get_pilot_button_socket(self):
         if self.__pilot_button_socket is None:
             uri = f"wss://{self.__hostname}/desk/api/navigation/events"
@@ -524,8 +834,11 @@ class BaseDesk(ABC):
         return self.__control_token
 
     @property
-    def control_token_id(self) -> str | None:
-        """The ID of the current control token, or None if this session does not hold control."""
+    def control_token_id(self) -> str | NoTokenIdType | None:
+        """The ID of the current control token, or None if this session does not hold control.
+
+        Is NO_TOKEN_ID on API versions that grant control without reporting a token ID.
+        """
         return self.__control_token_id
 
     @property
@@ -556,13 +869,6 @@ class BaseDesk(ABC):
         return self._get_brake_state()
 
 
-class NoTokenIdType:
-    pass
-
-
-NO_TOKEN_ID = NoTokenIdType()
-
-
 class DeskWebSession(BaseDesk):
     """Desk web session for the legacy Franka Desk API.
 
@@ -570,8 +876,14 @@ class DeskWebSession(BaseDesk):
     firmware, use :class:`Desk` instead.
     """
 
-    def __init__(self, hostname: str, username: str, password: str):
-        super().__init__(hostname, username, password)
+    def __init__(
+        self,
+        hostname: str,
+        username: str,
+        password: str,
+        token_storage: bool | str | os.PathLike = False,
+    ):
+        super().__init__(hostname, username, password, token_storage=token_storage)
         self.__token = None
 
     def _get_pilot_auth_headers(self) -> dict[str, str]:
@@ -594,8 +906,9 @@ class DeskWebSession(BaseDesk):
                 },
                 response_encoding="text",
             )
+            self._adopt_control_token()
         except:
-            self.close()
+            self._abort_open()
             raise
 
     def close(self):
@@ -612,13 +925,15 @@ class DeskWebSession(BaseDesk):
                 "Forcibly taking control: "
                 f"Please physically take control by pressing the top button on the FR3 within {wait_timeout}s!"
             )
-        token_id, token = response_dict["id"], response_dict["token"]
+        # Token ids are strings from here on: the API reports them as numbers, but they have to
+        # survive a round trip through the token store as text.
+        token_id, token = str(response_dict["id"]), response_dict["token"]
 
         # Cannot use self.has_control here as the token is only stored in the
         # base class once this method returns.
         def granted() -> bool:
             active_token = self._get_system_status()["controlToken"]["activeToken"]
-            return active_token is not None and active_token["id"] == token_id
+            return active_token is not None and str(active_token["id"]) == token_id
 
         start = time.time()
         has_control = granted()
@@ -634,7 +949,10 @@ class DeskWebSession(BaseDesk):
     def _get_has_control(self):
         status = self._get_system_status()
         active_token = status["controlToken"]["activeToken"]
-        return active_token is not None and active_token["id"] == self.control_token_id
+        return (
+            active_token is not None
+            and str(active_token["id"]) == self.control_token_id
+        )
 
     def _release_control(self):
         self.send_control_api_request(
@@ -736,8 +1054,14 @@ class Desk(BaseDesk):
     on System 5+ firmware. For older firmware, use :class:`DeskWebSession`.
     """
 
-    def __init__(self, hostname: str, username: str, password: str):
-        super().__init__(hostname, username, password)
+    def __init__(
+        self,
+        hostname: str,
+        username: str,
+        password: str,
+        token_storage: bool | str | os.PathLike = False,
+    ):
+        super().__init__(hostname, username, password, token_storage=token_storage)
         self.__warned_no_token_id = False
 
     def _get_pilot_auth_headers(self) -> dict[str, str]:
@@ -751,18 +1075,38 @@ class Desk(BaseDesk):
         try:
             # Verify connectivity and credentials right away.
             self._get_system_status()
+            self._adopt_control_token()
         except:
-            self.close()
+            self._abort_open()
             raise
 
     def _take_control(self, wait_timeout: float = 30.0, force: bool = False):
         # force is ignored on the v1 API -- the server queues the request
         # (up to wait_timeout seconds) until the current holder releases.
-        res = self.send_api_request(
-            "/api/system/control-token:take",
-            content={"owner": self.username, "timeout": int(wait_timeout)},
-        )
-        return res.get("tokenId", NO_TOKEN_ID), res["token"]
+        try:
+            res = self.send_api_request(
+                "/api/system/control-token:take",
+                content={"owner": self.username, "timeout": int(wait_timeout)},
+            )
+        except FrankaAPIError as e:
+            try:
+                code = json.loads(e.message).get("code")
+            except (ValueError, TypeError, AttributeError):
+                code = None
+            if e.http_code == 424 and code == "Timeout":
+                raise TakeControlTimeoutError(
+                    f"Timed out after {wait_timeout}s waiting for the current control-token "
+                    "holder to release control. force=True has no effect on this API version. "
+                    "Either release control from whichever session currently holds it (the "
+                    "Desk web interface prompts that session to do so), retry with a longer "
+                    "wait_timeout, or pass token_storage=True to Desk() so a crashed run of "
+                    "this process can reclaim its own token next time instead of contending "
+                    "with a dead one."
+                ) from e
+            raise
+        # See DeskWebSession._take_control on why the id is stringified here.
+        token_id = res.get("tokenId")
+        return (NO_TOKEN_ID if token_id is None else str(token_id)), res["token"]
 
     def _release_control(self):
         self.send_control_api_request("/api/system/control-token:release")
@@ -778,7 +1122,8 @@ class Desk(BaseDesk):
                 )
                 self.__warned_no_token_id = True
             return data.get("owner") == self.username
-        return data.get("tokenId") == self.control_token_id
+        token_id = data.get("tokenId")
+        return token_id is not None and str(token_id) == self.control_token_id
 
     def _get_operating_mode(self) -> OperatingMode:
         data = self.send_api_request("/api/system/operating-mode", method="GET")
