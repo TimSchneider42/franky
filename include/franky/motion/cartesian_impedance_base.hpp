@@ -408,6 +408,21 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
   Matrix6d current_damping_;
   NullspaceGains current_nullspace_gains_;
 
+  /**
+   * Last value read from each gain handle. Refreshed only when the handle reports new data, so a
+   * settled controller does not re-copy the payload every cycle.
+   */
+  CartesianImpedanceGains target_gains_;
+  NullspaceGains target_nullspace_gains_;
+
+  /**
+   * Which nullspace task types params_ holds. Fixed at construction, since params_ is only ever
+   * assigned there. Lets the control loop skip the nullspace gain interpolation, and the Jacobian
+   * decomposition, when there is nothing to project.
+   */
+  bool has_posture_task_;
+  bool has_manipulability_task_;
+
   /** Cached critical damping = defaultCartesianImpedanceDamping(current_stiffness_). */
   Matrix6d critical_damping_;
 

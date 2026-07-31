@@ -21,6 +21,12 @@ namespace {
 // rather than inverted.
 constexpr double kJacobianRankTolerance = 1e-6;
 
+template <typename TaskType>
+bool containsTask(const std::vector<NullspaceTask> &tasks) {
+  return std::any_of(
+      tasks.begin(), tasks.end(), [](const NullspaceTask &task) { return std::holds_alternative<TaskType>(task); });
+}
+
 NullspaceGains nullspaceGainsFromTasks(const std::vector<NullspaceTask> &tasks) {
   NullspaceGains gains{};
   for (const auto &task : tasks) {
@@ -166,7 +172,11 @@ CartesianImpedanceBase::CartesianImpedanceBase(
       nullspace_gains_handle_(nullspaceGainsFromTasks(params.nullspace_tasks)),
       gains_time_constant_(gains_time_constant),
       current_stiffness_(params.stiffness),
-      current_nullspace_gains_(nullspaceGainsFromTasks(params.nullspace_tasks)) {
+      current_nullspace_gains_(nullspaceGainsFromTasks(params.nullspace_tasks)),
+      target_gains_(params.stiffness, params.damping),
+      target_nullspace_gains_(nullspaceGainsFromTasks(params.nullspace_tasks)),
+      has_posture_task_(containsTask<PostureTask>(params.nullspace_tasks)),
+      has_manipulability_task_(containsTask<ManipulabilityTask>(params.nullspace_tasks)) {
   if (!std::isfinite(gains_time_constant_) || gains_time_constant_ <= 0.0) {
     throw std::invalid_argument("gains_time_constant must be finite and positive");
   }
@@ -189,31 +199,36 @@ const Matrix6d &CartesianImpedanceBase::criticalDamping() {
 
 franka::Torques CartesianImpedanceBase::computeCommand(
     const RobotState &robot_state, const CartesianReference &reference, double dt) {
-  // Interpolate toward the target gains.
-  const auto target_gains = gains_handle_.getUnsafe();
+  // Interpolate toward the target gains. Gains are published rarely, so re-copy a handle's payload
+  // only once the writer has actually pushed one
+  if (gains_handle_.hasNewData()) target_gains_ = gains_handle_.getUnsafe();
   const double alpha = 1.0 - std::exp(-dt / gains_time_constant_);
-  current_stiffness_ = interpolateGain(current_stiffness_, target_gains.stiffness, alpha);
+  current_stiffness_ = interpolateGain(current_stiffness_, target_gains_.stiffness, alpha);
   // An unset target means "critically damp the current stiffness"; interpolate toward it like any
   // other gain so unsetting damping is as smooth as setting it. The ternary keeps the
   // eigendecomposition off the explicit-damping path.
-  const Matrix6d &target_damping = target_gains.damping.has_value() ? *target_gains.damping : criticalDamping();
+  const Matrix6d &target_damping = target_gains_.damping.has_value() ? *target_gains_.damping : criticalDamping();
   current_damping_ += alpha * (target_damping - current_damping_);
 
-  const auto target_nullspace_gains = nullspace_gains_handle_.getUnsafe();
   auto &cur = current_nullspace_gains_;
-  cur.posture_stiffness = interpolateGain(cur.posture_stiffness, target_nullspace_gains.posture_stiffness, alpha);
-  const Vector7d posture_critical = 2.0 * cur.posture_stiffness.cwiseMax(0.0).cwiseSqrt();
-  cur.posture_damping = interpolateGain(
-      cur.posture_damping.value_or(posture_critical),
-      target_nullspace_gains.posture_damping.value_or(posture_critical),
-      alpha);
-  cur.manipulability_gain = interpolateGain(cur.manipulability_gain, target_nullspace_gains.manipulability_gain, alpha);
-  cur.manipulability_damping =
-      interpolateGain(cur.manipulability_damping, target_nullspace_gains.manipulability_damping, alpha);
-  // Hard clamp limit (optional). saturateTorqueRate keeps the
-  // commanded torque smooth.
-  cur.posture_max_torque = target_nullspace_gains.posture_max_torque;
-  cur.manipulability_max_torque = target_nullspace_gains.manipulability_max_torque;
+  if (has_posture_task_ || has_manipulability_task_) {
+    if (nullspace_gains_handle_.hasNewData()) target_nullspace_gains_ = nullspace_gains_handle_.getUnsafe();
+    const NullspaceGains &target_nullspace_gains = target_nullspace_gains_;
+    cur.posture_stiffness = interpolateGain(cur.posture_stiffness, target_nullspace_gains.posture_stiffness, alpha);
+    const Vector7d posture_critical = 2.0 * cur.posture_stiffness.cwiseMax(0.0).cwiseSqrt();
+    cur.posture_damping = interpolateGain(
+        cur.posture_damping.value_or(posture_critical),
+        target_nullspace_gains.posture_damping.value_or(posture_critical),
+        alpha);
+    cur.manipulability_gain =
+        interpolateGain(cur.manipulability_gain, target_nullspace_gains.manipulability_gain, alpha);
+    cur.manipulability_damping =
+        interpolateGain(cur.manipulability_damping, target_nullspace_gains.manipulability_damping, alpha);
+    // Hard clamp limit (optional). saturateTorqueRate keeps the
+    // commanded torque smooth.
+    cur.posture_max_torque = target_nullspace_gains.posture_max_torque;
+    cur.manipulability_max_torque = target_nullspace_gains.manipulability_max_torque;
+  }
 
   auto model = robot()->model();
   Vector7d coriolis = model->coriolis(robot_state);
@@ -252,7 +267,10 @@ franka::Torques CartesianImpedanceBase::computeCommand(
 
   auto tau_task = jacobian.transpose() * wrench_cartesian;
   Vector7d tau_nullspace = Vector7d::Zero();
-  if (!params_.nullspace_tasks.empty()) {
+  // configured-but-disabled task does not pay for the Jacobian decomposition.
+  const bool posture_active = has_posture_task_ && (cur.posture_stiffness.array() > 0.0).any();
+  const bool manipulability_active = has_manipulability_task_ && cur.manipulability_gain != 0.0;
+  if (posture_active || manipulability_active) {
     const JacobianNullspaceTerms terms = computeJacobianNullspaceTerms(jacobian);
     Vector7d tau_nullspace_unprojected = Vector7d::Zero();
     for (const auto &task : params_.nullspace_tasks) {

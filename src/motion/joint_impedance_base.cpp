@@ -19,7 +19,9 @@ JointImpedanceBase::JointImpedanceBase(
       cartesian_gains_handle_(params.cartesian_gains.value_or(CartesianImpedanceGains{})),
       gains_time_constant_(gains_time_constant),
       current_stiffness_(params.stiffness),
-      current_damping_(params.damping.value_or(defaultJointImpedanceDamping(params.stiffness))) {
+      current_damping_(params.damping.value_or(defaultJointImpedanceDamping(params.stiffness))),
+      target_gains_(params.stiffness, params.damping),
+      target_cartesian_gains_(params.cartesian_gains.value_or(CartesianImpedanceGains{})) {
   if (!std::isfinite(gains_time_constant_) || gains_time_constant_ <= 0.0) {
     throw std::invalid_argument("gains_time_constant must be finite and positive");
   }
@@ -47,13 +49,15 @@ const Matrix6d &JointImpedanceBase::criticalShapingDamping(CartesianShapingState
 
 franka::Torques JointImpedanceBase::computeCommand(
     const RobotState &robot_state, const JointReference &reference, double dt) {
-  // Interpolate toward the target gains.
-  const auto target_gains = gains_handle_.getUnsafe();
+  // Interpolate toward the target gains. Gains are published rarely, so re-copy a handle's payload
+  // only once the writer has actually pushed one. hasNewData() is a single atomic load and, unlike
+  // getUnsafe(), does not consume the flag, so this reads the same value getUnsafe() would return.
+  if (gains_handle_.hasNewData()) target_gains_ = gains_handle_.getUnsafe();
   const double alpha = 1.0 - std::exp(-dt / gains_time_constant_);
-  current_stiffness_ += alpha * (target_gains.stiffness - current_stiffness_);
+  current_stiffness_ += alpha * (target_gains_.stiffness - current_stiffness_);
   // An unset damping target means "critically damp the current stiffness"
   const Vector7d target_damping =
-      target_gains.damping.has_value() ? *target_gains.damping : defaultJointImpedanceDamping(current_stiffness_);
+      target_gains_.damping.has_value() ? *target_gains_.damping : defaultJointImpedanceDamping(current_stiffness_);
   current_damping_ += alpha * (target_damping - current_damping_);
 
   Vector7d torque_feedforward = params_.constant_torque_offset + reference.tau_ff;
@@ -64,13 +68,13 @@ franka::Torques JointImpedanceBase::computeCommand(
   Vector7d tau_d;
   if (cartesian_shaping_.has_value()) {
     auto &shaping = *cartesian_shaping_;
-    const auto target_gains = cartesian_gains_handle_.getUnsafe();
-    shaping.stiffness = interpolateGain(shaping.stiffness, target_gains.stiffness, alpha);
+    if (cartesian_gains_handle_.hasNewData()) target_cartesian_gains_ = cartesian_gains_handle_.getUnsafe();
+    shaping.stiffness = interpolateGain(shaping.stiffness, target_cartesian_gains_.stiffness, alpha);
     // An unset target means "critically damp the current stiffness"; interpolate toward it like any
     // other gain so unsetting damping is as smooth as setting it. The ternary keeps the
     // eigendecomposition off the explicit-damping path.
-    const Matrix6d &target_damping =
-        target_gains.damping.has_value() ? *target_gains.damping : criticalShapingDamping(shaping);
+    const Matrix6d &target_damping = target_cartesian_gains_.damping.has_value() ? *target_cartesian_gains_.damping
+                                                                                 : criticalShapingDamping(shaping);
     shaping.damping += alpha * (target_damping - shaping.damping);
 
     const Jacobian jacobian = model->zeroJacobian(franka::Frame::kEndEffector, robot_state);

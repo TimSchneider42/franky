@@ -208,6 +208,14 @@ class JointImpedanceBase : public Motion<franka::Torques> {
   double gains_time_constant_;
   Vector7d current_stiffness_;
   Vector7d current_damping_;
+
+  /**
+   * Last value read from each gain handle. Refreshed only when the handle reports new data, so a
+   * settled controller does not re-copy the payload every cycle.
+   */
+  JointImpedanceGains target_gains_;
+  CartesianImpedanceGains target_cartesian_gains_;
+
   std::optional<CartesianShapingState> cartesian_shaping_;
 };
 
