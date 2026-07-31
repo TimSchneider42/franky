@@ -89,44 +89,59 @@ JacobianNullspaceTerms computeJacobianNullspaceTerms(const Jacobian &jacobian) {
   return terms;
 }
 
-Vector7d manipulabilityGradient(
-    const Model &model, const RobotState &robot_state, const Jacobian &jacobian, const JacobianNullspaceTerms &terms) {
+// Gradient of the Yoshikawa manipulability, derived entirely from the Jacobian the model already
+// supplied. No joint-frame poses and no dJ matrices are required.
+//
+// For a chain of revolute joints, column k of the geometric Jacobian is v_k = z_k x (p_E - p_k) and
+// w_k = z_k. Differentiating with respect to joint i gives
+//
+//   k <  i:  dv_k/dq_i = z_k x v_i          dw_k/dq_i = 0
+//   k >= i:  dv_k/dq_i = z_i x v_k          dw_k/dq_i = z_i x z_k
+//
+// The k >= i linear term comes out as (z_i x z_k) x r + z_k x (z_i x r), which the Jacobi identity
+// collapses to z_i x (z_k x r) = z_i x v_k. So every derivative is one cross product between two
+// columns of J, and the joint origins that used to be fetched from the model are exactly the
+// information J already carries. This stays valid for arbitrary end-effector and tool offsets
+// because it only ever refers to the Jacobian the model returned.
+//
+// The gradient is w * trace(J^+ dJ_i) = w * sum_k (row k of J^+) . (column k of dJ_i). Splitting
+// row k into a_k (linear) and b_k (angular) and applying a . (z x v) = (a x z) . v factors each
+// term into a part that does not depend on i:
+//
+//   k <  i:  a_k . (z_k x v_i)                    = (a_k x z_k) . v_i          =: c_k . v_i
+//   k >= i:  a_k . (z_i x v_k) + b_k . (z_i x z_k) = z_i . (v_k x a_k + z_k x b_k) =: z_i . d_k
+//
+// Neither c_k nor d_k depends on i, so the double loop reduces to a prefix sum over c and a suffix
+// sum over d, making the whole gradient linear rather than quadratic in the joint count.
+Vector7d manipulabilityGradient(const Jacobian &jacobian, const JacobianNullspaceTerms &terms) {
   const double w = terms.manipulability;
   if (w < 1e-10) return Vector7d::Zero();
 
   const Eigen::Matrix<double, 7, 6> &J_pinv = terms.pinv;
-
+  const auto v = jacobian.topRows<3>();
   const auto z = jacobian.bottomRows<3>();
 
-  static constexpr std::array<franka::Frame, 7> kJointFrames = {
-      franka::Frame::kJoint1,
-      franka::Frame::kJoint2,
-      franka::Frame::kJoint3,
-      franka::Frame::kJoint4,
-      franka::Frame::kJoint5,
-      franka::Frame::kJoint6,
-      franka::Frame::kJoint7};
-  Eigen::Matrix<double, 3, 7> p;
-  for (int k = 0; k < 7; ++k) p.col(k) = model.pose(kJointFrames[k], robot_state).translation();
+  // Gather the pseudoinverse rows into contiguous columns once. Reading them inside the loops
+  // instead is a strided access into a column-major matrix and costs more than it saves.
+  Eigen::Matrix<double, 3, 7> c;
+  Eigen::Matrix<double, 3, 7> d;
+  for (int k = 0; k < 7; ++k) {
+    const Eigen::Vector3d a = J_pinv.row(k).head<3>().transpose();
+    const Eigen::Vector3d b = J_pinv.row(k).tail<3>().transpose();
+    c.col(k) = a.cross(z.col(k));
+    d.col(k) = v.col(k).cross(a) + z.col(k).cross(b);
+  }
 
-  const Eigen::Vector3d pn = robot_state.O_T_EE.translation();
+  // suffix.col(i) = sum over k >= i of d_k.
+  Eigen::Matrix<double, 3, 8> suffix;
+  suffix.col(7).setZero();
+  for (int i = 6; i >= 0; --i) suffix.col(i) = suffix.col(i + 1) + d.col(i);
 
-  Vector7d gradient = Vector7d::Zero();
+  Vector7d gradient;
+  Eigen::Vector3d prefix = Eigen::Vector3d::Zero();  // sum over k < i of c_k
   for (int i = 0; i < 7; ++i) {
-    const Eigen::Vector3d zi = z.col(i);
-    Eigen::Matrix<double, 6, 7> dJ = Eigen::Matrix<double, 6, 7>::Zero();
-    for (int k = 0; k < 7; ++k) {
-      const Eigen::Vector3d zk = z.col(k);
-      if (k < i) {
-        dJ.block<3, 1>(0, k) = zk.cross(zi.cross(pn - p.col(i)));
-      } else {
-        const Eigen::Vector3d r = pn - p.col(k);
-        const Eigen::Vector3d zi_x_zk = zi.cross(zk);
-        dJ.block<3, 1>(0, k) = zi_x_zk.cross(r) + zk.cross(zi.cross(r));
-        dJ.block<3, 1>(3, k) = zi_x_zk;
-      }
-    }
-    gradient[i] = w * (J_pinv.transpose().array() * dJ.array()).sum();
+    gradient[i] = w * (prefix.dot(v.col(i)) + z.col(i).dot(suffix.col(i)));
+    prefix += c.col(i);
   }
   return gradient;
 }
@@ -153,11 +168,10 @@ Vector7d computeTaskTorque(const PostureTask &task, const RobotState &robot_stat
 }
 
 Vector7d computeTaskTorque(
-    const ManipulabilityTask &task, const Model &model, const RobotState &robot_state, const Jacobian &jacobian,
+    const ManipulabilityTask &task, const RobotState &robot_state, const Jacobian &jacobian,
     const JacobianNullspaceTerms &terms) {
   if (task.gain == 0.0) return Vector7d::Zero();
-  Vector7d tau =
-      task.gain * manipulabilityGradient(model, robot_state, jacobian, terms) - task.damping * robot_state.dq;
+  Vector7d tau = task.gain * manipulabilityGradient(jacobian, terms) - task.damping * robot_state.dq;
   return clampTorque(tau, task.max_torque);
 }
 
@@ -280,7 +294,7 @@ franka::Torques CartesianImpedanceBase::computeCommand(
             using Task = std::decay_t<decltype(concrete_task)>;
             const auto effective = applyGains(concrete_task, current_nullspace_gains_);
             if constexpr (std::is_same_v<Task, ManipulabilityTask>) {
-              return computeTaskTorque(effective, *model, robot_state, jacobian, terms);
+              return computeTaskTorque(effective, robot_state, jacobian, terms);
             } else {
               return computeTaskTorque(effective, robot_state);
             }
