@@ -191,6 +191,7 @@ inline Vector7d computeJointLimitTorque(
 
 inline Vector7d computeFrictionCompensation(const Vector7d &dq, const FrictionCompensationParams &params) {
   Vector7d tau = Vector7d::Zero();
+  if ((params.coulomb.array() == 0.0).all() && (params.viscous.array() == 0.0).all()) return tau;
   const double epsilon = std::max(params.velocity_epsilon, 1e-9);
   for (int i = 0; i < 7; ++i) {
     const double limit = std::max(params.max_torque[i], 0.0);
