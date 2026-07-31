@@ -81,8 +81,9 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="cartesian__impedance__base_8hpp_source.html">franky/motion/cartesian_impedance_base.hpp</a>&quot;</code><br />
 <code>#include &lt;Eigen/Core&gt;</code><br />
+<code>#include &lt;Eigen/Eigenvalues&gt;</code><br />
 <code>#include &lt;Eigen/Geometry&gt;</code><br />
-<code>#include &lt;Eigen/SVD&gt;</code><br />
+<code>#include &lt;Eigen/QR&gt;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;array&gt;</code><br />
 <code>#include &lt;cmath&gt;</code><br />
@@ -96,6 +97,35 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacefranky" id="r_namespacefranky"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html">franky</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="acf1764ead9f5c4e43aaa7eaf2c5ea74b" name="acf1764ead9f5c4e43aaa7eaf2c5ea74b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf1764ead9f5c4e43aaa7eaf2c5ea74b">&#9670;&#160;</a></span>manipulability</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double manipulability {0.0}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8b64fdc349f11db7a6f707aeaa75903f" name="a8b64fdc349f11db7a6f707aeaa75903f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b64fdc349f11db7a6f707aeaa75903f">&#9670;&#160;</a></span>pinv</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Matrix&lt;double, 7, 6&gt; pinv</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

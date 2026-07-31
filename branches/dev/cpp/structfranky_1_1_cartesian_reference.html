@@ -90,7 +90,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a418ea8d47f70fd59dd4e54ac464596ff" id="r_a418ea8d47f70fd59dd4e54ac464596ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_cartesian_reference.html#a418ea8d47f70fd59dd4e54ac464596ff">validate</a> () <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a></td></tr>
-<tr class="memdesc:a418ea8d47f70fd59dd4e54ac464596ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Throw std::invalid_argument if any value is non-finite.  <br /></td></tr>
+<tr class="memdesc:a418ea8d47f70fd59dd4e54ac464596ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Throw std::invalid_argument if any value is non-finite or the target is not an isometry.  <br /></td></tr>
 <tr class="separator:a418ea8d47f70fd59dd4e54ac464596ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -128,7 +128,8 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Throw std::invalid_argument if any value is non-finite. </p>
+<p>Throw std::invalid_argument if any value is non-finite or the target is not an isometry. </p>
+<p>The controller reads the target's rotation with .<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">linear()</a> on the real-time path, which is only correct for a proper rigid transform, so rigidity is enforced cycle. </p>
 
 </div>
 </div>

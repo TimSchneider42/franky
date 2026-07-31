@@ -380,6 +380,7 @@ Functions</h2></td></tr>
 <tr class="memitem:af08ad2d549bc7bc9f5f7223ad4e192e0" id="r_af08ad2d549bc7bc9f5f7223ad4e192e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a6ccd41d8c07a9600de3eb0394cc5e039">Matrix6d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#af08ad2d549bc7bc9f5f7223ad4e192e0">defaultCartesianImpedanceStiffness</a> ()</td></tr>
 <tr class="separator:af08ad2d549bc7bc9f5f7223ad4e192e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05e648e2a5cf4fe379d14a74ec206735" id="r_a05e648e2a5cf4fe379d14a74ec206735"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a6ccd41d8c07a9600de3eb0394cc5e039">Matrix6d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a05e648e2a5cf4fe379d14a74ec206735">defaultCartesianImpedanceDamping</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#a6ccd41d8c07a9600de3eb0394cc5e039">Matrix6d</a> &amp;stiffness)</td></tr>
+<tr class="memdesc:a05e648e2a5cf4fe379d14a74ec206735"><td class="mdescLeft">&#160;</td><td class="mdescRight">Normalized critical damping 2 * sqrt(K) for a Cartesian stiffness matrix.  <br /></td></tr>
 <tr class="separator:a05e648e2a5cf4fe379d14a74ec206735"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a901a193c7ec8f7ae4da9e83a4b6eefd6" id="r_a901a193c7ec8f7ae4da9e83a4b6eefd6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a901a193c7ec8f7ae4da9e83a4b6eefd6">defaultJointImpedanceStiffness</a> ()</td></tr>
 <tr class="separator:a901a193c7ec8f7ae4da9e83a4b6eefd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -424,6 +425,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a6cdbe2accc58f7e0d176091f3b29db1b"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a6cdbe2accc58f7e0d176091f3b29db1b">validateNonNegativeFinite</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> Eigen::MatrixBase&lt; <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">Derived</a> &gt; &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">values</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">char</a> *<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">name</a>)</td></tr>
 <tr class="memdesc:a6cdbe2accc58f7e0d176091f3b29db1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Throw std::invalid_argument if any element of values is negative or non-finite.  <br /></td></tr>
 <tr class="separator:a6cdbe2accc58f7e0d176091f3b29db1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeab14a8977b34bbad29bcd2292e6f8ca" id="r_aeab14a8977b34bbad29bcd2292e6f8ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#aeab14a8977b34bbad29bcd2292e6f8ca">validateIsometry</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;transform, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">char</a> *<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">name</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">tolerance</a>=1<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">e</a>-6)</td></tr>
+<tr class="memdesc:aeab14a8977b34bbad29bcd2292e6f8ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Throw std::invalid_argument unless the transform is a proper rigid motion.  <br /></td></tr>
+<tr class="separator:aeab14a8977b34bbad29bcd2292e6f8ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ee5ff507e471587c6e92fbb1a7c63aa" id="r_a7ee5ff507e471587c6e92fbb1a7c63aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a7ee5ff507e471587c6e92fbb1a7c63aa">validatePositiveSemidefinite</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#a6ccd41d8c07a9600de3eb0394cc5e039">Matrix6d</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">matrix</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">char</a> *<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">name</a>)</td></tr>
 <tr class="separator:a7ee5ff507e471587c6e92fbb1a7c63aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf788f80e67a640ddaf8d3b3f6ef693f" id="r_abf788f80e67a640ddaf8d3b3f6ef693f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#abf788f80e67a640ddaf8d3b3f6ef693f">saturateTorqueRate</a> (<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">tau_d_calculated</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &amp;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">tau_reference</a>, <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a> max_delta_tau)</td></tr>
@@ -989,6 +993,8 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Normalized critical damping 2 * sqrt(K) for a Cartesian stiffness matrix. </p>
 
 </div>
 </div>
@@ -2712,6 +2718,52 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
 </div><div class="memdoc">
 
 <p>Throw std::invalid_argument if any element of values is non-finite. </p>
+
+</div>
+</div>
+<a id="aeab14a8977b34bbad29bcd2292e6f8ca" name="aeab14a8977b34bbad29bcd2292e6f8ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeab14a8977b34bbad29bcd2292e6f8ca">&#9670;&#160;</a></span>validateIsometry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">void</a> franky::validateIsometry </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#afab9faf133666ada543b15236a8c4b5f">Affine</a> &amp;&#160;</td>
+          <td class="paramname"><em>transform</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">const</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">char</a> *&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">double</a>&#160;</td>
+          <td class="paramname"><em>tolerance</em> = <code>1<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">e</a>-6</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Throw std::invalid_argument unless the transform is a proper rigid motion. </p>
+<p>Affine is Eigen::Affine3d, whose Mode is Affine rather than Isometry, so Transform::rotation() extracts the rotation through a JacobiSVD. That polar decomposition is the only thing keeping a non-rigid target from reaching the orientation error as a malformed quaternion, and it costs roughly 40x a plain .<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">linear()</a> block read on every control cycle. Checking rigidity where a target enters instead is about 9x cheaper than one decomposition, and it reports a broken target rather than silently substituting the nearest rotation, which is wrong by about as much as the input was.</p>
+<p>The tolerance is loose enough for a pose composed from many transforms and tight enough to catch a genuinely corrupt one. </p>
 
 </div>
 </div>
