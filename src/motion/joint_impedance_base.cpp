@@ -25,6 +25,8 @@ JointImpedanceBase::JointImpedanceBase(
   if (!std::isfinite(gains_time_constant_) || gains_time_constant_ <= 0.0) {
     throw std::invalid_argument("gains_time_constant must be finite and positive");
   }
+  validateFinite(target_, "target");
+  validateFinite(target_velocity_, "target_velocity");
   if (params.cartesian_gains.has_value()) {
     const auto &cartesian_gains = *params.cartesian_gains;
     CartesianShapingState shaping;

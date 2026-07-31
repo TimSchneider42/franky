@@ -180,6 +180,8 @@ CartesianImpedanceBase::CartesianImpedanceBase(
   if (!std::isfinite(gains_time_constant_) || gains_time_constant_ <= 0.0) {
     throw std::invalid_argument("gains_time_constant must be finite and positive");
   }
+  // The real-time path reads target_ with .linear(), so a non-rigid target must be rejected here
+  validateIsometry(target_, "target");
   params_.validate();
   critical_damping_ = defaultCartesianImpedanceDamping(current_stiffness_);
   critical_damping_stiffness_ = current_stiffness_;
@@ -239,8 +241,7 @@ franka::Torques CartesianImpedanceBase::computeCommand(
   Eigen::Matrix<double, 6, 1> error;
   error.head(3) << robot_state.O_T_EE.translation() - reference.target.translation();
   error.head(3) = error.head(3).cwiseMax(-params_.translational_error_clip).cwiseMin(params_.translational_error_clip);
-
-  Eigen::Quaterniond quat(reference.target.rotation());
+  Eigen::Quaterniond quat(reference.target.linear());
   if (quat.coeffs().dot(orientation.coeffs()) < 0.0) {
     orientation.coeffs() << -orientation.coeffs();
   }

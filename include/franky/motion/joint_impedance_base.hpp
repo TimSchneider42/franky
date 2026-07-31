@@ -107,6 +107,7 @@ struct JointImpedanceParams {
     validateNonNegativeFinite(stiffness, "stiffness");
     if (damping.has_value()) validateNonNegativeFinite(*damping, "damping");
     validateNonNegativeFinite(error_clip, "error_clip");
+    validateFinite(constant_torque_offset, "constant_torque_offset");
     if (cartesian_gains.has_value()) {
       cartesian_gains->validate();
     }

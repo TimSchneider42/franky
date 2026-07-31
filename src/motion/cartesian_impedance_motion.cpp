@@ -15,7 +15,10 @@ CartesianImpedanceMotion::CartesianImpedanceMotion(const Affine &target, const T
 
 CartesianImpedanceMotion::CartesianImpedanceMotion(
     const Affine &target, const Twist &target_twist, const CartesianImpedanceMotion::Params &params)
-    : CartesianImpedanceBase(target, params), original_target_(target), target_twist_(target_twist), params_(params) {}
+    : CartesianImpedanceBase(target, params), original_target_(target), target_twist_(target_twist), params_(params) {
+  validateIsometry(original_target_, "target");
+  validateFinite(target_twist_.vector_repr(), "target_twist");
+}
 
 void CartesianImpedanceMotion::initImpl(
     const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) {

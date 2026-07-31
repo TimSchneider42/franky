@@ -36,9 +36,11 @@ franka::Torques CartesianImpedanceTrackingMotion::nextCommandImpl(
 
   auto opt_reference = reference_handle_.getUnsafe();
   if (opt_reference) {
+    // Already validated by setReference().
     reference = *opt_reference;
   } else if (reference_callback_) {
     reference = reference_callback_(robot_state, time_step, rel_time, abs_time);
+    reference.validate();
   }
 
   target_ = reference.target;

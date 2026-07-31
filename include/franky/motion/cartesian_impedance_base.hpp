@@ -40,9 +40,15 @@ struct CartesianReference {
    */
   std::optional<TwistAcceleration> target_acceleration{};
 
-  /** @brief Throw std::invalid_argument if any value is non-finite. */
+  /**
+   * @brief Throw std::invalid_argument if any value is non-finite or the target is not an isometry.
+   *
+   * The controller reads the target's rotation with .linear() on the real-time path, which is only
+   * correct for a proper rigid transform, so rigidity is enforced
+   * cycle.
+   */
   void validate() const {
-    validateFinite(target.matrix(), "target");
+    validateIsometry(target, "target");
     if (target_twist.has_value()) validateFinite(target_twist->vector_repr(), "target_twist");
     if (target_acceleration.has_value()) validateFinite(target_acceleration->vector_repr(), "target_acceleration");
   }
@@ -304,6 +310,11 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
       if (damping.has_value()) validatePositiveSemidefinite(*damping, "damping");
       validateNonNegativeFinite(translational_error_clip, "translational_error_clip");
       validateNonNegativeFinite(rotational_error_clip, "rotational_error_clip");
+      for (int i = 0; i < 6; ++i) {
+        if (force_constraints[i].has_value() && !std::isfinite(*force_constraints[i])) {
+          throw std::invalid_argument("force_constraints must contain only finite values");
+        }
+      }
       bool has_posture_task = false;
       bool has_manipulability_task = false;
       for (const auto &task : nullspace_tasks) {
