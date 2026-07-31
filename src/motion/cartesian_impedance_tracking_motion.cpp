@@ -15,20 +15,15 @@ CartesianImpedanceTrackingMotion::CartesianImpedanceTrackingMotion(
 
 void CartesianImpedanceTrackingMotion::initImpl(
     const RobotState &robot_state, const std::optional<franka::Torques> &previous_command) {
+  // Seed the fallback target from the measured pose only. nextCommandImpl runs later in this same
+  // control cycle and re-reads the handle or callback, overwriting anything prefetched here, so a
+  // prefetch would be discarded while still advancing a stateful callback an extra time on every
+  // initialization -- including the re-init a reaction triggers when it swaps motions. The handle
+  // and callback are therefore polled exactly once per cycle, from nextCommandImpl. Mirrors
+  // JointImpedanceTrackingMotion::initImpl.
   target_ = Affine(Eigen::Matrix4d::Map(robot_state.O_T_EE.data()));
   target_twist_ = std::nullopt;
   target_acceleration_ = std::nullopt;
-  auto opt_reference = reference_handle_.getUnsafe();
-  if (opt_reference) {
-    target_ = opt_reference->target;
-    target_twist_ = opt_reference->target_twist;
-    target_acceleration_ = opt_reference->target_acceleration;
-  } else if (reference_callback_) {
-    auto reference = reference_callback_(robot_state, franka::Duration(0), franka::Duration(0), franka::Duration(0));
-    target_ = reference.target;
-    target_twist_ = reference.target_twist;
-    target_acceleration_ = reference.target_acceleration;
-  }
 }
 
 franka::Torques CartesianImpedanceTrackingMotion::nextCommandImpl(
