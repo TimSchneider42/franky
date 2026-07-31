@@ -63,7 +63,15 @@ inline Matrix6d cartesianGainBlocks(double translational, double rotational) {
 
 inline Matrix6d defaultCartesianImpedanceStiffness() { return cartesianGainBlocks(500.0, 50.0); }
 
+/**
+ * @brief Normalized critical damping 2 * sqrt(K) for a Cartesian stiffness matrix.
+ */
 inline Matrix6d defaultCartesianImpedanceDamping(const Matrix6d &stiffness) {
+  if (stiffness.isDiagonal(0.0)) {
+    // cwiseMax guards a negative diagonal, which operatorSqrt would turn into a NaN gain
+    const Vector6d damping = 2.0 * stiffness.diagonal().cwiseMax(0.0).cwiseSqrt();
+    return damping.asDiagonal();
+  }
   Eigen::SelfAdjointEigenSolver<Matrix6d> solver(stiffness);
   return 2.0 * solver.operatorSqrt();
 }
