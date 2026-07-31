@@ -84,8 +84,7 @@ JacobianNullspaceTerms computeJacobianNullspaceTerms(const Jacobian &jacobian) {
 }
 
 Vector7d manipulabilityGradient(
-    const Model &model, const RobotState &robot_state, const Jacobian &jacobian,
-    const JacobianNullspaceTerms &terms) {
+    const Model &model, const RobotState &robot_state, const Jacobian &jacobian, const JacobianNullspaceTerms &terms) {
   const double w = terms.manipulability;
   if (w < 1e-10) return Vector7d::Zero();
 
@@ -255,10 +254,6 @@ franka::Torques CartesianImpedanceBase::computeCommand(
   Vector7d tau_nullspace = Vector7d::Zero();
   if (!params_.nullspace_tasks.empty()) {
     const JacobianNullspaceTerms terms = computeJacobianNullspaceTerms(jacobian);
-    // Orthogonal projector onto the nullspace of J, equal to the textbook I - J^T (J^T)^+ because
-    // pinv(J^T) = pinv(J)^T. Symmetric, so it needs no transpose below.
-    const Eigen::Matrix<double, 7, 7> nullspace_projector =
-        Eigen::Matrix<double, 7, 7>::Identity() - terms.pinv * jacobian;
     Vector7d tau_nullspace_unprojected = Vector7d::Zero();
     for (const auto &task : params_.nullspace_tasks) {
       tau_nullspace_unprojected += std::visit(
@@ -273,7 +268,9 @@ franka::Torques CartesianImpedanceBase::computeCommand(
           },
           task);
     }
-    tau_nullspace = nullspace_projector * tau_nullspace_unprojected;
+    // Orthogonal projector onto the nullspace of J, equal to the textbook I - J^T (J^T)^+ because
+    // pinv(J^T) = pinv(J)^T. Applied in factored form so the dense 7x7 projector is never formed.
+    tau_nullspace = tau_nullspace_unprojected - terms.pinv * (jacobian * tau_nullspace_unprojected);
   }
 
   Vector7d tau_limit = Vector7d::Zero();

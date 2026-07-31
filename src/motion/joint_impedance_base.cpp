@@ -58,6 +58,7 @@ franka::Torques JointImpedanceBase::computeCommand(
 
   Vector7d torque_feedforward = params_.constant_torque_offset + reference.tau_ff;
   const Vector7d q_error = (reference.q - robot_state.q).cwiseMax(-params_.error_clip).cwiseMin(params_.error_clip);
+  const Vector7d dq_error = reference.dq - robot_state.dq;
   auto model = robot()->model();
 
   Vector7d tau_d;
@@ -73,14 +74,14 @@ franka::Torques JointImpedanceBase::computeCommand(
     shaping.damping += alpha * (target_damping - shaping.damping);
 
     const Jacobian jacobian = model->zeroJacobian(franka::Frame::kEndEffector, robot_state);
-    const Eigen::Matrix<double, 7, 7> stiffness_eff =
-        current_stiffness_.asDiagonal().toDenseMatrix() + jacobian.transpose() * shaping.stiffness * jacobian;
-    const Eigen::Matrix<double, 7, 7> damping_eff =
-        current_damping_.asDiagonal().toDenseMatrix() + jacobian.transpose() * shaping.damping * jacobian;
-    tau_d = stiffness_eff * q_error + damping_eff * (reference.dq - robot_state.dq) + torque_feedforward;
+    // Same law as (diag(Kq) + J^T Kx J) q_e + (diag(Dq) + J^T Dx J) dq_e, reassociated into
+    // matrix-vector products so neither dense 7x7 effective gain matrix is ever formed.
+    tau_d =
+        current_stiffness_.cwiseProduct(q_error) + current_damping_.cwiseProduct(dq_error) +
+        jacobian.transpose() * (shaping.stiffness * (jacobian * q_error) + shaping.damping * (jacobian * dq_error)) +
+        torque_feedforward;
   } else {
-    tau_d = current_stiffness_.asDiagonal() * q_error +
-            current_damping_.asDiagonal() * (reference.dq - robot_state.dq) + torque_feedforward;
+    tau_d = current_stiffness_.asDiagonal() * q_error + current_damping_.asDiagonal() * dq_error + torque_feedforward;
   }
 
   tau_d += computeFrictionCompensation(robot_state.dq, params_.friction);
