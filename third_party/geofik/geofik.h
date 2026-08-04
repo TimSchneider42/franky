@@ -3,7 +3,6 @@
 
 #include <Eigen/Dense>
 #include <array>
-#include <vector>
 
 // NOTE (franky vendoring patch): the upstream header declared `using namespace
 // std;` at global scope. That has been removed so the header does not leak the
@@ -11,7 +10,10 @@
 // below are qualified with std:: instead. The .cpp keeps a file-local `using
 // namespace std;` so the implementation is unchanged. See third_party/geofik/README.md.
 
-constexpr double GEOFIK_PI = 3.14159265359;
+// franky vendoring patch: upstream truncated this to 3.14159265359, ~2.6e-12 short of pi.
+// It cancels between this solver's own FK and IK, so round-trips never showed it, but it
+// biased the absolute kinematics against libfranka's by ~1e-12. See README.md.
+constexpr double GEOFIK_PI = 3.14159265358979323846;
 constexpr double PI = GEOFIK_PI;
 
 // franky vendoring patch: the swivel solvers store their q7 sweep in fixed-size stack
