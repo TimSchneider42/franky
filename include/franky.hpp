@@ -5,6 +5,7 @@
 #include "franky/elbow_state.hpp"
 #include "franky/gripper.hpp"
 #include "franky/joint_state.hpp"
+#include "franky/kinematics.hpp"
 #include "franky/model.hpp"
 #include "franky/motion/cartesian_impedance_base.hpp"
 #include "franky/motion/cartesian_impedance_motion.hpp"
