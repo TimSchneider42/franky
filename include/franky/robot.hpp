@@ -17,6 +17,7 @@
 #include "franky/control_signal_type.hpp"
 #include "franky/dynamics_limit.hpp"
 #include "franky/joint_state.hpp"
+#include "franky/kinematics.hpp"
 #include "franky/model.hpp"
 #include "franky/motion/motion.hpp"
 #include "franky/motion/motion_generator.hpp"
@@ -286,6 +287,50 @@ class Robot : public franka::Robot {
    * @return The current joint velocities of the robot.
    */
   [[nodiscard]] Vector7d currentJointVelocities() { return currentJointState().velocity(); }
+
+  /**
+   * @brief Analytical inverse kinematics for a target end-effector pose.
+   *
+   * Convenience wrapper around franky::inverseKinematics that uses the robot's
+   * current flange-to-end-effector transform. See franky/kinematics.hpp.
+   *
+   * @param O_T_EE           Target pose of the end-effector frame relative to base.
+   * @param redundancy_value Value at which @p parameter is held [rad].
+   * @param parameter        Which quantity resolves the redundancy.
+   * @param options          Joint limits and singularity/solver options.
+   * @return The valid joint configurations [rad] (possibly empty).
+   */
+  [[nodiscard]] std::vector<Vector7d> inverseKinematics(
+      const Affine &O_T_EE, double redundancy_value, RedundancyParameter parameter = RedundancyParameter::kQ7,
+      const IKOptions &options = {}) {
+    return franky::inverseKinematics(O_T_EE, redundancy_value, parameter, state().F_T_EE, options);
+  }
+
+  /**
+   * @brief Analytical inverse kinematics returning the branch nearest the robot's
+   * current configuration.
+   *
+   * Convenience wrapper around franky::inverseKinematicsNearest that seeds with the
+   * robot's current joint positions and uses its current flange-to-end-effector
+   * transform. With the default arguments this reaches @p O_T_EE while holding the
+   * current arm posture (the current joint 7).
+   *
+   * @param O_T_EE           Target pose of the end-effector frame relative to base.
+   * @param options          Joint limits and singularity/solver options.
+   * @param redundancy_value Value at which @p parameter is held [rad], or nullopt to
+   *                         hold the current configuration's value.
+   * @param parameter        Which quantity resolves the redundancy.
+   * @param max_distance     Largest acceptable single-joint move from the current
+   *                         configuration [rad], or nullopt to accept any distance.
+   * @return The nearest valid configuration [rad], or nullopt if none exists (or none
+   *         is within @p max_distance).
+   */
+  [[nodiscard]] std::optional<Vector7d> inverseKinematicsNearest(
+      const Affine &O_T_EE, const IKOptions &options = {}, std::optional<double> redundancy_value = std::nullopt,
+      RedundancyParameter parameter = RedundancyParameter::kQ7, std::optional<double> max_distance = std::nullopt) {
+    auto s = state();
+    return franky::inverseKinematicsNearest(O_T_EE, s.q, s.F_T_EE, options, redundancy_value, parameter, max_distance);
+  }
 
   /**
    * @brief Returns the current state of the robot.
