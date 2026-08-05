@@ -32,6 +32,9 @@ def _is_premption_exception(exc: ControlException) -> bool:
 
 _DEFAULT_JOINT_STIFFNESS = np.full(7, 50.0)
 
+#: Floor for the timestep reported by ``tick()``.
+_MIN_DT = 1e-9
+
 
 class _CriticalDamping:
     """Sentinel type for :data:`CRITICAL`."""
@@ -111,6 +114,8 @@ class CartesianImpedanceTracker:
         self._tick_count = 0
         self._t_start = _time.perf_counter()
         self._t_next = self._t_start
+        self._t_last = self._t_start
+        self._dt = 0.0
 
         kwargs = {
             "translational_stiffness": translational_stiffness,
@@ -148,30 +153,54 @@ class CartesianImpedanceTracker:
 
     # --- tick ---
 
-    def tick(self) -> bool:
-        """Sleep to maintain the requested period and return whether the controller is alive.
+    def tick(self) -> Optional[float]:
+        """Sleep to maintain the requested period and return the measured timestep.
 
-        On the first call, returns immediately (no sleep). On subsequent calls,
-        sleeps the remaining time until the next tick boundary so that loop body
-        time is compensated for.
+        Returns the wall-clock seconds elapsed since the previous tick, or ``None``
+        once the controller is no longer in control, so a loop can pace itself and
+        pick up a timestep to integrate with in one step::
 
-        If no period was set, just returns is_running without sleeping.
+            while dt := tracker.tick():
+                tracker.set_target(integrate(dt))
+
+        The returned timestep is always non-zero positive.
+
+        On the first call, returns immediately (no sleep) and reports ``period``: the
+        nominal length of the cycle about to run, since there is no previous tick to
+        measure against and construction or caller setup time is not the loop's to
+        report. With no period configured, the first call reports a negligible
+        non-zero timestep. On subsequent calls, sleeps the remaining time until the
+        next tick boundary so that loop body time is compensated for; a body that
+        overran its period shows up as a timestep larger than ``period``.
+
+        If no period was set, just measures and returns without sleeping.
         """
-        if self._period is not None and self._tick_count > 0:
-            now = _time.perf_counter()
-            remaining = self._t_next - now
-            if remaining > 0:
-                _time.sleep(remaining)
-            self._t_next += self._period
-        elif self._period is not None:
-            # First tick: set up the schedule.
-            self._t_next = _time.perf_counter() + self._period
+        first = self._tick_count == 0
+
+        if self._period is not None:
+            if first:
+                # First tick: anchor the schedule, don't sleep.
+                self._t_next = _time.perf_counter() + self._period
+            else:
+                remaining = self._t_next - _time.perf_counter()
+                if remaining > 0:
+                    _time.sleep(remaining)
+                self._t_next += self._period
 
         if not self._robot.is_in_control:
-            return False
+            return None
+
+        now = _time.perf_counter()
+        if first:
+            self._dt = (
+                max(self._period, _MIN_DT) if self._period is not None else _MIN_DT
+            )
+        else:
+            self._dt = max(now - self._t_last, _MIN_DT)
+        self._t_last = now
 
         self._tick_count += 1
-        return True
+        return self._dt
 
     # --- streaming updates ---
 
@@ -278,8 +307,18 @@ class CartesianImpedanceTracker:
         return _time.perf_counter() - self._t_start
 
     @property
+    def period(self) -> Optional[float]:
+        """The configured loop period in seconds, or None if the tracker is unpaced."""
+        return self._period
+
+    @property
+    def dt(self) -> float:
+        """The timestep most recently returned by :meth:`tick` (0.0 before the first tick)."""
+        return self._dt
+
+    @property
     def tick_count(self) -> int:
-        """Number of ticks that have returned True."""
+        """Number of ticks that have run, i.e. returned a timestep rather than None."""
         return self._tick_count
 
     # --- lifecycle ---
@@ -371,6 +410,8 @@ class JointImpedanceTracker:
         self._tick_count = 0
         self._t_start = _time.perf_counter()
         self._t_next = self._t_start
+        self._t_last = self._t_start
+        self._dt = 0.0
 
         # Damping is all-or-nothing: omitted/CRITICAL -> unset (RT loop tracks critical);
         # a full 7-vector pins it.
@@ -420,29 +461,55 @@ class JointImpedanceTracker:
 
     # --- tick ---
 
-    def tick(self) -> bool:
-        """Sleep to maintain the requested period and return whether the controller is alive.
+    def tick(self) -> Optional[float]:
+        """Sleep to maintain the requested period and return the measured timestep.
 
-        On the first call, returns immediately (no sleep). On subsequent calls,
-        sleeps the remaining time until the next tick boundary so that loop body
-        time is compensated for.
+        Returns the wall-clock seconds elapsed since the previous tick, or ``None``
+        once the controller is no longer in control, so a loop can pace itself and
+        pick up a timestep to integrate with in one step::
 
-        If no period was set, just returns is_running without sleeping.
+            while dt := tracker.tick():
+                tracker.set_target(integrate(dt))
+
+        The returned timestep is always non-zero positive.
+
+        On the first call, returns immediately (no sleep) and reports ``period``: the
+        nominal length of the cycle about to run, since there is no previous tick to
+        measure against and construction or caller setup time is not the loop's to
+        report. With no period configured, the first call reports a negligible
+        non-zero timestep. On subsequent calls, sleeps the remaining time until the
+        next tick boundary so that loop body time is compensated for; a body that
+        overran its period shows up as a timestep larger than ``period``.
+
+        If no period was set, just measures and returns without sleeping.
         """
-        if self._period is not None and self._tick_count > 0:
-            now = _time.perf_counter()
-            remaining = self._t_next - now
-            if remaining > 0:
-                _time.sleep(remaining)
-            self._t_next += self._period
-        elif self._period is not None:
-            self._t_next = _time.perf_counter() + self._period
+        first = self._tick_count == 0
+
+        if self._period is not None:
+            if first:
+                # No sleeping, just set the next target
+                self._t_next = _time.perf_counter() + self._period
+            else:
+                remaining = self._t_next - _time.perf_counter()
+                if remaining > 0:
+                    # Sleep to hit the configured rate
+                    _time.sleep(remaining)
+                self._t_next += self._period
 
         if not self._robot.is_in_control:
-            return False
+            return None
+
+        now = _time.perf_counter()
+        if first:
+            self._dt = (
+                max(self._period, _MIN_DT) if self._period is not None else _MIN_DT
+            )
+        else:
+            self._dt = max(now - self._t_last, _MIN_DT)
+        self._t_last = now
 
         self._tick_count += 1
-        return True
+        return self._dt
 
     # --- streaming updates ---
 
@@ -508,8 +575,18 @@ class JointImpedanceTracker:
         return _time.perf_counter() - self._t_start
 
     @property
+    def period(self) -> Optional[float]:
+        """The configured loop period in seconds, or None if the tracker is unpaced."""
+        return self._period
+
+    @property
+    def dt(self) -> float:
+        """The timestep most recently returned by :meth:`tick` (0.0 before the first tick)."""
+        return self._dt
+
+    @property
     def tick_count(self) -> int:
-        """Number of ticks that have returned True."""
+        """Number of ticks that have run, i.e. returned a timestep rather than None."""
         return self._tick_count
 
     # --- lifecycle ---
