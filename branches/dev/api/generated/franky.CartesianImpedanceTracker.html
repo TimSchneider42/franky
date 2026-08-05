@@ -441,18 +441,36 @@ just joins the motion to surface any stored exception.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="franky.CartesianImpedanceTracker.tick">
-<span class="sig-name descname"><span class="pre">tick</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#franky.CartesianImpedanceTracker.tick" title="Link to this definition">¶</a></dt>
-<dd><p>Sleep to maintain the requested period and return whether the controller is alive.</p>
-<p>On the first call, returns immediately (no sleep). On subsequent calls,
-sleeps the remaining time until the next tick boundary so that loop body
-time is compensated for.</p>
-<p>If no period was set, just returns is_running without sleeping.</p>
+<span class="sig-name descname"><span class="pre">tick</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#franky.CartesianImpedanceTracker.tick" title="Link to this definition">¶</a></dt>
+<dd><p>Sleep to maintain the requested period and return the measured timestep.</p>
+<p>Returns the wall-clock seconds elapsed since the previous tick, or <code class="docutils literal notranslate"><span class="pre">None</span></code>
+once the controller is no longer in control, so a loop can pace itself and
+pick up a timestep to integrate with in one step:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">dt</span> <span class="o">:=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">tick</span><span class="p">():</span>
+    <span class="n">tracker</span><span class="o">.</span><span class="n">set_target</span><span class="p">(</span><span class="n">integrate</span><span class="p">(</span><span class="n">dt</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The returned timestep is always non-zero positive.</p>
+<p>On the first call, returns immediately (no sleep) and reports <code class="docutils literal notranslate"><span class="pre">period</span></code>: the
+nominal length of the cycle about to run, since there is no previous tick to
+measure against and construction or caller setup time is not the loop’s to
+report. With no period configured, the first call reports a negligible
+non-zero timestep. On subsequent calls, sleeps the remaining time until the
+next tick boundary so that loop body time is compensated for; a body that
+overran its period shows up as a timestep larger than <code class="docutils literal notranslate"><span class="pre">period</span></code>.</p>
+<p>If no period was set, just measures and returns without sleeping.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="franky.CartesianImpedanceTracker.current_pose">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">current_pose</span></span><a class="headerlink" href="#franky.CartesianImpedanceTracker.current_pose" title="Link to this definition">¶</a></dt>
 <dd><p>The current end-effector pose as a RobotPose (shorthand for robot.current_pose).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="franky.CartesianImpedanceTracker.dt">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">dt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#franky.CartesianImpedanceTracker.dt" title="Link to this definition">¶</a></dt>
+<dd><p>The timestep most recently returned by <a class="reference internal" href="#franky.CartesianImpedanceTracker.tick" title="franky.CartesianImpedanceTracker.tick"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tick()</span></code></a> (0.0 before the first tick).</p>
 </dd></dl>
 
 <dl class="py property">
@@ -474,6 +492,12 @@ time is compensated for.</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="franky.CartesianImpedanceTracker.period">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">period</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#franky.CartesianImpedanceTracker.period" title="Link to this definition">¶</a></dt>
+<dd><p>The configured loop period in seconds, or None if the tracker is unpaced.</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="franky.CartesianImpedanceTracker.state">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">state</span></span><a class="headerlink" href="#franky.CartesianImpedanceTracker.state" title="Link to this definition">¶</a></dt>
 <dd><p>The current robot state from this control session.</p>
@@ -482,7 +506,7 @@ time is compensated for.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="franky.CartesianImpedanceTracker.tick_count">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">tick_count</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#franky.CartesianImpedanceTracker.tick_count" title="Link to this definition">¶</a></dt>
-<dd><p>Number of ticks that have returned True.</p>
+<dd><p>Number of ticks that have run, i.e. returned a timestep rather than None.</p>
 </dd></dl>
 
 </dd></dl>
@@ -552,9 +576,11 @@ time is compensated for.</p>
 <li><a class="reference internal" href="#franky.CartesianImpedanceTracker.stop"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceTracker.stop()</span></code></a></li>
 <li><a class="reference internal" href="#franky.CartesianImpedanceTracker.tick"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceTracker.tick()</span></code></a></li>
 <li><a class="reference internal" href="#franky.CartesianImpedanceTracker.current_pose"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceTracker.current_pose</span></code></a></li>
+<li><a class="reference internal" href="#franky.CartesianImpedanceTracker.dt"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceTracker.dt</span></code></a></li>
 <li><a class="reference internal" href="#franky.CartesianImpedanceTracker.elapsed_time"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceTracker.elapsed_time</span></code></a></li>
 <li><a class="reference internal" href="#franky.CartesianImpedanceTracker.is_running"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceTracker.is_running</span></code></a></li>
 <li><a class="reference internal" href="#franky.CartesianImpedanceTracker.motion"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceTracker.motion</span></code></a></li>
+<li><a class="reference internal" href="#franky.CartesianImpedanceTracker.period"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceTracker.period</span></code></a></li>
 <li><a class="reference internal" href="#franky.CartesianImpedanceTracker.state"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceTracker.state</span></code></a></li>
 <li><a class="reference internal" href="#franky.CartesianImpedanceTracker.tick_count"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceTracker.tick_count</span></code></a></li>
 </ul>
