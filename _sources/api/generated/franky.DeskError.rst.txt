@@ -1,0 +1,6 @@
+﻿franky.DeskError
+================
+
+.. currentmodule:: franky
+
+.. autoexception:: DeskError

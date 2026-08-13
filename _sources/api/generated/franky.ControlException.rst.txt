@@ -1,0 +1,6 @@
+﻿franky.ControlException
+=======================
+
+.. currentmodule:: franky
+
+.. autoexception:: ControlException

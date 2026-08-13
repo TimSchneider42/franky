@@ -1,0 +1,6 @@
+﻿franky.InvalidMotionTypeException
+=================================
+
+.. currentmodule:: franky
+
+.. autoexception:: InvalidMotionTypeException

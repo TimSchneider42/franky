@@ -1,0 +1,11 @@
+﻿franky.ElbowState
+=================
+
+.. currentmodule:: franky
+
+.. autoclass:: ElbowState
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

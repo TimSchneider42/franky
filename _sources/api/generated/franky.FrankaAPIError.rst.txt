@@ -1,0 +1,6 @@
+﻿franky.FrankaAPIError
+=====================
+
+.. currentmodule:: franky
+
+.. autoexception:: FrankaAPIError

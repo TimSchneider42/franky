@@ -1,0 +1,11 @@
+﻿franky.CartesianPose
+====================
+
+.. currentmodule:: franky
+
+.. autoclass:: CartesianPose
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

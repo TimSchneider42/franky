@@ -1,0 +1,11 @@
+﻿franky.Gripper
+==============
+
+.. currentmodule:: franky
+
+.. autoclass:: Gripper
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

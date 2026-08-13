@@ -1,0 +1,11 @@
+﻿franky.CartesianImpedanceMotionParams
+=====================================
+
+.. currentmodule:: franky
+
+.. autoclass:: CartesianImpedanceMotionParams
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

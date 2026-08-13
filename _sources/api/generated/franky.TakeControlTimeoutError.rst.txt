@@ -1,0 +1,6 @@
+﻿franky.TakeControlTimeoutError
+==============================
+
+.. currentmodule:: franky
+
+.. autoexception:: TakeControlTimeoutError

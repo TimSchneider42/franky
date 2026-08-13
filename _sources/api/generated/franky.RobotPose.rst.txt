@@ -1,0 +1,11 @@
+﻿franky.RobotPose
+================
+
+.. currentmodule:: franky
+
+.. autoclass:: RobotPose
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

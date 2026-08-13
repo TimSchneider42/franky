@@ -1,0 +1,6 @@
+﻿franky.CommandException
+=======================
+
+.. currentmodule:: franky
+
+.. autoexception:: CommandException

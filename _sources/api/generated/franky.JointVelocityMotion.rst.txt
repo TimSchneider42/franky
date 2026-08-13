@@ -1,0 +1,11 @@
+﻿franky.JointVelocityMotion
+==========================
+
+.. currentmodule:: franky
+
+.. autoclass:: JointVelocityMotion
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

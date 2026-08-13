@@ -1,0 +1,11 @@
+﻿franky.FlipDirection
+====================
+
+.. currentmodule:: franky
+
+.. autoclass:: FlipDirection
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

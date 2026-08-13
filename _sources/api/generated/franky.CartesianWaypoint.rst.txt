@@ -1,0 +1,11 @@
+﻿franky.CartesianWaypoint
+========================
+
+.. currentmodule:: franky
+
+.. autoclass:: CartesianWaypoint
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

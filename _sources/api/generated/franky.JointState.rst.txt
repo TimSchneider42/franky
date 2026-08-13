@@ -1,0 +1,11 @@
+﻿franky.JointState
+=================
+
+.. currentmodule:: franky
+
+.. autoclass:: JointState
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

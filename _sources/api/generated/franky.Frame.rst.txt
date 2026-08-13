@@ -1,0 +1,11 @@
+﻿franky.Frame
+============
+
+.. currentmodule:: franky
+
+.. autoclass:: Frame
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

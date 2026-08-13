@@ -1,0 +1,6 @@
+﻿franky.MotionReuseException
+===========================
+
+.. currentmodule:: franky
+
+.. autoexception:: MotionReuseException

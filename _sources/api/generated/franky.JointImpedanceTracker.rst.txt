@@ -1,0 +1,11 @@
+﻿franky.JointImpedanceTracker
+============================
+
+.. currentmodule:: franky
+
+.. autoclass:: JointImpedanceTracker
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

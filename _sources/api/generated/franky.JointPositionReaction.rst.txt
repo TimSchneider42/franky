@@ -1,0 +1,11 @@
+﻿franky.JointPositionReaction
+============================
+
+.. currentmodule:: franky
+
+.. autoclass:: JointPositionReaction
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

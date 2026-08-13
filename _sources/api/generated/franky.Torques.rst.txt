@@ -1,0 +1,11 @@
+﻿franky.Torques
+==============
+
+.. currentmodule:: franky
+
+.. autoclass:: Torques
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

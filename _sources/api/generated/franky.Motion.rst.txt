@@ -1,0 +1,6 @@
+﻿franky.Motion
+=============
+
+.. currentmodule:: franky
+
+.. autodata:: Motion
