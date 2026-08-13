@@ -60,7 +60,7 @@ jobs:
       run: |
         if [ "${GITHUB_REF_NAME}" = dev ]; then
           pages_url="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}"
-          export FRANKY_DOCS_ANNOUNCEMENT="This is the documentation of the development version of franky. The documentation of the latest release can be found <a href=\"${pages_url}/master/\">here</a>."
+          export FRANKY_DOCS_ANNOUNCEMENT="This is the documentation of the development version of franky. The documentation of the latest release can be found <a href=\"${pages_url}/\">here</a>."
         fi
         VERSION=$(cat VERSION) sphinx-build -W --keep-going -b html doc doc/_build/html
 
