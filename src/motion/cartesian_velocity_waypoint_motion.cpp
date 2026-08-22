@@ -100,6 +100,14 @@ void CartesianVelocityWaypointMotion::setNewWaypoint(
     last_elbow_vel_ = robot_state.delbow_c;
   }
   input_parameter.enabled = {true, true, true, true, true, true, has_elbow};
+  if (!has_elbow) {
+    input_parameter.current_position[6] = 0.0;
+    input_parameter.current_velocity[6] = 0.0;
+    input_parameter.current_acceleration[6] = 0.0;
+    input_parameter.target_position[6] = 0.0;
+    input_parameter.target_velocity[6] = 0.0;
+    input_parameter.target_acceleration[6] = 0.0;
+  }
 }
 
 std::tuple<Vector7d, Vector7d, Vector7d> CartesianVelocityWaypointMotion::getAbsoluteInputLimits() const {

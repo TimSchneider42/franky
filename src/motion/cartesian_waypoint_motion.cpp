@@ -122,8 +122,16 @@ void CartesianWaypointMotion::setNewWaypoint(
   // This is a bit of an oversimplification, as the angular velocities don't
   // work like linear velocities (but we pretend they do here). However, it is
   // probably good enough here.
-  input_parameter.target_velocity = toStdD<7>(new_target_ref_frame.velocity().vector_repr());
-  input_parameter.enabled = {true, true, true, true, true, true, waypoint_pose.elbow_state().has_value()};
+  const bool has_elbow = waypoint_pose.elbow_state().has_value();
+  input_parameter.enabled = {true, true, true, true, true, true, has_elbow};
+  if (!has_elbow) {
+    input_parameter.current_position[6] = 0.0;
+    input_parameter.current_velocity[6] = 0.0;
+    input_parameter.current_acceleration[6] = 0.0;
+    input_parameter.target_position[6] = 0.0;
+    input_parameter.target_velocity[6] = 0.0;
+    input_parameter.target_acceleration[6] = 0.0;
+  }
 
   target_state_ = new_target;
 }

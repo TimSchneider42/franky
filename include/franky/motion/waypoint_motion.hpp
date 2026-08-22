@@ -119,9 +119,6 @@ class WaypointMotion : public Motion<ControlSignalType> {
     }
 
     if (prev_result_ == ruckig::Finished || max_time_reached) {
-      // minimum_duration constrains travel to a waypoint, not the stationary
-      // trajectory updates used while holding it.
-      input_parameter_.minimum_duration = std::nullopt;
       if (!target_reached_time_.has_value()) {
         target_reached_time_ = rel_time;
       }
@@ -150,14 +147,18 @@ class WaypointMotion : public Motion<ControlSignalType> {
         if (!return_when_finished_) return command;
         return franka::MotionFinished(command);
       }
+      // If holding the current waypoint target, return the held command directly without calling Ruckig update
+      if (target_reached_time_.has_value() && prev_result_ == ruckig::Finished) {
+        return getControlSignal(robot_state, time_step, previous_command, input_parameter_);
+      }
     }
 
     assert(waypoint_iterator_ != waypoints_.end());
 
     prev_result_ = trajectory_generator_.update(input_parameter_, output_parameter_);
     if (prev_result_ == ruckig::Result::Working || prev_result_ == ruckig::Result::Finished) {
-      // This is a workaround to prevent NaNs from popping up. Must be some bug
-      // in ruckig.
+      // For disabled DoFs, ensure output values remain zeroed so pass_to_input
+      // maintains exact consistency with input_parameter_ across cycles.
       for (int i = 0; i < 7; i++) {
         if (!input_parameter_.enabled[i]) {
           output_parameter_.new_position[i] = 0.0;
