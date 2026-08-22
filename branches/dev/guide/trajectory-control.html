@@ -485,7 +485,7 @@ anchored to that waypoint’s target, not the position reached at the timeout.</
 <span class="kn">from</span><span class="w"> </span><span class="nn">franky</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 
 <span class="c1"># Move to the given target pose</span>
-<span class="n">quat</span> <span class="o">=</span> <span class="n">Rotation</span><span class="o">.</span><span class="n">from_euler</span><span class="p">(</span><span class="s2">&quot;xyz&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">as_quat</span><span class="p">()</span>
+<span class="n">quat</span> <span class="o">=</span> <span class="n">Rotation</span><span class="o">.</span><span class="n">from_euler</span><span class="p">(</span><span class="s2">"xyz"</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">as_quat</span><span class="p">()</span>
 <span class="n">m_cp1</span> <span class="o">=</span> <span class="n">CartesianMotion</span><span class="p">(</span><span class="n">Affine</span><span class="p">([</span><span class="mf">0.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span> <span class="n">quat</span><span class="p">))</span>
 
 <span class="c1"># With target elbow angle (otherwise, the Franka firmware will choose by itself)</span>
@@ -494,7 +494,7 @@ anchored to that waypoint’s target, not the position reached at the timeout.</
 <span class="p">)</span>
 
 <span class="c1"># A linear motion in Cartesian space relative to the initial position</span>
-<span class="c1"># (Note that this motion is relative both in position and orientation. Hence, when the robot&#39;s</span>
+<span class="c1"># (Note that this motion is relative both in position and orientation. Hence, when the robot's</span>
 <span class="c1"># end-effector is oriented differently, it will move in a different direction)</span>
 <span class="n">m_cp3</span> <span class="o">=</span> <span class="n">CartesianMotion</span><span class="p">(</span><span class="n">Affine</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]),</span> <span class="n">ReferenceType</span><span class="o">.</span><span class="n">Relative</span><span class="p">)</span>
 

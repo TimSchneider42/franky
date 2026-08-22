@@ -396,7 +396,7 @@ As a first example, only four lines of code are needed for simple robotic motion
 <span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">franky</span><span class="p">;</span>
 
 <span class="c1">// Connect to the robot with the FCI IP address</span>
-<span class="n">Robot</span><span class="w"> </span><span class="n">robot</span><span class="p">(</span><span class="s">&quot;10.90.90.1&quot;</span><span class="p">);</span>
+<span class="n">Robot</span><span class="w"> </span><span class="n">robot</span><span class="p">(</span><span class="s">"10.90.90.1"</span><span class="p">);</span>
 
 <span class="c1">// Reduce velocity and acceleration of the robot</span>
 <span class="n">robot</span><span class="p">.</span><span class="n">setRelativeDynamicsFactor</span><span class="p">(</span><span class="mf">0.05</span><span class="p">);</span>
@@ -411,7 +411,7 @@ As a first example, only four lines of code are needed for simple robotic motion
 <p>The corresponding program in Python is</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">franky</span><span class="w"> </span><span class="kn">import</span> <span class="n">Affine</span><span class="p">,</span> <span class="n">CartesianMotion</span><span class="p">,</span> <span class="n">Robot</span><span class="p">,</span> <span class="n">ReferenceType</span>
 
-<span class="n">robot</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">(</span><span class="s2">&quot;10.90.90.1&quot;</span><span class="p">)</span>
+<span class="n">robot</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">(</span><span class="s2">"10.90.90.1"</span><span class="p">)</span>
 <span class="n">robot</span><span class="o">.</span><span class="n">relative_dynamics_factor</span> <span class="o">=</span> <span class="mf">0.05</span>
 
 <span class="n">motion</span> <span class="o">=</span> <span class="n">CartesianMotion</span><span class="p">(</span><span class="n">Affine</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]),</span> <span class="n">ReferenceType</span><span class="o">.</span><span class="n">Relative</span><span class="p">)</span>

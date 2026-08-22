@@ -440,14 +440,14 @@ sudo<span class="w"> </span>usermod<span class="w"> </span>-a<span class="w"> </
 </div>
 <p>If you need <code class="docutils literal notranslate"><span class="pre">franky</span></code> for a specific robot server version, you can install the corresponding wheel by adding an <code class="docutils literal notranslate"><span class="pre">--extra-index-url</span></code> specifying your robot’s server version. <code class="docutils literal notranslate"><span class="pre">franky</span></code> supports Robot Server versions 2 through 10.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replace 10 with your robot server version</span>
-pip<span class="w"> </span>install<span class="w"> </span>franky-control<span class="w"> </span>--extra-index-url<span class="w"> </span><span class="s2">&quot;https://timschneider42.github.io/franky/whl/by-robot-server-version/10/&quot;</span>
+pip<span class="w"> </span>install<span class="w"> </span>franky-control<span class="w"> </span>--extra-index-url<span class="w"> </span><span class="s2">"https://timschneider42.github.io/franky/whl/by-robot-server-version/10/"</span>
 </pre></div>
 </div>
 <p>If you need a specific libfranka version, we provide wheels for versions <em>0.7.1</em>, <em>0.8.0</em>, <em>0.9.2</em>, <em>0.12.1</em>, <em>0.13.3</em>,
 <em>0.14.2</em>, <em>0.17.0</em>, and <em>0.21.2</em>.
 They can be installed via</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># You can replace the libfranka version by any of the supported versions denoted above</span>
-pip<span class="w"> </span>install<span class="w"> </span>franky-control<span class="w"> </span>--extra-index-url<span class="w"> </span><span class="s2">&quot;https://timschneider42.github.io/franky/whl/libfranka-0.21.2/&quot;</span>
+pip<span class="w"> </span>install<span class="w"> </span>franky-control<span class="w"> </span>--extra-index-url<span class="w"> </span><span class="s2">"https://timschneider42.github.io/franky/whl/libfranka-0.21.2/"</span>
 </pre></div>
 </div>
 </section>
@@ -458,7 +458,7 @@ branch in the rolling <a class="reference external" href="https://github.com/Tim
 These wheels are rebuilt on every push to <code class="docutils literal notranslate"><span class="pre">master</span></code> and are provided for all supported libfranka versions.
 They can be installed via the <a class="reference external" href="https://timschneider42.github.io/franky/whl/">package index</a> by adding the <code class="docutils literal notranslate"><span class="pre">--pre</span></code> flag:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replace 10 with your robot server version</span>
-pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>franky-control<span class="w"> </span>--extra-index-url<span class="w"> </span><span class="s2">&quot;https://timschneider42.github.io/franky/whl/by-robot-server-version/10/&quot;</span>
+pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>franky-control<span class="w"> </span>--extra-index-url<span class="w"> </span><span class="s2">"https://timschneider42.github.io/franky/whl/by-robot-server-version/10/"</span>
 </pre></div>
 </div>
 <p>Development builds are versioned as pre-releases of the next patch version, and their version indicates the commit and

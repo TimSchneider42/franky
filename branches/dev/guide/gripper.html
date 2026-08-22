@@ -393,7 +393,7 @@ Then, in addition to the libfranka commands, the following helper methods can be
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;chrono&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;future&gt;</span>
 
-<span class="k">auto</span><span class="w"> </span><span class="n">gripper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">franky</span><span class="o">::</span><span class="n">Gripper</span><span class="p">(</span><span class="s">&quot;10.90.90.1&quot;</span><span class="p">);</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">gripper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">franky</span><span class="o">::</span><span class="n">Gripper</span><span class="p">(</span><span class="s">"10.90.90.1"</span><span class="p">);</span>
 
 <span class="kt">double</span><span class="w"> </span><span class="n">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.02</span><span class="p">;</span><span class="w"> </span><span class="c1">// [m/s]</span>
 <span class="kt">double</span><span class="w"> </span><span class="n">force</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">20.0</span><span class="p">;</span><span class="w"> </span><span class="c1">// [N]</span>
@@ -416,18 +416,18 @@ Then, in addition to the libfranka commands, the following helper methods can be
 <span class="c1">// Wait for 1s</span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">success_future</span><span class="p">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">future_status</span><span class="o">::</span><span class="n">ready</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="c1">// Get the result</span>
-<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Success: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">success_future</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"Success: "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">success_future</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 <span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">gripper</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
 <span class="w">  </span><span class="n">success_future</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span>
-<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Gripper motion timed out.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"Gripper motion timed out."</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>The Python API follows the C++ API closely:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">franky</span>
 
-<span class="n">gripper</span> <span class="o">=</span> <span class="n">franky</span><span class="o">.</span><span class="n">Gripper</span><span class="p">(</span><span class="s2">&quot;10.90.90.1&quot;</span><span class="p">)</span>
+<span class="n">gripper</span> <span class="o">=</span> <span class="n">franky</span><span class="o">.</span><span class="n">Gripper</span><span class="p">(</span><span class="s2">"10.90.90.1"</span><span class="p">)</span>
 
 <span class="n">speed</span> <span class="o">=</span> <span class="mf">0.02</span>  <span class="c1"># [m/s]</span>
 <span class="n">force</span> <span class="o">=</span> <span class="mf">20.0</span>  <span class="c1"># [N]</span>
@@ -449,11 +449,11 @@ Then, in addition to the libfranka commands, the following helper methods can be
 
 <span class="c1"># Wait for 1s</span>
 <span class="k">if</span> <span class="n">success_future</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Success: </span><span class="si">{</span><span class="n">success_future</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Success: </span><span class="si">{</span><span class="n">success_future</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="n">gripper</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
     <span class="n">success_future</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Gripper motion timed out.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Gripper motion timed out."</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

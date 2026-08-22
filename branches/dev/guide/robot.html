@@ -391,7 +391,7 @@
 Moreover, we added methods to adapt the dynamic limits of the robot for all motions.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">franky</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 
-<span class="n">robot</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">(</span><span class="s2">&quot;10.90.90.1&quot;</span><span class="p">)</span>
+<span class="n">robot</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">(</span><span class="s2">"10.90.90.1"</span><span class="p">)</span>
 
 <span class="c1"># Recover from errors</span>
 <span class="n">robot</span><span class="o">.</span><span class="n">recover_from_errors</span><span class="p">()</span>
@@ -441,12 +441,12 @@ and <a class="reference external" href="https://frankarobotics.github.io/libfran
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">franky</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 
-<span class="n">robot</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">(</span><span class="s2">&quot;10.90.90.1&quot;</span><span class="p">)</span>
+<span class="n">robot</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">(</span><span class="s2">"10.90.90.1"</span><span class="p">)</span>
 
 <span class="c1"># Get the current state as `franky.RobotState`. See the documentation for a list of fields.</span>
 <span class="n">state</span> <span class="o">=</span> <span class="n">robot</span><span class="o">.</span><span class="n">state</span>
 
-<span class="c1"># Get the robot&#39;s cartesian state</span>
+<span class="c1"># Get the robot's cartesian state</span>
 <span class="n">cartesian_state</span> <span class="o">=</span> <span class="n">robot</span><span class="o">.</span><span class="n">current_cartesian_state</span>
 <span class="n">robot_pose</span> <span class="o">=</span> <span class="n">cartesian_state</span><span class="o">.</span><span class="n">pose</span>  <span class="c1"># Contains end-effector pose and elbow position</span>
 <span class="n">ee_pose</span> <span class="o">=</span> <span class="n">robot_pose</span><span class="o">.</span><span class="n">end_effector_pose</span>
@@ -455,7 +455,7 @@ and <a class="reference external" href="https://frankarobotics.github.io/libfran
 <span class="n">ee_twist</span> <span class="o">=</span> <span class="n">robot_velocity</span><span class="o">.</span><span class="n">end_effector_twist</span>
 <span class="n">elbow_vel</span> <span class="o">=</span> <span class="n">robot_velocity</span><span class="o">.</span><span class="n">elbow_velocity</span>
 
-<span class="c1"># Get the robot&#39;s joint state</span>
+<span class="c1"># Get the robot's joint state</span>
 <span class="n">joint_state</span> <span class="o">=</span> <span class="n">robot</span><span class="o">.</span><span class="n">current_joint_state</span>
 <span class="n">joint_pos</span> <span class="o">=</span> <span class="n">joint_state</span><span class="o">.</span><span class="n">position</span>
 <span class="n">joint_vel</span> <span class="o">=</span> <span class="n">joint_state</span><span class="o">.</span><span class="n">velocity</span>

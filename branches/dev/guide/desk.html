@@ -396,7 +396,7 @@ Hence, use this feature at your own risk.</p>
 <p>A typical automated workflow could look like this:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">franky</span>
 
-<span class="k">with</span> <span class="n">franky</span><span class="o">.</span><span class="n">Desk</span><span class="p">(</span><span class="s2">&quot;10.90.90.1&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">desk</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">franky</span><span class="o">.</span><span class="n">Desk</span><span class="p">(</span><span class="s2">"10.90.90.1"</span><span class="p">,</span> <span class="s2">"username"</span><span class="p">,</span> <span class="s2">"password"</span><span class="p">)</span> <span class="k">as</span> <span class="n">desk</span><span class="p">:</span>
   <span class="c1"># First take control</span>
   <span class="k">try</span><span class="p">:</span>
     <span class="c1"># Try taking control. The session currently holding control has to release it in order</span>
@@ -408,7 +408,7 @@ Hence, use this feature at your own risk.</p>
   <span class="k">except</span> <span class="n">franky</span><span class="o">.</span><span class="n">TakeControlTimeoutError</span><span class="p">:</span>
     <span class="c1"># If nothing happens for 10s, we try to take control forcefully. This is particularly</span>
     <span class="c1"># useful if the session holding control is dead. Taking control by force requires the</span>
-    <span class="c1"># user to manually push the blue button close to the robot&#39;s wrist.</span>
+    <span class="c1"># user to manually push the blue button close to the robot's wrist.</span>
     <span class="n">desk</span><span class="o">.</span><span class="n">take_control</span><span class="p">(</span><span class="n">wait_timeout</span><span class="o">=</span><span class="mf">30.0</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
   <span class="c1"># Unlock the brakes</span>
@@ -438,9 +438,9 @@ instead of <code class="docutils literal notranslate"><span class="pre">True</sp
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">franky</span>
 
-<span class="k">with</span> <span class="n">franky</span><span class="o">.</span><span class="n">Desk</span><span class="p">(</span><span class="s2">&quot;10.90.90.1&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">desk</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">franky</span><span class="o">.</span><span class="n">Desk</span><span class="p">(</span><span class="s2">"10.90.90.1"</span><span class="p">,</span> <span class="s2">"username"</span><span class="p">,</span> <span class="s2">"password"</span><span class="p">)</span> <span class="k">as</span> <span class="n">desk</span><span class="p">:</span>
   <span class="c1"># Execute self-test if the time until self-test is less than 5 minutes.</span>
-  <span class="k">if</span> <span class="n">desk</span><span class="o">.</span><span class="n">system_status</span><span class="p">[</span><span class="s2">&quot;safety&quot;</span><span class="p">][</span><span class="s2">&quot;timeToTd2&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">300</span><span class="p">:</span>
+  <span class="k">if</span> <span class="n">desk</span><span class="o">.</span><span class="n">system_status</span><span class="p">[</span><span class="s2">"safety"</span><span class="p">][</span><span class="s2">"timeToTd2"</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">300</span><span class="p">:</span>
     <span class="n">desk</span><span class="o">.</span><span class="n">disable_fci</span><span class="p">()</span>
     <span class="n">desk</span><span class="o">.</span><span class="n">lock_brakes</span><span class="p">()</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
@@ -469,7 +469,7 @@ Note that the top button is not accessible, and the center directional keys will
 Each event is returned as a <code class="docutils literal notranslate"><span class="pre">PilotButtonEvent</span></code> containing the button and whether it was pressed or released.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">franky</span>
 
-<span class="k">with</span> <span class="n">franky</span><span class="o">.</span><span class="n">Desk</span><span class="p">(</span><span class="s2">&quot;10.90.90.1&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">desk</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">franky</span><span class="o">.</span><span class="n">Desk</span><span class="p">(</span><span class="s2">"10.90.90.1"</span><span class="p">,</span> <span class="s2">"username"</span><span class="p">,</span> <span class="s2">"password"</span><span class="p">)</span> <span class="k">as</span> <span class="n">desk</span><span class="p">:</span>
   <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">desk</span><span class="o">.</span><span class="n">poll_buttons</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
       <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">button</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">pressed</span><span class="p">)</span>

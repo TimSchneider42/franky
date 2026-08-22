@@ -449,7 +449,7 @@ with <a class="reference external" href="https://github.com/pybind/pybind11_mkdo
 comments in the headers, regenerate this file with the <code class="docutils literal notranslate"><span class="pre">franky-docstrings</span></code> CMake target, which uses
 the include directories and version defines of the configured build:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>libclang-dev
-pip<span class="w"> </span>install<span class="w"> </span>pybind11_mkdoc<span class="w"> </span><span class="s2">&quot;clang~=14.0&quot;</span><span class="w">  </span><span class="c1"># the clang package version should match libclang</span>
+pip<span class="w"> </span>install<span class="w"> </span>pybind11_mkdoc<span class="w"> </span><span class="s2">"clang~=14.0"</span><span class="w">  </span><span class="c1"># the clang package version should match libclang</span>
 cmake<span class="w"> </span>--build<span class="w"> </span>build<span class="w"> </span>--target<span class="w"> </span>franky-docstrings
 </pre></div>
 </div>
