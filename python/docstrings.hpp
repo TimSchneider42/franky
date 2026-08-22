@@ -6011,7 +6011,7 @@ static const char *mkd_doc_franky_Robot_pollMotion =
 Throw any exceptions that occurred during the motion.
 
 Returns:
-    Whether the robot is still in motion.
+    True if no motion is running.
 
 )doc";
 

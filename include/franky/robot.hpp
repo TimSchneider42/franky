@@ -370,7 +370,7 @@ class Robot : public franka::Robot {
    * @brief Check whether the robot is still in motion. This function is
    * non-blocking and returns immediately. Throw any exceptions that occurred
    * during the motion.
-   * @return Whether the robot is still in motion.
+   * @return True if no motion is running.
    */
   [[nodiscard]]
   bool pollMotion() {
