@@ -1,6 +1,7 @@
 #include "franky/dynamics_limit.hpp"
 
 #include <array>
+#include <cmath>
 
 #include "franky/types.hpp"
 #include "franky/util.hpp"
@@ -9,6 +10,11 @@ namespace franky {
 
 template <>
 void DynamicsLimit<double>::check(const double &value) const {
+  if (std::isnan(value)) {
+    std::stringstream ss;
+    ss << desc << " limit cannot be NaN.";
+    throw std::runtime_error(ss.str());
+  }
   if (value < 0) {
     std::stringstream ss;
     ss << desc << " limit cannot be negative.";
@@ -30,6 +36,11 @@ void DynamicsLimit<Vector7d>::setFrom<Array<7>>(const Array<7> &value) {
 template <>
 void DynamicsLimit<Vector7d>::check(const Vector7d &value) const {
   for (int i = 0; i < value.size(); i++) {
+    if (std::isnan(value[i])) {
+      std::stringstream ss;
+      ss << desc << " limit at index " << i << " cannot be NaN.";
+      throw std::runtime_error(ss.str());
+    }
     if (value[i] < 0) {
       std::stringstream ss;
       ss << desc << " limit cannot be negative.";
