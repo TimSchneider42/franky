@@ -413,6 +413,31 @@ Returns:
           "current_joint_positions",
           py::cpp_function(&Robot::currentJointPositions, py::call_guard<py::gil_scoped_release>()),
           DOC(franky, Robot, currentJointPositions))
+      .def(
+          "inverse_kinematics",
+          &Robot::inverseKinematics,
+          "o_t_ee"_a,
+          "redundancy_value"_a,
+          py::arg_v("parameter", RedundancyParameter::kQ7, "RedundancyParameter.Q7"),
+          "options"_a = IKOptions(),
+          // Unlike the free functions, these release unconditionally: they read state()
+          // first, which blocks on a mutex shared with the control loop.
+          py::call_guard<py::gil_scoped_release>(),
+          "Analytical IK for a target end-effector pose, using the robot's current flange-to-end-effector "
+          "transform. Returns a list of valid joint configurations [rad]. See franky.kinematics.inverse_kinematics.")
+      .def(
+          "inverse_kinematics_nearest",
+          &Robot::inverseKinematicsNearest,
+          "o_t_ee"_a,
+          "options"_a = IKOptions(),
+          "redundancy_value"_a = std::nullopt,
+          py::arg_v("parameter", RedundancyParameter::kQ7, "RedundancyParameter.Q7"),
+          "max_distance"_a = std::nullopt,
+          py::call_guard<py::gil_scoped_release>(),
+          "Analytical IK returning the branch nearest the robot's current configuration, using its current "
+          "joint positions as seed and its current flange-to-end-effector transform. With defaults, reaches "
+          "o_t_ee while holding the current arm posture. Pass max_distance [rad] to get None rather than a "
+          "branch switch that would move a joint farther than that. Returns a configuration [rad] or None.")
       .def_property_readonly(
           "state", py::cpp_function(&Robot::state, py::call_guard<py::gil_scoped_release>()), DOC(franky, Robot, state))
       .def_property_readonly(
