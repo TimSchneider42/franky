@@ -4,7 +4,9 @@ repos:
     hooks:
       - id: check-yaml
       - id: end-of-file-fixer
+        exclude: '^third_party/nanogeofik/'
       - id: trailing-whitespace
+        exclude: '^third_party/nanogeofik/'
   - repo: https://github.com/psf/black
     rev: 25.1.0
     hooks:
@@ -16,7 +18,7 @@ repos:
         args: [ '--style=file' ]
         # clang-format treats notebooks as JSON and splits long lines into adjacent
         # string literals, which is invalid JSON
-        exclude: '\.ipynb$'
+        exclude: '\.ipynb$|^third_party/nanogeofik/'
   - repo: local
     hooks:
       # Checks links in Markdown files, resolving documentation links against the dev
