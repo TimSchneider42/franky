@@ -8,12 +8,6 @@
 
 namespace franky {
 
-template class Motion<franka::Torques>;
-template class Motion<franka::JointVelocities>;
-template class Motion<franka::CartesianVelocities>;
-template class Motion<franka::JointPositions>;
-template class Motion<franka::CartesianPose>;
-
 template <typename ControlSignalType>
 Motion<ControlSignalType>::Motion() : robot_(nullptr) {
   patchMutexRT(callback_mutex_);
@@ -82,5 +76,11 @@ std::shared_ptr<Motion<ControlSignalType>> Motion<ControlSignalType>::checkAndCa
   }
   return nullptr;
 }
+
+template class Motion<franka::Torques>;
+template class Motion<franka::JointVelocities>;
+template class Motion<franka::CartesianVelocities>;
+template class Motion<franka::JointPositions>;
+template class Motion<franka::CartesianPose>;
 
 }  // namespace franky

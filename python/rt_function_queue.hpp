@@ -68,7 +68,7 @@ class RTFunctionQueue {
   bool tryEmplace(F &&function) {
     using Fn = std::decay_t<F>;
     static_assert(sizeof(Fn) <= SlotSize, "Closure exceeds slot size; increase SlotSize");
-    static_assert(alignof(Fn) <= alignof(std::max_align_t), "Closure is over-aligned for slot storage");
+    static_assert(alignof(Fn) <= kSlotAlign, "Closure is over-aligned for slot storage");
     // A throwing move here would leave a claimed slot unpublished and wedge the queue.
     static_assert(std::is_nothrow_move_constructible_v<Fn>, "Closure must be nothrow move constructible");
 
@@ -125,11 +125,12 @@ class RTFunctionQueue {
  private:
   static constexpr size_t kPageSize = 4096;
   static constexpr size_t kCacheLineSize = 64;
+  static constexpr size_t kSlotAlign = std::max(alignof(std::max_align_t), kCacheLineSize);
 
   struct Slot {
     std::atomic<size_t> seq;
     void (*extract)(void *src, std::function<void()> &dst);
-    alignas(std::max_align_t) std::byte storage[SlotSize];
+    alignas(kSlotAlign) std::byte storage[SlotSize];
   };
 
   std::array<Slot, Capacity> slots_;

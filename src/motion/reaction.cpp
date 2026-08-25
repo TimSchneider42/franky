@@ -11,12 +11,6 @@
 
 namespace franky {
 
-template class Reaction<franka::Torques>;
-template class Reaction<franka::JointVelocities>;
-template class Reaction<franka::CartesianVelocities>;
-template class Reaction<franka::JointPositions>;
-template class Reaction<franka::CartesianPose>;
-
 template <typename ControlSignalType>
 Reaction<ControlSignalType>::Reaction(
     const Condition &condition, const std::shared_ptr<Motion<ControlSignalType>> new_motion)
@@ -44,5 +38,11 @@ void Reaction<ControlSignalType>::registerCallback(
   std::lock_guard lock(callback_mutex_);
   callbacks_.push_back(callback);
 }
+
+template class Reaction<franka::Torques>;
+template class Reaction<franka::JointVelocities>;
+template class Reaction<franka::CartesianVelocities>;
+template class Reaction<franka::JointPositions>;
+template class Reaction<franka::CartesianPose>;
 
 }  // namespace franky

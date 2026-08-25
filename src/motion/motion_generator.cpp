@@ -11,12 +11,6 @@
 
 namespace franky {
 
-template class MotionGenerator<franka::Torques>;
-template class MotionGenerator<franka::JointVelocities>;
-template class MotionGenerator<franka::CartesianVelocities>;
-template class MotionGenerator<franka::JointPositions>;
-template class MotionGenerator<franka::CartesianPose>;
-
 template <typename ControlSignalType>
 MotionGenerator<ControlSignalType>::MotionGenerator(
     Robot *robot, std::shared_ptr<Motion<ControlSignalType>> initial_motion)
@@ -107,5 +101,11 @@ void MotionGenerator<ControlSignalType>::resetTimeUnsafe() {
   abs_time_ = franka::Duration(0);
   rel_time_offset_ = franka::Duration(0);
 }
+
+template class MotionGenerator<franka::Torques>;
+template class MotionGenerator<franka::JointVelocities>;
+template class MotionGenerator<franka::CartesianVelocities>;
+template class MotionGenerator<franka::JointPositions>;
+template class MotionGenerator<franka::CartesianPose>;
 
 }  // namespace franky
