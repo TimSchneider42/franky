@@ -198,7 +198,8 @@ void bind_motion_torque(py::module &m) {
                      target_twist,
                  std::optional<TwistAcceleration>
                      target_acceleration) { return CartesianReference{target, target_twist, target_acceleration}; }),
-          "target"_a = Affine::Identity(),
+          // Affine's repr is not a valid Python expression, so spell out the default for the signature
+          py::arg_v("target", Affine::Identity(), "_franky.Affine()"),
           "target_twist"_a = std::nullopt,
           "target_acceleration"_a = std::nullopt)
       .def_readwrite("target", &CartesianReference::target, DOC(franky, CartesianReference, target))
