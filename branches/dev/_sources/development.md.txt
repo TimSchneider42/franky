@@ -29,6 +29,9 @@ If you need only the Python module, you can install franky via
 pip install .
 ```
 
+The Python package is built with [scikit-build-core](https://scikit-build-core.readthedocs.io) (see `pyproject.toml`);
+set `SKBUILD_CMAKE_BUILD_TYPE=Debug` to build the module in debug mode.
+
 Make sure that the built library `_franky.cpython-3**-****-linux-gnu.so` is in the Python path, e.g. by adjusting
 `PYTHONPATH` accordingly.
 

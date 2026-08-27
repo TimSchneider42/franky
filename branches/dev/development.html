@@ -410,6 +410,8 @@ make<span class="w"> </span>install
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>.
 </pre></div>
 </div>
+<p>The Python package is built with <a class="reference external" href="https://scikit-build-core.readthedocs.io">scikit-build-core</a> (see <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>);
+set <code class="docutils literal notranslate"><span class="pre">SKBUILD_CMAKE_BUILD_TYPE=Debug</span></code> to build the module in debug mode.</p>
 <p>Make sure that the built library <code class="docutils literal notranslate"><span class="pre">_franky.cpython-3**-****-linux-gnu.so</span></code> is in the Python path, e.g. by adjusting
 <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> accordingly.</p>
 <section id="building-franky-with-docker">
