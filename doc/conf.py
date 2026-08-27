@@ -22,6 +22,7 @@ autosummary_generate = True
 autodoc_member_order = "groupwise"
 templates_path = ["_templates"]
 
+toc_object_entries_show_parents = "hide"
 myst_enable_extensions = [
     "colon_fence",
     "dollarmath",
