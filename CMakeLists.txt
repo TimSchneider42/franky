@@ -10,6 +10,15 @@ project(franky VERSION "${version}" LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
+if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build." FORCE)
+endif ()
+
+option(FRANKY_NATIVE_ARCH "Compile with -march=native for local CPU optimizations" OFF)
+if (FRANKY_NATIVE_ARCH)
+    add_compile_options(-march=native)
+endif ()
+
 include(GNUInstallDirs)
 
 option(BUILD_EXAMPLES "Build example programs" ON)
