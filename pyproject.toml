@@ -6,7 +6,10 @@ build-backend = "scikit_build_core.build"
 name = "franky-control"
 description = "High-level control library for Franka robots."
 readme = "README.md"
-authors = [{ name = "Tim Schneider", email = "tim@robot-learning.de" }]
+authors = [
+    { name = "Tim Schneider", email = "tim@robot-learning.de" },
+    { name = "Nick Walker", email = "nick@nickwalker.us" },
+]
 license = { text = "MIT" }
 keywords = ["control", "robotics", "franka", "franka-panda", "franka-research-3"]
 classifiers = [
