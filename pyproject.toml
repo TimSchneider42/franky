@@ -1,0 +1,52 @@
+[build-system]
+requires = ["scikit-build-core>=0.10.7"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "franky-control"
+description = "High-level control library for Franka robots."
+readme = "README.md"
+authors = [{ name = "Tim Schneider", email = "tim@robot-learning.de" }]
+license = { text = "MIT" }
+keywords = ["control", "robotics", "franka", "franka-panda", "franka-research-3"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Programming Language :: C++",
+]
+requires-python = ">=3.7"
+dependencies = [
+    "numpy",
+    "websockets>=11",
+    "typing_extensions; python_version < '3.8'",
+]
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/TimSchneider42/franky"
+
+[tool.scikit-build]
+# scikit-build-core 0.10.7 is the last release supporting Python 3.7
+minimum-version = "build-system.requires"
+# Required for the custom version provider below
+experimental = true
+cmake.version = ">=3.11"
+build.targets = ["_franky"]
+wheel.packages = ["franky"]
+sdist.exclude = [".github", "doc", "docker", "docker-compose.yml"]
+
+[tool.scikit-build.cmake.define]
+BUILD_EXAMPLES = false
+BUILD_PYTHON_STUBS = true
+BUILD_TESTS = false
+BUILD_SHARED_LIBS = false
+CMAKE_BUILD_WITH_INSTALL_RPATH = true
+CMAKE_INSTALL_RPATH = "$ORIGIN"
+CMAKE_POSITION_INDEPENDENT_CODE = true
+
+# Version derived from the VERSION file and the FRANKY_DEV_BUILD_NUMBER, FRANKY_DEV_BUILD_HASH,
+# and FRANKY_LIBFRANKA_VERSION_LABEL environment variables (see tools/franky_version.py)
+[tool.scikit-build.metadata.version]
+provider = "franky_version"
+provider-path = "tools"

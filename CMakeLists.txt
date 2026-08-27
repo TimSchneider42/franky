@@ -36,6 +36,15 @@ find_package(ruckig 0.17.3 REQUIRED)
 
 set(FRANKY_PREBUILT_LIB "" CACHE FILEPATH "Path to a pre-built libfranky.so; skips rebuilding the core library")
 
+# If FRANKY_LIB_CACHE_DIR is set, libfranky.so is shared between builds (e.g. wheels for several
+# Python versions): a cached copy is used instead of rebuilding, and a fresh build is copied there.
+set(FRANKY_LIB_CACHE_DIR "$ENV{FRANKY_LIB_CACHE_DIR}")
+if (NOT FRANKY_PREBUILT_LIB AND FRANKY_LIB_CACHE_DIR AND EXISTS "${FRANKY_LIB_CACHE_DIR}/libfranky.so")
+    # Copied next to the Python module, where its $ORIGIN rpath expects it
+    file(COPY "${FRANKY_LIB_CACHE_DIR}/libfranky.so" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+    set(FRANKY_PREBUILT_LIB "${CMAKE_CURRENT_BINARY_DIR}/libfranky.so")
+endif ()
+
 if (FRANKY_PREBUILT_LIB)
     add_library(franky SHARED IMPORTED GLOBAL)
     set_target_properties(franky PROPERTIES
@@ -48,6 +57,11 @@ else ()
     add_library(franky SHARED ${SRC})
     target_include_directories(franky PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
     target_link_libraries(franky PUBLIC Franka::Franka Eigen3::Eigen ruckig::ruckig)
+    if (FRANKY_LIB_CACHE_DIR)
+        add_custom_command(TARGET franky POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E make_directory "${FRANKY_LIB_CACHE_DIR}"
+                COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:franky>" "${FRANKY_LIB_CACHE_DIR}/libfranky.so")
+    endif ()
 endif ()
 
 
@@ -91,6 +105,20 @@ if (BUILD_PYTHON_MODULE)
             COMMAND_EXPAND_LISTS
             VERBATIM)
 
+    if (SKBUILD)
+        # The Python wheel (built by scikit-build-core, see pyproject.toml) ships the module, the
+        # core library, and the stubs inside the franky package
+        install(TARGETS _franky-lib LIBRARY DESTINATION franky)
+        if (FRANKY_PREBUILT_LIB)
+            install(PROGRAMS "${FRANKY_PREBUILT_LIB}" DESTINATION franky)
+        else ()
+            install(TARGETS franky LIBRARY DESTINATION franky)
+        endif ()
+        set(STUBS_INSTALL_DIR franky)
+    else ()
+        set(STUBS_INSTALL_DIR lib)
+    endif ()
+
     if (BUILD_PYTHON_STUBS)
         # Build stubs
         add_custom_target(
@@ -99,7 +127,7 @@ if (BUILD_PYTHON_MODULE)
                 COMMENT "Generating Python stubs..."
                 DEPENDS _franky-lib
         )
-        install(FILES ${CMAKE_CURRENT_BINARY_DIR}/stubs/_franky-stubs/__init__.pyi DESTINATION lib OPTIONAL)
+        install(FILES "$<TARGET_FILE_DIR:_franky-lib>/_franky.pyi" DESTINATION "${STUBS_INSTALL_DIR}" OPTIONAL)
 
         add_custom_target(_franky
                 DEPENDS _franky-lib
@@ -134,7 +162,7 @@ if (BUILD_TESTS)
 endif ()
 
 
-if (NOT FRANKY_PREBUILT_LIB)
+if (NOT FRANKY_PREBUILT_LIB AND NOT SKBUILD)
     install(TARGETS franky
             ARCHIVE DESTINATION lib
             LIBRARY DESTINATION lib

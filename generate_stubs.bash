@@ -18,27 +18,17 @@ mkdir -p "${STUBS_GEN_DIR}"
 ${PYTHON} -m venv "${STUBS_GEN_DIR}/venv"
 source "${STUBS_GEN_DIR}/venv/bin/activate"
 pip install --upgrade pip --no-cache-dir > /dev/null
-pip install setuptools --no-cache-dir > /dev/null
-(cd ${SCRIPT_DIR} && python "setup.py" egg_info -e "${STUBS_GEN_DIR}" > /dev/null)
-REQUIRES_FILE="${STUBS_GEN_DIR}/franky_control.egg-info/requires.txt"
-NORMALIZED_REQUIRES_FILE="${STUBS_GEN_DIR}/requirements.txt"
-awk '
-    /^\[:.*\]$/ {
-        marker = substr($0, 3, length($0) - 3)
-        next
-    }
-    /^\[.*\]$/ {
-        marker = ""
-        next
-    }
-    NF {
-        if (marker != "")
-            print $0 "; " marker
-        else
-            print
-    }
-' "${REQUIRES_FILE}" > "${NORMALIZED_REQUIRES_FILE}"
-pip install -r "${NORMALIZED_REQUIRES_FILE}" --no-cache-dir > /dev/null
+# Install the runtime dependencies of franky-control (from pyproject.toml) into the venv
+pip install tomli --no-cache-dir > /dev/null
+REQUIREMENTS_FILE="${STUBS_GEN_DIR}/requirements.txt"
+python - "${SCRIPT_DIR}/pyproject.toml" > "${REQUIREMENTS_FILE}" <<'PYEOF'
+import sys
+import tomli
+
+with open(sys.argv[1], "rb") as f:
+    print("\n".join(tomli.load(f)["project"]["dependencies"]))
+PYEOF
+pip install -r "${REQUIREMENTS_FILE}" --no-cache-dir > /dev/null
 pip install pybind11-stubgen==2.5.5 --no-cache-dir > /dev/null
 
 PYTHONPATH="${LIB_DIR}" "${SCRIPT_DIR}/custom_stubgen.py" -o "${LIB_DIR}" _franky
