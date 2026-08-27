@@ -6,6 +6,10 @@ authors:
     given-names: "Tim"
     orcid: "0000-0001-6605-9257"
     affiliation: "Technical University of Darmstadt"
+  - family-names: "Walker"
+    given-names: "Nick"
+    affiliation: "Massachusetts Institute of Technology"
+    orcid: "0000-0001-7711-0003"
 repository-code: "https://github.com/TimSchneider42/franky"
 license: "MIT"
 abstract: |
