@@ -8,6 +8,10 @@ export LD_LIBRARY_PATH="/usr/local/lib64:/usr/local/lib"  # For whatever reason,
 TOOLSET_ENABLE=$(ls /opt/rh/gcc-toolset-*/enable 2>/dev/null | sort -V | tail -1)
 [ -n "${TOOLSET_ENABLE}" ] && source "${TOOLSET_ENABLE}"
 
+# Use Clang for wheel compilation
+export CC=clang
+export CXX=clang++
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 . "${SCRIPT_DIR}/dependency_versions"
 

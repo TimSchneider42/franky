@@ -3,7 +3,7 @@ FROM quay.io/pypa/${MANYLINUX_VERSION}:latest
 
 LABEL maintainer="Tim Schneider <tim@robot-learning.de>"
 
-RUN yum -y install zip fmt-devel openssl-devel mysql-devel postgresql-devel boost-devel
+RUN yum -y install zip fmt-devel openssl-devel mysql-devel postgresql-devel boost-devel clang
 
 ADD docker/common/ /tmp/common/
 ARG LIBFRANKA_VERSION
