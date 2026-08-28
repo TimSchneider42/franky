@@ -48,8 +48,8 @@ bash <(wget -qO- https://raw.githubusercontent.com/timschneider42/franky/master/
 ## Is your robot connected to a different machine?
 
 No problem!
-There are two projects which let you run franky remotely via RPC with minimal
-effort: [franky-remote](https://github.com/kvasios/franky-remote) and [net_franky](https://github.com/yblei/net_franky).
+There are three projects that let you run franky remotely via RPC with minimal
+effort: [zero-franky](https://github.com/nickswalker/zero-franky), [franky-remote](https://github.com/kvasios/franky-remote), and [net_franky](https://github.com/yblei/net_franky).
 
-Please note that I'm not involved in the development of these projects, so I cannot take any liability for its use.
-If you decide to use it, please ensure that you credit the developers of these projects for their work.
+Please note that zero-franky is developed by franky co-maintainer Nick Walker, while franky-remote and net_franky are third-party tools.
+If you decide to use one of them, please ensure that you credit the developers of these projects for their work.
