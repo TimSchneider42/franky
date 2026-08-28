@@ -45,6 +45,7 @@ types, how to implement real-time reactions and changing waypoints in real time,
 :maxdepth: 2
 
 geometry
+kinematics
 robot
 trajectory-control
 impedance-control
