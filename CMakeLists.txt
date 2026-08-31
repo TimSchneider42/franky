@@ -10,6 +10,15 @@ project(franky VERSION "${version}" LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
+if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build." FORCE)
+endif ()
+
+option(FRANKY_NATIVE_ARCH "Compile with -march=native for local CPU optimizations" OFF)
+if (FRANKY_NATIVE_ARCH)
+    add_compile_options(-march=native)
+endif ()
+
 include(GNUInstallDirs)
 
 option(BUILD_EXAMPLES "Build example programs" ON)
@@ -54,8 +63,9 @@ if (FRANKY_PREBUILT_LIB)
     )
 else ()
     file(GLOB_RECURSE SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
-    add_library(franky SHARED ${SRC})
+    add_library(franky SHARED ${SRC} ${CMAKE_CURRENT_SOURCE_DIR}/third_party/nanogeofik/nanogeofik.cpp)
     target_include_directories(franky PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+    target_include_directories(franky PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/third_party/nanogeofik)
     target_link_libraries(franky PUBLIC Franka::Franka Eigen3::Eigen ruckig::ruckig)
     if (FRANKY_LIB_CACHE_DIR)
         add_custom_command(TARGET franky POST_BUILD

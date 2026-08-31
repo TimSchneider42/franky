@@ -53,6 +53,8 @@ the [simulation](https://timschneider42.github.io/franky/guide/simulation.html) 
 - **[Trajectory control](https://timschneider42.github.io/franky/guide/trajectory-control.html)**: [Cartesian position](https://timschneider42.github.io/franky/guide/trajectory-control.html#cartesian-position-control), [Cartesian velocity](https://timschneider42.github.io/franky/guide/trajectory-control.html#cartesian-velocity-control), [Joint position](https://timschneider42.github.io/franky/guide/trajectory-control.html#joint-position-control), and [Joint velocity](https://timschneider42.github.io/franky/guide/trajectory-control.html#joint-velocity-control) control.
   franky's trajectory controllers use [Ruckig](https://github.com/pantor/ruckig) to generate smooth, time-optimal trajectories while respecting velocity, acceleration, and jerk limits.
 
+- **[Analytical kinematics](https://timschneider42.github.io/franky/guide/kinematics.html)**: Compute forward kinematics and solve inverse kinematics offline, with nearest-branch tracking.
+
 - **[Torque control](https://timschneider42.github.io/franky/guide/torque-control.html)**: [Direct torque control](https://timschneider42.github.io/franky/guide/torque-control.html) and [Impedance control](https://timschneider42.github.io/franky/guide/impedance-control.html).
   Command joint torques directly, or use franky's built-in [Cartesian](https://timschneider42.github.io/franky/guide/impedance-control.html#cartesian-impedance-control) and [joint](https://timschneider42.github.io/franky/guide/impedance-control.html#joint-impedance-control) impedance controllers.
 

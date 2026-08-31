@@ -61,6 +61,31 @@ See the [Geometry](../guide/geometry.md) chapter of the guide for an introductio
    JointReference
 ```
 
+## Analytical Kinematics
+
+The `franky.kinematics` submodule provides analytical forward and inverse kinematics without requiring a robot connection.
+See the [Analytical Kinematics](../guide/kinematics.md) chapter of the guide for an introduction.
+
+```{eval-rst}
+.. currentmodule:: franky.kinematics
+
+.. autosummary::
+   :toctree: generated
+   :nosignatures:
+
+   IKOptions
+   RedundancyParameter
+   forward_kinematics
+   swivel_angle
+   inverse_kinematics
+   inverse_kinematics_nearest
+   inverse_kinematics_nearest_batch
+   PANDA_JOINT_LIMITS
+   FR3_JOINT_LIMITS
+   MIN_SWIVEL_SAMPLES
+   MAX_SWIVEL_SAMPLES
+```
+
 ## Trajectory Motions
 
 Motion types for the four trajectory control modes.
