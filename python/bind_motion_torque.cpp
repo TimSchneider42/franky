@@ -13,11 +13,12 @@ namespace {
 
 CartesianReference toCartesianReference(
     const Affine &target, const std::optional<Twist> &target_twist,
-    const std::optional<TwistAcceleration> &target_acceleration) {
+    const std::optional<TwistAcceleration> &target_acceleration, const std::optional<Vector6d> &target_wrench) {
   CartesianReference reference;
   reference.target = target;
   reference.target_twist = target_twist;
   reference.target_acceleration = target_acceleration;
+  reference.target_wrench = target_wrench;
   return reference;
 }
 
@@ -75,11 +76,19 @@ CartesianImpedanceBase::Params makeCartesianImpedanceParams(
     const std::optional<Vector7d> &upper_joint_limits, double joint_limit_activation_distance,
     double joint_limit_stiffness, double joint_limit_damping, double joint_limit_max_torque,
     const Eigen::Vector3d &translational_error_clip, const Eigen::Vector3d &rotational_error_clip,
-    const std::optional<FrictionCompensationParams> &friction) {
+    const std::optional<FrictionCompensationParams> &friction, bool use_operational_space,
+    double task_inertia_regularization, bool use_local_frame, NullspaceProjectorType nullspace_projector_type,
+    bool compensate_coriolis, const std::optional<ImpedanceFilterParams> &filters) {
   auto params = CartesianImpedanceBase::Params{};
   params.stiffness = cartesianGainBlocks(translational_stiffness, rotational_stiffness);
   params.translational_error_clip = translational_error_clip;
   params.rotational_error_clip = rotational_error_clip;
+  params.use_operational_space = use_operational_space;
+  params.task_inertia_regularization = task_inertia_regularization;
+  params.use_local_frame = use_local_frame;
+  params.nullspace_projector_type = nullspace_projector_type;
+  params.compensate_coriolis = compensate_coriolis;
+  if (filters.has_value()) params.filters = *filters;
   if (posture_task.has_value()) {
     params.nullspace_tasks.emplace_back(*posture_task);
   }
@@ -160,6 +169,7 @@ void bind_motion_torque(py::module &m) {
 
   py::class_<NullspaceGains>(m, "NullspaceGains", DOC(franky, NullspaceGains))
       .def(py::init<>())
+      .def_readwrite("posture_target", &NullspaceGains::posture_target, DOC(franky, NullspaceGains, posture_target))
       .def_property(
           "posture_stiffness",
           [](const NullspaceGains &gains) { return gains.posture_stiffness; },
@@ -192,22 +202,28 @@ void bind_motion_torque(py::module &m) {
 
   py::class_<CartesianReference>(m, "CartesianReference", DOC(franky, CartesianReference))
       .def(
-          py::init<>(
-              [](const Affine &target,
-                 std::optional<Twist>
-                     target_twist,
-                 std::optional<TwistAcceleration>
-                     target_acceleration) { return CartesianReference{target, target_twist, target_acceleration}; }),
+          py::init<>([](const Affine &target,
+                        std::optional<Twist>
+                            target_twist,
+                        std::optional<TwistAcceleration>
+                            target_acceleration,
+                        std::optional<Vector6d>
+                            target_wrench) {
+            return CartesianReference{target, target_twist, target_acceleration, target_wrench};
+          }),
           // Affine's repr is not a valid Python expression, so spell out the default for the signature
           py::arg_v("target", Affine::Identity(), "_franky.Affine()"),
           "target_twist"_a = std::nullopt,
-          "target_acceleration"_a = std::nullopt)
+          "target_acceleration"_a = std::nullopt,
+          "target_wrench"_a = std::nullopt)
       .def_readwrite("target", &CartesianReference::target, DOC(franky, CartesianReference, target))
       .def_readwrite("target_twist", &CartesianReference::target_twist, DOC(franky, CartesianReference, target_twist))
       .def_readwrite(
           "target_acceleration",
           &CartesianReference::target_acceleration,
-          DOC(franky, CartesianReference, target_acceleration));
+          DOC(franky, CartesianReference, target_acceleration))
+      .def_readwrite(
+          "target_wrench", &CartesianReference::target_wrench, DOC(franky, CartesianReference, target_wrench));
 
   py::class_<JointImpedanceGains>(m, "JointImpedanceGains", DOC(franky, JointImpedanceGains))
       .def(
@@ -267,6 +283,44 @@ void bind_motion_torque(py::module &m) {
           DOC(franky, JointImpedanceBase, setCartesianGains));
 
   // Params classes — bind before the motion classes that use them.
+
+  py::class_<ImpedanceFilterParams>(m, "ImpedanceFilterParams", DOC(franky, ImpedanceFilterParams))
+      .def(
+          py::init<>([](std::optional<double> target_pose_time_constant,
+                        std::optional<double>
+                            q_time_constant,
+                        std::optional<double>
+                            dq_time_constant,
+                        std::optional<double>
+                            output_torque_time_constant) {
+            ImpedanceFilterParams params;
+            params.target_pose_time_constant = target_pose_time_constant;
+            params.q_time_constant = q_time_constant;
+            params.dq_time_constant = dq_time_constant;
+            params.output_torque_time_constant = output_torque_time_constant;
+            params.validate();
+            return params;
+          }),
+          "target_pose_time_constant"_a = std::nullopt,
+          "q_time_constant"_a = std::nullopt,
+          "dq_time_constant"_a = std::nullopt,
+          "output_torque_time_constant"_a = std::nullopt)
+      .def_readwrite(
+          "target_pose_time_constant",
+          &ImpedanceFilterParams::target_pose_time_constant,
+          DOC(franky, ImpedanceFilterParams, target_pose_time_constant))
+      .def_readwrite(
+          "q_time_constant",
+          &ImpedanceFilterParams::q_time_constant,
+          DOC(franky, ImpedanceFilterParams, q_time_constant))
+      .def_readwrite(
+          "dq_time_constant",
+          &ImpedanceFilterParams::dq_time_constant,
+          DOC(franky, ImpedanceFilterParams, dq_time_constant))
+      .def_readwrite(
+          "output_torque_time_constant",
+          &ImpedanceFilterParams::output_torque_time_constant,
+          DOC(franky, ImpedanceFilterParams, output_torque_time_constant));
 
   py::class_<TorqueSafetyParams>(m, "TorqueSafetyParams", DOC(franky, TorqueSafetyParams))
       .def(py::init<>())
@@ -361,6 +415,28 @@ void bind_motion_torque(py::module &m) {
           "nullspace_tasks",
           &CartesianImpedanceBase::Params::nullspace_tasks,
           DOC(franky, CartesianImpedanceBase, Params, nullspace_tasks))
+      .def_readwrite(
+          "use_operational_space",
+          &CartesianImpedanceBase::Params::use_operational_space,
+          DOC(franky, CartesianImpedanceBase, Params, use_operational_space))
+      .def_readwrite(
+          "task_inertia_regularization",
+          &CartesianImpedanceBase::Params::task_inertia_regularization,
+          DOC(franky, CartesianImpedanceBase, Params, task_inertia_regularization))
+      .def_readwrite(
+          "use_local_frame",
+          &CartesianImpedanceBase::Params::use_local_frame,
+          DOC(franky, CartesianImpedanceBase, Params, use_local_frame))
+      .def_readwrite(
+          "nullspace_projector_type",
+          &CartesianImpedanceBase::Params::nullspace_projector_type,
+          DOC(franky, CartesianImpedanceBase, Params, nullspace_projector_type))
+      .def_readwrite(
+          "compensate_coriolis",
+          &CartesianImpedanceBase::Params::compensate_coriolis,
+          DOC(franky, CartesianImpedanceBase, Params, compensate_coriolis))
+      .def_readwrite(
+          "filters", &CartesianImpedanceBase::Params::filters, DOC(franky, CartesianImpedanceBase, Params, filters))
       .def_readwrite(
           "safety", &CartesianImpedanceBase::Params::safety, DOC(franky, CartesianImpedanceBase, Params, safety))
       .def_readwrite(
@@ -567,7 +643,14 @@ interpolates toward them with the given time constant, allowing smooth runtime s
                         const Eigen::Vector3d &translational_error_clip,
                         const Eigen::Vector3d &rotational_error_clip,
                         std::optional<FrictionCompensationParams>
-                            friction) {
+                            friction,
+                        bool use_operational_space,
+                        double task_inertia_regularization,
+                        bool use_local_frame,
+                        NullspaceProjectorType nullspace_projector_type,
+                        bool compensate_coriolis,
+                        std::optional<ImpedanceFilterParams>
+                            filters) {
             auto base_params = makeCartesianImpedanceParams(
                 translational_stiffness,
                 rotational_stiffness,
@@ -583,7 +666,13 @@ interpolates toward them with the given time constant, allowing smooth runtime s
                 joint_limit_max_torque,
                 translational_error_clip,
                 rotational_error_clip,
-                friction);
+                friction,
+                use_operational_space,
+                task_inertia_regularization,
+                use_local_frame,
+                nullspace_projector_type,
+                compensate_coriolis,
+                filters);
             auto params = CartesianImpedanceMotion::Params{};
             static_cast<CartesianImpedanceBase::Params &>(params) = base_params;
             params.target_type = target_type;
@@ -600,7 +689,9 @@ If target_twist is provided, it is interpreted as the desired end-effector twist
 
 Cartesian damping is chosen internally as critically damped with respect to the requested stiffness.
 
-The optional posture_task adds a secondary joint-posture objective (a PostureTask) that is projected into the Jacobian nullspace, biasing the redundant arm posture without changing the Cartesian task to first order. Its per-joint stiffness leaves zero-stiffness joints unpushed. manipulability_task adds a manipulability-maximization objective in the same nullspace. At most one of each is supported.)doc",
+The optional posture_task adds a secondary joint-posture objective (a PostureTask) that is projected into the Jacobian nullspace, biasing the redundant arm posture without changing the Cartesian task to first order. Its per-joint stiffness leaves zero-stiffness joints unpushed. manipulability_task adds a manipulability-maximization objective in the same nullspace. At most one of each is supported.
+
+use_operational_space switches from classical Cartesian impedance control to operational space control, shaping the stiffness/damping terms with the task-space inertia. use_local_frame expresses the error and stiffness axes in the end-effector frame instead of the base frame. nullspace_projector_type selects how secondary-task torques are kept out of the Cartesian task, and filters configures exponential smoothing of the target pose, the measured joint state, and the output torque.)doc",
           "target"_a,
           "target_twist"_a = std::nullopt,
           py::arg_v("target_type", ReferenceType::kAbsolute, "_franky.ReferenceType.Absolute"),
@@ -618,7 +709,16 @@ The optional posture_task adds a secondary joint-posture objective (a PostureTas
           "joint_limit_max_torque"_a = 5.0,
           "translational_error_clip"_a = Eigen::Vector3d::Constant(0.10),
           "rotational_error_clip"_a = Eigen::Vector3d::Constant(0.25),
-          "friction"_a = std::nullopt)
+          "friction"_a = std::nullopt,
+          "use_operational_space"_a = false,
+          "task_inertia_regularization"_a = 0.01,
+          "use_local_frame"_a = false,
+          py::arg_v(
+              "nullspace_projector_type",
+              NullspaceProjectorType::kKinematic,
+              "_franky.NullspaceProjectorType.Kinematic"),
+          "compensate_coriolis"_a = true,
+          "filters"_a = std::nullopt)
       .def_property_readonly("target", &CartesianImpedanceMotion::target, DOC(franky, CartesianImpedanceBase, target))
       .def_property_readonly(
           "target_twist", &CartesianImpedanceMotion::target_twist, DOC(franky, CartesianImpedanceMotion, target_twist))
@@ -654,7 +754,14 @@ The optional posture_task adds a secondary joint-posture objective (a PostureTas
                         const Eigen::Vector3d &rotational_error_clip,
                         double gains_time_constant,
                         std::optional<FrictionCompensationParams>
-                            friction) {
+                            friction,
+                        bool use_operational_space,
+                        double task_inertia_regularization,
+                        bool use_local_frame,
+                        NullspaceProjectorType nullspace_projector_type,
+                        bool compensate_coriolis,
+                        std::optional<ImpedanceFilterParams>
+                            filters) {
             auto base_params = makeCartesianImpedanceParams(
                 translational_stiffness,
                 rotational_stiffness,
@@ -670,7 +777,13 @@ The optional posture_task adds a secondary joint-posture objective (a PostureTas
                 joint_limit_max_torque,
                 translational_error_clip,
                 rotational_error_clip,
-                friction);
+                friction,
+                use_operational_space,
+                task_inertia_regularization,
+                use_local_frame,
+                nullspace_projector_type,
+                compensate_coriolis,
+                filters);
             return std::make_shared<CartesianImpedanceTrackingMotion>(base_params, gains_time_constant);
           }),
           R"doc(Construct a dynamic Cartesian impedance tracking controller.
@@ -679,7 +792,9 @@ Cartesian damping is chosen internally as critically damped with respect to the 
 The optional posture_task adds a secondary joint-posture objective (a PostureTask) that is projected into the Jacobian nullspace, biasing the redundant arm posture without changing the Cartesian task to first order. Its per-joint stiffness leaves zero-stiffness joints unpushed. manipulability_task adds a manipulability-maximization objective in the same nullspace. Their gains can be retuned at runtime via set_nullspace_gains.
 
 The controller reads target gains each cycle and exponentially
-interpolates toward them with the given time constant, allowing smooth runtime stiffness changes.)doc",
+interpolates toward them with the given time constant, allowing smooth runtime stiffness changes.
+
+use_operational_space switches from classical Cartesian impedance control to operational space control, shaping the stiffness/damping terms with the task-space inertia. use_local_frame expresses the error and stiffness axes in the end-effector frame instead of the base frame. nullspace_projector_type selects how secondary-task torques are kept out of the Cartesian task, and filters configures exponential smoothing of the target pose, the measured joint state, and the output torque. Together with a filtered target pose, this controller matches the feature set of the CRISP controllers for learning-based policies and teleoperation.)doc",
           "translational_stiffness"_a = 500,
           "rotational_stiffness"_a = 50,
           "force_constraints"_a = std::nullopt,
@@ -695,7 +810,16 @@ interpolates toward them with the given time constant, allowing smooth runtime s
           "translational_error_clip"_a = Eigen::Vector3d::Constant(0.10),
           "rotational_error_clip"_a = Eigen::Vector3d::Constant(0.25),
           "gains_time_constant"_a = 0.1,
-          "friction"_a = std::nullopt)
+          "friction"_a = std::nullopt,
+          "use_operational_space"_a = false,
+          "task_inertia_regularization"_a = 0.01,
+          "use_local_frame"_a = false,
+          py::arg_v(
+              "nullspace_projector_type",
+              NullspaceProjectorType::kKinematic,
+              "_franky.NullspaceProjectorType.Kinematic"),
+          "compensate_coriolis"_a = true,
+          "filters"_a = std::nullopt)
       .def_property_readonly(
           "params",
           [](const CartesianImpedanceTrackingMotion &m) { return m.params(); },

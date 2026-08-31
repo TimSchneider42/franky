@@ -500,6 +500,262 @@ def test_cartesian_impedance_tracker():
 
 
 # ---------------------------------------------------------------------------
+# Test 8e - Operational space control (CRISP)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.timeout(20)
+def test_cartesian_impedance_operational_space():
+    """
+    Reach a Cartesian target with the CRISP-style operational-space variant of the
+    impedance controller: the stiffness/damping terms are shaped by the task-space
+    inertia and the secondary posture task uses the dynamically consistent
+    nullspace projector.
+    """
+    offset = np.array([0.05, 0.05, 0.0])
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
+        initial_pose = robot.current_cartesian_state.pose.end_effector_pose
+        initial_translation = np.array(initial_pose.translation).flatten()
+        initial_q = np.array(robot.current_joint_state.position)
+
+        target_translation = initial_translation + offset
+        target_matrix = initial_pose.matrix.copy()
+        target_matrix[:3, 3] = target_translation
+
+        robot.move(
+            franky.CartesianImpedanceMotion(
+                franky.Affine(target_matrix),
+                use_operational_space=True,
+                nullspace_projector_type=franky.NullspaceProjectorType.Dynamic,
+                posture_task=franky.PostureTask(initial_q, stiffness=2.0),
+            ),
+            asynchronous=True,
+        )
+        time.sleep(1.5)
+
+        robot.stop()
+        try:
+            robot.join_motion()
+        except franky.ControlException as e:
+            if "Move command preempted" not in str(e):
+                raise
+
+        actual_translation = np.array(
+            robot.current_cartesian_state.pose.end_effector_pose.translation
+        ).flatten()
+        np.testing.assert_allclose(
+            actual_translation,
+            target_translation,
+            atol=CART_ATOL,
+            err_msg="Position out of tolerance for operational-space control",
+        )
+
+
+# ---------------------------------------------------------------------------
+# Test 8f - Local-frame stiffness and filters (CRISP)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.timeout(20)
+def test_cartesian_impedance_local_frame_and_filters():
+    """
+    Reach a Cartesian target with the error and stiffness expressed in the
+    end-effector frame and all exponential filters enabled (a smoke test that the
+    filtered pipeline converges to the same fixed point).
+    """
+    offset = np.array([-0.05, 0.05, 0.0])
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
+        initial_pose = robot.current_cartesian_state.pose.end_effector_pose
+        initial_translation = np.array(initial_pose.translation).flatten()
+
+        target_translation = initial_translation + offset
+        target_matrix = initial_pose.matrix.copy()
+        target_matrix[:3, 3] = target_translation
+
+        robot.move(
+            franky.CartesianImpedanceMotion(
+                franky.Affine(target_matrix),
+                use_local_frame=True,
+                compensate_coriolis=False,
+                filters=franky.ImpedanceFilterParams(
+                    target_pose_time_constant=0.05,
+                    q_time_constant=0.005,
+                    dq_time_constant=0.005,
+                    output_torque_time_constant=0.002,
+                ),
+            ),
+            asynchronous=True,
+        )
+        time.sleep(2.0)
+
+        robot.stop()
+        try:
+            robot.join_motion()
+        except franky.ControlException as e:
+            if "Move command preempted" not in str(e):
+                raise
+
+        actual_translation = np.array(
+            robot.current_cartesian_state.pose.end_effector_pose.translation
+        ).flatten()
+        np.testing.assert_allclose(
+            actual_translation,
+            target_translation,
+            atol=CART_ATOL,
+            err_msg="Position out of tolerance for local-frame control with filters",
+        )
+
+
+# ---------------------------------------------------------------------------
+# Test 8g - Target pose filter lag (CRISP)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.timeout(20)
+def test_cartesian_impedance_target_pose_filter_lag():
+    """
+    A slow target-pose filter must turn a target jump into a gradual approach:
+    shortly after the jump, the end effector must have covered only part of the
+    step it would have covered without the filter.
+    """
+    offset = np.array([0.0, 0.0, 0.08])
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
+        initial_pose = robot.current_cartesian_state.pose.end_effector_pose
+        initial_translation = np.array(initial_pose.translation).flatten()
+
+        target_matrix = initial_pose.matrix.copy()
+        target_matrix[:3, 3] = initial_translation + offset
+
+        robot.move(
+            franky.CartesianImpedanceMotion(
+                franky.Affine(target_matrix),
+                translational_stiffness=1000.0,
+                # After 0.4 s a 1.5 s filter has released only ~23% of the step.
+                filters=franky.ImpedanceFilterParams(target_pose_time_constant=1.5),
+            ),
+            asynchronous=True,
+        )
+        time.sleep(0.4)
+        early_translation = np.array(
+            robot.current_cartesian_state.pose.end_effector_pose.translation
+        ).flatten()
+
+        robot.stop()
+        try:
+            robot.join_motion()
+        except franky.ControlException as e:
+            if "Move command preempted" not in str(e):
+                raise
+
+        early_progress = (early_translation - initial_translation)[2] / offset[2]
+        assert early_progress < 0.6, (
+            f"Target filter should delay the approach, but {early_progress:.0%} of the "
+            "step was already covered after 0.4 s"
+        )
+
+
+# ---------------------------------------------------------------------------
+# Test 8h - Wrench feedforward (CRISP)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.timeout(20)
+def test_cartesian_impedance_wrench_feedforward():
+    """
+    A feedforward wrench must displace the end effector until the impedance
+    spring balances it: commanding a downward force F with translational
+    stiffness k must settle roughly F/k below the held pose.
+    """
+    stiffness = 400.0
+    force_z = -12.0
+    expected_dz = force_z / stiffness  # -0.03 m
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
+        initial_pose = robot.current_cartesian_state.pose.end_effector_pose
+        initial_translation = np.array(initial_pose.translation).flatten()
+
+        with franky.CartesianImpedanceTracker(
+            robot,
+            translational_stiffness=stiffness,
+            rotational_stiffness=30.0,
+            period=0.01,
+        ) as tracker:
+            wrench = np.array([0.0, 0.0, force_z, 0.0, 0.0, 0.0])
+            for _ in range(150):
+                if not tracker.tick():
+                    break
+                tracker.set_target(initial_pose, wrench=wrench)
+            settled_translation = np.array(
+                robot.current_cartesian_state.pose.end_effector_pose.translation
+            ).flatten()
+
+        dz = (settled_translation - initial_translation)[2]
+        assert (
+            expected_dz - 0.02 < dz < expected_dz + 0.02
+        ), f"Wrench feedforward should settle around {expected_dz:+.3f} m in z, got {dz:+.3f} m"
+
+
+# ---------------------------------------------------------------------------
+# Test 8i - Streaming the nullspace posture target (CRISP)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.timeout(30)
+def test_cartesian_impedance_posture_target_stream():
+    """
+    Update the nullspace posture target at runtime. The posture task starts at the
+    current configuration (no self-motion), then a new target for joint 1 is
+    streamed via set_gains(posture_target=...). With stiffness on joint 1 only,
+    the projected torque vanishes exactly when joint 1 reaches the new target
+    (see test_cartesian_impedance_nullspace_posture for the nullspace geometry),
+    while the end-effector pose must remain unchanged.
+    """
+    joint1_offset = -0.3
+    with sim_server_context() as robot_server:
+        robot = make_robot(robot_server.hostname)
+        initial_pose = robot.current_cartesian_state.pose.end_effector_pose
+        initial_translation = np.array(initial_pose.translation).flatten()
+        initial_q = np.array(robot.current_joint_state.position)
+
+        stiffness = np.zeros(7)
+        stiffness[0] = 50.0
+
+        with franky.CartesianImpedanceTracker(
+            robot,
+            posture_task=franky.PostureTask(initial_q, stiffness),
+            period=0.01,
+        ) as tracker:
+            new_posture = initial_q.copy()
+            new_posture[0] += joint1_offset
+            tracker.set_gains(posture_target=new_posture)
+            np.testing.assert_allclose(
+                tracker.motion.get_nullspace_gains().posture_target, new_posture
+            )
+
+            for _ in range(500):
+                if not tracker.tick():
+                    break
+            q_settled = np.array(robot.current_joint_state.position)
+            settled_translation = np.array(
+                robot.current_cartesian_state.pose.end_effector_pose.translation
+            ).flatten()
+
+        assert abs(q_settled[0] - new_posture[0]) < 0.1, (
+            f"Joint 1 should follow the streamed posture target {new_posture[0]:.2f}, "
+            f"got {q_settled[0]:.2f}"
+        )
+        np.testing.assert_allclose(
+            settled_translation,
+            initial_translation,
+            atol=CART_ATOL,
+            err_msg="End-effector position should be unchanged by the posture update",
+        )
+
+
+# ---------------------------------------------------------------------------
 # Test 8b - Simple torque control
 # ---------------------------------------------------------------------------
 

@@ -230,6 +230,107 @@ was not configured at construction raises.
 the pose error fed into the spring law, which can prevent large torque spikes
 when the reference jumps.
 
+## Operational Space Control and CRISP Features
+
+The Cartesian impedance controller implements the full feature set of the
+[CRISP controllers](https://github.com/utiasDSL/crisp_controllers)
+([San José Pro et al., 2025](https://arxiv.org/abs/2509.06819)) for deploying
+learning-based policies and teleoperation. All of the following options are
+available on `CartesianImpedanceMotion`, `CartesianImpedanceTrackingMotion`,
+and `CartesianImpedanceTracker`.
+
+### Reference and state filtering
+
+Learned policies and teleoperation devices typically publish targets at a much
+lower rate than the 1 kHz control loop, and each new target is a discontinuous
+jump. Pass an `ImpedanceFilterParams` to smooth them (and, optionally, the
+measured joint state and the commanded torque) with first-order exponential
+filters. Each field is a time constant in seconds; unset filters are disabled:
+
+```python
+from franky import CartesianImpedanceTracker, ImpedanceFilterParams
+
+with CartesianImpedanceTracker(
+    robot,
+    filters=ImpedanceFilterParams(
+        target_pose_time_constant=0.05,     # smooth 20 Hz policy actions
+        dq_time_constant=0.005,             # low-pass velocity noise out of the damping term
+        output_torque_time_constant=0.002,  # low-pass the torque command
+    ),
+    period=0.05,
+) as tracker:
+    while tracker.tick():
+        tracker.set_target(policy_action())
+```
+
+The target position is smoothed with an exponential moving average and the
+target orientation via slerp, so a target jump becomes a smooth approach
+trajectory. Filtering the measured joint positions (`q_time_constant`) makes
+the controller recompute the end-effector pose and all model quantities from
+the filtered positions, keeping everything consistent.
+
+### Operational space control
+
+By default, the stiffness and damping terms are applied directly as a wrench
+(classical Cartesian impedance control). With `use_operational_space=True`,
+they are treated as a desired task-space acceleration and shaped by the
+task-space inertia `Lambda = (J M^-1 J^T)^-1` instead, which decouples the
+apparent Cartesian dynamics from the arm configuration at the cost of
+amplifying model errors. `task_inertia_regularization` (default `0.01`)
+bounds `Lambda` near singularities via damped inversion; it also applies to
+the acceleration feedforward and the dynamic nullspace projector.
+
+### Nullspace projector selection
+
+`nullspace_projector_type` selects how secondary-task torques are kept out of
+the Cartesian task:
+
+- `NullspaceProjectorType.Kinematic` (default): `I - J^+ J`; secondary tasks
+  cause no end-effector velocity to first order.
+- `NullspaceProjectorType.Dynamic`: the dynamically consistent projector
+  `I - J^T Lambda J M^-1`; secondary tasks cause no end-effector acceleration.
+- `NullspaceProjectorType.NoProjection`: no projection; the secondary tasks act
+  as a soft joint-space objective in parallel with the Cartesian task.
+
+### End-effector frame stiffness
+
+With `use_local_frame=True`, the pose error, error clips, and stiffness axes
+are expressed in the end-effector frame instead of the base frame, so
+anisotropic gains act along the tool axes — for example, soft along the tool
+z-axis for insertion tasks. References (`target_twist`, `target_acceleration`,
+and `target_wrench`) remain specified in the base frame and are rotated
+internally.
+
+### Wrench feedforward
+
+A Cartesian reference can carry a feedforward wrench the end effector should
+exert on the environment (base frame, `[fx, fy, fz, tx, ty, tz]` in N and Nm).
+It is added on top of the impedance wrench through `J^T`, so the controller
+keeps tracking the target while pushing:
+
+```python
+tracker.set_target(pose, wrench=[0.0, 0.0, -5.0, 0.0, 0.0, 0.0])  # press down with 5 N
+```
+
+Unlike `force_constraints`, which replaces the impedance wrench on an axis
+entirely, the feedforward wrench adds to it.
+
+### Streaming the posture target
+
+When a `PostureTask` is configured, its target posture can be streamed at
+runtime alongside the gains, e.g. to follow a teleoperation leader arm's
+configuration in the nullspace:
+
+```python
+tracker.set_gains(posture_target=leader_arm_configuration)
+```
+
+Like all gain updates, the new target is smoothed in the RT loop.
+
+Finally, `compensate_coriolis=False` disables the model-based Coriolis
+feedforward (enabled by default; gravity is always compensated by the robot
+itself).
+
 ## Ending a Torque Motion
 
 Unlike the trajectory-based motions, impedance (torque) motions never signal

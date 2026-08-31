@@ -36,6 +36,11 @@ void bind_enums(py::module &m) {
       .value("UserStopped", franka::RobotMode::kUserStopped)
       .value("AutomaticErrorRecovery", franka::RobotMode::kAutomaticErrorRecovery);
 
+  py::enum_<NullspaceProjectorType>(m, "NullspaceProjectorType", DOC(franky, NullspaceProjectorType))
+      .value("Kinematic", NullspaceProjectorType::kKinematic, DOC(franky, NullspaceProjectorType, kKinematic))
+      .value("Dynamic", NullspaceProjectorType::kDynamic, DOC(franky, NullspaceProjectorType, kDynamic))
+      .value("NoProjection", NullspaceProjectorType::kNone, DOC(franky, NullspaceProjectorType, kNone));
+
   py::enum_<FlipDirection>(m, "FlipDirection", DOC(franky, FlipDirection))
       .value("Negative", FlipDirection::kNegative, DOC(franky, FlipDirection, kNegative))
       .value("Neutral", FlipDirection::kNeutral, DOC(franky, FlipDirection, kNeutral))

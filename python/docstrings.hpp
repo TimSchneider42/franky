@@ -3371,14 +3371,23 @@ static const char *mkd_doc_franky_CartesianImpedanceBase_CartesianImpedanceBase 
 
 static const char *mkd_doc_franky_CartesianImpedanceBase_Params = R"doc(Parameters for the impedance motion.)doc";
 
+static const char *mkd_doc_franky_CartesianImpedanceBase_Params_compensate_coriolis =
+    R"doc(Whether the model-based Coriolis torque is added to the command.)doc";
+
 static const char *mkd_doc_franky_CartesianImpedanceBase_Params_damping =
     R"doc(Cartesian damping matrix. If unset, critical damping is used.)doc";
+
+static const char *mkd_doc_franky_CartesianImpedanceBase_Params_filters =
+    R"doc(Exponential smoothing of the target pose, measured joint state, and output torque.)doc";
 
 static const char *mkd_doc_franky_CartesianImpedanceBase_Params_force_constraints =
     R"doc(Per-axis force/torque constraints [N, Nm]. nullopt on an axis means unconstrained.)doc";
 
 static const char *mkd_doc_franky_CartesianImpedanceBase_Params_friction =
     R"doc(Per-joint friction feedforward. Defaults to zero (disabled).)doc";
+
+static const char *mkd_doc_franky_CartesianImpedanceBase_Params_nullspace_projector_type =
+    R"doc(Type of nullspace projector applied to the secondary-task torques.)doc";
 
 static const char *mkd_doc_franky_CartesianImpedanceBase_Params_nullspace_tasks =
     R"doc(Nullspace objectives.
@@ -3399,6 +3408,14 @@ static const char *mkd_doc_franky_CartesianImpedanceBase_Params_safety =
 static const char *mkd_doc_franky_CartesianImpedanceBase_Params_stiffness =
     R"doc(Cartesian stiffness matrix [N/m, Nm/rad], ordered [x, y, z, rx, ry, rz].)doc";
 
+static const char *mkd_doc_franky_CartesianImpedanceBase_Params_task_inertia_regularization =
+    R"doc(Tikhonov regularization for the task-space inertia pseudoinverse.
+
+Eigenvalues lambda of J M^-1 J^T are inverted as lambda / (lambda^2 + reg^2), which bounds the task-
+space inertia near singularities. Used wherever Lambda appears: the operational-space wrench, the
+acceleration feedforward, and the dynamic nullspace projector. Set to 0 to fall back to a hard rank
+cutoff.)doc";
+
 static const char *mkd_doc_franky_CartesianImpedanceBase_Params_translational_error_clip =
     R"doc(Maximum absolute Cartesian position error [m] used by the task-space controller.
 
@@ -3406,12 +3423,33 @@ The translational error is clamped elementwise before the impedance wrench is co
 the commanded Cartesian force when the reference jumps or contact prevents the end effector from
 reaching the target.)doc";
 
+static const char *mkd_doc_franky_CartesianImpedanceBase_Params_use_local_frame =
+    R"doc(Whether to express the pose error, twist error, and stiffness axes in the end-effector frame instead
+of the base frame.
+
+With this enabled, anisotropic stiffness and the error clips act along the tool axes (e.g. soft
+along the tool z-axis for insertion tasks). References (target twist, acceleration, and wrench)
+remain specified in the base frame and are rotated internally.)doc";
+
+static const char *mkd_doc_franky_CartesianImpedanceBase_Params_use_operational_space =
+    R"doc(Whether to shape the task wrench with the task-space inertia (operational space control).
+
+If true, the stiffness and damping terms are treated as a desired task-space acceleration and
+multiplied by the task-space inertia Lambda = (J M^-1 J^T)^-1 before being mapped through J^T. This
+decouples the apparent Cartesian dynamics from the arm configuration, at the cost of amplifying
+model errors. If false (default), the terms are applied directly as a wrench (classical Cartesian
+impedance control).)doc";
+
 static const char *mkd_doc_franky_CartesianImpedanceBase_Params_validate =
     R"doc(Throw std::invalid_argument if any parameter is out of range.)doc";
 
 static const char *mkd_doc_franky_CartesianImpedanceBase_base_params = R"doc()doc";
 
 static const char *mkd_doc_franky_CartesianImpedanceBase_computeCommand = R"doc()doc";
+
+static const char *mkd_doc_franky_CartesianImpedanceBase_control_state_initialized =
+    R"doc(Exponential filter memory, seeded from the measured state on the first control cycle after
+construction or resetControlState().)doc";
 
 static const char *mkd_doc_franky_CartesianImpedanceBase_criticalDamping = R"doc()doc";
 
@@ -3427,6 +3465,14 @@ static const char *mkd_doc_franky_CartesianImpedanceBase_current_damping = R"doc
 static const char *mkd_doc_franky_CartesianImpedanceBase_current_nullspace_gains = R"doc()doc";
 
 static const char *mkd_doc_franky_CartesianImpedanceBase_current_stiffness = R"doc()doc";
+
+static const char *mkd_doc_franky_CartesianImpedanceBase_filtered_dq = R"doc()doc";
+
+static const char *mkd_doc_franky_CartesianImpedanceBase_filtered_q = R"doc()doc";
+
+static const char *mkd_doc_franky_CartesianImpedanceBase_filtered_target_orientation = R"doc()doc";
+
+static const char *mkd_doc_franky_CartesianImpedanceBase_filtered_target_position = R"doc()doc";
 
 static const char *mkd_doc_franky_CartesianImpedanceBase_gains_handle = R"doc()doc";
 
@@ -3447,9 +3493,28 @@ changes.
 
 )doc";
 
+static const char *mkd_doc_franky_CartesianImpedanceBase_has_manipulability_task = R"doc()doc";
+
+static const char *mkd_doc_franky_CartesianImpedanceBase_has_posture_task =
+    R"doc(Which nullspace task types params_ holds. Fixed at construction, since params_ is only ever assigned
+there. Lets the control loop skip the nullspace gain interpolation, and the Jacobian decomposition,
+when there is nothing to project.)doc";
+
 static const char *mkd_doc_franky_CartesianImpedanceBase_nullspace_gains_handle = R"doc()doc";
 
 static const char *mkd_doc_franky_CartesianImpedanceBase_params = R"doc()doc";
+
+static const char *mkd_doc_franky_CartesianImpedanceBase_posture_task_target =
+    R"doc(Posture target configured in the PostureTask at construction; fallback when no runtime target is
+set.)doc";
+
+static const char *mkd_doc_franky_CartesianImpedanceBase_resetControlState =
+    R"doc(Re-seed the state and target filters from the next robot state.
+
+Derived motions call this from initImpl so a (re-)initialized motion starts from the measured state
+instead of stale filter memory.
+
+)doc";
 
 static const char *mkd_doc_franky_CartesianImpedanceBase_setGains =
     R"doc(Set the target impedance gains.
@@ -3474,6 +3539,12 @@ Args:
 static const char *mkd_doc_franky_CartesianImpedanceBase_target = R"doc(The target pose of the motion.)doc";
 
 static const char *mkd_doc_franky_CartesianImpedanceBase_target_2 = R"doc()doc";
+
+static const char *mkd_doc_franky_CartesianImpedanceBase_target_gains =
+    R"doc(Last value read from each gain handle. Refreshed only when the handle reports new data, so a settled
+controller does not re-copy the payload every cycle.)doc";
+
+static const char *mkd_doc_franky_CartesianImpedanceBase_target_nullspace_gains = R"doc()doc";
 
 static const char *mkd_doc_franky_CartesianImpedanceGains =
     R"doc(Runtime-adjustable stiffness and damping gains for Cartesian impedance motions.)doc";
@@ -3619,6 +3690,8 @@ static const char *mkd_doc_franky_CartesianImpedanceTrackingMotion_target_accele
 
 static const char *mkd_doc_franky_CartesianImpedanceTrackingMotion_target_twist = R"doc()doc";
 
+static const char *mkd_doc_franky_CartesianImpedanceTrackingMotion_target_wrench = R"doc()doc";
+
 static const char *mkd_doc_franky_CartesianMotion = R"doc(Cartesian motion with a single target.)doc";
 
 static const char *mkd_doc_franky_CartesianMotion_CartesianMotion =
@@ -3655,8 +3728,21 @@ static const char *mkd_doc_franky_CartesianReference_target_twist =
 
 When present, the damping term acts on twist error rather than resisting all motion toward zero.)doc";
 
+static const char *mkd_doc_franky_CartesianReference_target_wrench =
+    R"doc(Feedforward wrench [N, Nm] the end effector should exert on the environment, expressed in the base
+frame and ordered [x, y, z, rx, ry, rz].
+
+When present, the controller adds J^T * target_wrench to the commanded torque. Unlike
+force_constraints, this term adds to the impedance wrench instead of replacing it, so the end
+effector keeps tracking the target while pushing.)doc";
+
 static const char *mkd_doc_franky_CartesianReference_validate =
-    R"doc(Throw std::invalid_argument if any value is non-finite.)doc";
+    R"doc(Throw std::invalid_argument if any value is non-finite or the target is not an isometry.
+
+The controller reads the target's rotation with .linear() on the real-time path, which is only
+correct for a proper rigid transform, so rigidity is enforced cycle.
+
+)doc";
 
 static const char *mkd_doc_franky_CartesianState =
     R"doc(Cartesian state of a robot.
@@ -3917,7 +4003,24 @@ load".)doc";
 static const char *mkd_doc_franky_DynamicsLimit_get =
     R"doc(Get the current value of the limit.
 
-Retrieves the current value stored in this limit.
+Retrieves the current value stored in this limit. Takes the value mutex to avoid reading a partially
+written value while another thread calls set(). Must not be called from the real-time thread; use
+get_rt() there instead.
+
+Returns:
+    The current value of the limit.
+
+)doc";
+
+static const char *mkd_doc_franky_DynamicsLimit_get_rt =
+    R"doc(Get the current value of the limit without taking the value mutex.
+
+This is the variant the real-time thread has to use, as it must not block on a mutex a user thread
+could be holding. Unlike the unsafe operations of WaitFreeTripleBuffer, this one imposes no
+obligation on the caller: set() refuses to write while the robot is in control, so no write can ever
+be in flight while the control loop is running. The last write before control started is visible
+because set() releases write_mutex_ (the robot's control mutex), which the creator of the control
+thread acquires before spawning it.
 
 Returns:
     The current value of the limit.
@@ -3958,6 +4061,8 @@ Template Args:
 )doc";
 
 static const char *mkd_doc_franky_DynamicsLimit_value = R"doc(Current value of the limit.)doc";
+
+static const char *mkd_doc_franky_DynamicsLimit_value_mutex = R"doc(Mutex guarding the value itself.)doc";
 
 static const char *mkd_doc_franky_DynamicsLimit_write_mutex = R"doc(Mutex for synchronizing writes to the limit.)doc";
 
@@ -4068,6 +4173,9 @@ static const char *mkd_doc_franky_Gripper_Gripper_2 = R"doc()doc";
 
 static const char *mkd_doc_franky_Gripper_current_future = R"doc()doc";
 
+static const char *mkd_doc_franky_Gripper_future_mutex =
+    R"doc(Guards current_future_, as the asynchronous functions may be called from multiple threads.)doc";
+
 static const char *mkd_doc_franky_Gripper_graspAsync =
     R"doc(Asynchronous variant of the grasp function.
 
@@ -4148,6 +4256,38 @@ Returns:
 )doc";
 
 static const char *mkd_doc_franky_Gripper_width = R"doc(Current opening width of the gripper [m])doc";
+
+static const char *mkd_doc_franky_ImpedanceFilterParams =
+    R"doc(Time constants of the exponential smoothing filters of the Cartesian impedance controller.
+
+Each filter is a first-order exponential moving average with the given time constant [s]; an unset
+time constant disables the corresponding filter. Smoothing the reference and the measured signals
+trades responsiveness for smoother torques, which is particularly useful when the reference comes
+from a low-rate or noisy source such as a learned policy or teleoperation.)doc";
+
+static const char *mkd_doc_franky_ImpedanceFilterParams_dq_time_constant =
+    R"doc(Time constant [s] for smoothing the measured joint velocities before they enter the damping,
+nullspace, and friction terms. Unset disables joint-velocity smoothing.)doc";
+
+static const char *mkd_doc_franky_ImpedanceFilterParams_output_torque_time_constant =
+    R"doc(Time constant [s] for smoothing the commanded torque after rate saturation. The filter memory is the
+previously commanded torque, so it low-passes the torque signal itself. Unset disables output
+smoothing.)doc";
+
+static const char *mkd_doc_franky_ImpedanceFilterParams_q_time_constant =
+    R"doc(Time constant [s] for smoothing the measured joint positions before they enter the controller. The
+end-effector pose and all model quantities are recomputed from the filtered positions. Unset
+disables joint-position smoothing.)doc";
+
+static const char *mkd_doc_franky_ImpedanceFilterParams_target_pose_time_constant =
+    R"doc(Time constant [s] for smoothing the target pose.
+
+The target position is filtered with an exponential moving average and the target orientation via
+spherical linear interpolation toward the raw target. This turns discontinuous reference jumps into
+smooth approach trajectories. Unset disables target-pose smoothing.)doc";
+
+static const char *mkd_doc_franky_ImpedanceFilterParams_validate =
+    R"doc(Throw std::invalid_argument if any set time constant is not finite and positive.)doc";
 
 static const char *mkd_doc_franky_InvalidMotionTypeException =
     R"doc(Exception thrown when an invalid motion type is used.
@@ -4233,6 +4373,12 @@ static const char *mkd_doc_franky_JointImpedanceBase_target =
     R"doc(The target joint positions of the motion [rad].)doc";
 
 static const char *mkd_doc_franky_JointImpedanceBase_target_2 = R"doc()doc";
+
+static const char *mkd_doc_franky_JointImpedanceBase_target_cartesian_gains = R"doc()doc";
+
+static const char *mkd_doc_franky_JointImpedanceBase_target_gains =
+    R"doc(Last value read from each gain handle. Refreshed only when the handle reports new data, so a settled
+controller does not re-copy the payload every cycle.)doc";
 
 static const char *mkd_doc_franky_JointImpedanceBase_target_velocity =
     R"doc(The target joint velocities of the motion [rad/s].)doc";
@@ -4820,6 +4966,8 @@ static const char *mkd_doc_franky_MotionGenerator_rel_time_offset = R"doc()doc";
 static const char *mkd_doc_franky_MotionGenerator_resetTimeUnsafe =
     R"doc(Reset the time of the motion generator without locking the mutex.)doc";
 
+static const char *mkd_doc_franky_MotionGenerator_retired_motions = R"doc()doc";
+
 static const char *mkd_doc_franky_MotionGenerator_robot = R"doc()doc";
 
 static const char *mkd_doc_franky_MotionGenerator_updateMotion =
@@ -4966,8 +5114,35 @@ static const char *mkd_doc_franky_NullspaceGains_posture_max_torque =
 static const char *mkd_doc_franky_NullspaceGains_posture_stiffness =
     R"doc(Per-joint posture stiffness [Nm/rad]. A joint with zero stiffness is not pushed.)doc";
 
+static const char *mkd_doc_franky_NullspaceGains_posture_target =
+    R"doc(Preferred joint posture [rad] the posture task regulates toward.
+
+If unset, the target configured in the PostureTask at construction is kept. Like the gains, a new
+target is smoothed in the control loop via exponential interpolation, so it can be streamed at
+runtime (e.g. from a teleoperation leader arm or a policy).)doc";
+
 static const char *mkd_doc_franky_NullspaceGains_validate =
     R"doc(Throw std::invalid_argument if any gain or clamp is out of range.)doc";
+
+static const char *mkd_doc_franky_NullspaceProjectorType =
+    R"doc(Type of nullspace projector used to keep secondary-task torques out of the Cartesian task.)doc";
+
+static const char *mkd_doc_franky_NullspaceProjectorType_kDynamic =
+    R"doc(Dynamically consistent projector :math:`I - J^T \Lambda J M^{-1}`.
+
+Secondary-task torques cause no end-effector acceleration, at the cost of an additional mass-matrix
+computation per cycle.)doc";
+
+static const char *mkd_doc_franky_NullspaceProjectorType_kKinematic =
+    R"doc(Kinematic projector :math:`I - J^+ J`.
+
+Secondary-task torques cause no end-effector velocity to first order.)doc";
+
+static const char *mkd_doc_franky_NullspaceProjectorType_kNone =
+    R"doc(No projection; secondary-task torques are applied directly.
+
+The secondary tasks then disturb the Cartesian task and act more like a soft joint-space objective
+running in parallel.)doc";
 
 static const char *mkd_doc_franky_PositionWaypoint =
     R"doc(A position waypoint with a target and optional parameters.
@@ -6690,7 +6865,8 @@ static const char *mkd_doc_franky_computeFrictionCompensation = R"doc()doc";
 
 static const char *mkd_doc_franky_computeJointLimitTorque = R"doc()doc";
 
-static const char *mkd_doc_franky_defaultCartesianImpedanceDamping = R"doc()doc";
+static const char *mkd_doc_franky_defaultCartesianImpedanceDamping =
+    R"doc(Normalized critical damping 2 * sqrt(K) for a Cartesian stiffness matrix.)doc";
 
 static const char *mkd_doc_franky_defaultCartesianImpedanceStiffness = R"doc()doc";
 
@@ -6817,6 +6993,21 @@ static const char *mkd_doc_franky_toStdDMatD = R"doc()doc";
 
 static const char *mkd_doc_franky_validateFinite =
     R"doc(Throw std::invalid_argument if any element of values is non-finite.)doc";
+
+static const char *mkd_doc_franky_validateIsometry =
+    R"doc(Throw std::invalid_argument unless the transform is a proper rigid motion.
+
+Affine is Eigen::Affine3d, whose Mode is Affine rather than Isometry, so Transform::rotation()
+extracts the rotation through a JacobiSVD. That polar decomposition is the only thing keeping a non-
+rigid target from reaching the orientation error as a malformed quaternion, and it costs roughly 40x
+a plain .linear() block read on every control cycle. Checking rigidity where a target enters instead
+is about 9x cheaper than one decomposition, and it reports a broken target rather than silently
+substituting the nearest rotation, which is wrong by about as much as the input was.
+
+The tolerance is loose enough for a pose composed from many transforms and tight enough to catch a
+genuinely corrupt one.
+
+)doc";
 
 static const char *mkd_doc_franky_validateNonNegativeFinite =
     R"doc(Throw std::invalid_argument if value is negative or non-finite.)doc";

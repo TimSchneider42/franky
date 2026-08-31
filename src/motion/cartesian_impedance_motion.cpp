@@ -27,6 +27,7 @@ void CartesianImpedanceMotion::initImpl(
   } else {
     target_ = original_target_;
   }
+  resetControlState();
 }
 
 franka::Torques CartesianImpedanceMotion::nextCommandImpl(

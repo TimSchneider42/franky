@@ -12,11 +12,13 @@ from ._franky import (
     CartesianReference,
     ControlException,
     FrictionCompensationParams,
+    ImpedanceFilterParams,
     JointImpedanceGains,
     JointImpedanceTrackingMotion,
     JointReference,
     ManipulabilityTask,
     NullspaceGains,
+    NullspaceProjectorType,
     PostureTask,
     TorqueStopMotion,
     Twist,
@@ -68,6 +70,12 @@ class CartesianImpedanceTracker:
     (``2 * sqrt(stiffness)``), tracked against the current stiffness each cycle. Pass
     ``posture_task``/``manipulability_task`` to add nullspace objectives.
 
+    For low-rate or discontinuous target sources (learned policies, teleoperation), pass
+    ``filters`` (an :class:`ImpedanceFilterParams`) to smooth the target pose and torques,
+    matching the behaviour of the CRISP controllers. ``use_operational_space``,
+    ``use_local_frame``, and ``nullspace_projector_type`` select the corresponding
+    control-law variants.
+
     Example::
 
         with CartesianImpedanceTracker(robot, translational_stiffness=800.0, period=0.01) as tracker:
@@ -96,6 +104,12 @@ class CartesianImpedanceTracker:
         joint_limit_damping: float = 1.0,
         joint_limit_max_torque: float = 5.0,
         gains_time_constant: float = 0.1,
+        use_operational_space: bool = False,
+        task_inertia_regularization: Optional[float] = None,
+        use_local_frame: bool = False,
+        nullspace_projector_type: Optional[NullspaceProjectorType] = None,
+        compensate_coriolis: bool = True,
+        filters: Optional[ImpedanceFilterParams] = None,
         period: Optional[float] = None,
     ):
         if gains is not None and (
@@ -133,6 +147,12 @@ class CartesianImpedanceTracker:
             "joint_limit_damping": joint_limit_damping,
             "joint_limit_max_torque": joint_limit_max_torque,
             "gains_time_constant": gains_time_constant,
+            "use_operational_space": use_operational_space,
+            "task_inertia_regularization": task_inertia_regularization,
+            "use_local_frame": use_local_frame,
+            "nullspace_projector_type": nullspace_projector_type,
+            "compensate_coriolis": compensate_coriolis,
+            "filters": filters,
         }
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
@@ -209,13 +229,20 @@ class CartesianImpedanceTracker:
         pose: Affine,
         twist: Optional[Twist] = None,
         acceleration: Optional[TwistAcceleration] = None,
+        wrench: Optional[np.ndarray] = None,
     ) -> None:
-        """Update the Cartesian target pose and optional twist/acceleration feedforward."""
+        """Update the Cartesian target pose and optional twist/acceleration/wrench feedforward.
+
+        ``wrench`` is a base-frame 6-vector ``[fx, fy, fz, tx, ty, tz]`` the end effector should
+        exert on the environment, added on top of the impedance wrench.
+        """
         kwargs = {"target": pose}
         if twist is not None:
             kwargs["target_twist"] = twist
         if acceleration is not None:
             kwargs["target_acceleration"] = acceleration
+        if wrench is not None:
+            kwargs["target_wrench"] = np.asarray(wrench, dtype=float)
         self._motion.set_reference(CartesianReference(**kwargs))
 
     def set_gains(
@@ -226,6 +253,7 @@ class CartesianImpedanceTracker:
         damping: Optional[np.ndarray] = None,
         gains: Optional[CartesianImpedanceGains] = None,
         posture_stiffness: Optional[Union[float, np.ndarray]] = None,
+        posture_target: Optional[np.ndarray] = None,
         nullspace_gains: Optional[NullspaceGains] = None,
     ) -> None:
         """Update impedance gains (smoothed in the RT loop).
@@ -237,8 +265,9 @@ class CartesianImpedanceTracker:
         critical: a stiffness change re-criticals unless ``damping`` is passed too.
 
         For the nullspace, ``posture_stiffness`` (scalar or 7-vector) nudges just the posture
-        task's stiffness; ``nullspace_gains`` replaces the full :class:`NullspaceGains` (posture +
-        manipulability). Mutually exclusive; both only retune tasks configured at construction.
+        task's stiffness and ``posture_target`` (7-vector) just its target posture;
+        ``nullspace_gains`` replaces the full :class:`NullspaceGains` (posture + manipulability)
+        and is exclusive with both. All only retune tasks configured at construction.
         """
         stiffness_given = (
             translational_stiffness is not None or rotational_stiffness is not None
@@ -250,9 +279,11 @@ class CartesianImpedanceTracker:
                 "or the isotropic `translational_stiffness`/`rotational_stiffness`/`damping` keywords, "
                 "not both."
             )
-        if nullspace_gains is not None and posture_stiffness is not None:
+        if nullspace_gains is not None and (
+            posture_stiffness is not None or posture_target is not None
+        ):
             raise ValueError(
-                "Pass either `nullspace_gains` or `posture_stiffness`, not both."
+                "Pass either `nullspace_gains` or `posture_stiffness`/`posture_target`, not both."
             )
 
         if gains is not None:
@@ -279,9 +310,12 @@ class CartesianImpedanceTracker:
 
         if nullspace_gains is not None:
             self._motion.set_nullspace_gains(nullspace_gains)
-        elif posture_stiffness is not None:
+        elif posture_stiffness is not None or posture_target is not None:
             current_ns = self._motion.get_nullspace_gains()
-            current_ns.posture_stiffness = posture_stiffness
+            if posture_stiffness is not None:
+                current_ns.posture_stiffness = posture_stiffness
+            if posture_target is not None:
+                current_ns.posture_target = np.asarray(posture_target, dtype=float)
             self._motion.set_nullspace_gains(current_ns)
 
     # --- state ---

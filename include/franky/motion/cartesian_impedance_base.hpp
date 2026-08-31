@@ -18,6 +18,35 @@
 namespace franky {
 
 /**
+ * @brief Type of nullspace projector used to keep secondary-task torques out
+ * of the Cartesian task.
+ */
+enum class NullspaceProjectorType {
+  /**
+   * Kinematic projector \f$I - J^+ J\f$.
+   *
+   * Secondary-task torques cause no end-effector velocity to first order.
+   */
+  kKinematic,
+
+  /**
+   * Dynamically consistent projector \f$I - J^T \Lambda J M^{-1}\f$.
+   *
+   * Secondary-task torques cause no end-effector acceleration, at the cost of
+   * an additional mass-matrix computation per cycle.
+   */
+  kDynamic,
+
+  /**
+   * No projection; secondary-task torques are applied directly.
+   *
+   * The secondary tasks then disturb the Cartesian task and act more like a
+   * soft joint-space objective running in parallel.
+   */
+  kNone
+};
+
+/**
  * @brief Cartesian impedance reference expressed in the base frame.
  */
 struct CartesianReference {
@@ -41,6 +70,17 @@ struct CartesianReference {
   std::optional<TwistAcceleration> target_acceleration{};
 
   /**
+   * Feedforward wrench [N, Nm] the end effector should exert on the
+   * environment, expressed in the base frame and ordered [x, y, z, rx, ry, rz].
+   *
+   * When present, the controller adds J^T * target_wrench to the commanded
+   * torque. Unlike force_constraints, this term adds to the impedance wrench
+   * instead of replacing it, so the end effector keeps tracking the target
+   * while pushing.
+   */
+  std::optional<Vector6d> target_wrench{};
+
+  /**
    * @brief Throw std::invalid_argument if any value is non-finite or the target is not an isometry.
    *
    * The controller reads the target's rotation with .linear() on the real-time path, which is only
@@ -51,6 +91,64 @@ struct CartesianReference {
     validateIsometry(target, "target");
     if (target_twist.has_value()) validateFinite(target_twist->vector_repr(), "target_twist");
     if (target_acceleration.has_value()) validateFinite(target_acceleration->vector_repr(), "target_acceleration");
+    if (target_wrench.has_value()) validateFinite(*target_wrench, "target_wrench");
+  }
+};
+
+/**
+ * @brief Time constants of the exponential smoothing filters of the Cartesian
+ * impedance controller.
+ *
+ * Each filter is a first-order exponential moving average with the given time
+ * constant [s]; an unset time constant disables the corresponding filter.
+ * Smoothing the reference and the measured signals trades responsiveness for
+ * smoother torques, which is particularly useful when the reference comes from
+ * a low-rate or noisy source such as a learned policy or teleoperation.
+ */
+struct ImpedanceFilterParams {
+  /**
+   * Time constant [s] for smoothing the target pose.
+   *
+   * The target position is filtered with an exponential moving average and the
+   * target orientation via spherical linear interpolation toward the raw
+   * target. This turns discontinuous reference jumps into smooth approach
+   * trajectories. Unset disables target-pose smoothing.
+   */
+  std::optional<double> target_pose_time_constant{std::nullopt};
+
+  /**
+   * Time constant [s] for smoothing the measured joint positions before they
+   * enter the controller. The end-effector pose and all model quantities are
+   * recomputed from the filtered positions. Unset disables joint-position
+   * smoothing.
+   */
+  std::optional<double> q_time_constant{std::nullopt};
+
+  /**
+   * Time constant [s] for smoothing the measured joint velocities before they
+   * enter the damping, nullspace, and friction terms. Unset disables
+   * joint-velocity smoothing.
+   */
+  std::optional<double> dq_time_constant{std::nullopt};
+
+  /**
+   * Time constant [s] for smoothing the commanded torque after rate
+   * saturation. The filter memory is the previously commanded torque, so it
+   * low-passes the torque signal itself. Unset disables output smoothing.
+   */
+  std::optional<double> output_torque_time_constant{std::nullopt};
+
+  /** @brief Throw std::invalid_argument if any set time constant is not finite and positive. */
+  void validate() const {
+    auto check = [](const std::optional<double> &value, const char *name) {
+      if (value.has_value() && (!std::isfinite(*value) || *value <= 0.0)) {
+        throw std::invalid_argument(std::string(name) + " must be finite and positive");
+      }
+    };
+    check(target_pose_time_constant, "filters.target_pose_time_constant");
+    check(q_time_constant, "filters.q_time_constant");
+    check(dq_time_constant, "filters.dq_time_constant");
+    check(output_torque_time_constant, "filters.output_torque_time_constant");
   }
 };
 
@@ -228,6 +326,16 @@ using NullspaceTask = std::variant<PostureTask, ManipulabilityTask>;
  * @brief Runtime-adjustable gains for a nullspace task.
  */
 struct NullspaceGains {
+  /**
+   * Preferred joint posture [rad] the posture task regulates toward.
+   *
+   * If unset, the target configured in the PostureTask at construction is
+   * kept. Like the gains, a new target is smoothed in the control loop via
+   * exponential interpolation, so it can be streamed at runtime (e.g. from a
+   * teleoperation leader arm or a policy).
+   */
+  std::optional<Vector7d> posture_target{std::nullopt};
+
   /** Per-joint posture stiffness [Nm/rad]. A joint with zero stiffness is not pushed. */
   Vector7d posture_stiffness{Vector7d::Zero()};
 
@@ -248,6 +356,7 @@ struct NullspaceGains {
 
   /** @brief Throw std::invalid_argument if any gain or clamp is out of range. */
   void validate() const {
+    if (posture_target.has_value()) validateFinite(*posture_target, "nullspace posture target");
     validateNonNegativeFinite(posture_stiffness, "nullspace posture stiffness");
     if (posture_damping.has_value()) validateNonNegativeFinite(*posture_damping, "nullspace posture damping");
     if (posture_max_torque.has_value()) validateNonNegativeFinite(*posture_max_torque, "nullspace posture max_torque");
@@ -298,6 +407,51 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
     std::array<std::optional<double>, 6> force_constraints{};
 
     /**
+     * Whether to shape the task wrench with the task-space inertia
+     * (operational space control).
+     *
+     * If true, the stiffness and damping terms are treated as a desired
+     * task-space acceleration and multiplied by the task-space inertia
+     * Lambda = (J M^-1 J^T)^-1 before being mapped through J^T. This
+     * decouples the apparent Cartesian dynamics from the arm configuration,
+     * at the cost of amplifying model errors. If false (default), the terms
+     * are applied directly as a wrench (classical Cartesian impedance
+     * control).
+     */
+    bool use_operational_space{false};
+
+    /**
+     * Tikhonov regularization for the task-space inertia pseudoinverse.
+     *
+     * Eigenvalues lambda of J M^-1 J^T are inverted as
+     * lambda / (lambda^2 + reg^2), which bounds the task-space inertia near
+     * singularities. Used wherever Lambda appears: the operational-space
+     * wrench, the acceleration feedforward, and the dynamic nullspace
+     * projector. Set to 0 to fall back to a hard rank cutoff.
+     */
+    double task_inertia_regularization{0.01};
+
+    /**
+     * Whether to express the pose error, twist error, and stiffness axes in
+     * the end-effector frame instead of the base frame.
+     *
+     * With this enabled, anisotropic stiffness and the error clips act along
+     * the tool axes (e.g. soft along the tool z-axis for insertion tasks).
+     * References (target twist, acceleration, and wrench) remain specified in
+     * the base frame and are rotated internally.
+     */
+    bool use_local_frame{false};
+
+    /** Type of nullspace projector applied to the secondary-task torques. */
+    NullspaceProjectorType nullspace_projector_type{NullspaceProjectorType::kKinematic};
+
+    /** Whether the model-based Coriolis torque is added to the command. */
+    bool compensate_coriolis{true};
+
+    /** Exponential smoothing of the target pose, measured joint state, and output torque. */
+    ImpedanceFilterParams filters{};
+
+    /**
      * Nullspace objectives.
      *
      * Each task contributes a joint-space torque that is summed and projected
@@ -323,6 +477,8 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
           throw std::invalid_argument("force_constraints must contain only finite values");
         }
       }
+      validateNonNegativeFinite(task_inertia_regularization, "task_inertia_regularization");
+      filters.validate();
       bool has_posture_task = false;
       bool has_manipulability_task = false;
       for (const auto &task : nullspace_tasks) {
@@ -384,6 +540,9 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
     if (!has_posture && !gains.posture_stiffness.isZero()) {
       throw std::invalid_argument("nullspace posture gains set but no PostureTask was configured at construction");
     }
+    if (!has_posture && gains.posture_target.has_value()) {
+      throw std::invalid_argument("nullspace posture target set but no PostureTask was configured at construction");
+    }
     if (!has_manipulability && gains.manipulability_gain != 0.0) {
       throw std::invalid_argument(
           "nullspace manipulability gain set but no ManipulabilityTask was configured at construction");
@@ -410,6 +569,14 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
 
   [[nodiscard]] franka::Torques computeCommand(
       const RobotState &robot_state, const CartesianReference &reference, double dt);
+
+  /**
+   * @brief Re-seed the state and target filters from the next robot state.
+   *
+   * Derived motions call this from initImpl so a (re-)initialized motion
+   * starts from the measured state instead of stale filter memory.
+   */
+  void resetControlState() { control_state_initialized_ = false; }
 
   [[nodiscard]] inline const Params &base_params() const { return params_; }
 
@@ -441,6 +608,19 @@ class CartesianImpedanceBase : public Motion<franka::Torques> {
    */
   bool has_posture_task_;
   bool has_manipulability_task_;
+
+  /** Posture target configured in the PostureTask at construction; fallback when no runtime target is set. */
+  Vector7d posture_task_target_{Vector7d::Zero()};
+
+  /**
+   * Exponential filter memory, seeded from the measured state on the first control cycle after
+   * construction or resetControlState().
+   */
+  bool control_state_initialized_{false};
+  Vector7d filtered_q_{Vector7d::Zero()};
+  Vector7d filtered_dq_{Vector7d::Zero()};
+  Eigen::Vector3d filtered_target_position_{Eigen::Vector3d::Zero()};
+  Eigen::Quaterniond filtered_target_orientation_{Eigen::Quaterniond::Identity()};
 
   /** Cached critical damping = defaultCartesianImpedanceDamping(current_stiffness_). */
   Matrix6d critical_damping_;
