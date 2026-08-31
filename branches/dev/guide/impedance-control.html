@@ -293,8 +293,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.CartesianImpedanceParams.html">franky.CartesianImpedanceParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.CartesianImpedanceMotionParams.html">franky.CartesianImpedanceMotionParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.NullspaceGains.html">franky.NullspaceGains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.NullspaceProjectorType.html">franky.NullspaceProjectorType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.PostureTask.html">franky.PostureTask</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.ManipulabilityTask.html">franky.ManipulabilityTask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.ImpedanceFilterParams.html">franky.ImpedanceFilterParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.FrictionCompensationParams.html">franky.FrictionCompensationParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.TorqueSafetyParams.html">franky.TorqueSafetyParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/generated/franky.TorqueStopMotion.html">franky.TorqueStopMotion</a></li>
@@ -590,6 +592,101 @@ was not configured at construction raises.</p>
 the pose error fed into the spring law, which can prevent large torque spikes
 when the reference jumps.</p>
 </section>
+<section id="operational-space-control-and-crisp-features">
+<h2>Operational Space Control and CRISP Features<a class="headerlink" href="#operational-space-control-and-crisp-features" title="Link to this heading">¶</a></h2>
+<p>The Cartesian impedance controller implements the full feature set of the
+<a class="reference external" href="https://github.com/utiasDSL/crisp_controllers">CRISP controllers</a>
+(<a class="reference external" href="https://arxiv.org/abs/2509.06819">San José Pro et al., 2025</a>) for deploying
+learning-based policies and teleoperation. All of the following options are
+available on <code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotion</span></code>, <code class="docutils literal notranslate"><span class="pre">CartesianImpedanceTrackingMotion</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">CartesianImpedanceTracker</span></code>.</p>
+<section id="reference-and-state-filtering">
+<h3>Reference and state filtering<a class="headerlink" href="#reference-and-state-filtering" title="Link to this heading">¶</a></h3>
+<p>Learned policies and teleoperation devices typically publish targets at a much
+lower rate than the 1 kHz control loop, and each new target is a discontinuous
+jump. Pass an <code class="docutils literal notranslate"><span class="pre">ImpedanceFilterParams</span></code> to smooth them (and, optionally, the
+measured joint state and the commanded torque) with first-order exponential
+filters. Each field is a time constant in seconds; unset filters are disabled:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">franky</span><span class="w"> </span><span class="kn">import</span> <span class="n">CartesianImpedanceTracker</span><span class="p">,</span> <span class="n">ImpedanceFilterParams</span>
+
+<span class="k">with</span> <span class="n">CartesianImpedanceTracker</span><span class="p">(</span>
+    <span class="n">robot</span><span class="p">,</span>
+    <span class="n">filters</span><span class="o">=</span><span class="n">ImpedanceFilterParams</span><span class="p">(</span>
+        <span class="n">target_pose_time_constant</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>     <span class="c1"># smooth 20 Hz policy actions</span>
+        <span class="n">dq_time_constant</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span>             <span class="c1"># low-pass velocity noise out of the damping term</span>
+        <span class="n">output_torque_time_constant</span><span class="o">=</span><span class="mf">0.002</span><span class="p">,</span>  <span class="c1"># low-pass the torque command</span>
+    <span class="p">),</span>
+    <span class="n">period</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">tracker</span><span class="p">:</span>
+    <span class="k">while</span> <span class="n">tracker</span><span class="o">.</span><span class="n">tick</span><span class="p">():</span>
+        <span class="n">tracker</span><span class="o">.</span><span class="n">set_target</span><span class="p">(</span><span class="n">policy_action</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The target position is smoothed with an exponential moving average and the
+target orientation via slerp, so a target jump becomes a smooth approach
+trajectory. Filtering the measured joint positions (<code class="docutils literal notranslate"><span class="pre">q_time_constant</span></code>) makes
+the controller recompute the end-effector pose and all model quantities from
+the filtered positions, keeping everything consistent.</p>
+</section>
+<section id="operational-space-control">
+<h3>Operational space control<a class="headerlink" href="#operational-space-control" title="Link to this heading">¶</a></h3>
+<p>By default, the stiffness and damping terms are applied directly as a wrench
+(classical Cartesian impedance control). With <code class="docutils literal notranslate"><span class="pre">use_operational_space=True</span></code>,
+they are treated as a desired task-space acceleration and shaped by the
+task-space inertia <code class="docutils literal notranslate"><span class="pre">Lambda</span> <span class="pre">=</span> <span class="pre">(J</span> <span class="pre">M^-1</span> <span class="pre">J^T)^-1</span></code> instead, which decouples the
+apparent Cartesian dynamics from the arm configuration at the cost of
+amplifying model errors. <code class="docutils literal notranslate"><span class="pre">task_inertia_regularization</span></code> (default <code class="docutils literal notranslate"><span class="pre">0.01</span></code>)
+bounds <code class="docutils literal notranslate"><span class="pre">Lambda</span></code> near singularities via damped inversion; it also applies to
+the acceleration feedforward and the dynamic nullspace projector.</p>
+</section>
+<section id="nullspace-projector-selection">
+<h3>Nullspace projector selection<a class="headerlink" href="#nullspace-projector-selection" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">nullspace_projector_type</span></code> selects how secondary-task torques are kept out of
+the Cartesian task:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">NullspaceProjectorType.Kinematic</span></code> (default): <code class="docutils literal notranslate"><span class="pre">I</span> <span class="pre">-</span> <span class="pre">J^+</span> <span class="pre">J</span></code>; secondary tasks
+cause no end-effector velocity to first order.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NullspaceProjectorType.Dynamic</span></code>: the dynamically consistent projector
+<code class="docutils literal notranslate"><span class="pre">I</span> <span class="pre">-</span> <span class="pre">J^T</span> <span class="pre">Lambda</span> <span class="pre">J</span> <span class="pre">M^-1</span></code>; secondary tasks cause no end-effector acceleration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NullspaceProjectorType.NoProjection</span></code>: no projection; the secondary tasks act
+as a soft joint-space objective in parallel with the Cartesian task.</p></li>
+</ul>
+</section>
+<section id="end-effector-frame-stiffness">
+<h3>End-effector frame stiffness<a class="headerlink" href="#end-effector-frame-stiffness" title="Link to this heading">¶</a></h3>
+<p>With <code class="docutils literal notranslate"><span class="pre">use_local_frame=True</span></code>, the pose error, error clips, and stiffness axes
+are expressed in the end-effector frame instead of the base frame, so
+anisotropic gains act along the tool axes — for example, soft along the tool
+z-axis for insertion tasks. References (<code class="docutils literal notranslate"><span class="pre">target_twist</span></code>, <code class="docutils literal notranslate"><span class="pre">target_acceleration</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">target_wrench</span></code>) remain specified in the base frame and are rotated
+internally.</p>
+</section>
+<section id="wrench-feedforward">
+<h3>Wrench feedforward<a class="headerlink" href="#wrench-feedforward" title="Link to this heading">¶</a></h3>
+<p>A Cartesian reference can carry a feedforward wrench the end effector should
+exert on the environment (base frame, <code class="docutils literal notranslate"><span class="pre">[fx,</span> <span class="pre">fy,</span> <span class="pre">fz,</span> <span class="pre">tx,</span> <span class="pre">ty,</span> <span class="pre">tz]</span></code> in N and Nm).
+It is added on top of the impedance wrench through <code class="docutils literal notranslate"><span class="pre">J^T</span></code>, so the controller
+keeps tracking the target while pushing:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tracker</span><span class="o">.</span><span class="n">set_target</span><span class="p">(</span><span class="n">pose</span><span class="p">,</span> <span class="n">wrench</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>  <span class="c1"># press down with 5 N</span>
+</pre></div>
+</div>
+<p>Unlike <code class="docutils literal notranslate"><span class="pre">force_constraints</span></code>, which replaces the impedance wrench on an axis
+entirely, the feedforward wrench adds to it.</p>
+</section>
+<section id="streaming-the-posture-target">
+<h3>Streaming the posture target<a class="headerlink" href="#streaming-the-posture-target" title="Link to this heading">¶</a></h3>
+<p>When a <code class="docutils literal notranslate"><span class="pre">PostureTask</span></code> is configured, its target posture can be streamed at
+runtime alongside the gains, e.g. to follow a teleoperation leader arm’s
+configuration in the nullspace:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tracker</span><span class="o">.</span><span class="n">set_gains</span><span class="p">(</span><span class="n">posture_target</span><span class="o">=</span><span class="n">leader_arm_configuration</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Like all gain updates, the new target is smoothed in the RT loop.</p>
+<p>Finally, <code class="docutils literal notranslate"><span class="pre">compensate_coriolis=False</span></code> disables the model-based Coriolis
+feedforward (enabled by default; gravity is always compensated by the robot
+itself).</p>
+</section>
+</section>
 <section id="ending-a-torque-motion">
 <h2>Ending a Torque Motion<a class="headerlink" href="#ending-a-torque-motion" title="Link to this heading">¶</a></h2>
 <p>Unlike the trajectory-based motions, impedance (torque) motions never signal
@@ -675,6 +772,15 @@ a sustained external push can never make the stop hang.</p>
 <li><a class="reference internal" href="#">🫨 Impedance Control</a><ul>
 <li><a class="reference internal" href="#joint-impedance-control">Joint Impedance Control</a></li>
 <li><a class="reference internal" href="#cartesian-impedance-control">Cartesian Impedance Control</a></li>
+<li><a class="reference internal" href="#operational-space-control-and-crisp-features">Operational Space Control and CRISP Features</a><ul>
+<li><a class="reference internal" href="#reference-and-state-filtering">Reference and state filtering</a></li>
+<li><a class="reference internal" href="#operational-space-control">Operational space control</a></li>
+<li><a class="reference internal" href="#nullspace-projector-selection">Nullspace projector selection</a></li>
+<li><a class="reference internal" href="#end-effector-frame-stiffness">End-effector frame stiffness</a></li>
+<li><a class="reference internal" href="#wrench-feedforward">Wrench feedforward</a></li>
+<li><a class="reference internal" href="#streaming-the-posture-target">Streaming the posture target</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#ending-a-torque-motion">Ending a Torque Motion</a></li>
 </ul>
 </li>

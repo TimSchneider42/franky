@@ -101,6 +101,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a9e115300d98cd397b77d013e7ab8ace1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2de1ad3cc39fff92e4158b7364da95f3" id="r_a2de1ad3cc39fff92e4158b7364da95f3"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="classfranky_1_1_twist_acceleration.html">TwistAcceleration</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_cartesian_reference.html#a2de1ad3cc39fff92e4158b7364da95f3">target_acceleration</a> {}</td></tr>
 <tr class="separator:a2de1ad3cc39fff92e4158b7364da95f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00c99000be37e25707c21362905a4182" id="r_a00c99000be37e25707c21362905a4182"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb">Vector6d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_cartesian_reference.html#a00c99000be37e25707c21362905a4182">target_wrench</a> {}</td></tr>
+<tr class="separator:a00c99000be37e25707c21362905a4182"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Cartesian impedance reference expressed in the base frame. </p>
@@ -178,6 +180,22 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Desired end-effector twist in the base frame.</p>
 <p>When present, the damping term acts on twist error rather than resisting all motion toward zero. </p>
+
+</div>
+</div>
+<a id="a00c99000be37e25707c21362905a4182" name="a00c99000be37e25707c21362905a4182"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00c99000be37e25707c21362905a4182">&#9670;&#160;</a></span>target_wrench</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;<a class="el" href="namespacefranky.html#a92a07a88df41e482914cf4f9f2dddecb">Vector6d</a>&gt; franky::CartesianReference::target_wrench {}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Feedforward wrench [N, Nm] the end effector should exert on the environment, expressed in the base frame and ordered [x, y, z, rx, ry, rz].</p>
+<p>When present, the controller adds J^T * target_wrench to the commanded torque. Unlike force_constraints, this term adds to the impedance wrench instead of replacing it, so the end effector keeps tracking the target while pushing. </p>
 
 </div>
 </div>

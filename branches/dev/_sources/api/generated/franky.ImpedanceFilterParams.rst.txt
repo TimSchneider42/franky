@@ -1,0 +1,11 @@
+﻿franky.ImpedanceFilterParams
+============================
+
+.. currentmodule:: franky
+
+.. autoclass:: ImpedanceFilterParams
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :special-members: __init__

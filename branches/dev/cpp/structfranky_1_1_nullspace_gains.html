@@ -95,6 +95,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:adcce323c7b3e537d20c662c4b4ddb9e0" id="r_adcce323c7b3e537d20c662c4b4ddb9e0"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_nullspace_gains.html#adcce323c7b3e537d20c662c4b4ddb9e0">posture_target</a> {std::nullopt}</td></tr>
+<tr class="separator:adcce323c7b3e537d20c662c4b4ddb9e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1813696479f2278b789aea27379e4dfd" id="r_a1813696479f2278b789aea27379e4dfd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_nullspace_gains.html#a1813696479f2278b789aea27379e4dfd">posture_stiffness</a> {Vector7d::Zero()}</td></tr>
 <tr class="separator:a1813696479f2278b789aea27379e4dfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f7d32c72c1684c3cefca544ce3b07b0" id="r_a4f7d32c72c1684c3cefca544ce3b07b0"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_nullspace_gains.html#a4f7d32c72c1684c3cefca544ce3b07b0">posture_damping</a> {std::nullopt}</td></tr>
@@ -226,6 +228,22 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Per-joint posture stiffness [Nm/rad]. A joint with zero stiffness is not pushed. </p>
+
+</div>
+</div>
+<a id="adcce323c7b3e537d20c662c4b4ddb9e0" name="adcce323c7b3e537d20c662c4b4ddb9e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcce323c7b3e537d20c662c4b4ddb9e0">&#9670;&#160;</a></span>posture_target</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;<a class="el" href="namespacefranky.html#a4c36e6539a78f808bf759142dec935c4">Vector7d</a>&gt; franky::NullspaceGains::posture_target {std::nullopt}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Preferred joint posture [rad] the posture task regulates toward.</p>
+<p>If unset, the target configured in the <a class="el" href="structfranky_1_1_posture_task.html" title="Joint-posture objective projected into the Cartesian nullspace.">PostureTask</a> at construction is kept. Like the gains, a new target is smoothed in the control loop via exponential interpolation, so it can be streamed at runtime (e.g. from a teleoperation leader arm or a policy). </p>
 
 </div>
 </div>

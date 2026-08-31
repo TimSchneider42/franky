@@ -291,8 +291,10 @@
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianImpedanceParams.html">franky.CartesianImpedanceParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.CartesianImpedanceMotionParams.html">franky.CartesianImpedanceMotionParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.NullspaceGains.html">franky.NullspaceGains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.NullspaceProjectorType.html">franky.NullspaceProjectorType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.PostureTask.html">franky.PostureTask</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.ManipulabilityTask.html">franky.ManipulabilityTask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/generated/franky.ImpedanceFilterParams.html">franky.ImpedanceFilterParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.FrictionCompensationParams.html">franky.FrictionCompensationParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.TorqueSafetyParams.html">franky.TorqueSafetyParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/generated/franky.TorqueStopMotion.html">franky.TorqueStopMotion</a></li>
@@ -469,6 +471,8 @@
 </li>
           <li><a href="api/generated/franky.GripperState.html#franky.GripperState.__init__">(franky.GripperState method)</a>
 </li>
+          <li><a href="api/generated/franky.ImpedanceFilterParams.html#franky.ImpedanceFilterParams.__init__">(franky.ImpedanceFilterParams method)</a>
+</li>
           <li><a href="api/generated/franky.JointImpedanceBase.html#franky.JointImpedanceBase.__init__">(franky.JointImpedanceBase method)</a>
 </li>
           <li><a href="api/generated/franky.JointImpedanceGains.html#franky.JointImpedanceGains.__init__">(franky.JointImpedanceGains method)</a>
@@ -516,6 +520,8 @@
           <li><a href="api/generated/franky.Model.html#franky.Model.__init__">(franky.Model method)</a>
 </li>
           <li><a href="api/generated/franky.NullspaceGains.html#franky.NullspaceGains.__init__">(franky.NullspaceGains method)</a>
+</li>
+          <li><a href="api/generated/franky.NullspaceProjectorType.html#franky.NullspaceProjectorType.__init__">(franky.NullspaceProjectorType method)</a>
 </li>
           <li><a href="api/generated/franky.PilotButtonEvent.html#franky.PilotButtonEvent.__init__">(franky.PilotButtonEvent method)</a>
 </li>
@@ -778,8 +784,6 @@
 </li>
         <li><a href="api/generated/franky.CartesianWaypointMotion.html#franky.CartesianWaypointMotion">CartesianWaypointMotion (class in franky)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/generated/franky.CartesianState.html#franky.CartesianState.change_end_effector_frame">change_end_effector_frame() (franky.CartesianState method)</a>
 
         <ul>
@@ -788,6 +792,8 @@
           <li><a href="api/generated/franky.RobotVelocity.html#franky.RobotVelocity.change_end_effector_frame">(franky.RobotVelocity method)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/generated/franky.PilotButton.html#franky.PilotButton.CHECK">CHECK (franky.PilotButton attribute)</a>
 </li>
         <li><a href="api/generated/franky.PilotButton.html#franky.PilotButton.CIRCLE">CIRCLE (franky.PilotButton attribute)</a>
@@ -812,9 +818,13 @@
 </li>
         <li><a href="api/generated/franky.Errors.html#franky.Errors.communication_constraints_violation">communication_constraints_violation (franky.Errors property)</a>
 </li>
-        <li><a href="api/generated/franky.JointImpedanceParams.html#franky.JointImpedanceParams.compensate_coriolis">compensate_coriolis (franky.JointImpedanceParams property)</a>
+        <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams.compensate_coriolis">compensate_coriolis (franky.CartesianImpedanceMotionParams property)</a>
 
         <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.compensate_coriolis">(franky.CartesianImpedanceParams property)</a>
+</li>
+          <li><a href="api/generated/franky.JointImpedanceParams.html#franky.JointImpedanceParams.compensate_coriolis">(franky.JointImpedanceParams property)</a>
+</li>
           <li><a href="api/generated/franky.SimpleTorqueParams.html#franky.SimpleTorqueParams.compensate_coriolis">(franky.SimpleTorqueParams property)</a>
 </li>
           <li><a href="api/generated/franky.TorqueStopParams.html#franky.TorqueStopParams.compensate_coriolis">(franky.TorqueStopParams property)</a>
@@ -934,10 +944,10 @@
         </ul></li>
         <li><a href="api/generated/franky.Desk.html#franky.Desk">Desk (class in franky)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/generated/franky.DeskError.html#franky.DeskError">DeskError</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/generated/franky.DeskWebSession.html#franky.DeskWebSession">DeskWebSession (class in franky)</a>
 </li>
         <li><a href="api/generated/franky.CartesianImpedanceGains.html#franky.CartesianImpedanceGains.diagonal">diagonal() (franky.CartesianImpedanceGains static method)</a>
@@ -960,6 +970,8 @@
 </li>
         <li><a href="api/generated/franky.RobotState.html#franky.RobotState.dq_est">dq_est (franky.RobotState property)</a>
 </li>
+        <li><a href="api/generated/franky.ImpedanceFilterParams.html#franky.ImpedanceFilterParams.dq_time_constant">dq_time_constant (franky.ImpedanceFilterParams property)</a>
+</li>
         <li><a href="api/generated/franky.CartesianImpedanceTracker.html#franky.CartesianImpedanceTracker.dt">dt (franky.CartesianImpedanceTracker property)</a>
 
         <ul>
@@ -978,6 +990,8 @@
           <li><a href="api/generated/franky.JointVelocityMotion.html#franky.JointVelocityMotion.duration">(franky.JointVelocityMotion property)</a>
 </li>
         </ul></li>
+        <li><a href="api/generated/franky.NullspaceProjectorType.html#franky.NullspaceProjectorType.Dynamic">Dynamic (franky.NullspaceProjectorType attribute)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -1080,6 +1094,12 @@
 </li>
         <li><a href="api/generated/franky.Robot.html#franky.Robot.fci_hostname">fci_hostname (franky.Robot property)</a>
 </li>
+        <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams.filters">filters (franky.CartesianImpedanceMotionParams property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.filters">(franky.CartesianImpedanceParams property)</a>
+</li>
+        </ul></li>
         <li><a href="api/generated/franky.Frame.html#franky.Frame.Flange">Flange (franky.Frame attribute)</a>
 </li>
         <li><a href="api/generated/franky.FlipDirection.html#franky.FlipDirection">FlipDirection (class in franky)</a>
@@ -1090,10 +1110,10 @@
           <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.force_constraints">(franky.CartesianImpedanceParams property)</a>
 </li>
         </ul></li>
-        <li><a href="api/generated/franky.Errors.html#franky.Errors.force_control_safety_violation">force_control_safety_violation (franky.Errors property)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.Errors.html#franky.Errors.force_control_safety_violation">force_control_safety_violation (franky.Errors property)</a>
+</li>
         <li><a href="api/generated/franky.Errors.html#franky.Errors.force_controller_desired_force_tolerance_violation">force_controller_desired_force_tolerance_violation (franky.Errors property)</a>
 </li>
         <li><a href="api/generated/franky.Measure.html#franky.Measure.FORCE_X">FORCE_X (franky.Measure attribute)</a>
@@ -1253,6 +1273,8 @@
         <li><a href="api/generated/franky.RobotMode.html#franky.RobotMode.Idle">Idle (franky.RobotMode attribute)</a>
 </li>
         <li><a href="api/generated/franky.RealtimeConfig.html#franky.RealtimeConfig.Ignore">Ignore (franky.RealtimeConfig attribute)</a>
+</li>
+        <li><a href="api/generated/franky.ImpedanceFilterParams.html#franky.ImpedanceFilterParams">ImpedanceFilterParams (class in franky)</a>
 </li>
         <li><a href="api/generated/franky.ImpedanceMotion.html#franky.ImpedanceMotion">ImpedanceMotion (in module franky)</a>
 </li>
@@ -1427,6 +1449,10 @@
         <li><a href="api/generated/franky.RobotState.html#franky.RobotState.K_F_ext_hat_K">K_F_ext_hat_K (franky.RobotState property)</a>
 </li>
     </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.NullspaceProjectorType.html#franky.NullspaceProjectorType.Kinematic">Kinematic (franky.NullspaceProjectorType attribute)</a>
+</li>
+    </ul></td>
   </tr></table>
 </section>
 
@@ -1598,10 +1624,18 @@
 </li>
         <li><a href="api/generated/franky.NetworkException.html#franky.NetworkException">NetworkException</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/generated/franky.FlipDirection.html#franky.FlipDirection.Neutral">Neutral (franky.FlipDirection attribute)</a>
 </li>
+        <li><a href="api/generated/franky.NullspaceProjectorType.html#franky.NullspaceProjectorType.NoProjection">NoProjection (franky.NullspaceProjectorType attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams.nullspace_projector_type">nullspace_projector_type (franky.CartesianImpedanceMotionParams property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.nullspace_projector_type">(franky.CartesianImpedanceParams property)</a>
+</li>
+        </ul></li>
         <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams.nullspace_tasks">nullspace_tasks (franky.CartesianImpedanceMotionParams property)</a>
 
         <ul>
@@ -1609,6 +1643,8 @@
 </li>
         </ul></li>
         <li><a href="api/generated/franky.NullspaceGains.html#franky.NullspaceGains">NullspaceGains (class in franky)</a>
+</li>
+        <li><a href="api/generated/franky.NullspaceProjectorType.html#franky.NullspaceProjectorType">NullspaceProjectorType (class in franky)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1669,6 +1705,8 @@
         <li><a href="api/generated/franky.OperatingMode.html#franky.OperatingMode">OperatingMode (class in franky)</a>
 </li>
         <li><a href="api/generated/franky.RobotMode.html#franky.RobotMode.Other">Other (franky.RobotMode attribute)</a>
+</li>
+        <li><a href="api/generated/franky.ImpedanceFilterParams.html#franky.ImpedanceFilterParams.output_torque_time_constant">output_torque_time_constant (franky.ImpedanceFilterParams property)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1734,6 +1772,8 @@
 </li>
         <li><a href="api/generated/franky.NullspaceGains.html#franky.NullspaceGains.posture_stiffness">posture_stiffness (franky.NullspaceGains property)</a>
 </li>
+        <li><a href="api/generated/franky.NullspaceGains.html#franky.NullspaceGains.posture_target">posture_target (franky.NullspaceGains property)</a>
+</li>
         <li><a href="api/generated/franky.PostureTask.html#franky.PostureTask">PostureTask (class in franky)</a>
 </li>
         <li><a href="api/generated/franky.Errors.html#franky.Errors.power_limit_violation">power_limit_violation (franky.Errors property)</a>
@@ -1771,6 +1811,8 @@
         <li><a href="api/generated/franky.RobotState.html#franky.RobotState.q_d">q_d (franky.RobotState property)</a>
 </li>
         <li><a href="api/generated/franky.RobotState.html#franky.RobotState.q_est">q_est (franky.RobotState property)</a>
+</li>
+        <li><a href="api/generated/franky.ImpedanceFilterParams.html#franky.ImpedanceFilterParams.q_time_constant">q_time_constant (franky.ImpedanceFilterParams property)</a>
 </li>
         <li><a href="api/generated/franky.Affine.html#franky.Affine.quaternion">quaternion (franky.Affine property)</a>
 </li>
@@ -2256,6 +2298,8 @@
         </ul></li>
         <li><a href="api/generated/franky.CartesianReference.html#franky.CartesianReference.target_acceleration">target_acceleration (franky.CartesianReference property)</a>
 </li>
+        <li><a href="api/generated/franky.ImpedanceFilterParams.html#franky.ImpedanceFilterParams.target_pose_time_constant">target_pose_time_constant (franky.ImpedanceFilterParams property)</a>
+</li>
         <li><a href="api/generated/franky.CartesianImpedanceMotion.html#franky.CartesianImpedanceMotion.target_twist">target_twist (franky.CartesianImpedanceMotion property)</a>
 
         <ul>
@@ -2270,6 +2314,14 @@
           <li><a href="api/generated/franky.JointImpedanceTrackingMotion.html#franky.JointImpedanceTrackingMotion.target_velocity">(franky.JointImpedanceTrackingMotion property)</a>
 </li>
         </ul></li>
+        <li><a href="api/generated/franky.CartesianReference.html#franky.CartesianReference.target_wrench">target_wrench (franky.CartesianReference property)</a>
+</li>
+        <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams.task_inertia_regularization">task_inertia_regularization (franky.CartesianImpedanceMotionParams property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.task_inertia_regularization">(franky.CartesianImpedanceParams property)</a>
+</li>
+        </ul></li>
         <li><a href="api/generated/franky.RobotState.html#franky.RobotState.tau_ext_hat_filtered">tau_ext_hat_filtered (franky.RobotState property)</a>
 </li>
         <li><a href="api/generated/franky.JointReference.html#franky.JointReference.tau_ff">tau_ff (franky.JointReference property)</a>
@@ -2280,12 +2332,12 @@
           <li><a href="api/generated/franky.Torques.html#franky.Torques.tau_J">(franky.Torques property)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/generated/franky.RobotState.html#franky.RobotState.tau_J_d">tau_J_d (franky.RobotState property)</a>
 </li>
         <li><a href="api/generated/franky.Errors.html#franky.Errors.tau_j_range_violation">tau_j_range_violation (franky.Errors property)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/generated/franky.GripperState.html#franky.GripperState.temperature">temperature (franky.GripperState property)</a>
 </li>
         <li><a href="api/generated/franky.RobotState.html#franky.RobotState.theta">theta (franky.RobotState property)</a>
@@ -2376,10 +2428,22 @@
 </li>
         <li><a href="api/generated/franky.PilotButton.html#franky.PilotButton.UP">UP (franky.PilotButton attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/generated/franky.TorqueSafetyParams.html#franky.TorqueSafetyParams.upper_joint_limits">upper_joint_limits (franky.TorqueSafetyParams property)</a>
 </li>
+        <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams.use_local_frame">use_local_frame (franky.CartesianImpedanceMotionParams property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.use_local_frame">(franky.CartesianImpedanceParams property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/generated/franky.CartesianImpedanceMotionParams.html#franky.CartesianImpedanceMotionParams.use_operational_space">use_operational_space (franky.CartesianImpedanceMotionParams property)</a>
+
+        <ul>
+          <li><a href="api/generated/franky.CartesianImpedanceParams.html#franky.CartesianImpedanceParams.use_operational_space">(franky.CartesianImpedanceParams property)</a>
+</li>
+        </ul></li>
         <li><a href="api/generated/franky.BaseDesk.html#franky.BaseDesk.username">username (franky.BaseDesk property)</a>
 
         <ul>
@@ -2406,6 +2470,8 @@
           <li><a href="api/generated/franky.FlipDirection.html#franky.FlipDirection.value">(franky.FlipDirection property)</a>
 </li>
           <li><a href="api/generated/franky.Frame.html#franky.Frame.value">(franky.Frame property)</a>
+</li>
+          <li><a href="api/generated/franky.NullspaceProjectorType.html#franky.NullspaceProjectorType.value">(franky.NullspaceProjectorType property)</a>
 </li>
           <li><a href="api/generated/franky.RealtimeConfig.html#franky.RealtimeConfig.value">(franky.RealtimeConfig property)</a>
 </li>

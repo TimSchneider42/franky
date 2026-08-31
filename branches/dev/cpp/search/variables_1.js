@@ -14,6 +14,7 @@ var searchData=
   ['dq_11',['dq',['../structfranky_1_1_joint_reference.html#a15998ceb85c31357571fa1cb34835381',1,'franky::JointReference::dq'],['../structfranky_1_1_robot_state.html#ae63f90261417b37a6c731076ce4d5cc6',1,'franky::RobotState::dq']]],
   ['dq_5fd_12',['dq_d',['../structfranky_1_1_robot_state.html#a3712f4da986dac8f09fa2af356a81fb9',1,'franky::RobotState']]],
   ['dq_5fest_13',['dq_est',['../structfranky_1_1_robot_state.html#aaea1aa7f342609aa0d8b4e917bf2c47e',1,'franky::RobotState']]],
-  ['dtau_5fj_14',['dtau_J',['../structfranky_1_1_robot_state.html#a7691ba4f68ee2c2c88138faa319156f5',1,'franky::RobotState']]],
-  ['dtheta_15',['dtheta',['../structfranky_1_1_robot_state.html#a80fbf260b9bbb1d9df330522b2f76568',1,'franky::RobotState']]]
+  ['dq_5ftime_5fconstant_14',['dq_time_constant',['../structfranky_1_1_impedance_filter_params.html#a4e1ccf43d4a55620f524ed3ffce30017',1,'franky::ImpedanceFilterParams']]],
+  ['dtau_5fj_15',['dtau_J',['../structfranky_1_1_robot_state.html#a7691ba4f68ee2c2c88138faa319156f5',1,'franky::RobotState']]],
+  ['dtheta_16',['dtheta',['../structfranky_1_1_robot_state.html#a80fbf260b9bbb1d9df330522b2f76568',1,'franky::RobotState']]]
 ];

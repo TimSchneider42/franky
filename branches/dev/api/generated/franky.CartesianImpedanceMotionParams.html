@@ -293,8 +293,10 @@
 <li class="toctree-l2"><a class="reference internal" href="franky.CartesianImpedanceParams.html">franky.CartesianImpedanceParams</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">franky.CartesianImpedanceMotionParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.NullspaceGains.html">franky.NullspaceGains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="franky.NullspaceProjectorType.html">franky.NullspaceProjectorType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.PostureTask.html">franky.PostureTask</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.ManipulabilityTask.html">franky.ManipulabilityTask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="franky.ImpedanceFilterParams.html">franky.ImpedanceFilterParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.FrictionCompensationParams.html">franky.FrictionCompensationParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.TorqueSafetyParams.html">franky.TorqueSafetyParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.TorqueStopMotion.html">franky.TorqueStopMotion</a></li>
@@ -402,9 +404,21 @@
 <dd></dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="franky.CartesianImpedanceMotionParams.compensate_coriolis">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">compensate_coriolis</span></span><a class="headerlink" href="#franky.CartesianImpedanceMotionParams.compensate_coriolis" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the model-based Coriolis torque is added to the command.</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="franky.CartesianImpedanceMotionParams.damping">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">damping</span></span><a class="headerlink" href="#franky.CartesianImpedanceMotionParams.damping" title="Link to this definition">¶</a></dt>
 <dd><p>Cartesian damping matrix. If unset, critical damping is used.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="franky.CartesianImpedanceMotionParams.filters">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">filters</span></span><a class="headerlink" href="#franky.CartesianImpedanceMotionParams.filters" title="Link to this definition">¶</a></dt>
+<dd><p>Exponential smoothing of the target pose, measured joint state, and output torque.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -417,6 +431,12 @@
 <dt class="sig sig-object py" id="franky.CartesianImpedanceMotionParams.friction">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">friction</span></span><a class="headerlink" href="#franky.CartesianImpedanceMotionParams.friction" title="Link to this definition">¶</a></dt>
 <dd><p>Per-joint friction feedforward. Defaults to zero (disabled).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="franky.CartesianImpedanceMotionParams.nullspace_projector_type">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">nullspace_projector_type</span></span><a class="headerlink" href="#franky.CartesianImpedanceMotionParams.nullspace_projector_type" title="Link to this definition">¶</a></dt>
+<dd><p>Type of nullspace projector applied to the secondary-task torques.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -455,12 +475,43 @@ computed. This bounds the commanded Cartesian torque.</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="franky.CartesianImpedanceMotionParams.task_inertia_regularization">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">task_inertia_regularization</span></span><a class="headerlink" href="#franky.CartesianImpedanceMotionParams.task_inertia_regularization" title="Link to this definition">¶</a></dt>
+<dd><p>Tikhonov regularization for the task-space inertia pseudoinverse.</p>
+<p>Eigenvalues lambda of J M^-1 J^T are inverted as lambda / (lambda^2 + reg^2), which bounds the task-
+space inertia near singularities. Used wherever Lambda appears: the operational-space wrench, the
+acceleration feedforward, and the dynamic nullspace projector. Set to 0 to fall back to a hard rank
+cutoff.</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="franky.CartesianImpedanceMotionParams.translational_error_clip">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">translational_error_clip</span></span><a class="headerlink" href="#franky.CartesianImpedanceMotionParams.translational_error_clip" title="Link to this definition">¶</a></dt>
 <dd><p>Maximum absolute Cartesian position error [m] used by the task-space controller.</p>
 <p>The translational error is clamped elementwise before the impedance wrench is computed. This bounds
 the commanded Cartesian force when the reference jumps or contact prevents the end effector from
 reaching the target.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="franky.CartesianImpedanceMotionParams.use_local_frame">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">use_local_frame</span></span><a class="headerlink" href="#franky.CartesianImpedanceMotionParams.use_local_frame" title="Link to this definition">¶</a></dt>
+<dd><p>Whether to express the pose error, twist error, and stiffness axes in the end-effector frame instead
+of the base frame.</p>
+<p>With this enabled, anisotropic stiffness and the error clips act along the tool axes (e.g. soft
+along the tool z-axis for insertion tasks). References (target twist, acceleration, and wrench)
+remain specified in the base frame and are rotated internally.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="franky.CartesianImpedanceMotionParams.use_operational_space">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">use_operational_space</span></span><a class="headerlink" href="#franky.CartesianImpedanceMotionParams.use_operational_space" title="Link to this definition">¶</a></dt>
+<dd><p>Whether to shape the task wrench with the task-space inertia (operational space control).</p>
+<p>If true, the stiffness and damping terms are treated as a desired task-space acceleration and
+multiplied by the task-space inertia Lambda = (J M^-1 J^T)^-1 before being mapped through J^T. This
+decouples the apparent Cartesian dynamics from the arm configuration, at the cost of amplifying
+model errors. If false (default), the terms are applied directly as a wrench (classical Cartesian
+impedance control).</p>
 </dd></dl>
 
 </dd></dl>
@@ -525,15 +576,21 @@ reaching the target.</p>
 <li><a class="reference internal" href="#">franky.CartesianImpedanceMotionParams</a><ul>
 <li><a class="reference internal" href="#franky.CartesianImpedanceMotionParams"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotionParams</span></code></a><ul>
 <li><a class="reference internal" href="#franky.CartesianImpedanceMotionParams.__init__"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotionParams.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#franky.CartesianImpedanceMotionParams.compensate_coriolis"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotionParams.compensate_coriolis</span></code></a></li>
 <li><a class="reference internal" href="#franky.CartesianImpedanceMotionParams.damping"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotionParams.damping</span></code></a></li>
+<li><a class="reference internal" href="#franky.CartesianImpedanceMotionParams.filters"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotionParams.filters</span></code></a></li>
 <li><a class="reference internal" href="#franky.CartesianImpedanceMotionParams.force_constraints"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotionParams.force_constraints</span></code></a></li>
 <li><a class="reference internal" href="#franky.CartesianImpedanceMotionParams.friction"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotionParams.friction</span></code></a></li>
+<li><a class="reference internal" href="#franky.CartesianImpedanceMotionParams.nullspace_projector_type"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotionParams.nullspace_projector_type</span></code></a></li>
 <li><a class="reference internal" href="#franky.CartesianImpedanceMotionParams.nullspace_tasks"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotionParams.nullspace_tasks</span></code></a></li>
 <li><a class="reference internal" href="#franky.CartesianImpedanceMotionParams.rotational_error_clip"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotionParams.rotational_error_clip</span></code></a></li>
 <li><a class="reference internal" href="#franky.CartesianImpedanceMotionParams.safety"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotionParams.safety</span></code></a></li>
 <li><a class="reference internal" href="#franky.CartesianImpedanceMotionParams.stiffness"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotionParams.stiffness</span></code></a></li>
 <li><a class="reference internal" href="#franky.CartesianImpedanceMotionParams.target_type"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotionParams.target_type</span></code></a></li>
+<li><a class="reference internal" href="#franky.CartesianImpedanceMotionParams.task_inertia_regularization"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotionParams.task_inertia_regularization</span></code></a></li>
 <li><a class="reference internal" href="#franky.CartesianImpedanceMotionParams.translational_error_clip"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotionParams.translational_error_clip</span></code></a></li>
+<li><a class="reference internal" href="#franky.CartesianImpedanceMotionParams.use_local_frame"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotionParams.use_local_frame</span></code></a></li>
+<li><a class="reference internal" href="#franky.CartesianImpedanceMotionParams.use_operational_space"><code class="docutils literal notranslate"><span class="pre">CartesianImpedanceMotionParams.use_operational_space</span></code></a></li>
 </ul>
 </li>
 </ul>

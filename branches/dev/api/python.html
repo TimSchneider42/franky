@@ -293,8 +293,10 @@
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.CartesianImpedanceParams.html">franky.CartesianImpedanceParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.CartesianImpedanceMotionParams.html">franky.CartesianImpedanceMotionParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.NullspaceGains.html">franky.NullspaceGains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/franky.NullspaceProjectorType.html">franky.NullspaceProjectorType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.PostureTask.html">franky.PostureTask</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.ManipulabilityTask.html">franky.ManipulabilityTask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/franky.ImpedanceFilterParams.html">franky.ImpedanceFilterParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.FrictionCompensationParams.html">franky.FrictionCompensationParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.TorqueSafetyParams.html">franky.TorqueSafetyParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/franky.TorqueStopMotion.html">franky.TorqueStopMotion</a></li>
@@ -663,11 +665,17 @@ See the <a class="reference internal" href="../guide/impedance-control.html"><sp
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/franky.NullspaceGains.html#franky.NullspaceGains" title="franky.NullspaceGains"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NullspaceGains</span></code></a></p></td>
 <td><p>Runtime-adjustable gains for a nullspace task.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/franky.PostureTask.html#franky.PostureTask" title="franky.PostureTask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PostureTask</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/franky.NullspaceProjectorType.html#franky.NullspaceProjectorType" title="franky.NullspaceProjectorType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NullspaceProjectorType</span></code></a></p></td>
+<td><p>Type of nullspace projector used to keep secondary-task torques out of the Cartesian task.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/franky.PostureTask.html#franky.PostureTask" title="franky.PostureTask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PostureTask</span></code></a></p></td>
 <td><p>Joint-posture objective projected into the Cartesian nullspace.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/franky.ManipulabilityTask.html#franky.ManipulabilityTask" title="franky.ManipulabilityTask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ManipulabilityTask</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/franky.ManipulabilityTask.html#franky.ManipulabilityTask" title="franky.ManipulabilityTask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ManipulabilityTask</span></code></a></p></td>
 <td><p>Manipulability maximization objective projected into the Cartesian nullspace.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/franky.ImpedanceFilterParams.html#franky.ImpedanceFilterParams" title="franky.ImpedanceFilterParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImpedanceFilterParams</span></code></a></p></td>
+<td><p>Time constants of the exponential smoothing filters of the Cartesian impedance controller.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/franky.FrictionCompensationParams.html#franky.FrictionCompensationParams" title="franky.FrictionCompensationParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FrictionCompensationParams</span></code></a></p></td>
 <td><p>Per-joint friction feedforward settings for torque-control motions.</p></td>

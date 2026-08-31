@@ -293,8 +293,10 @@
 <li class="toctree-l2"><a class="reference internal" href="franky.CartesianImpedanceParams.html">franky.CartesianImpedanceParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.CartesianImpedanceMotionParams.html">franky.CartesianImpedanceMotionParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.NullspaceGains.html">franky.NullspaceGains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="franky.NullspaceProjectorType.html">franky.NullspaceProjectorType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.PostureTask.html">franky.PostureTask</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.ManipulabilityTask.html">franky.ManipulabilityTask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="franky.ImpedanceFilterParams.html">franky.ImpedanceFilterParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.FrictionCompensationParams.html">franky.FrictionCompensationParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.TorqueSafetyParams.html">franky.TorqueSafetyParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.TorqueStopMotion.html">franky.TorqueStopMotion</a></li>
@@ -407,7 +409,9 @@ the value of the limit while ensuring that it cannot be written while the robot 
 <dt class="sig sig-object py" id="franky.DoubleDynamicsLimit.get">
 <span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#franky.DoubleDynamicsLimit" title="franky._franky.DoubleDynamicsLimit"><span class="pre">franky._franky.DoubleDynamicsLimit</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#franky.DoubleDynamicsLimit.get" title="Link to this definition">¶</a></dt>
 <dd><p>Get the current value of the limit.</p>
-<p>Retrieves the current value stored in this limit.</p>
+<p>Retrieves the current value stored in this limit. Takes the value mutex to avoid reading a partially
+written value while another thread calls set(). Must not be called from the real-time thread; use
+get_rt() there instead.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The current value of the limit.</p>

@@ -78,6 +78,7 @@ $(function() {
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">cartesian_impedance_base.hpp File Reference</div></div>
 </div><!--header-->
@@ -102,6 +103,9 @@ $(function() {
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_cartesian_reference.html">franky::CartesianReference</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cartesian impedance reference expressed in the base frame.  <a href="structfranky_1_1_cartesian_reference.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_impedance_filter_params.html">franky::ImpedanceFilterParams</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time constants of the exponential smoothing filters of the Cartesian impedance controller.  <a href="structfranky_1_1_impedance_filter_params.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_cartesian_impedance_gains.html">franky::CartesianImpedanceGains</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runtime-adjustable stiffness and damping gains for Cartesian impedance motions.  <a href="structfranky_1_1_cartesian_impedance_gains.html#details">More...</a><br /></td></tr>
@@ -133,6 +137,15 @@ Typedefs</h2></td></tr>
 <tr class="separator:a50cb5a747fda255131c0db7bbec58c7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd331cc368787daa5fdb6fbe19974ed9" id="r_acd331cc368787daa5fdb6fbe19974ed9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#acd331cc368787daa5fdb6fbe19974ed9">franky::ImpedanceMotion</a> = <a class="el" href="classfranky_1_1_cartesian_impedance_base.html">CartesianImpedanceBase</a></td></tr>
 <tr class="separator:acd331cc368787daa5fdb6fbe19974ed9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:aa42ea3c879cdaa3bb94efbea8a0495bb" id="r_aa42ea3c879cdaa3bb94efbea8a0495bb"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#aa42ea3c879cdaa3bb94efbea8a0495bb">franky::NullspaceProjectorType</a> { <a class="el" href="namespacefranky.html#aa42ea3c879cdaa3bb94efbea8a0495bba21892c3209f3a5893df0fce14c29cdce">franky::kKinematic</a>
+, <a class="el" href="namespacefranky.html#aa42ea3c879cdaa3bb94efbea8a0495bba31e8689e4043726d9a175c783872c06c">franky::kDynamic</a>
+, <a class="el" href="namespacefranky.html#aa42ea3c879cdaa3bb94efbea8a0495bba35c3ace1970663a16e5c65baa5941b13">franky::kNone</a>
+ }</td></tr>
+<tr class="memdesc:aa42ea3c879cdaa3bb94efbea8a0495bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of nullspace projector used to keep secondary-task torques out of the Cartesian task.  <a href="namespacefranky.html#aa42ea3c879cdaa3bb94efbea8a0495bb">More...</a><br /></td></tr>
+<tr class="separator:aa42ea3c879cdaa3bb94efbea8a0495bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>

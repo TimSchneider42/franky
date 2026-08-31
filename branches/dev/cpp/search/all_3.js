@@ -19,11 +19,12 @@ var searchData=
   ['dq_16',['dq',['../structfranky_1_1_joint_reference.html#a15998ceb85c31357571fa1cb34835381',1,'franky::JointReference::dq'],['../structfranky_1_1_robot_state.html#ae63f90261417b37a6c731076ce4d5cc6',1,'franky::RobotState::dq']]],
   ['dq_5fd_17',['dq_d',['../structfranky_1_1_robot_state.html#a3712f4da986dac8f09fa2af356a81fb9',1,'franky::RobotState']]],
   ['dq_5fest_18',['dq_est',['../structfranky_1_1_robot_state.html#aaea1aa7f342609aa0d8b4e917bf2c47e',1,'franky::RobotState']]],
-  ['dtau_5fj_19',['dtau_J',['../structfranky_1_1_robot_state.html#a7691ba4f68ee2c2c88138faa319156f5',1,'franky::RobotState']]],
-  ['dtheta_20',['dtheta',['../structfranky_1_1_robot_state.html#a80fbf260b9bbb1d9df330522b2f76568',1,'franky::RobotState']]],
-  ['dynamics_5flimit_2ecpp_21',['dynamics_limit.cpp',['../dynamics__limit_8cpp.html',1,'']]],
-  ['dynamics_5flimit_2ehpp_22',['dynamics_limit.hpp',['../dynamics__limit_8hpp.html',1,'']]],
-  ['dynamicslimit_23',['dynamicslimit',['../classfranky_1_1_dynamics_limit.html#a344e2c223138ec679d26af30e5fdd9e5',1,'franky::DynamicsLimit::DynamicsLimit(const std::string &amp;desc, const LimitType &amp;max_val, const std::shared_ptr&lt; std::mutex &gt; &amp;write_mutex, const std::function&lt; bool()&gt; &amp;can_write_condition)'],['../classfranky_1_1_dynamics_limit.html#addd366f6d40b581abd6463ca61cfd2c5',1,'franky::DynamicsLimit::DynamicsLimit(std::string desc, const LimitType &amp;max_val, const std::shared_ptr&lt; std::mutex &gt; &amp;write_mutex, const std::function&lt; bool()&gt; &amp;can_write_condition, const LimitType &amp;default_val)'],['../classfranky_1_1_dynamics_limit.html',1,'franky::DynamicsLimit&lt; LimitType &gt;']]],
-  ['dynamicslimit_3c_20double_20_3e_24',['DynamicsLimit&lt; double &gt;',['../classfranky_1_1_dynamics_limit.html',1,'franky']]],
-  ['dynamicslimit_3c_20vector7d_20_3e_25',['DynamicsLimit&lt; Vector7d &gt;',['../classfranky_1_1_dynamics_limit.html',1,'franky']]]
+  ['dq_5ftime_5fconstant_19',['dq_time_constant',['../structfranky_1_1_impedance_filter_params.html#a4e1ccf43d4a55620f524ed3ffce30017',1,'franky::ImpedanceFilterParams']]],
+  ['dtau_5fj_20',['dtau_J',['../structfranky_1_1_robot_state.html#a7691ba4f68ee2c2c88138faa319156f5',1,'franky::RobotState']]],
+  ['dtheta_21',['dtheta',['../structfranky_1_1_robot_state.html#a80fbf260b9bbb1d9df330522b2f76568',1,'franky::RobotState']]],
+  ['dynamics_5flimit_2ecpp_22',['dynamics_limit.cpp',['../dynamics__limit_8cpp.html',1,'']]],
+  ['dynamics_5flimit_2ehpp_23',['dynamics_limit.hpp',['../dynamics__limit_8hpp.html',1,'']]],
+  ['dynamicslimit_24',['dynamicslimit',['../classfranky_1_1_dynamics_limit.html#a344e2c223138ec679d26af30e5fdd9e5',1,'franky::DynamicsLimit::DynamicsLimit(const std::string &amp;desc, const LimitType &amp;max_val, const std::shared_ptr&lt; std::mutex &gt; &amp;write_mutex, const std::function&lt; bool()&gt; &amp;can_write_condition)'],['../classfranky_1_1_dynamics_limit.html#addd366f6d40b581abd6463ca61cfd2c5',1,'franky::DynamicsLimit::DynamicsLimit(std::string desc, const LimitType &amp;max_val, const std::shared_ptr&lt; std::mutex &gt; &amp;write_mutex, const std::function&lt; bool()&gt; &amp;can_write_condition, const LimitType &amp;default_val)'],['../classfranky_1_1_dynamics_limit.html',1,'franky::DynamicsLimit&lt; LimitType &gt;']]],
+  ['dynamicslimit_3c_20double_20_3e_25',['DynamicsLimit&lt; double &gt;',['../classfranky_1_1_dynamics_limit.html',1,'franky']]],
+  ['dynamicslimit_3c_20vector7d_20_3e_26',['DynamicsLimit&lt; Vector7d &gt;',['../classfranky_1_1_dynamics_limit.html',1,'franky']]]
 ];

@@ -160,8 +160,10 @@ See the [Impedance Control](../guide/impedance-control.md) chapter of the guide 
    CartesianImpedanceParams
    CartesianImpedanceMotionParams
    NullspaceGains
+   NullspaceProjectorType
    PostureTask
    ManipulabilityTask
+   ImpedanceFilterParams
    FrictionCompensationParams
    TorqueSafetyParams
    TorqueStopMotion

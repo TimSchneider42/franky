@@ -132,6 +132,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_gripper_exception.html">GripperException</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exception thrown by the gripper class.  <a href="structfranky_1_1_gripper_exception.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_impedance_filter_params.html">ImpedanceFilterParams</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time constants of the exponential smoothing filters of the Cartesian impedance controller.  <a href="structfranky_1_1_impedance_filter_params.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfranky_1_1_invalid_motion_type_exception.html">InvalidMotionTypeException</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exception thrown when an invalid motion type is used.  <a href="structfranky_1_1_invalid_motion_type_exception.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -329,6 +332,12 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:aaebafd6d1e78da2a42cf35eb266cb43b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flip direction of a joint.  <a href="namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43b">More...</a><br /></td></tr>
 <tr class="separator:aaebafd6d1e78da2a42cf35eb266cb43b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa42ea3c879cdaa3bb94efbea8a0495bb" id="r_aa42ea3c879cdaa3bb94efbea8a0495bb"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#aa42ea3c879cdaa3bb94efbea8a0495bb">NullspaceProjectorType</a> { <a class="el" href="namespacefranky.html#aa42ea3c879cdaa3bb94efbea8a0495bba21892c3209f3a5893df0fce14c29cdce">kKinematic</a>
+, <a class="el" href="namespacefranky.html#aa42ea3c879cdaa3bb94efbea8a0495bba31e8689e4043726d9a175c783872c06c">kDynamic</a>
+, <a class="el" href="namespacefranky.html#aa42ea3c879cdaa3bb94efbea8a0495bba35c3ace1970663a16e5c65baa5941b13">kNone</a>
+ }</td></tr>
+<tr class="memdesc:aa42ea3c879cdaa3bb94efbea8a0495bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of nullspace projector used to keep secondary-task torques out of the Cartesian task.  <a href="namespacefranky.html#aa42ea3c879cdaa3bb94efbea8a0495bb">More...</a><br /></td></tr>
+<tr class="separator:aa42ea3c879cdaa3bb94efbea8a0495bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2354a27cfe3100f07e0ad71513ded80e" id="r_a2354a27cfe3100f07e0ad71513ded80e"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80e">ReferenceType</a> { <a class="el" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80eabab0767e88027de9944aa55c24c8387a">kAbsolute</a>
 , <a class="el" href="namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80eaf460a96ab20647996c15854794763384">kRelative</a>
  }</td></tr>
@@ -753,6 +762,41 @@ template&lt;<a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adccc
 <tr><td class="fieldname"><a id="aaebafd6d1e78da2a42cf35eb266cb43ba5c9755c01963e8444ea5ee1802139851" name="aaebafd6d1e78da2a42cf35eb266cb43ba5c9755c01963e8444ea5ee1802139851"></a>kNeutral&#160;</td><td class="fielddoc"><p>The joint angle is zero. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="aaebafd6d1e78da2a42cf35eb266cb43bafe449700ac27fbd09863263d74e7735f" name="aaebafd6d1e78da2a42cf35eb266cb43bafe449700ac27fbd09863263d74e7735f"></a>kPositive&#160;</td><td class="fielddoc"><p>The joint angle is positive. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="aa42ea3c879cdaa3bb94efbea8a0495bb" name="aa42ea3c879cdaa3bb94efbea8a0495bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa42ea3c879cdaa3bb94efbea8a0495bb">&#9670;&#160;</a></span>NullspaceProjectorType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">enum</a> <a class="el" href="namespacefranky.html#a0b6bfc825c262ae89d9b0adcccd97ab0">class</a> <a class="el" href="namespacefranky.html#aa42ea3c879cdaa3bb94efbea8a0495bb">franky::NullspaceProjectorType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Type of nullspace projector used to keep secondary-task torques out of the Cartesian task. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aa42ea3c879cdaa3bb94efbea8a0495bba21892c3209f3a5893df0fce14c29cdce" name="aa42ea3c879cdaa3bb94efbea8a0495bba21892c3209f3a5893df0fce14c29cdce"></a>kKinematic&#160;</td><td class="fielddoc"><p>Kinematic projector <picture><source srcset="form_0_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$I - J^+ J$" src="form_0.png"/></picture>.</p>
+<p>Secondary-task torques cause no end-effector velocity to first order. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa42ea3c879cdaa3bb94efbea8a0495bba31e8689e4043726d9a175c783872c06c" name="aa42ea3c879cdaa3bb94efbea8a0495bba31e8689e4043726d9a175c783872c06c"></a>kDynamic&#160;</td><td class="fielddoc"><p>Dynamically consistent projector <picture><source srcset="form_1_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$I - J^T \Lambda J M^{-1}$" src="form_1.png"/></picture>.</p>
+<p>Secondary-task torques cause no end-effector acceleration, at the cost of an additional mass-matrix computation per cycle. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa42ea3c879cdaa3bb94efbea8a0495bba35c3ace1970663a16e5c65baa5941b13" name="aa42ea3c879cdaa3bb94efbea8a0495bba35c3ace1970663a16e5c65baa5941b13"></a>kNone&#160;</td><td class="fielddoc"><p>No projection; secondary-task torques are applied directly.</p>
+<p>The secondary tasks then disturb the Cartesian task and act more like a soft joint-space objective running in parallel. </p>
 </td></tr>
 </table>
 

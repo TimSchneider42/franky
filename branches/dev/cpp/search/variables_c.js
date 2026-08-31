@@ -8,5 +8,6 @@ var searchData=
   ['o_5ff_5fext_5fhat_5fk_5',['O_F_ext_hat_K',['../structfranky_1_1_robot_state.html#acac3a6e1b9e7f6e19c19aa5df3740b1c',1,'franky::RobotState']]],
   ['o_5ft_5fee_6',['O_T_EE',['../structfranky_1_1_robot_state.html#a0a9667e0d76a3901c0e9393a8b227c0a',1,'franky::RobotState']]],
   ['o_5ft_5fee_5fc_7',['O_T_EE_c',['../structfranky_1_1_robot_state.html#aebb25f8a7c0e6b72f2a5f1829a97ea43',1,'franky::RobotState']]],
-  ['o_5ft_5fee_5fd_8',['O_T_EE_d',['../structfranky_1_1_robot_state.html#a9650368f3c772ed7d46f07f6412b3faf',1,'franky::RobotState']]]
+  ['o_5ft_5fee_5fd_8',['O_T_EE_d',['../structfranky_1_1_robot_state.html#a9650368f3c772ed7d46f07f6412b3faf',1,'franky::RobotState']]],
+  ['output_5ftorque_5ftime_5fconstant_9',['output_torque_time_constant',['../structfranky_1_1_impedance_filter_params.html#ae76427c749c5d804b6d7a24c237cb0e4',1,'franky::ImpedanceFilterParams']]]
 ];

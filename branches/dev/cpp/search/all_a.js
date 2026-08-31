@@ -12,8 +12,11 @@ var searchData=
   ['kalman_5fq_5fd_5fobs_5fvar_9',['kalman_q_d_obs_var',['../structfranky_1_1_robot_1_1_params.html#a78a7c309785935bab49cdb24b5a750a8',1,'franky::Robot::Params']]],
   ['kalman_5fq_5fobs_5fvar_10',['kalman_q_obs_var',['../structfranky_1_1_robot_1_1_params.html#a304e57064f927eb2c00757a1d86d2e08',1,'franky::Robot::Params']]],
   ['kalman_5fq_5fprocess_5fvar_11',['kalman_q_process_var',['../structfranky_1_1_robot_1_1_params.html#ae6c5c63f100b88ae3fc1ae3dcd50c44e',1,'franky::Robot::Params']]],
-  ['knegative_12',['kNegative',['../namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43ba25b105cbe0fd4622cdb36360c85e89c3',1,'franky']]],
-  ['kneutral_13',['kNeutral',['../namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43ba5c9755c01963e8444ea5ee1802139851',1,'franky']]],
-  ['kpositive_14',['kPositive',['../namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43bafe449700ac27fbd09863263d74e7735f',1,'franky']]],
-  ['krelative_15',['kRelative',['../namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80eaf460a96ab20647996c15854794763384',1,'franky']]]
+  ['kdynamic_12',['kDynamic',['../namespacefranky.html#aa42ea3c879cdaa3bb94efbea8a0495bba31e8689e4043726d9a175c783872c06c',1,'franky']]],
+  ['kkinematic_13',['kKinematic',['../namespacefranky.html#aa42ea3c879cdaa3bb94efbea8a0495bba21892c3209f3a5893df0fce14c29cdce',1,'franky']]],
+  ['knegative_14',['kNegative',['../namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43ba25b105cbe0fd4622cdb36360c85e89c3',1,'franky']]],
+  ['kneutral_15',['kNeutral',['../namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43ba5c9755c01963e8444ea5ee1802139851',1,'franky']]],
+  ['knone_16',['kNone',['../namespacefranky.html#aa42ea3c879cdaa3bb94efbea8a0495bba35c3ace1970663a16e5c65baa5941b13',1,'franky']]],
+  ['kpositive_17',['kPositive',['../namespacefranky.html#aaebafd6d1e78da2a42cf35eb266cb43bafe449700ac27fbd09863263d74e7735f',1,'franky']]],
+  ['krelative_18',['kRelative',['../namespacefranky.html#a2354a27cfe3100f07e0ad71513ded80eaf460a96ab20647996c15854794763384',1,'franky']]]
 ];

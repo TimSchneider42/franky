@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="franky.PostureTask" href="franky.PostureTask.html"><link rel="prev" title="franky.CartesianImpedanceMotionParams" href="franky.CartesianImpedanceMotionParams.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="franky.NullspaceProjectorType" href="franky.NullspaceProjectorType.html"><link rel="prev" title="franky.CartesianImpedanceMotionParams" href="franky.CartesianImpedanceMotionParams.html">
         <link rel="prefetch" href="../../_static/logo.svg" as="image">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
@@ -293,8 +293,10 @@
 <li class="toctree-l2"><a class="reference internal" href="franky.CartesianImpedanceParams.html">franky.CartesianImpedanceParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.CartesianImpedanceMotionParams.html">franky.CartesianImpedanceMotionParams</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">franky.NullspaceGains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="franky.NullspaceProjectorType.html">franky.NullspaceProjectorType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.PostureTask.html">franky.PostureTask</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.ManipulabilityTask.html">franky.ManipulabilityTask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="franky.ImpedanceFilterParams.html">franky.ImpedanceFilterParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.FrictionCompensationParams.html">franky.FrictionCompensationParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.TorqueSafetyParams.html">franky.TorqueSafetyParams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="franky.TorqueStopMotion.html">franky.TorqueStopMotion</a></li>
@@ -433,6 +435,15 @@
 <dd><p>Per-joint posture stiffness [Nm/rad]. Accepts a scalar (applied to all joints) or a 7-vector.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="franky.NullspaceGains.posture_target">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">posture_target</span></span><a class="headerlink" href="#franky.NullspaceGains.posture_target" title="Link to this definition">¶</a></dt>
+<dd><p>Preferred joint posture [rad] the posture task regulates toward.</p>
+<p>If unset, the target configured in the PostureTask at construction is kept. Like the gains, a new
+target is smoothed in the control loop via exponential interpolation, so it can be streamed at
+runtime (e.g. from a teleoperation leader arm or a policy).</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -442,12 +453,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="franky.PostureTask.html">
+          <a class="next-page" href="franky.NullspaceProjectorType.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">franky.PostureTask</div>
+                <div class="title">franky.NullspaceProjectorType</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -501,6 +512,7 @@
 <li><a class="reference internal" href="#franky.NullspaceGains.posture_damping"><code class="docutils literal notranslate"><span class="pre">NullspaceGains.posture_damping</span></code></a></li>
 <li><a class="reference internal" href="#franky.NullspaceGains.posture_max_torque"><code class="docutils literal notranslate"><span class="pre">NullspaceGains.posture_max_torque</span></code></a></li>
 <li><a class="reference internal" href="#franky.NullspaceGains.posture_stiffness"><code class="docutils literal notranslate"><span class="pre">NullspaceGains.posture_stiffness</span></code></a></li>
+<li><a class="reference internal" href="#franky.NullspaceGains.posture_target"><code class="docutils literal notranslate"><span class="pre">NullspaceGains.posture_target</span></code></a></li>
 </ul>
 </li>
 </ul>
